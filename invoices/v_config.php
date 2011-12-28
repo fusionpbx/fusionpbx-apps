@@ -1,7 +1,7 @@
 <?php
 	//application details
 		$apps[$x]['name'] = 'invoice';
-		$apps[$x]['guid'] = 'E5A1F4F5-7766-EC9C-118B-50F76B0788C0';
+		$apps[$x]['uuid'] = 'E5A1F4F5-7766-EC9C-118B-50F76B0788C0';
 		$apps[$x]['category'] = '';
 		$apps[$x]['subcategory'] = '';
 		$apps[$x]['version'] = '';
@@ -11,8 +11,8 @@
 
 	//menu details
 		$apps[$x]['menu'][$y]['title']['en'] = 'Invoices';
-		$apps[$x]['menu'][$y]['guid'] = '6EBE753B-0F83-DC34-1C0B-51DF2C6F0C3B';
-		$apps[$x]['menu'][$y]['parent_guid'] = 'FD29E39C-C936-F5FC-8E2B-611681B266B5';
+		$apps[$x]['menu'][$y]['uuid'] = '6EBE753B-0F83-DC34-1C0B-51DF2C6F0C3B';
+		$apps[$x]['menu'][$y]['parent_uuid'] = 'FD29E39C-C936-F5FC-8E2B-611681B266B5';
 		$apps[$x]['menu'][$y]['category'] = 'internal';
 		$apps[$x]['menu'][$y]['path'] = '/mod/invoices/v_invoices.php';
 		//$apps[$x]['menu'][$y]['groups'][] = 'user';

@@ -2,7 +2,7 @@
 	/*
 	//application details
 		$apps[$x]['name'] = "Templates";
-		$apps[$x]['guid'] = 'zzz';
+		$apps[$x]['uuid'] = 'zzz';
 		$apps[$x]['category'] = '';
 		$apps[$x]['subcategory'] = '';
 		$apps[$x]['version'] = '';
@@ -12,8 +12,8 @@
 
 	//menu details
 		$apps[$x]['menu'][0]['title']['en'] = 'Templates';
-		$apps[$x]['menu'][0]['guid'] = 'zzz';
-		$apps[$x]['menu'][0]['parent_guid'] = 'zzz';
+		$apps[$x]['menu'][0]['uuid'] = 'zzz';
+		$apps[$x]['menu'][0]['parent_uuid'] = 'zzz';
 		$apps[$x]['menu'][0]['category'] = 'internal';
 		$apps[$x]['menu'][0]['path'] = '/mod/zzz/zzz.php';
 		$apps[$x]['menu'][0]['groups'][] = 'admin';

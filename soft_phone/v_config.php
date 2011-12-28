@@ -2,7 +2,7 @@
 	/*
 	//application details
 		$apps[$x]['name'] = "Soft Phone";
-		$apps[$x]['guid'] = 'D49D1E25-2240-DCB3-8A40-643232472A2D';
+		$apps[$x]['uuid'] = 'D49D1E25-2240-DCB3-8A40-643232472A2D';
 		$apps[$x]['category'] = 'PBX';
 		$apps[$x]['subcategory'] = '';
 		$apps[$x]['version'] = '';
@@ -12,8 +12,8 @@
 	
 	//menu details	
 		$apps[$x]['menu'][0]['title']['en'] = 'Soft Phone';
-		$apps[$x]['menu'][0]['guid'] = '0875598D-BF25-D348-2E87-8D05AEF3CF78';
-		$apps[$x]['menu'][0]['parent_guid'] = 'FD29E39C-C936-F5FC-8E2B-611681B266B5';
+		$apps[$x]['menu'][0]['uuid'] = '0875598D-BF25-D348-2E87-8D05AEF3CF78';
+		$apps[$x]['menu'][0]['parent_uuid'] = 'FD29E39C-C936-F5FC-8E2B-611681B266B5';
 		$apps[$x]['menu'][0]['category'] = 'internal';
 		$apps[$x]['menu'][0]['path'] = '/mod/soft_phone/v_softphone.php';
 		$apps[$x]['menu'][0]['groups'][] = 'admin';
