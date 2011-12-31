@@ -91,12 +91,12 @@ require_once "includes/paging.php";
 
 	echo "<tr>\n";
 	echo thorderby('username', 'Username', $orderby, $order);
-	echo thorderby('usertype', 'Type', $orderby, $order);
-	echo thorderby('usercategory', 'Category', $orderby, $order);
-	echo thorderby('userfirstname', 'First Name', $orderby, $order);
-	echo thorderby('userlastname', 'Last Name', $orderby, $order);
-	echo thorderby('usercompanyname', 'Organization', $orderby, $order);
-	echo thorderby('userphone1', 'Phone', $orderby, $order);
+	echo thorderby('user_type', 'Type', $orderby, $order);
+	echo thorderby('user_category', 'Category', $orderby, $order);
+	echo thorderby('user_first_name', 'First Name', $orderby, $order);
+	echo thorderby('user_last_name', 'Last Name', $orderby, $order);
+	echo thorderby('user_company_name', 'Organization', $orderby, $order);
+	echo thorderby('user_phone_1', 'Phone', $orderby, $order);
 	echo "<td align='right' width='42'>\n";
 	if (permission_exists('contacts_add')) {
 		echo "	<a href='users_edit.php' alt='add'>$v_link_label_add</a>\n";
@@ -116,12 +116,12 @@ require_once "includes/paging.php";
 			else {
 				echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[username]."&nbsp;</td>\n";
 			}
-			echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[usertype]."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[usercategory]."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[userfirstname]."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[userlastname]."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[usercompanyname]."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[userphone1]."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[user_type]."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[user_category]."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[user_first_name]."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[user_last_name]."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[user_company_name]."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[user_phone_1]."&nbsp;</td>\n";
 			echo "	<td valign='top' align='right'>\n";
 			if (permission_exists('contacts_edit')) {
 				echo "		<a href='users_edit.php?id=".$row[id]."' alt='edit'>$v_link_label_edit</a>\n";

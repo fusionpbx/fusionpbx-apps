@@ -206,20 +206,20 @@ if ($action == "update" && permission_exists('ticket_update')) {
 	$db->exec(check_sql($sql));
 
 	if ($note_added && $request['alert_user']) {
-		$sql = "select useremail from v_users where id = . " . $ticket_header['user_id'];
+		$sql = "select user_email from v_users where id = . " . $ticket_header['user_id'];
 	        $prepstatement = $db->prepare(check_sql($sql));
 		$prepstatement->execute();
 		$x = 0;
 		$result = $prepstatement->fetchAll();
 		foreach ($result as &$row) {
-			$useremail = $row['useremail'];
+			$user_email = $row['user_email'];
 			break;
 		}
 		unset ($prepstatement);
 
-		if (strlen($useremail) > 1) {
+		if (strlen($user_email) > 1) {
 			$subject = sprintf("[%s] Ticket %s Updated", $queue['queue_name'], $ticket_header['ticket_number']);
-			$to = $useremail;
+			$to = $user_email;
 			$message = "";
 			$message .= "Ticket Number $ticketnumber has been update\n";
 			$message .= "Ticket Link: http://" . $_SESSION['v_domain'] . PROJECT_PATH . "/mod/tickets/v_ticket_update.php?uuid=" . urlencode($ticket_uuid). "\n";
@@ -231,20 +231,20 @@ if ($action == "update" && permission_exists('ticket_update')) {
 	} 
 	
 	if ($alert_new_owner) {
-		$sql = "select useremail from v_users where id = . " . $request['ticket_owner'];
+		$sql = "select user_email from v_users where id = . " . $request['ticket_owner'];
 	        $prepstatement = $db->prepare(check_sql($sql));
 		$prepstatement->execute();
 		$x = 0;
 		$result = $prepstatement->fetchAll();
 		foreach ($result as &$row) {
-			$useremail = $row['useremail'];
+			$user_email = $row['user_email'];
 			break;
 		}
 		unset ($prepstatement);
 
-		if (strlen($useremail) > 1) {
+		if (strlen($user_email) > 1) {
 			$subject = sprintf("[%s] Ticket %s Updated", $queue['queue_name'], $ticket_header['ticket_number']);
-			$to = $useremail;
+			$to = $user_email;
 			$message = "";
 			$message .= "Ticket Number $ticketnumber has been update\n";
 			$message .= "Ticket Link: http://" . $_SESSION['v_domain'] . PROJECT_PATH . "/mod/tickets/v_ticket_update.php?uuid=" . urlencode($ticket_uuid). "\n";
