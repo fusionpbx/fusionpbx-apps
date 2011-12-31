@@ -48,18 +48,18 @@ else {
 //POST to PHP variables
 if (count($_POST)>0) {
 	//$v_id = check_str($_POST["v_id"]);
-	$aaextension = check_str($_POST["aaextension"]);
-	$aaname = check_str($_POST["aaname"]);
-	$recordingidaction = check_str($_POST["recordingidaction"]);
-	$recordingidantiaction = check_str($_POST["recordingidantiaction"]);
-	$aatimeout = check_str($_POST["aatimeout"]);
-	$aacalltimeout = check_str($_POST["aacalltimeout"]);
-	$aacontext = check_str($_POST["aacontext"]);
-	$aadirectdial = check_str($_POST["aadirectdial"]);
-	$aaringback = check_str($_POST["aaringback"]);
-	$aacidnameprefix = check_str($_POST["aacidnameprefix"]);
-	$aaconditionjs = check_str($_POST["aaconditionjs"]);
-	$aadescr = check_str($_POST["aadescr"]);
+	$aa_extension = check_str($_POST["aa_extension"]);
+	$aa_name = check_str($_POST["aa_name"]);
+	$recording_id_action = check_str($_POST["recording_id_action"]);
+	$recording_id_anti_action = check_str($_POST["recording_id_anti_action"]);
+	$aa_timeout = check_str($_POST["aa_timeout"]);
+	$aa_call_timeout = check_str($_POST["aa_call_timeout"]);
+	$aa_context = check_str($_POST["aa_context"]);
+	$aa_direct_dial = check_str($_POST["aa_direct_dial"]);
+	$aa_ringback = check_str($_POST["aa_ringback"]);
+	$aa_cid_name_prefix = check_str($_POST["aa_cid_name_prefix"]);
+	$aa_condition_js = check_str($_POST["aa_condition_js"]);
+	$aa_descr = check_str($_POST["aa_descr"]);
 }
 
 if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
@@ -78,18 +78,18 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 
 	//check for all required data
 		if (strlen($v_id) == 0) { $msg .= "Please provide: v_id<br>\n"; }
-		if (strlen($aaextension) == 0) { $msg .= "Please provide: Extension<br>\n"; }
-		if (strlen($aaname) == 0) { $msg .= "Please provide: Name<br>\n"; }
-		if (strlen($recordingidaction) == 0) { $msg .= "Please provide: Recording Action<br>\n"; }
-		if (strlen($recordingidantiaction) == 0) { $msg .= "Please provide: Recording Anti-Action<br>\n"; }
-		if (strlen($aatimeout) == 0) { $msg .= "Please provide: Timeout<br>\n"; }
-		if (strlen($aacalltimeout) == 0) { $msg .= "Please provide: Call Timeout<br>\n"; }
-		if (strlen($aacontext) == 0) { $msg .= "Please provide: Context<br>\n"; }
-		if (strlen($aadirectdial) == 0) { $msg .= "Please provide: Direct Dial<br>\n"; }
-		if (strlen($aaringback) == 0) { $msg .= "Please provide: Ring Back<br>\n"; }
-		//if (strlen($aacidnameprefix) == 0) { $msg .= "Please provide: CID Prefix<br>\n"; }
-		//if (strlen($aaconditionjs) == 0) { $msg .= "Please provide: Javascript Condition<br>\n"; }
-		//if (strlen($aadescr) == 0) { $msg .= "Please provide: Description<br>\n"; }
+		if (strlen($aa_extension) == 0) { $msg .= "Please provide: Extension<br>\n"; }
+		if (strlen($aa_name) == 0) { $msg .= "Please provide: Name<br>\n"; }
+		if (strlen($recording_id_action) == 0) { $msg .= "Please provide: Recording Action<br>\n"; }
+		if (strlen($recording_id_anti_action) == 0) { $msg .= "Please provide: Recording Anti-Action<br>\n"; }
+		if (strlen($aa_timeout) == 0) { $msg .= "Please provide: Timeout<br>\n"; }
+		if (strlen($aa_call_timeout) == 0) { $msg .= "Please provide: Call Timeout<br>\n"; }
+		if (strlen($aa_context) == 0) { $msg .= "Please provide: Context<br>\n"; }
+		if (strlen($aa_direct_dial) == 0) { $msg .= "Please provide: Direct Dial<br>\n"; }
+		if (strlen($aa_ringback) == 0) { $msg .= "Please provide: Ring Back<br>\n"; }
+		//if (strlen($aa_cid_name_prefix) == 0) { $msg .= "Please provide: CID Prefix<br>\n"; }
+		//if (strlen($aa_condition_js) == 0) { $msg .= "Please provide: Javascript Condition<br>\n"; }
+		//if (strlen($aa_descr) == 0) { $msg .= "Please provide: Description<br>\n"; }
 		if (strlen($msg) > 0 && strlen($_POST["persistformvar"]) == 0) {
 			require_once "includes/header.php";
 			require_once "includes/persistformvar.php";
@@ -105,18 +105,18 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 
 	$tmp = "\n";
 	//$tmp .= "v_id: $v_id\n";
-	$tmp .= "Extension: $aaextension\n";
-	$tmp .= "Name: $aaname\n";
-	$tmp .= "Recording Action: $recordingidaction\n";
-	$tmp .= "Recording Anti-Action: $recordingidantiaction\n";
-	$tmp .= "Timeout: $aatimeout\n";
-	$tmp .= "Call Timeout: $aacalltimeout\n";
-	$tmp .= "Context: $aacontext\n";
-	$tmp .= "Direct Dial: $aadirectdial\n";
-	$tmp .= "Ring Back: $aaringback\n";
-	$tmp .= "CID Prefix: $aacidnameprefix\n";
-	$tmp .= "Javascript Condition: $aaconditionjs\n";
-	$tmp .= "Description: $aadescr\n";
+	$tmp .= "Extension: $aa_extension\n";
+	$tmp .= "Name: $aa_name\n";
+	$tmp .= "Recording Action: $recording_id_action\n";
+	$tmp .= "Recording Anti-Action: $recording_id_anti_action\n";
+	$tmp .= "Timeout: $aa_timeout\n";
+	$tmp .= "Call Timeout: $aa_call_timeout\n";
+	$tmp .= "Context: $aa_context\n";
+	$tmp .= "Direct Dial: $aa_direct_dial\n";
+	$tmp .= "Ring Back: $aa_ringback\n";
+	$tmp .= "CID Prefix: $aa_cid_name_prefix\n";
+	$tmp .= "Javascript Condition: $aa_condition_js\n";
+	$tmp .= "Description: $aa_descr\n";
 
 	//Add or update the database
 	if ($_POST["persistformvar"] != "true") {
@@ -124,34 +124,34 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			$sql = "insert into v_auto_attendant ";
 			$sql .= "(";
 			$sql .= "v_id, ";
-			$sql .= "aaextension, ";
-			$sql .= "aaname, ";
-			$sql .= "recordingidaction, ";
-			$sql .= "recordingidantiaction, ";
-			$sql .= "aatimeout, ";
-			$sql .= "aacalltimeout, ";
-			$sql .= "aacontext, ";
-			$sql .= "aadirectdial, ";
-			$sql .= "aaringback, ";
-			$sql .= "aacidnameprefix, ";
-			$sql .= "aaconditionjs, ";
-			$sql .= "aadescr ";
+			$sql .= "aa_extension, ";
+			$sql .= "aa_name, ";
+			$sql .= "recording_id_action, ";
+			$sql .= "recording_id_anti_action, ";
+			$sql .= "aa_timeout, ";
+			$sql .= "aa_call_timeout, ";
+			$sql .= "aa_context, ";
+			$sql .= "aa_direct_dial, ";
+			$sql .= "aa_ringback, ";
+			$sql .= "aa_cid_name_prefix, ";
+			$sql .= "aa_condition_js, ";
+			$sql .= "aa_descr ";
 			$sql .= ")";
 			$sql .= "values ";
 			$sql .= "(";
 			$sql .= "'$v_id', ";
-			$sql .= "'$aaextension', ";
-			$sql .= "'$aaname', ";
-			$sql .= "'$recordingidaction', ";
-			$sql .= "'$recordingidantiaction', ";
-			$sql .= "'$aatimeout', ";
-			$sql .= "'$aacalltimeout', ";
-			$sql .= "'$aacontext', ";
-			$sql .= "'$aadirectdial', ";
-			$sql .= "'$aaringback', ";
-			$sql .= "'$aacidnameprefix', ";
-			$sql .= "'$aaconditionjs', ";
-			$sql .= "'$aadescr' ";
+			$sql .= "'$aa_extension', ";
+			$sql .= "'$aa_name', ";
+			$sql .= "'$recording_id_action', ";
+			$sql .= "'$recording_id_anti_action', ";
+			$sql .= "'$aa_timeout', ";
+			$sql .= "'$aa_call_timeout', ";
+			$sql .= "'$aa_context', ";
+			$sql .= "'$aa_direct_dial', ";
+			$sql .= "'$aa_ringback', ";
+			$sql .= "'$aa_cid_name_prefix', ";
+			$sql .= "'$aa_condition_js', ";
+			$sql .= "'$aa_descr' ";
 			$sql .= ")";
 			$db->exec(check_sql($sql));
 			unset($sql);
@@ -174,18 +174,18 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 		if ($action == "update") {
 			$sql = "update v_auto_attendant set ";
 			$sql .= "v_id = '$v_id', ";
-			$sql .= "aaextension = '$aaextension', ";
-			$sql .= "aaname = '$aaname', ";
-			$sql .= "recordingidaction = '$recordingidaction', ";
-			$sql .= "recordingidantiaction = '$recordingidantiaction', ";
-			$sql .= "aatimeout = '$aatimeout', ";
-			$sql .= "aacalltimeout = '$aacalltimeout', ";
-			$sql .= "aacontext = '$aacontext', ";
-			$sql .= "aadirectdial = '$aadirectdial', ";
-			$sql .= "aaringback = '$aaringback', ";
-			$sql .= "aacidnameprefix = '$aacidnameprefix', ";
-			$sql .= "aaconditionjs = '$aaconditionjs', ";
-			$sql .= "aadescr = '$aadescr' ";
+			$sql .= "aa_extension = '$aa_extension', ";
+			$sql .= "aa_name = '$aa_name', ";
+			$sql .= "recording_id_action = '$recording_id_action', ";
+			$sql .= "recording_id_anti_action = '$recording_id_anti_action', ";
+			$sql .= "aa_timeout = '$aa_timeout', ";
+			$sql .= "aa_call_timeout = '$aa_call_timeout', ";
+			$sql .= "aa_context = '$aa_context', ";
+			$sql .= "aa_direct_dial = '$aa_direct_dial', ";
+			$sql .= "aa_ringback = '$aa_ringback', ";
+			$sql .= "aa_cid_name_prefix = '$aa_cid_name_prefix', ";
+			$sql .= "aa_condition_js = '$aa_condition_js', ";
+			$sql .= "aa_descr = '$aa_descr' ";
 			$sql .= "where v_id = '$v_id' ";
 			$sql .= "and auto_attendant_id = '$auto_attendant_id'";
 			$db->exec(check_sql($sql));
@@ -209,83 +209,83 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 
 } //(count($_POST)>0 && strlen($_POST["persistformvar"]) == 0)
 
-//set default $aaconditionjs
-	$aaconditionjs_default = "function isholiday( Month, Date ) {\n";
-	$aaconditionjs_default .= "    var Holiday = 0; //default false\n";
-	$aaconditionjs_default .= "    if (Month == \"12\" && Date == \"25\") {\n";
-	$aaconditionjs_default .= "      Holiday = 1; //true\n";
-	$aaconditionjs_default .= "    }\n";
-	$aaconditionjs_default .= "    if (Month == \"7\" && Date == \"4\") {\n";
-	$aaconditionjs_default .= "      Holiday = 1; //true\n";
-	$aaconditionjs_default .= "    }\n";
-	$aaconditionjs_default .= "    if (Month == \"1\" && Date == \"1\") {\n";
-	$aaconditionjs_default .= "      Holiday = 1; //true\n";
-	$aaconditionjs_default .= "    }\n";
-	$aaconditionjs_default .= "    if (Holiday == 1) {\n";
-	$aaconditionjs_default .= "      return true;\n";
-	$aaconditionjs_default .= "    }\n";
-	$aaconditionjs_default .= "    else {\n";
-	$aaconditionjs_default .= "      return false;\n";
-	$aaconditionjs_default .= "    }\n";
-	$aaconditionjs_default .= "}\n";
-	$aaconditionjs_default .= "\n";
-	$aaconditionjs_default .= "function isweekday( Day ) {\n";
-	$aaconditionjs_default .= "    if (Day > 1 && Day < 7) {\n";
-	$aaconditionjs_default .= "        return true;\n";
-	$aaconditionjs_default .= "    }\n";
-	$aaconditionjs_default .= "    else {\n";
-	$aaconditionjs_default .= "        return false;\n";
-	$aaconditionjs_default .= "    }\n";
-	$aaconditionjs_default .= "}\n";
-	$aaconditionjs_default .= "\n";
-	$aaconditionjs_default .= "function isweekend( Day ) {\n";
-	$aaconditionjs_default .= "    if (Day > 1 && Day < 7) {\n";
-	$aaconditionjs_default .= "        return false;\n";
-	$aaconditionjs_default .= "    }\n";
-	$aaconditionjs_default .= "    else {\n";
-	$aaconditionjs_default .= "        return true;\n";
-	$aaconditionjs_default .= "    }\n";
-	$aaconditionjs_default .= "}\n";
-	$aaconditionjs_default .= "\n";
-	$aaconditionjs_default .= "function isofficehours( Hours ) {\n";
-	$aaconditionjs_default .= "    if (Hours >= 9 && Hours < 17) {\n";
-	$aaconditionjs_default .= "        return true;\n";
-	$aaconditionjs_default .= "    }\n";
-	$aaconditionjs_default .= "    else {\n";
-	$aaconditionjs_default .= "        return false;\n";
-	$aaconditionjs_default .= "    }\n";
-	$aaconditionjs_default .= "}\n";
-	$aaconditionjs_default .= "\n";
-	$aaconditionjs_default .= "function isafterhours( Hours ) {\n";
-	$aaconditionjs_default .= "    if (Hours >= 9 && Hours < 17) {\n";
-	$aaconditionjs_default .= "        return false;\n";
-	$aaconditionjs_default .= "    }\n";
-	$aaconditionjs_default .= "    else {\n";
-	$aaconditionjs_default .= "        return true;\n";
-	$aaconditionjs_default .= "    }\n";
-	$aaconditionjs_default .= "}\n";
-	$aaconditionjs_default .= "\n";
-	$aaconditionjs_default .= "//set default\n";
-	$aaconditionjs_default .= "condition = true;\n";
-	$aaconditionjs_default .= "\n";
-	$aaconditionjs_default .= "//Holiday?\n";
-	$aaconditionjs_default .= "if (isholiday( Month, Date )) {\n";
-	//$aaconditionjs_default .= "    console_log( \"info\", \"holiday\\n\" );\n";
-	$aaconditionjs_default .= "    condition = false;\n";
-	$aaconditionjs_default .= "}\n";
-	$aaconditionjs_default .= "\n";
-	$aaconditionjs_default .= "//Weekend?\n";
-	$aaconditionjs_default .= "if (isweekend( Day )) {\n";
-	//$aaconditionjs_default .= "    console_log( \"info\", \"weekend\\n\" );\n";
-	$aaconditionjs_default .= "    condition = false;\n";
-	$aaconditionjs_default .= "}\n";
-	$aaconditionjs_default .= "\n";
-	$aaconditionjs_default .= "// After Hours?\n";
-	$aaconditionjs_default .= "if (isafterhours( Hours )) {\n";
-	//$aaconditionjs_default .= "    console_log( \"info\", \"after hours\\n\" );\n";
-	$aaconditionjs_default .= "    condition = false;\n";
-	$aaconditionjs_default .= "}\n";
-	$aaconditionjs_default .= "\n";
+//set default $aa_condition_js
+	$aa_condition_js_default = "function isholiday( Month, Date ) {\n";
+	$aa_condition_js_default .= "    var Holiday = 0; //default false\n";
+	$aa_condition_js_default .= "    if (Month == \"12\" && Date == \"25\") {\n";
+	$aa_condition_js_default .= "      Holiday = 1; //true\n";
+	$aa_condition_js_default .= "    }\n";
+	$aa_condition_js_default .= "    if (Month == \"7\" && Date == \"4\") {\n";
+	$aa_condition_js_default .= "      Holiday = 1; //true\n";
+	$aa_condition_js_default .= "    }\n";
+	$aa_condition_js_default .= "    if (Month == \"1\" && Date == \"1\") {\n";
+	$aa_condition_js_default .= "      Holiday = 1; //true\n";
+	$aa_condition_js_default .= "    }\n";
+	$aa_condition_js_default .= "    if (Holiday == 1) {\n";
+	$aa_condition_js_default .= "      return true;\n";
+	$aa_condition_js_default .= "    }\n";
+	$aa_condition_js_default .= "    else {\n";
+	$aa_condition_js_default .= "      return false;\n";
+	$aa_condition_js_default .= "    }\n";
+	$aa_condition_js_default .= "}\n";
+	$aa_condition_js_default .= "\n";
+	$aa_condition_js_default .= "function isweekday( Day ) {\n";
+	$aa_condition_js_default .= "    if (Day > 1 && Day < 7) {\n";
+	$aa_condition_js_default .= "        return true;\n";
+	$aa_condition_js_default .= "    }\n";
+	$aa_condition_js_default .= "    else {\n";
+	$aa_condition_js_default .= "        return false;\n";
+	$aa_condition_js_default .= "    }\n";
+	$aa_condition_js_default .= "}\n";
+	$aa_condition_js_default .= "\n";
+	$aa_condition_js_default .= "function isweekend( Day ) {\n";
+	$aa_condition_js_default .= "    if (Day > 1 && Day < 7) {\n";
+	$aa_condition_js_default .= "        return false;\n";
+	$aa_condition_js_default .= "    }\n";
+	$aa_condition_js_default .= "    else {\n";
+	$aa_condition_js_default .= "        return true;\n";
+	$aa_condition_js_default .= "    }\n";
+	$aa_condition_js_default .= "}\n";
+	$aa_condition_js_default .= "\n";
+	$aa_condition_js_default .= "function isofficehours( Hours ) {\n";
+	$aa_condition_js_default .= "    if (Hours >= 9 && Hours < 17) {\n";
+	$aa_condition_js_default .= "        return true;\n";
+	$aa_condition_js_default .= "    }\n";
+	$aa_condition_js_default .= "    else {\n";
+	$aa_condition_js_default .= "        return false;\n";
+	$aa_condition_js_default .= "    }\n";
+	$aa_condition_js_default .= "}\n";
+	$aa_condition_js_default .= "\n";
+	$aa_condition_js_default .= "function isafterhours( Hours ) {\n";
+	$aa_condition_js_default .= "    if (Hours >= 9 && Hours < 17) {\n";
+	$aa_condition_js_default .= "        return false;\n";
+	$aa_condition_js_default .= "    }\n";
+	$aa_condition_js_default .= "    else {\n";
+	$aa_condition_js_default .= "        return true;\n";
+	$aa_condition_js_default .= "    }\n";
+	$aa_condition_js_default .= "}\n";
+	$aa_condition_js_default .= "\n";
+	$aa_condition_js_default .= "//set default\n";
+	$aa_condition_js_default .= "condition = true;\n";
+	$aa_condition_js_default .= "\n";
+	$aa_condition_js_default .= "//Holiday?\n";
+	$aa_condition_js_default .= "if (isholiday( Month, Date )) {\n";
+	//$aa_condition_js_default .= "    console_log( \"info\", \"holiday\\n\" );\n";
+	$aa_condition_js_default .= "    condition = false;\n";
+	$aa_condition_js_default .= "}\n";
+	$aa_condition_js_default .= "\n";
+	$aa_condition_js_default .= "//Weekend?\n";
+	$aa_condition_js_default .= "if (isweekend( Day )) {\n";
+	//$aa_condition_js_default .= "    console_log( \"info\", \"weekend\\n\" );\n";
+	$aa_condition_js_default .= "    condition = false;\n";
+	$aa_condition_js_default .= "}\n";
+	$aa_condition_js_default .= "\n";
+	$aa_condition_js_default .= "// After Hours?\n";
+	$aa_condition_js_default .= "if (isafterhours( Hours )) {\n";
+	//$aa_condition_js_default .= "    console_log( \"info\", \"after hours\\n\" );\n";
+	$aa_condition_js_default .= "    condition = false;\n";
+	$aa_condition_js_default .= "}\n";
+	$aa_condition_js_default .= "\n";
 
 //Pre-populate the form
 if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
@@ -299,22 +299,22 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	$result = $prepstatement->fetchAll();
 	foreach ($result as &$row) {
 		$v_id = $row["v_id"];
-		$aaextension = $row["aaextension"];
-		$aaname = $row["aaname"];
-		$recordingidaction = $row["recordingidaction"];
-		$recordingidantiaction = $row["recordingidantiaction"];
-		$aatimeout = $row["aatimeout"];
-		$aacalltimeout = $row["aacalltimeout"];
-		$aacontext = $row["aacontext"];
-		$aadirectdial = $row["aadirectdial"];
-		$aaringback = $row["aaringback"];
-		$aacidnameprefix = $row["aacidnameprefix"];
-		$aaconditionjs = $row["aaconditionjs"];
-		if (strlen($aaconditionjs) == 0) {
-			$aaconditionjs = $aaconditionjs_default;
+		$aa_extension = $row["aa_extension"];
+		$aa_name = $row["aa_name"];
+		$recording_id_action = $row["recording_id_action"];
+		$recording_id_anti_action = $row["recording_id_anti_action"];
+		$aa_timeout = $row["aa_timeout"];
+		$aa_call_timeout = $row["aa_call_timeout"];
+		$aa_context = $row["aa_context"];
+		$aa_direct_dial = $row["aa_direct_dial"];
+		$aa_ringback = $row["aa_ringback"];
+		$aa_cid_name_prefix = $row["aa_cid_name_prefix"];
+		$aa_condition_js = $row["aa_condition_js"];
+		if (strlen($aa_condition_js) == 0) {
+			$aa_condition_js = $aa_condition_js_default;
 		}
 		
-		$aadescr = $row["aadescr"];
+		$aa_descr = $row["aa_descr"];
 		break; //limit to 1 row
 	}
 	unset ($prepstatement);
@@ -331,7 +331,7 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "<script language=\"Javascript\" type=\"text/javascript\">\n";
 	echo "	// initialisation\n";
 	echo "	editAreaLoader.init({\n";
-	echo "		id: \"aaconditionjs\"	// id of the textarea to transform\n";
+	echo "		id: \"aa_condition_js\"	// id of the textarea to transform\n";
 	echo "		,start_highlight: true\n";
 	echo "		,allow_toggle: false\n";
 	echo "		,language: \"en\"\n";
@@ -372,7 +372,7 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "    Extension:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "    <input class='formfld' type='text' name='aaextension' maxlength='255' value=\"$aaextension\">\n";
+	echo "    <input class='formfld' type='text' name='aa_extension' maxlength='255' value=\"$aa_extension\">\n";
 	echo "<br />\n";
 	echo "example: 5002\n";
 	echo "</td>\n";
@@ -383,7 +383,7 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "    Name:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "    <input class='formfld' type='text' name='aaname' maxlength='255' value=\"$aaname\">\n";
+	echo "    <input class='formfld' type='text' name='aa_name' maxlength='255' value=\"$aa_name\">\n";
 	echo "<br />\n";
 	echo "\n";
 	echo "</td>\n";
@@ -394,7 +394,7 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "	Recording Action:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "		<select name='recordingidaction' class='formfld'>\n";
+	echo "		<select name='recording_id_action' class='formfld'>\n";
 	echo "		<option></option>\n";
 
 	$sql = "";
@@ -404,7 +404,7 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	$prepstatement->execute();
 	$result = $prepstatement->fetchAll();
 	foreach ($result as &$row) {
-		if ($recordingidaction == $row['recording_id']) {
+		if ($recording_id_action == $row['recording_id']) {
 			echo "		<option value='".$row['recording_id']."' selected='yes'>".$row['recordingname']."</option>\n";
 		}
 		else {
@@ -424,8 +424,8 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "    Recording Anti-Action:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	//echo "    <input class='formfld' type='text' name='recordingidantiaction' maxlength='255' value=\"$recordingidantiaction\">\n";
-	echo "              <select name='recordingidantiaction' class='formfld'>\n";
+	//echo "    <input class='formfld' type='text' name='recording_id_anti_action' maxlength='255' value=\"$recording_id_anti_action\">\n";
+	echo "              <select name='recording_id_anti_action' class='formfld'>\n";
 	echo "                <option></option>\n";
 	$sql = "";
 	$sql .= "select * from v_recordings ";
@@ -439,7 +439,7 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 		//$recordingname = $row["recordingname"];
 		//$recording_id = $row["recording_id"];
 		//$descr = $row["descr"];
-		if ($recordingidantiaction == $row['recording_id']) {
+		if ($recording_id_anti_action == $row['recording_id']) {
 			echo "              <option value='".$row['recording_id']."' selected='yes'>".$row['recordingname']."</option>\n";
 		}
 		else {
@@ -460,7 +460,7 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "    Timeout:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "    <input class='formfld' type='text' name='aatimeout' maxlength='255' value=\"$aatimeout\">\n";
+	echo "    <input class='formfld' type='text' name='aa_timeout' maxlength='255' value=\"$aa_timeout\">\n";
 	echo "<br />\n";
 	echo "After the recording concludes the timeout sets the time in seconds to continue to wait for DTMF. If the DTMF is \n";
 	echo "not detected during that time the 't' timeout option is executed. \n";
@@ -472,7 +472,7 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "    Call Timeout:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "    <input class='formfld' type='text' name='aacalltimeout' maxlength='255' value=\"$aacalltimeout\">\n";
+	echo "    <input class='formfld' type='text' name='aa_call_timeout' maxlength='255' value=\"$aa_call_timeout\">\n";
 	echo "<br />\n";
 	echo "Call timeout is the time in seconds to ring the destination. After this time is exceeded calls to extensions \n";
 	echo "will be sent to voicemail. default: 30 seconds \n";
@@ -484,11 +484,11 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "    Context:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	if (strlen(aacontext) == 0) {
-		echo "    <input class='formfld' type='text' name='aacontext' maxlength='255' value=\"default\">\n";
+	if (strlen(aa_context) == 0) {
+		echo "    <input class='formfld' type='text' name='aa_context' maxlength='255' value=\"default\">\n";
 	}
 	else {
-		echo "    <input class='formfld' type='text' name='aacontext' maxlength='255' value=\"$aacontext\">\n";
+		echo "    <input class='formfld' type='text' name='aa_context' maxlength='255' value=\"$aa_context\">\n";
 	}
 	echo "<br />\n";
 	echo "example: default\n";
@@ -500,21 +500,21 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "    Direct Dial:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	//echo "    <input class='formfld' type='text' name='aadirectdial' maxlength='255' value=\"$aadirectdial\">\n";
-	echo "                <select name='aadirectdial' class='formfld'>\n";
+	//echo "    <input class='formfld' type='text' name='aa_direct_dial' maxlength='255' value=\"$aa_direct_dial\">\n";
+	echo "                <select name='aa_direct_dial' class='formfld'>\n";
 	echo "                <option></option>\n";
-	if (strlen($aadirectdial) == 0) { //set default
+	if (strlen($aa_direct_dial) == 0) { //set default
 		echo "                <option value='true'>enable</option>\n";
 		echo "                <option selected='yes' value='false'>disabled</option>\n";
 	}
 	else {
-		if ($aadirectdial == "true") {
+		if ($aa_direct_dial == "true") {
 			echo "                <option selected='yes' value='true'>enabled</option>\n";
 		}
 		else {
 			echo "                <option value='true'>enable</option>\n";
 		}
-		if ($aadirectdial == "false") {
+		if ($aa_direct_dial == "false") {
 			echo "                <option selected='yes' value='false'>disabled</option>\n";
 		}
 		else {
@@ -532,15 +532,15 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "    Ring Back:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "                <select name='aaringback' class='formfld'>\n";
+	echo "                <select name='aa_ringback' class='formfld'>\n";
 	echo "                <option></option>\n";
-	if ($aaringback == "ring") {
+	if ($aa_ringback == "ring") {
 		echo "                <option selected='yes'>ring</option>\n";
 	}
 	else {
 		echo "                <option>ring</option>\n";
 	}
-	if ($aaringback == "music") {
+	if ($aa_ringback == "music") {
 		echo "                <option selected='yes'>music</option>\n";
 	}
 	else {
@@ -558,7 +558,7 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "    CID Prefix:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "    <input class='formfld' type='text' name='aacidnameprefix' maxlength='255' value=\"$aacidnameprefix\">\n";
+	echo "    <input class='formfld' type='text' name='aa_cid_name_prefix' maxlength='255' value=\"$aa_cid_name_prefix\">\n";
 	echo "<br />\n";
 	echo "Set a prefix on the caller ID name. (optional)\n";
 	echo "</td>\n";
@@ -569,11 +569,11 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "    Javascript Condition:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	if (strlen($aaconditionjs) == 0) {
-		echo "<textarea name=\"aaconditionjs\" id=\"aaconditionjs\" cols=\"60\" rows=\"10\" wrap=\"off\">".$aaconditionjs_default."</textarea>\n";
+	if (strlen($aa_condition_js) == 0) {
+		echo "<textarea name=\"aa_condition_js\" id=\"aa_condition_js\" cols=\"60\" rows=\"10\" wrap=\"off\">".$aa_condition_js_default."</textarea>\n";
 	}
 	else {
-		echo "<textarea name=\"aaconditionjs\" id=\"aaconditionjs\" cols=\"60\" rows=\"10\" wrap=\"off\">".$aaconditionjs."</textarea>\n";
+		echo "<textarea name=\"aa_condition_js\" id=\"aa_condition_js\" cols=\"60\" rows=\"10\" wrap=\"off\">".$aa_condition_js."</textarea>\n";
 	}
 	echo "<br />\n";
 	echo "A simple valid condition is: condition=true; To re-populate the default simply empty the textarea and click on save. The following javascript variables have been defined: Hours, Mins, Seconds, Month, Date, Year, and Day.\n";
@@ -585,7 +585,7 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "    Description:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "    <input class='formfld' type='text' name='aadescr' maxlength='255' value=\"$aadescr\">\n";
+	echo "    <input class='formfld' type='text' name='aa_descr' maxlength='255' value=\"$aa_descr\">\n";
 	echo "<br />\n";
 	echo "You may enter a description here for your reference (not parsed). \n";
 	echo "</td>\n";
@@ -646,8 +646,8 @@ if ($action == "update") {
 	$sql .= " select * from v_auto_attendant_options ";
 	$sql .= " where v_id = '$v_id' ";
 	$sql .= " and auto_attendant_id = '$auto_attendant_id' ";
-	$sql .= " and optionaction = 'action' ";
-	$sql .= " order by optionnumber asc";
+	$sql .= " and option_action = 'action' ";
+	$sql .= " order by option_number asc";
 	//if (strlen($orderby)> 0) { $sql .= "order by $orderby $order "; }
 	//$sql .= " limit $rowsperpage offset $offset ";
 	//echo $sql;
@@ -673,7 +673,7 @@ if ($action == "update") {
 	echo "<th align='left'>&nbsp;&nbsp;Destination</th>\n";
 	echo "<th align='left'>&nbsp;&nbsp;Description</th>\n";
 	echo "<td align='right' width='42'>\n";
-	echo "	<a href='v_auto_attendant_options_edit.php?id2=".$auto_attendant_id."&optionaction=action' alt='add'>$v_link_label_add</a>\n";
+	echo "	<a href='v_auto_attendant_options_edit.php?id2=".$auto_attendant_id."&option_action=action' alt='add'>$v_link_label_add</a>\n";
 	echo "</td>\n";
 	echo "<tr>\n";
 
@@ -685,11 +685,11 @@ if ($action == "update") {
 		foreach($result as $row) {
 			//print_r( $row );
 			echo "<tr >\n";
-			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[optionnumber]."</td>\n";
-			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[optiontype]."</td>\n";
-			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[optionprofile]."</td>\n";
-			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[optiondata]."</td>\n";
-			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[optiondescr]."</td>\n";
+			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[option_number]."</td>\n";
+			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[option_type]."</td>\n";
+			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[option_profile]."</td>\n";
+			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[option_data]."</td>\n";
+			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[option_descr]."</td>\n";
 			echo "   <td valign='top' align='right'>\n";
 			echo "		<a href='v_auto_attendant_options_edit.php?id=".$row[auto_attendant_option_id]."&id2=".$auto_attendant_id."' alt='edit'>$v_link_label_edit</a>\n";
 			echo "		<a href='v_auto_attendant_options_delete.php?id=".$row[auto_attendant_option_id]."&id2=".$auto_attendant_id."' alt='delete' onclick=\"return confirm('Do you really want to delete this?')\">$v_link_label_delete</a>\n";
@@ -708,7 +708,7 @@ if ($action == "update") {
 	echo "		<td width='33.3%' nowrap>&nbsp;</td>\n";
 	echo "		<td width='33.3%' align='center' nowrap>$pagingcontrols</td>\n";
 	echo "		<td width='33.3%' align='right'>\n";
-	echo "			<a href='v_auto_attendant_options_edit.php?id2=".$auto_attendant_id."&optionaction=action' alt='add'>$v_link_label_add</a>\n";
+	echo "			<a href='v_auto_attendant_options_edit.php?id2=".$auto_attendant_id."&option_action=action' alt='add'>$v_link_label_add</a>\n";
 	echo "		</td>\n";
 	echo "	</tr>\n";
 	echo "	</table>\n";
@@ -750,8 +750,8 @@ if ($action == "update") {
 	$sql .= " select * from v_auto_attendant_options ";
 	$sql .= " where auto_attendant_id = '$auto_attendant_id' ";
 	$sql .= " and v_id = $v_id ";
-	$sql .= " and optionaction = 'anti-action' ";
-	$sql .= " order by optionnumber asc";
+	$sql .= " and option_action = 'anti-action' ";
+	$sql .= " order by option_number asc";
 	//if (strlen($orderby)> 0) { $sql .= "order by $orderby $order "; }
 
 	//$sql .= " limit $rowsperpage offset $offset ";
@@ -778,7 +778,7 @@ if ($action == "update") {
 	echo "<th align='left'>&nbsp;&nbsp;Destination</th>\n";
 	echo "<th align='left'>&nbsp;&nbsp;Description</th>\n";
 	echo "<td align='right' width='42'>\n";
-	echo "	<a href='v_auto_attendant_options_edit.php?id2=".$auto_attendant_id."&optionaction=action' alt='add'>$v_link_label_add</a>\n";
+	echo "	<a href='v_auto_attendant_options_edit.php?id2=".$auto_attendant_id."&option_action=action' alt='add'>$v_link_label_add</a>\n";
 	echo "</td>\n";
 	echo "<tr>\n";
 	//echo "<tr><td colspan='5'><img src='/images/spacer.gif' width='100%' height='1' style='background-color: #BBBBBB;'></td></tr>\n";
@@ -789,11 +789,11 @@ if ($action == "update") {
 		foreach($result as $row) {
 			//print_r( $row );
 			echo "<tr >\n";
-			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[optionnumber]."</td>\n";
-			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[optiontype]."</td>\n";
-			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[optionprofile]."</td>\n";
-			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[optiondata]."</td>\n";
-			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[optiondescr]."</td>\n";
+			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[option_number]."</td>\n";
+			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[option_type]."</td>\n";
+			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[option_profile]."</td>\n";
+			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[option_data]."</td>\n";
+			echo "   <td valign='top' class='".$rowstyle[$c]."'>&nbsp;&nbsp;".$row[option_descr]."</td>\n";
 			echo "   <td valign='top' align='right'>\n";
 			echo "		<a href='v_auto_attendant_options_edit.php?id=".$row[auto_attendant_option_id]."&id2=".$auto_attendant_id."' alt='edit'>$v_link_label_edit</a>\n";
 			echo "		<a href='v_auto_attendant_options_delete.php?id=".$row[auto_attendant_option_id]."&id2=".$auto_attendant_id."' alt='delete' onclick=\"return confirm('Do you really want to delete this?')\">$v_link_label_delete</a>\n";
@@ -812,7 +812,7 @@ if ($action == "update") {
 	echo "		<td width='33.3%' nowrap>&nbsp;</td>\n";
 	echo "		<td width='33.3%' align='center' nowrap>$pagingcontrols</td>\n";
 	echo "		<td width='33.3%' align='right'>\n";
-	echo "			<a href='v_auto_attendant_options_edit.php?id2=".$auto_attendant_id."&optionaction=anti-action' alt='add'>$v_link_label_add</a>\n";
+	echo "			<a href='v_auto_attendant_options_edit.php?id2=".$auto_attendant_id."&option_action=anti-action' alt='add'>$v_link_label_add</a>\n";
 	echo "		</td>\n";
 	echo "	</tr>\n";
 	echo "	</table>\n";

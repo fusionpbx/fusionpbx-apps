@@ -48,8 +48,8 @@ else {
 if (isset($_REQUEST["id2"])) {
 	$auto_attendant_id = check_str($_REQUEST["id2"]);
 }
-if (isset($_REQUEST["optionaction"])) {
-	$optionaction = $_REQUEST["optionaction"];
+if (isset($_REQUEST["option_action"])) {
+	$option_action = $_REQUEST["option_action"];
 }
 
 //POST to PHP variables
@@ -58,13 +58,13 @@ if (count($_POST)>0) {
 	if (isset($_REQUEST["dialplan_include_id"])) {
 		$auto_attendant_id = check_str($_POST["auto_attendant_id"]);
 	}
-	$optionaction = check_str($_POST["optionaction"]);
-	$optionnumber = check_str($_POST["optionnumber"]);
-	$optiontype = check_str($_POST["optiontype"]);
-	$optionprofile = check_str($_POST["optionprofile"]);
-	$optionrecording = check_str($_POST["optionrecording"]);
-	$optiondata = check_str($_POST["optiondata"]);
-	$optiondescr = check_str($_POST["optiondescr"]);
+	$option_action = check_str($_POST["option_action"]);
+	$option_number = check_str($_POST["option_number"]);
+	$option_type = check_str($_POST["option_type"]);
+	$option_profile = check_str($_POST["option_profile"]);
+	$option_recording = check_str($_POST["option_recording"]);
+	$option_data = check_str($_POST["option_data"]);
+	$option_descr = check_str($_POST["option_descr"]);
 }
 
 if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
@@ -84,13 +84,13 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	//check for all required data
 		if (strlen($v_id) == 0) { $msg .= "Please provide: v_id<br>\n"; }
 		if (strlen($auto_attendant_id) == 0) { $msg .= "Please provide: auto_attendant_id<br>\n"; }
-		//if (strlen($optionaction) == 0) { $msg .= "Please provide: Action<br>\n"; }
-		if (strlen($optionnumber) == 0) { $msg .= "Please provide: Option Number<br>\n"; }
-		if (strlen($optiontype) == 0) { $msg .= "Please provide: Type<br>\n"; }
-		if (strlen($optionprofile) == 0) { $msg .= "Please provide: Profile<br>\n"; }
-		if (strlen($optiondata) == 0) { $msg .= "Please provide: Destination<br>\n"; }
-		//if (strlen($optionrecording) == 0) { $msg .= "Please provide: Recording<br>\n"; }
-		//if (strlen($optiondescr) == 0) { $msg .= "Please provide: Description<br>\n"; }
+		//if (strlen($option_action) == 0) { $msg .= "Please provide: Action<br>\n"; }
+		if (strlen($option_number) == 0) { $msg .= "Please provide: Option Number<br>\n"; }
+		if (strlen($option_type) == 0) { $msg .= "Please provide: Type<br>\n"; }
+		if (strlen($option_profile) == 0) { $msg .= "Please provide: Profile<br>\n"; }
+		if (strlen($option_data) == 0) { $msg .= "Please provide: Destination<br>\n"; }
+		//if (strlen($option_recording) == 0) { $msg .= "Please provide: Recording<br>\n"; }
+		//if (strlen($option_descr) == 0) { $msg .= "Please provide: Description<br>\n"; }
 		if (strlen($msg) > 0 && strlen($_POST["persistformvar"]) == 0) {
 			require_once "includes/header.php";
 			require_once "includes/persistformvar.php";
@@ -111,25 +111,25 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			$sql .= "(";
 			$sql .= "v_id, ";
 			$sql .= "auto_attendant_id, ";
-			$sql .= "optionaction, ";
-			$sql .= "optionnumber, ";
-			$sql .= "optiontype, ";
-			$sql .= "optionprofile, ";
-			$sql .= "optiondata, ";
-			$sql .= "optionrecording, ";
-			$sql .= "optiondescr ";
+			$sql .= "option_action, ";
+			$sql .= "option_number, ";
+			$sql .= "option_type, ";
+			$sql .= "option_profile, ";
+			$sql .= "option_data, ";
+			$sql .= "option_recording, ";
+			$sql .= "option_descr ";
 			$sql .= ")";
 			$sql .= "values ";
 			$sql .= "(";
 			$sql .= "'$v_id', ";
 			$sql .= "'$auto_attendant_id', ";
-			$sql .= "'$optionaction', ";
-			$sql .= "'$optionnumber', ";
-			$sql .= "'$optiontype', ";
-			$sql .= "'$optionprofile', ";
-			$sql .= "'$optiondata', ";
-			$sql .= "'$optionrecording', ";
-			$sql .= "'$optiondescr' ";
+			$sql .= "'$option_action', ";
+			$sql .= "'$option_number', ";
+			$sql .= "'$option_type', ";
+			$sql .= "'$option_profile', ";
+			$sql .= "'$option_data', ";
+			$sql .= "'$option_recording', ";
+			$sql .= "'$option_descr' ";
 			$sql .= ")";
 			$db->exec(check_sql($sql));
 			unset($sql);
@@ -149,13 +149,13 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 		if ($action == "update") {
 			$sql = "update v_auto_attendant_options set ";
 			$sql .= "auto_attendant_id = '$auto_attendant_id', ";
-			$sql .= "optionaction = '$optionaction', ";
-			$sql .= "optionnumber = '$optionnumber', ";
-			$sql .= "optiontype = '$optiontype', ";
-			$sql .= "optionprofile = '$optionprofile', ";
-			$sql .= "optiondata = '$optiondata', ";
-			$sql .= "optionrecording = '$optionrecording', ";
-			$sql .= "optiondescr = '$optiondescr' ";
+			$sql .= "option_action = '$option_action', ";
+			$sql .= "option_number = '$option_number', ";
+			$sql .= "option_type = '$option_type', ";
+			$sql .= "option_profile = '$option_profile', ";
+			$sql .= "option_data = '$option_data', ";
+			$sql .= "option_recording = '$option_recording', ";
+			$sql .= "option_descr = '$option_descr' ";
 			$sql .= "where v_id = '$v_id' ";
 			$sql .= "and auto_attendant_option_id = '$auto_attendant_option_id'";
 			$db->exec(check_sql($sql));
@@ -189,13 +189,13 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	$result = $prepstatement->fetchAll();
 	foreach ($result as &$row) {
 		$auto_attendant_id = $row["auto_attendant_id"];
-		$optionaction = $row["optionaction"];
-		$optionnumber = $row["optionnumber"];
-		$optiontype = $row["optiontype"];
-		$optionprofile = $row["optionprofile"];
-		$optiondata = $row["optiondata"];
-		$optionrecording = $row["optionrecording"];
-		$optiondescr = $row["optiondescr"];
+		$option_action = $row["option_action"];
+		$option_number = $row["option_number"];
+		$option_type = $row["option_type"];
+		$option_profile = $row["option_profile"];
+		$option_data = $row["option_data"];
+		$option_recording = $row["option_recording"];
+		$option_descr = $row["option_descr"];
 		break; //limit to 1 row
 	}
 	unset ($prepstatement);
@@ -235,7 +235,7 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "    Option Number:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "    <input class='formfld' type='text' name='optionnumber' maxlength='255' value=\"$optionnumber\">\n";
+	echo "    <input class='formfld' type='text' name='option_number' maxlength='255' value=\"$option_number\">\n";
 	echo "<br />\n";
 	echo "Any number 1-5 digits. The following are special options:<br />\n";
 	echo "'n' now (don't wait for dtmf perform the action now) <br />\n";
@@ -250,21 +250,21 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "    Type:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "                <select name='optiontype' class='formfld'>\n";
+	echo "                <select name='option_type' class='formfld'>\n";
 	echo "                <option></option>\n";
-	if ($optiontype == "extension") {
+	if ($option_type == "extension") {
 		echo "                <option selected='yes'>extension</option>\n";
 	}
 	else {
 		echo "                <option>extension</option>\n";
 	}
-	if ($optiontype == "voicemail") {
+	if ($option_type == "voicemail") {
 		echo "                <option selected='yes'>voicemail</option>\n";
 	}
 	else {
 		echo "                <option>voicemail</option>\n";
 	}
-	if ($optiontype == "sip uri") {
+	if ($option_type == "sip uri") {
 		echo "                <option selected='yes'>sip uri</option>\n";
 	}
 	else {
@@ -282,7 +282,7 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "    Type:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "    <input class='formfld' type='text' name='optiontype' maxlength='255' value=\"$optiontype\"><br />\n";
+	echo "    <input class='formfld' type='text' name='option_type' maxlength='255' value=\"$option_type\"><br />\n";
 	echo "bridge, transfer, voicemail, conference, fifo, etc.<br />\n";
 	echo "</td>\n";
 	echo "</tr>\n";
@@ -293,7 +293,7 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "    Destination:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "    <input class='formfld' type='text' name='optiondata' maxlength='255' value=\"$optiondata\">\n";
+	echo "    <input class='formfld' type='text' name='option_data' maxlength='255' value=\"$option_data\">\n";
 	echo "<br />\n";
 	echo "type: transfer data: 1001 XML default<br />\n";
 	echo "type: voicemail data: default \${domain} 1001<br />\n";
@@ -309,9 +309,9 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "    Profile:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "                <select name='optionprofile' class='formfld'>\n";
+	echo "                <select name='option_profile' class='formfld'>\n";
 	echo "                <option></option>\n";
-	if ($optionprofile == "auto") {
+	if ($option_profile == "auto") {
 		echo "                <option selected='yes'>auto</option>\n";
 	}
 	else {
@@ -321,7 +321,7 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	foreach (ListFiles($v_conf_dir.'/sip_profiles') as $key=>$sip_profile_file){
 		$sip_profile_name = str_replace(".xml", "", $sip_profile_file);
 
-		if ($optionprofile == $sip_profile_name) {
+		if ($option_profile == $sip_profile_name) {
 			echo "                <option selected='yes'>$sip_profile_name</option>\n";
 		}
 		else {
@@ -339,7 +339,7 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "	Recording:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "		<select name='optionrecording' class='formfld'>\n";
+	echo "		<select name='option_recording' class='formfld'>\n";
 	echo "		<option></option>\n";
 
 	$sql = "";
@@ -349,7 +349,7 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	$prepstatement->execute();
 	$result = $prepstatement->fetchAll();
 	foreach ($result as &$row) {
-		if ($optionrecording == $row['recording_id']) {
+		if ($option_recording == $row['recording_id']) {
 			echo "		<option value='".$row['recording_id']."' selected='yes'>".$row['recordingname']."</option>\n";
 		}
 		else {
@@ -369,7 +369,7 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "    Description:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "    <input class='formfld' type='text' name='optiondescr' maxlength='255' value=\"$optiondescr\">\n";
+	echo "    <input class='formfld' type='text' name='option_descr' maxlength='255' value=\"$option_descr\">\n";
 	echo "<br />\n";
 	echo "You may enter a description here for your reference (not parsed).\n";
 	echo "</td>\n";
@@ -377,7 +377,7 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	echo "	<tr>\n";
 	echo "		<td colspan='2' align='right'>\n";
 	echo "				<input type='hidden' name='auto_attendant_id' value='$auto_attendant_id'>\n";
-	echo "				<input class='formfld' type='hidden' name='optionaction' maxlength='255' value=\"$optionaction\">\n";
+	echo "				<input class='formfld' type='hidden' name='option_action' maxlength='255' value=\"$option_action\">\n";
 	if ($action == "update") {
 		echo "				<input type='hidden' name='auto_attendant_option_id' value='$auto_attendant_option_id'>\n";
 	}
