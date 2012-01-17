@@ -31,7 +31,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	}
 
 	//check for all required data
-		//if (strlen($v_id) == 0) { $msg .= "Please provide: v_id<br>\n"; }
+		//if (strlen($domain_uuid) == 0) { $msg .= "Please provide: domain_uuid<br>\n"; }
 		//if (strlen($item_qty) == 0) { $msg .= "Please provide: Quantity<br>\n"; }
 		//if (strlen($item_desc) == 0) { $msg .= "Please provide: Description<br>\n"; }
 		//if (strlen($item_unit_price) == 0) { $msg .= "Please provide: Price<br>\n"; }
@@ -54,7 +54,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			$sql = "insert into v_invoice_items ";
 			$sql .= "(";
 			$sql .= "invoice_id, ";
-			$sql .= "v_id, ";
+			$sql .= "domain_uuid, ";
 			$sql .= "item_qty, ";
 			$sql .= "item_desc, ";
 			$sql .= "item_unit_price ";
@@ -62,7 +62,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			$sql .= "values ";
 			$sql .= "(";
 			$sql .= "'$invoice_id', ";
-			$sql .= "'$v_id', ";
+			$sql .= "'$domain_uuid', ";
 			$sql .= "'$item_qty', ";
 			$sql .= "'$item_desc', ";
 			$sql .= "'$item_unit_price' ";
@@ -82,7 +82,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 		if ($action == "update") {
 			$sql = "update v_invoice_items set ";
 			$sql .= "invoice_id = '$invoice_id', ";
-			$sql .= "v_id = '$v_id', ";
+			$sql .= "domain_uuid = '$domain_uuid', ";
 			$sql .= "item_qty = '$item_qty', ";
 			$sql .= "item_desc = '$item_desc', ";
 			$sql .= "item_unit_price = '$item_unit_price' ";

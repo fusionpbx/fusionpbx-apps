@@ -40,12 +40,12 @@ else {
 
 require_once "includes/header.php";
 
-$v_domain = $_SESSION['domains'][$v_id]['domain'];
+$v_domain = $_SESSION['domains'][$domain_uuid]['domain'];
 
 //get a list of Available Queues
 $sql = "";
 $sql .= "select * from v_ticket_queues ";
-$sql .= "where v_id = '$v_id' ";
+$sql .= "where domain_uuid = '$domain_uuid' ";
 $sql .= "order by queue_name ";
 $prepstatement = $db->prepare(check_sql($sql));
 $prepstatement->execute();
@@ -94,10 +94,10 @@ if (strlen($error) > 0) {
 
 // Save New Entry
 if ($action == "add" && permission_exists('ticket_add')) {
-	$ticket_uuid = guid();
+	$ticket_uuid = uuid();
 	$sql = "";
 	$sql .= "insert into v_tickets (";
- 	$sql .= "v_id, ";
+ 	$sql .= "domain_uuid, ";
  	$sql .= "queue_id, ";
  	$sql .= "user_id, ";
  	$sql .= "customer_id, ";
@@ -110,7 +110,7 @@ if ($action == "add" && permission_exists('ticket_add')) {
  	$sql .= "ticket_status, ";
  	$sql .= "customer_ticket_number ";
 	$sql .= ") values (";
- 	$sql .= "$v_id, ";
+ 	$sql .= "$domain_uuid, ";
  	$sql .= "'" . $request['queue_id'] . "', ";
  	$sql .= "'" . $_SESSION['user_id'] . "', ";
  	$sql .= "'" . $_SESSION['customer_id'] . "', ";
@@ -157,7 +157,7 @@ if ($action == "add" && permission_exists('ticket_add')) {
 	$sql = "";
 	$sql .= "SELECT * from v_ticket_queues ";
 	$sql .= "where queue_id = " . $request['queue_id'] . " ";
-	$sql .= "and v_id = $v_id ";
+	$sql .= "and domain_uuid = $domain_uuid ";
 	$prepstatement = $db->prepare(check_sql($sql));
 	$prepstatement->execute();
 	$x = 0; 

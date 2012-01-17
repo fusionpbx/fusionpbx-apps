@@ -64,7 +64,7 @@ require_once "includes/paging.php";
 		$sql .= "SELECT count(*) as num_rows FROM v_invoices ";
 		$sql .= "LEFT OUTER JOIN v_contacts ";
 		$sql .= "ON v_invoices.contact_id_to = v_contacts.contact_id ";
-		$sql .= "where v_invoices.v_id = '$v_id' ";
+		$sql .= "where v_invoices.domain_uuid = '$domain_uuid' ";
 		if (strlen($contact_id) > 0) {
 			$sql .= "and v_invoices.contact_id_to = '$contact_id' ";
 		}
@@ -93,7 +93,7 @@ require_once "includes/paging.php";
 		$sql .= "SELECT * FROM v_invoices ";
 		$sql .= "LEFT OUTER JOIN v_contacts ";
 		$sql .= "ON v_invoices.contact_id_to = v_contacts.contact_id ";
-		$sql .= "where v_invoices.v_id = '$v_id' ";
+		$sql .= "where v_invoices.domain_uuid = '$domain_uuid' ";
 		if (strlen($contact_id) > 0) {
 			$sql .= "and v_invoices.contact_id_to = '$contact_id' ";
 		}

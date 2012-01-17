@@ -79,7 +79,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			if ($action == "add") {
 				$sql = "insert into v_invoices ";
 				$sql .= "(";
-				$sql .= "v_id, ";
+				$sql .= "domain_uuid, ";
 				$sql .= "invoice_number, ";
 				$sql .= "contact_id_from, ";
 				$sql .= "contact_id_to, ";
@@ -88,7 +88,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				$sql .= ")";
 				$sql .= "values ";
 				$sql .= "(";
-				$sql .= "'$v_id', ";
+				$sql .= "'$domain_uuid', ";
 				$sql .= "'$invoice_number', ";
 				$sql .= "'$contact_id_from', ";
 				$sql .= "'$contact_id_to', ";
@@ -114,7 +114,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				$sql .= "contact_id_from = '$contact_id_from', ";
 				$sql .= "contact_id_to = '$contact_id_to', ";
 				$sql .= "invoice_notes = '$invoice_notes' ";
-				$sql .= "where v_id = '$v_id' ";
+				$sql .= "where domain_uuid = '$domain_uuid' ";
 				$sql .= "and invoice_id = '$invoice_id' ";
 				$db->exec(check_sql($sql));
 				unset($sql);
@@ -135,7 +135,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 		$invoice_id = $_GET["id"];
 		$sql = "";
 		$sql .= "select * from v_invoices ";
-		$sql .= "where v_id = '$v_id' ";
+		$sql .= "where domain_uuid = '$domain_uuid' ";
 		$sql .= "and invoice_id = '$invoice_id' ";
 		$prep_statement = $db->prepare(check_sql($sql));
 		$prep_statement->execute();
@@ -158,7 +158,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	if ($action == "add") {
 		$sql = "";
 		$sql .= "select * from v_invoices ";
-		$sql .= "where v_id = '$v_id' ";
+		$sql .= "where domain_uuid = '$domain_uuid' ";
 		$sql .= "order by invoice_id desc ";
 		$sql .= "limit 1 ";
 		$prep_statement = $db->prepare(check_sql($sql));
@@ -212,7 +212,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "<td class='vtable' align='left'>\n";
 	$sql = "";
 	$sql .= " select contact_id, org, n_given, n_family from v_contacts ";
-	$sql .= " where v_id = '$v_id' ";
+	$sql .= " where domain_uuid = '$domain_uuid' ";
 	$sql .= " order by org asc ";
 	$prepstatement = $db->prepare(check_sql($sql));
 	$prepstatement->execute();
@@ -255,7 +255,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "<td class='vtable' align='left'>\n";
 	$sql = "";
 	$sql .= " select contact_id, org, n_given, n_family from v_contacts ";
-	$sql .= " where v_id = '$v_id' ";
+	$sql .= " where domain_uuid = '$domain_uuid' ";
 	$sql .= " order by org asc ";
 	$prepstatement = $db->prepare(check_sql($sql));
 	$prepstatement->execute();

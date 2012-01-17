@@ -25,7 +25,7 @@ require_once "includes/paging.php";
 	//prepare to page the results
 		$sql = "";
 		$sql .= " select count(*) as num_rows from v_invoice_items ";
-		$sql .= " where v_id = '$v_id' ";
+		$sql .= " where domain_uuid = '$domain_uuid' ";
 		$sql .= " and invoice_id = '$invoice_id' ";
 		if (strlen($orderby)> 0) { $sql .= "order by $orderby $order "; }
 		$prep_statement = $db->prepare($sql);
@@ -51,7 +51,7 @@ require_once "includes/paging.php";
 	//get the invoice list
 		$sql = "";
 		$sql .= " select * from v_invoice_items ";
-		$sql .= " where v_id = '$v_id' ";
+		$sql .= " where domain_uuid = '$domain_uuid' ";
 		$sql .= " and invoice_id = '$invoice_id' ";
 		if (strlen($orderby)> 0) { $sql .= "order by $orderby $order "; }
 		$sql .= " limit $rows_per_page offset $offset ";

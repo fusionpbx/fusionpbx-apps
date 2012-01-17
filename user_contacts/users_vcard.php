@@ -41,7 +41,7 @@ if (count($_GET)>0) {
 	$id = $_GET["id"];
 	$sql = "";
 	$sql .= "select * from v_users ";
-	$sql .= "where v_id = '$v_id' ";
+	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "and id = '$id' ";
 	$prepstatement = $db->prepare(check_sql($sql));
 	$prepstatement->execute();

@@ -38,13 +38,13 @@ else {
 
 require_once "includes/header.php";
 
-$v_domain = $_SESSION['domains'][$v_id]['domain'];
+$v_domain = $_SESSION['domains'][$domain_uuid]['domain'];
 
 $profile_id = $_REQUEST['id'];
 
 $sql = "";
 $sql .= "select * from v_xmpp ";
-$sql .= "where v_id = '$v_id' ";
+$sql .= "where domain_uuid = '$domain_uuid' ";
 $sql .= "and xmpp_profile_id = '$profile_id' ";
 
 $prepstatement = $db->prepare(check_sql($sql));
@@ -62,7 +62,7 @@ unset ($prepstatement);
 
 $sql = "";
 $sql .= "delete from v_xmpp ";
-$sql .= "where v_id = '$v_id' ";
+$sql .= "where domain_uuid = '$domain_uuid' ";
 $sql .= "and xmpp_profile_id = '$profile_id' ";
 
 $db->exec(check_sql($sql));

@@ -95,7 +95,7 @@ if ($_POST["persistformvar"] != "true") {
 	if ($action == "add") {
 		$sql = "insert into v_templates ";
 		$sql .= "(";
-		$sql .= "v_id, ";
+		$sql .= "domain_uuid, ";
 		$sql .= "templatename, ";
 		$sql .= "templatedesc, ";
 		$sql .= "template, ";
@@ -104,7 +104,7 @@ if ($_POST["persistformvar"] != "true") {
 		$sql .= ")";
 		$sql .= "values ";
 		$sql .= "(";
-		$sql .= "'$v_id', ";
+		$sql .= "'$domain_uuid', ";
 		$sql .= "'$templatename', ";
 		$sql .= "'$templatedesc', ";
 		$sql .= "'".base64_encode($template)."', ";
@@ -130,7 +130,7 @@ if ($_POST["persistformvar"] != "true") {
 		$sql .= "template = '".base64_encode($template)."', ";
 		$sql .= "templatemenutype = '$templatemenutype', ";
 		$sql .= "templatemenucss = '".base64_encode($templatemenucss)."' ";
-		$sql .= "where v_id = '$v_id'";
+		$sql .= "where domain_uuid = '$domain_uuid'";
 		$sql .= "and templateid = '$template_id'";
 		$db->exec(check_sql($sql));
 		unset($sql);
@@ -152,7 +152,7 @@ if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 	$template_id = $_GET["id"];
 	$sql = "";
 	$sql .= "select * from v_templates ";
-	$sql .= "where v_id = '$v_id' ";
+	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "and templateid = '$template_id' ";
 	$prepstatement = $db->prepare(check_sql($sql));
 	$prepstatement->execute();

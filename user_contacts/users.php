@@ -56,7 +56,7 @@ require_once "includes/paging.php";
 
 	$sql = "";
 	$sql .= "select * from v_users ";
-	$sql .= "where v_id = '$v_id' ";
+	$sql .= "where domain_uuid = '$domain_uuid' ";
 	if (strlen($orderby)> 0) { $sql .= "order by $orderby $order "; }
 	$prepstatement = $db->prepare(check_sql($sql));
 	$prepstatement->execute();
@@ -74,7 +74,7 @@ require_once "includes/paging.php";
 	$sql = "";
 	$sql .= "select * from v_users ";
 	if (strlen($orderby)> 0) { $sql .= "order by $orderby $order "; }
-	$sql .= "where v_id = '$v_id' ";
+	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "limit $rowsperpage offset $offset ";
 	$prepstatement = $db->prepare(check_sql($sql));
 	$prepstatement->execute();

@@ -42,7 +42,7 @@ else {
 //get the invoice details
 	$sql = "";
 	$sql .= "select * from v_invoices ";
-	$sql .= "where v_id = '$v_id' ";
+	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "and invoice_id = '$invoice_id' ";
 	$sql .= "order by invoice_id desc ";
 	$sql .= "limit 1 ";
@@ -73,7 +73,7 @@ else {
 //get contact from name
 	$sql = "";
 	$sql .= "select * from v_contacts ";
-	$sql .= "where v_id = '$v_id' ";
+	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "and contact_id = '$contact_id_from' ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
@@ -89,7 +89,7 @@ else {
 //get contact from address
 	$sql = "";
 	$sql .= "select * from v_contacts_adr ";
-	$sql .= "where v_id = '$v_id' ";
+	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "and contact_id = '$contact_id_from' ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
@@ -127,7 +127,7 @@ else {
 //get contact to name
 	$sql = "";
 	$sql .= "select * from v_contacts ";
-	$sql .= "where v_id = '$v_id' ";
+	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "and contact_id = '$contact_id_to' ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
@@ -143,7 +143,7 @@ else {
 //get contact to address
 	$sql = "";
 	$sql .= "select * from v_contacts_adr ";
-	$sql .= "where v_id = '$v_id' ";
+	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "and contact_id = '$contact_id_to' ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
@@ -232,7 +232,7 @@ else {
 //itemized list
 	$sql = "";
 	$sql .= "select * from v_invoice_items ";
-	$sql .= "where v_id = '$v_id' ";
+	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "and invoice_id = '$invoice_id' ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();

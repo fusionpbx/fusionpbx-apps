@@ -44,7 +44,7 @@ $extension = $_SESSION['user_extension_array'][0]['extension'];
 //get a list of assigned extensions for this user
 $sql = "";
 $sql .= "select * from v_extensions ";
-$sql .= "where v_id = '$v_id' ";
+$sql .= "where domain_uuid = '$domain_uuid' ";
 $sql .= "and user_list like '%|".$_SESSION["username"]."|%' ";
 $prepstatement = $db->prepare(check_sql($sql));
 $prepstatement->execute();
@@ -60,7 +60,7 @@ foreach ($result as &$row) {
 unset ($prepstatement);
 
 if ($x > 0) {
-	$key = guid();
+	$key = uuid();
 	$client_ip = $_SERVER['REMOTE_ADDR'];
 	$sql = sprintf("INSERT INTO v_flashphone_auth (auth_key, hostaddr, createtime, username) values ('%s', '%s', now(), '%s')",
 			$key, $client_ip, $_SESSION["username"]);

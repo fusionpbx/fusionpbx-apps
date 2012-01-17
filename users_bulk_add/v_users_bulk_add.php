@@ -28,20 +28,20 @@ $dq = '"';
 $self = $_SERVER['PHP_SELF'];
 ini_set('auto_detect_line_endings', '1');
 
-function get_v_ids(PDO $db) {
-	$query 				= sprintf("SELECT v_id, domain FROM v_system_settings;");
+function get_domain_uuids(PDO $db) {
+	$query 				= sprintf("SELECT domain_uuid, domain FROM v_system_settings;");
 	$stmt 				= $db->query($query);
 	$results 			= $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$result_count 		= count($results);
 	for ($i = 0; $i < $result_count; $i++) {
 		$domain 		= $results[$i]['domain'];
-		$v_id 			= $results[$i]['v_id'];
-		$v_ids[$domain]	= $v_id;
+		$domain_uuid 			= $results[$i]['domain_uuid'];
+		$domain_uuids[$domain]	= $domain_uuid;
 	}
-	return $v_ids;
+	return $domain_uuids;
 }
 
-function generate_insert_query($line, $places, $table, PDO $db, $v_ids) {
+function generate_insert_query($line, $places, $table, PDO $db, $domain_uuids) {
 	global $v_salt;
 	foreach ($places as $field => $place) {
 		$fields[] = $field;
@@ -90,11 +90,11 @@ function generate_insert_query($line, $places, $table, PDO $db, $v_ids) {
 			break;
 	}
 
-	if (!in_array('v_id')) {
-		//print "v_id not found, adding one for localhost<br>\n";
-		//printf('<pre>%s</pre>', print_r($v_ids, true));
-		$fields[] = 'v_id';
-		$values[] = $v_ids['localhost'];
+	if (!in_array('domain_uuid')) {
+		//print "domain_uuid not found, adding one for localhost<br>\n";
+		//printf('<pre>%s</pre>', print_r($domain_uuids, true));
+		$fields[] = 'domain_uuid';
+		$values[] = $domain_uuids['localhost'];
 	}
 
 	$query = sprintf('INSERT INTO %s (%s) VALUES (%s);'
@@ -128,11 +128,11 @@ function check_required_fields($line, $all_fields) {
 	return true;
 }
 
-function insert_db_row($db, $line, $places, $table, $v_ids) {
+function insert_db_row($db, $line, $places, $table, $domain_uuids) {
 	global $inserted;
 	//printf("<pre>%s</pre>\n", print_r($inserted, true));
 	$inserted[$table]++;
-	$query = generate_insert_query($line, $places, $table, $db, $v_ids);
+	$query = generate_insert_query($line, $places, $table, $db, $domain_uuids);
 	//print "QUERY: $query<br>\n";
 	if (empty($query)) {
 		return;
@@ -154,7 +154,7 @@ require_once "includes/paging.php";
 
 $inserted = array('v_users' => 0, 'v_extensions' => 0, 'v_group_members' => 0);
 if (is_array($_FILES) && array_key_exists('users_file', $_FILES)) {
-	$v_ids 				= get_v_ids($db);
+	$domain_uuids 				= get_domain_uuids($db);
 	$user_fields 		= get_db_field_names($db, 'v_users');
 	//printf("<pre>users => %s<br></pre>\n", print_r($user_fields, true));
 	$extension_fields 	= get_db_field_names($db, 'v_extensions');
@@ -181,15 +181,15 @@ if (is_array($_FILES) && array_key_exists('users_file', $_FILES)) {
 		if (check_required_fields($line, $all_fields)) {
 			while ($line = fgetcsv($fh, null, ',')) {
 				// create user
-				insert_db_row($db, $line, $user_places, 'v_users', $v_ids);
+				insert_db_row($db, $line, $user_places, 'v_users', $domain_uuids);
 
 				// add user to members group
 				$grp_line 	= array('member', $line[$user_places['username']]);
 				$grp_places	= array('group_id' => 0, 'username' => 1);
-				insert_db_row($db, $grp_line, $grp_places, 'v_group_members', $v_ids);
+				insert_db_row($db, $grp_line, $grp_places, 'v_group_members', $domain_uuids);
 				
 				// add user's extension
-				insert_db_row($db, $line, $extension_places, 'v_extensions', $v_ids);
+				insert_db_row($db, $line, $extension_places, 'v_extensions', $domain_uuids);
 			}
 		}
 		fclose($fh);

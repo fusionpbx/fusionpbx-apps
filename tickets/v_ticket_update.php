@@ -40,7 +40,7 @@ else {
 
 require_once "includes/header.php";
 
-$v_domain = $_SESSION['domains'][$v_id]['domain'];
+$v_domain = $_SESSION['domains'][$domain_uuid]['domain'];
 
 // Check to see if we're an admin and if we are set the $isadmin to true for use in the template and sql query building
 if (ifgroup("superadmin") || ifgroup("admin")){
@@ -66,14 +66,14 @@ if ($action == "update") {
 
 //get the ticket
 	$sql = "";
-	$sql .= "select a.ticket_id, a.queue_id, a.v_id, a.user_id, a.customer_id, a.subject, ";
+	$sql .= "select a.ticket_id, a.queue_id, a.domain_uuid, a.user_id, a.customer_id, a.subject, ";
 	$sql .= "to_char(a.create_stamp, 'MM-DD-YY HH24-MI-SS') as create_stamp, a.create_user_id, ";
 	$sql .= "a.ticket_status, to_char(a.last_update_stamp, 'MM-DD-YY HH24-MI-SS') as last_update_stamp, ";
 	$sql .= "a.last_update_user_id, a.ticket_uuid, a.ticket_number, a.ticket_owner, a.customer_ticket_number, ";
 	$sql .= "b.username, c.username as create_username, d.username as last_update_username ";
 	$sql .= "from v_tickets as a, v_users as b, v_users as c, v_users as d ";
 	$sql .= "where a.user_id = b.id and a.create_user_id = c.id and a.last_update_user_id = d.id ";
-	$sql .= "and a.v_id = '$v_id' ";
+	$sql .= "and a.domain_uuid = '$domain_uuid' ";
 	if (isset($_REQUEST["id"])) { 
 		$sql .= "and a.ticket_id = '$ticket_id' ";
 	}
@@ -131,7 +131,7 @@ if ($action == "update") {
 
 	$sql = "";
 	$sql .= "SELECT * from v_ticket_statuses ";
-	$sql .= "where v_id = $v_id ";
+	$sql .= "where domain_uuid = $domain_uuid ";
 	$sql .= "ORDER by status_id ";
 	$prepstatement = $db->prepare(check_sql($sql));
 	$prepstatement->execute();
@@ -145,7 +145,7 @@ if ($action == "update") {
 
 	$sql = "";
 	$sql .= "SELECT * from v_ticket_queues ";
-	$sql .= "where v_id = $v_id ";
+	$sql .= "where domain_uuid = $domain_uuid ";
 	$sql .= "ORDER by queue_name ";
 	$prepstatement = $db->prepare(check_sql($sql));
 	$prepstatement->execute();

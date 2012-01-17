@@ -54,8 +54,8 @@ if (isset($_REQUEST['queue_name'])) {
 		$sql .= "WHERE queue_id = " . $request['queue_id'] . " ";
 	} else {
 		//do Queue Create
-		$sql .= "INSERT into v_ticket_queues (queue_name, queue_email, v_id) values ";
-		$sql .= "('" . $request['queue_name'] . "', '" . $request['queue_email'] . "', $v_id) ";
+		$sql .= "INSERT into v_ticket_queues (queue_name, queue_email, domain_uuid) values ";
+		$sql .= "('" . $request['queue_name'] . "', '" . $request['queue_email'] . "', $domain_uuid) ";
 	}
 	$db->exec($sql);
 }
@@ -68,8 +68,8 @@ if (isset($_REQUEST['status_name'])) {
 		$sql .= "WHERE status_id = " . $request['status_id'] . " ";
 	} else {
 		//do Status Create
-		$sql .= "INSERT into v_ticket_statuses (status_name, v_id) values ";
-		$sql .= "('" . $request['status_name'] . "', $v_id) ";
+		$sql .= "INSERT into v_ticket_statuses (status_name, domain_uuid) values ";
+		$sql .= "('" . $request['status_name'] . "', $domain_uuid) ";
 	}
 	$db->exec($sql);
 }
@@ -77,7 +77,7 @@ if (isset($_REQUEST['status_name'])) {
 // Get a List of the Ticket Statuses
 $sql = "";
 $sql .= "select * from v_ticket_statuses ";
-$sql .= "where v_id = $v_id ";
+$sql .= "where domain_uuid = $domain_uuid ";
 $sql .= "order by status_id ";
 $prepstatement = $db->prepare(check_sql($sql));
 $prepstatement->execute();
@@ -90,7 +90,7 @@ unset ($prepstatement);
 
 $sql = "";
 $sql .= "select * from v_ticket_queues ";
-$sql .= "where v_id = $v_id ";
+$sql .= "where domain_uuid = $domain_uuid ";
 $sql .= "order by queue_id ";
 $prepstatement = $db->prepare(check_sql($sql));
 $prepstatement->execute();

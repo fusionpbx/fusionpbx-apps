@@ -37,8 +37,8 @@ else {
 
 //remove the old menu
 	$sql  = "delete from v_templates ";
-	$sql .= "where v_id = '$v_id' and templatename = 'default' ";
-	$sql .= "or v_id = '$v_id' and templatename = 'horizontal' ";
+	$sql .= "where domain_uuid = '$domain_uuid' and templatename = 'default' ";
+	$sql .= "or domain_uuid = '$domain_uuid' and templatename = 'horizontal' ";
 	//echo $sql;
 	$db->exec(check_sql($sql));
 
@@ -78,7 +78,7 @@ else {
 //load the default menu into an array
 	$sql = "";
 	$sql .= "select * from v_templates ";
-	$sql .= "where v_id = '$v_id' ";
+	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$prepstatement = $db_default->prepare(check_sql($sql));
 	$prepstatement->execute();
 	$menu_array = $prepstatement->fetchAll();
@@ -97,7 +97,7 @@ else {
 		//insert the defaul menu into the database
 			$sql = "insert into v_templates ";
 			$sql .= "(";
-			$sql .= "v_id, ";
+			$sql .= "domain_uuid, ";
 			$sql .= "templateid, ";
 			$sql .= "templatelanguage, ";
 			$sql .= "templatename, ";
@@ -109,7 +109,7 @@ else {
 			$sql .= ")";
 			$sql .= "values ";
 			$sql .= "(";
-			$sql .= "'$v_id', ";
+			$sql .= "'$domain_uuid', ";
 			$sql .= "'$templateid', "; 
 			$sql .= "'$templatelanguage', ";
 			$sql .= "'$templatename', ";

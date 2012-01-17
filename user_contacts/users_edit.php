@@ -163,7 +163,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				if ($action == "add" && permission_exists('contacts_add')) {
 					$sql = "insert into v_users ";
 					$sql .= "(";
-					$sql .= "v_id, ";
+					$sql .= "domain_uuid, ";
 					//$sql .= "username, ";
 					//$sql .= "password, ";
 					$sql .= "user_type, ";
@@ -212,7 +212,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 					$sql .= ")";
 					$sql .= "values ";
 					$sql .= "(";
-					$sql .= "'$v_id', ";
+					$sql .= "'$domain_uuid', ";
 					//$sql .= "'$username', ";
 					//$sql .= "'$password', ";
 					$sql .= "'$user_type', ";
@@ -320,7 +320,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 					$sql .= "user_optional_1 = '$user_optional_1' ";
 					//$sql .= "user_add_user = '$user_add_user', ";
 					//$sql .= "user_add_date = '$user_add_date' ";
-					$sql .= "where v_id = '$v_id' ";
+					$sql .= "where domain_uuid = '$domain_uuid' ";
 					$sql .= "and id = '$id' ";
 					$db->exec(check_sql($sql));
 					unset($sql);
@@ -341,7 +341,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			$id = $_GET["id"];
 			$sql = "";
 			$sql .= "select * from v_users ";
-			$sql .= "where v_id = '$v_id' ";
+			$sql .= "where domain_uuid = '$domain_uuid' ";
 			$sql .= "and id = '$id' ";
 			$prepstatement = $db->prepare(check_sql($sql));
 			$prepstatement->execute();

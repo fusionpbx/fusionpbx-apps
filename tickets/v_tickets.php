@@ -45,7 +45,7 @@ if (isset($_REQUEST['show_closed'])) {
 //get a list of assigned extensions for this user
 $sql = "";
 $sql .= "select * from v_tickets ";
-$sql .= "where v_id = '$v_id' ";
+$sql .= "where domain_uuid = '$domain_uuid' ";
 if (!$show_closed) {
 	$sql .= "and ticket_status < 6 ";
 }
@@ -76,7 +76,7 @@ unset ($prepstatement);
 
 $sql = "";
 $sql .= "select * from v_ticket_queues ";
-$sql .= "where v_id = $v_id ";
+$sql .= "where domain_uuid = $domain_uuid ";
 $prepstatement = $db->prepare(check_sql($sql));
 $prepstatement->execute();
 $x = 0;
