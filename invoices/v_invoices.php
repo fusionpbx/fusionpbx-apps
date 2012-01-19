@@ -131,8 +131,8 @@ require_once "includes/paging.php";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['n_family']."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['invoice_date']."&nbsp;</td>\n";
 			echo "	<td valign='top' align='right'>\n";
-			echo "		<a href='v_invoices_edit.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_id']."' alt='edit'>$v_link_label_edit</a>\n";
-			echo "		<a href='v_invoices_delete.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_id']."' alt='delete' onclick=\"return confirm('Do you really want to delete this?')\">$v_link_label_delete</a>\n";
+			echo "		<a href='v_invoices_edit.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid']."' alt='edit'>$v_link_label_edit</a>\n";
+			echo "		<a href='v_invoices_delete.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid']."' alt='delete' onclick=\"return confirm('Do you really want to delete this?')\">$v_link_label_delete</a>\n";
 			echo "	</td>\n";
 			echo "</tr>\n";
 			if ($c==0) { $c=1; } else { $c=0; }

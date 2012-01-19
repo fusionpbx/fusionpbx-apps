@@ -38,7 +38,7 @@ else {
 	echo "access denied";
 	exit;
 } */
-$extension_id = $_REQUEST['extension_id'];
+$extension_uuid = $_REQUEST['extension_uuid'];
 $key = $_REQUEST['key'];
 $username = $_REQUEST['username'];
 
@@ -69,14 +69,14 @@ if ($x < 1) {
 unset ($prepstatement);
 
 //get a list of assigned extensions for this user
-$sql = sprintf("select * from v_extensions where extension_id = '%s' and user_list like '%%|%s|%%'", $extension_id, $username);
+$sql = sprintf("select * from v_extensions where extension_uuid = '%s' and user_list like '%%|%s|%%'", $extension_uuid, $username);
 
 $prepstatement = $db->prepare(check_sql($sql));
 $prepstatement->execute();
 $x = 0;
 $result = $prepstatement->fetchAll();
 foreach ($result as &$row) {
-	$extension_array[$x]['extension_id'] = $row["extension_id"];
+	$extension_array[$x]['extension_uuid'] = $row["extension_uuid"];
 	$extension_array[$x]['extension'] = $row["extension"];
 	$extension_array[$x]['password'] = $row["password"];
 	$extension_array[$x]['user_context'] = $row["user_context"];

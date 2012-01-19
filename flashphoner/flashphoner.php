@@ -38,7 +38,7 @@ else {
 }
 require_once "includes/header.php";
 
-$extension_id = $_SESSION['user_extension_array'][0]['extension_id'];
+$extension_uuid = $_SESSION['user_extension_array'][0]['extension_uuid'];
 $extension = $_SESSION['user_extension_array'][0]['extension'];
 
 //get a list of assigned extensions for this user
@@ -52,7 +52,7 @@ $prepstatement->execute();
 $x = 0;
 $result = $prepstatement->fetchAll();
 foreach ($result as &$row) {
-	$extension_array[$x]['extension_id'] = $row["extension_id"];
+	$extension_array[$x]['extension_uuid'] = $row["extension_uuid"];
 	$extension_array[$x]['extension'] = $row["extension"];
 	$x++;
 }
@@ -73,7 +73,7 @@ if ($x < 1) {
 } else if ($x == 1) {
 	// DISPLAY THE PHONE HERE
 	$extension = $extension_array[0]['extension'];
-	$extension_id = $extension_array[0]['extension_id'];
+	$extension_uuid = $extension_array[0]['extension_uuid'];
 	include "phone_html.php";
 } else {
 	include "phone_choices_html.php";

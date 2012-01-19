@@ -5,7 +5,7 @@ require_once "includes/config.php";
 //action add or update
 	if (isset($_REQUEST["id"])) {
 		$action = "update";
-		$invoice_item_id = check_str($_REQUEST["id"]);
+		$invoice_item_uuid = check_str($_REQUEST["id"]);
 	}
 	else {
 		$action = "add";
@@ -13,7 +13,7 @@ require_once "includes/config.php";
 
 if (strlen(count($_REQUEST)) > 0) {
 	$contact_uuid = check_str($_REQUEST["contact_uuid"]);
-	$invoice_id = check_str($_REQUEST["invoice_id"]);
+	$invoice_uuid = check_str($_REQUEST["invoice_uuid"]);
 }
 
 //get http post variables and set them to php variables
@@ -27,7 +27,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 
 	$msg = '';
 	if ($action == "update") {
-		$invoice_item_id = check_str($_POST["invoice_item_id"]);
+		$invoice_item_uuid = check_str($_POST["invoice_item_uuid"]);
 	}
 
 	//check for all required data
@@ -53,7 +53,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 		if ($action == "add") {
 			$sql = "insert into v_invoice_items ";
 			$sql .= "(";
-			$sql .= "invoice_id, ";
+			$sql .= "invoice_uuid, ";
 			$sql .= "domain_uuid, ";
 			$sql .= "item_qty, ";
 			$sql .= "item_desc, ";
@@ -61,7 +61,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			$sql .= ")";
 			$sql .= "values ";
 			$sql .= "(";
-			$sql .= "'$invoice_id', ";
+			$sql .= "'$invoice_uuid', ";
 			$sql .= "'$domain_uuid', ";
 			$sql .= "'$item_qty', ";
 			$sql .= "'$item_desc', ";
@@ -71,7 +71,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			unset($sql);
 
 			require_once "includes/header.php";
-			echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices_edit.php?id=$invoice_id&contact_uuid=$contact_uuid\">\n";
+			echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices_edit.php?id=$invoice_uuid&contact_uuid=$contact_uuid\">\n";
 			echo "<div align='center'>\n";
 			echo "Add Complete $sql2\n";
 			echo "</div>\n";
@@ -81,17 +81,17 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 
 		if ($action == "update") {
 			$sql = "update v_invoice_items set ";
-			$sql .= "invoice_id = '$invoice_id', ";
+			$sql .= "invoice_uuid = '$invoice_uuid', ";
 			$sql .= "domain_uuid = '$domain_uuid', ";
 			$sql .= "item_qty = '$item_qty', ";
 			$sql .= "item_desc = '$item_desc', ";
 			$sql .= "item_unit_price = '$item_unit_price' ";
-			$sql .= "where invoice_item_id = '$invoice_item_id'";
+			$sql .= "where invoice_item_uuid = '$invoice_item_uuid'";
 			$db->exec(check_sql($sql));
 			unset($sql);
 
 			require_once "includes/header.php";
-			echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices_edit.php?id=$invoice_id&contact_uuid=$contact_uuid\">\n";
+			echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices_edit.php?id=$invoice_uuid&contact_uuid=$contact_uuid\">\n";
 			echo "<div align='center'>\n";
 			echo "Update Complete\n";
 			echo "</div>\n";
@@ -104,10 +104,10 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 
 //pre-populate the form
 	if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
-		$invoice_item_id = $_GET["id"];
+		$invoice_item_uuid = $_GET["id"];
 		$sql = "";
 		$sql .= "select * from v_invoice_items ";
-		$sql .= "where invoice_item_id = '$invoice_item_id' ";
+		$sql .= "where invoice_item_uuid = '$invoice_item_uuid' ";
 		$prep_statement = $db->prepare(check_sql($sql));
 		$prep_statement->execute();
 		$result = $prep_statement->fetchAll();
@@ -182,10 +182,10 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 
 	echo "	<tr>\n";
 	echo "		<td colspan='2' align='right'>\n";
-	echo "				<input type='hidden' name='invoice_id' value='$invoice_id'>\n";
+	echo "				<input type='hidden' name='invoice_uuid' value='$invoice_uuid'>\n";
 	echo "				<input type='hidden' name='contact_uuid' value='$contact_uuid'>\n";
 	if ($action == "update") {
-		echo "				<input type='hidden' name='invoice_item_id' value='$invoice_item_id'>\n";
+		echo "				<input type='hidden' name='invoice_item_uuid' value='$invoice_item_uuid'>\n";
 	}
 	echo "				<input type='submit' name='submit' class='btn' value='Save'>\n";
 	echo "		</td>\n";

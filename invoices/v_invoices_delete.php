@@ -18,7 +18,7 @@ if (count($_GET)>0) {
 if (strlen($id)>0) {
 	$sql = "";
 	$sql .= "delete from v_invoices ";
-	$sql .= "where invoice_id = '$id' ";
+	$sql .= "where invoice_uuid = '$id' ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
 	unset($sql);

@@ -34,17 +34,17 @@ else {
 	exit;
 }
 
-//action invoice_id
+//action invoice_uuid
 	if (isset($_REQUEST["id"])) {
-		$invoice_id = check_str($_REQUEST["id"]);
+		$invoice_uuid = check_str($_REQUEST["id"]);
 	}
 
 //get the invoice details
 	$sql = "";
 	$sql .= "select * from v_invoices ";
 	$sql .= "where domain_uuid = '$domain_uuid' ";
-	$sql .= "and invoice_id = '$invoice_id' ";
-	$sql .= "order by invoice_id desc ";
+	$sql .= "and invoice_uuid = '$invoice_uuid' ";
+	$sql .= "order by invoice_uuid desc ";
 	$sql .= "limit 1 ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	if ($prep_statement) {
@@ -233,7 +233,7 @@ else {
 	$sql = "";
 	$sql .= "select * from v_invoice_items ";
 	$sql .= "where domain_uuid = '$domain_uuid' ";
-	$sql .= "and invoice_id = '$invoice_id' ";
+	$sql .= "and invoice_uuid = '$invoice_uuid' ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
 	$result = $prep_statement->fetchAll();
