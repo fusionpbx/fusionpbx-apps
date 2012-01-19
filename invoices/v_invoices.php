@@ -41,7 +41,7 @@ require_once "includes/paging.php";
 	$order = $_GET["order"];
 
 //get the contact id
-	$contact_id = check_str($_REQUEST["id"]);
+	$contact_uuid = check_str($_REQUEST["id"]);
 
 //show the content
 	echo "<div align='center'>";
@@ -63,10 +63,10 @@ require_once "includes/paging.php";
 		$sql = "";
 		$sql .= "SELECT count(*) as num_rows FROM v_invoices ";
 		$sql .= "LEFT OUTER JOIN v_contacts ";
-		$sql .= "ON v_invoices.contact_id_to = v_contacts.contact_id ";
+		$sql .= "ON v_invoices.contact_uuid_to = v_contacts.contact_uuid ";
 		$sql .= "where v_invoices.domain_uuid = '$domain_uuid' ";
-		if (strlen($contact_id) > 0) {
-			$sql .= "and v_invoices.contact_id_to = '$contact_id' ";
+		if (strlen($contact_uuid) > 0) {
+			$sql .= "and v_invoices.contact_uuid_to = '$contact_uuid' ";
 		}
 		$prep_statement = $db->prepare($sql);
 		if ($prep_statement) {
@@ -92,10 +92,10 @@ require_once "includes/paging.php";
 		$sql = "";
 		$sql .= "SELECT * FROM v_invoices ";
 		$sql .= "LEFT OUTER JOIN v_contacts ";
-		$sql .= "ON v_invoices.contact_id_to = v_contacts.contact_id ";
+		$sql .= "ON v_invoices.contact_uuid_to = v_contacts.contact_uuid ";
 		$sql .= "where v_invoices.domain_uuid = '$domain_uuid' ";
-		if (strlen($contact_id) > 0) {
-			$sql .= "and v_invoices.contact_id_to = '$contact_id' ";
+		if (strlen($contact_uuid) > 0) {
+			$sql .= "and v_invoices.contact_uuid_to = '$contact_uuid' ";
 		}
 		if (strlen($orderby)> 0) { $sql .= "order by v_invoices.$orderby $order "; }
 		$sql .= " limit $rows_per_page offset $offset ";
@@ -118,7 +118,7 @@ require_once "includes/paging.php";
 	echo thorderby('n_family', 'Family Name', $orderby, $order);
 	echo thorderby('invoice_date', 'Date', $orderby, $order);
 	echo "<td align='right' width='42'>\n";
-	echo "	<a href='v_invoices_edit.php?contact_id=".$_GET['id']."' alt='add'>$v_link_label_add</a>\n";
+	echo "	<a href='v_invoices_edit.php?contact_uuid=".$_GET['id']."' alt='add'>$v_link_label_add</a>\n";
 	echo "</td>\n";
 	echo "<tr>\n";
 
@@ -131,8 +131,8 @@ require_once "includes/paging.php";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['n_family']."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['invoice_date']."&nbsp;</td>\n";
 			echo "	<td valign='top' align='right'>\n";
-			echo "		<a href='v_invoices_edit.php?contact_id=".$row['contact_id']."&id=".$row['invoice_id']."' alt='edit'>$v_link_label_edit</a>\n";
-			echo "		<a href='v_invoices_delete.php?contact_id=".$row['contact_id']."&id=".$row['invoice_id']."' alt='delete' onclick=\"return confirm('Do you really want to delete this?')\">$v_link_label_delete</a>\n";
+			echo "		<a href='v_invoices_edit.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_id']."' alt='edit'>$v_link_label_edit</a>\n";
+			echo "		<a href='v_invoices_delete.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_id']."' alt='delete' onclick=\"return confirm('Do you really want to delete this?')\">$v_link_label_delete</a>\n";
 			echo "	</td>\n";
 			echo "</tr>\n";
 			if ($c==0) { $c=1; } else { $c=0; }
@@ -147,7 +147,7 @@ require_once "includes/paging.php";
 	echo "		<td width='33.3%' nowrap>&nbsp;</td>\n";
 	echo "		<td width='33.3%' align='center' nowrap>$paging_controls</td>\n";
 	echo "		<td width='33.3%' align='right'>\n";
-	echo "			<a href='v_invoices_edit.php?contact_id=".$_GET['id']."' alt='add'>$v_link_label_add</a>\n";
+	echo "			<a href='v_invoices_edit.php?contact_uuid=".$_GET['id']."' alt='add'>$v_link_label_add</a>\n";
 	echo "		</td>\n";
 	echo "	</tr>\n";
  	echo "	</table>\n";

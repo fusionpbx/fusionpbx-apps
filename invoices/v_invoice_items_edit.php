@@ -12,7 +12,7 @@ require_once "includes/config.php";
 	}
 
 if (strlen(count($_REQUEST)) > 0) {
-	$contact_id = check_str($_REQUEST["contact_id"]);
+	$contact_uuid = check_str($_REQUEST["contact_uuid"]);
 	$invoice_id = check_str($_REQUEST["invoice_id"]);
 }
 
@@ -71,7 +71,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			unset($sql);
 
 			require_once "includes/header.php";
-			echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices_edit.php?id=$invoice_id&contact_id=$contact_id\">\n";
+			echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices_edit.php?id=$invoice_id&contact_uuid=$contact_uuid\">\n";
 			echo "<div align='center'>\n";
 			echo "Add Complete $sql2\n";
 			echo "</div>\n";
@@ -91,7 +91,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			unset($sql);
 
 			require_once "includes/header.php";
-			echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices_edit.php?id=$invoice_id&contact_id=$contact_id\">\n";
+			echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices_edit.php?id=$invoice_id&contact_uuid=$contact_uuid\">\n";
 			echo "<div align='center'>\n";
 			echo "Update Complete\n";
 			echo "</div>\n";
@@ -183,7 +183,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "	<tr>\n";
 	echo "		<td colspan='2' align='right'>\n";
 	echo "				<input type='hidden' name='invoice_id' value='$invoice_id'>\n";
-	echo "				<input type='hidden' name='contact_id' value='$contact_id'>\n";
+	echo "				<input type='hidden' name='contact_uuid' value='$contact_uuid'>\n";
 	if ($action == "update") {
 		echo "				<input type='hidden' name='invoice_item_id' value='$invoice_item_id'>\n";
 	}

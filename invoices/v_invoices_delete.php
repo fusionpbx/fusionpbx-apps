@@ -12,7 +12,7 @@ else {
 
 if (count($_GET)>0) {
 	$id = check_str($_GET["id"]);
-	$contact_id = check_str($_GET["contact_id"]);
+	$contact_uuid = check_str($_GET["contact_uuid"]);
 }
 
 if (strlen($id)>0) {
@@ -25,7 +25,7 @@ if (strlen($id)>0) {
 }
 
 require_once "includes/header.php";
-echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices.php?id=$contact_id\">\n";
+echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices.php?id=$contact_uuid\">\n";
 echo "<div align='center'>\n";
 echo "Delete Complete\n";
 echo "</div>\n";

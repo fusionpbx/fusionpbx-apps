@@ -51,8 +51,8 @@ else {
 		$prep_statement->execute();
 		$row = $prep_statement->fetch();
 		$invoice_number = $row['invoice_number'];
-		$contact_id_from = $row['contact_id_from'];
-		$contact_id_to = $row['contact_id_to'];
+		$contact_uuid_from = $row['contact_uuid_from'];
+		$contact_uuid_to = $row['contact_uuid_to'];
 		$invoice_date = $row['invoice_date'];
 		$invoice_note = $row['invoice_note'];
 		unset ($prep_statement);
@@ -74,7 +74,7 @@ else {
 	$sql = "";
 	$sql .= "select * from v_contacts ";
 	$sql .= "where domain_uuid = '$domain_uuid' ";
-	$sql .= "and contact_id = '$contact_id_from' ";
+	$sql .= "and contact_uuid = '$contact_uuid_from' ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
 	$result = $prep_statement->fetchAll();
@@ -90,7 +90,7 @@ else {
 	$sql = "";
 	$sql .= "select * from v_contacts_adr ";
 	$sql .= "where domain_uuid = '$domain_uuid' ";
-	$sql .= "and contact_id = '$contact_id_from' ";
+	$sql .= "and contact_uuid = '$contact_uuid_from' ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
 	$result = $prep_statement->fetchAll();
@@ -128,7 +128,7 @@ else {
 	$sql = "";
 	$sql .= "select * from v_contacts ";
 	$sql .= "where domain_uuid = '$domain_uuid' ";
-	$sql .= "and contact_id = '$contact_id_to' ";
+	$sql .= "and contact_uuid = '$contact_uuid_to' ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
 	$result = $prep_statement->fetchAll();
@@ -144,7 +144,7 @@ else {
 	$sql = "";
 	$sql .= "select * from v_contacts_adr ";
 	$sql .= "where domain_uuid = '$domain_uuid' ";
-	$sql .= "and contact_id = '$contact_id_to' ";
+	$sql .= "and contact_uuid = '$contact_uuid_to' ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
 	$result = $prep_statement->fetchAll();

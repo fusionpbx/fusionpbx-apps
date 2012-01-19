@@ -85,11 +85,11 @@
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'text';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = '';
 		$z++;
-		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'contact_id_from';
+		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'contact_uuid_from';
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'numeric';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'Contact ID invoice is sent from';
 		$z++;
-		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'contact_id_to';
+		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'contact_uuid_to';
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'numeric';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'Contact ID invoice is sent to';
 		$z++;

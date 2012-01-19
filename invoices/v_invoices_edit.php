@@ -46,8 +46,8 @@ else {
 //get http post variables and set them to php variables
 	if (count($_POST)>0) {
 		$invoice_number = check_str($_POST["invoice_number"]);
-		$contact_id_from = check_str($_POST["contact_id_from"]);
-		$contact_id_to = check_str($_POST["contact_id_to"]);
+		$contact_uuid_from = check_str($_POST["contact_uuid_from"]);
+		$contact_uuid_to = check_str($_POST["contact_uuid_to"]);
 		$invoice_notes = check_str($_POST["invoice_notes"]);
 	}
 
@@ -81,8 +81,8 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				$sql .= "(";
 				$sql .= "domain_uuid, ";
 				$sql .= "invoice_number, ";
-				$sql .= "contact_id_from, ";
-				$sql .= "contact_id_to, ";
+				$sql .= "contact_uuid_from, ";
+				$sql .= "contact_uuid_to, ";
 				$sql .= "invoice_notes, ";
 				$sql .= "invoice_date ";
 				$sql .= ")";
@@ -90,8 +90,8 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				$sql .= "(";
 				$sql .= "'$domain_uuid', ";
 				$sql .= "'$invoice_number', ";
-				$sql .= "'$contact_id_from', ";
-				$sql .= "'$contact_id_to', ";
+				$sql .= "'$contact_uuid_from', ";
+				$sql .= "'$contact_uuid_to', ";
 				$sql .= "'$invoice_notes', ";
 				$sql .= "now() ";
 				$sql .= ")";
@@ -100,7 +100,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 
 				//require_once "includes/header.php";
 				echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices.php\">\n";
-				//echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices.php?id=$contact_id\">\n";
+				//echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices.php?id=$contact_uuid\">\n";
 				echo "<div align='center'>\n";
 				echo "Add Complete\n";
 				echo "</div>\n";
@@ -111,8 +111,8 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			if ($action == "update") {
 				$sql = "update v_invoices set ";
 				$sql .= "invoice_number = '$invoice_number', ";
-				$sql .= "contact_id_from = '$contact_id_from', ";
-				$sql .= "contact_id_to = '$contact_id_to', ";
+				$sql .= "contact_uuid_from = '$contact_uuid_from', ";
+				$sql .= "contact_uuid_to = '$contact_uuid_to', ";
 				$sql .= "invoice_notes = '$invoice_notes' ";
 				$sql .= "where domain_uuid = '$domain_uuid' ";
 				$sql .= "and invoice_id = '$invoice_id' ";
@@ -143,8 +143,8 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 		foreach ($result as &$row) {
 			$invoice_number = $row["invoice_number"];
 			$invoice_date = $row["invoice_date"];
-			$contact_id_from = $row["contact_id_from"];
-			$contact_id_to = $row["contact_id_to"];
+			$contact_uuid_from = $row["contact_uuid_from"];
+			$contact_uuid_to = $row["contact_uuid_to"];
 			$invoice_notes = $row["invoice_notes"];
 			break; //limit to 1 row
 		}
@@ -154,7 +154,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 //show the header
 	require_once "includes/header.php";
 
-//get the default invoice number and contact_id_from
+//get the default invoice number and contact_uuid_from
 	if ($action == "add") {
 		$sql = "";
 		$sql .= "select * from v_invoices ";
@@ -166,7 +166,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			$prep_statement->execute();
 			$row = $prep_statement->fetch();
 			$invoice_number = $row['invoice_number'] + 1;
-			$contact_id_from = $row['contact_id_from'];
+			$contact_uuid_from = $row['contact_uuid_from'];
 			unset ($prep_statement);
 		}
 	}
@@ -211,14 +211,14 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
 	$sql = "";
-	$sql .= " select contact_id, org, n_given, n_family from v_contacts ";
+	$sql .= " select contact_uuid, org, n_given, n_family from v_contacts ";
 	$sql .= " where domain_uuid = '$domain_uuid' ";
 	$sql .= " order by org asc ";
 	$prepstatement = $db->prepare(check_sql($sql));
 	$prepstatement->execute();
 	$result = $prepstatement->fetchAll();
 	unset ($prepstatement, $sql);
-	echo "<select name=\"contact_id_from\" id=\"contact_id_from\" class=\"formfld\">\n";
+	echo "<select name=\"contact_uuid_from\" id=\"contact_uuid_from\" class=\"formfld\">\n";
 	echo "<option value=\"\"></option>\n";
 	foreach($result as $row) {
 		$contact_name = '';
@@ -233,18 +233,18 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			if (strlen($contact_name) > 0) { $contact_name .= ", "; }
 			$contact_name .= $row['n_given'];
 		}
-		if ($row['contact_id'] == $contact_id_from) {
-			echo "<option value=\"".$row['contact_id']."\" selected=\"selected\">".$contact_name." $contact_id</option>\n";
+		if ($row['contact_uuid'] == $contact_uuid_from) {
+			echo "<option value=\"".$row['contact_uuid']."\" selected=\"selected\">".$contact_name." $contact_uuid</option>\n";
 		}
 		else {
-			echo "<option value=\"".$row['contact_id']."\">".$contact_name."</option>\n";
+			echo "<option value=\"".$row['contact_uuid']."\">".$contact_name."</option>\n";
 		}
 	}
 	unset($sql, $result, $rowcount);
 	echo "</select>\n";
 	echo "<br />\n";
 	echo "Select the Contact to send the send the invoice from. \n";
-	echo "<a href='/mod/contacts/v_contacts_edit.php?id=".$contact_id_from."'>View</a>\n";
+	echo "<a href='/mod/contacts/v_contacts_edit.php?id=".$contact_uuid_from."'>View</a>\n";
 	echo "</td>\n";
 	echo "</tr>\n";
 
@@ -254,14 +254,14 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
 	$sql = "";
-	$sql .= " select contact_id, org, n_given, n_family from v_contacts ";
+	$sql .= " select contact_uuid, org, n_given, n_family from v_contacts ";
 	$sql .= " where domain_uuid = '$domain_uuid' ";
 	$sql .= " order by org asc ";
 	$prepstatement = $db->prepare(check_sql($sql));
 	$prepstatement->execute();
 	$result = $prepstatement->fetchAll();
 	unset ($prepstatement, $sql);
-	echo "<select name=\"contact_id_to\" id=\"contact_id_to\" class=\"formfld\">\n";
+	echo "<select name=\"contact_uuid_to\" id=\"contact_uuid_to\" class=\"formfld\">\n";
 	echo "<option value=\"\"></option>\n";
 	foreach($result as $row) {
 		$contact_name = '';
@@ -276,18 +276,18 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			if (strlen($contact_name) > 0) { $contact_name .= ", "; }
 			$contact_name .= $row['n_given'];
 		}
-		if ($row['contact_id'] == $contact_id_to) {
-			echo "<option value=\"".$row['contact_id']."\" selected=\"selected\">".$contact_name." $contact_id</option>\n";
+		if ($row['contact_uuid'] == $contact_uuid_to) {
+			echo "<option value=\"".$row['contact_uuid']."\" selected=\"selected\">".$contact_name." $contact_uuid</option>\n";
 		}
 		else {
-			echo "<option value=\"".$row['contact_id']."\">".$contact_name."</option>\n";
+			echo "<option value=\"".$row['contact_uuid']."\">".$contact_name."</option>\n";
 		}
 	}
 	unset($sql, $result, $rowcount);
 	echo "</select>\n";
 	echo "<br />\n";
 	echo "Select the Contact to send the send the invoice to. \n";
-	echo "<a href='/mod/contacts/v_contacts_edit.php?id=".$contact_id_to."'>View</a>\n";
+	echo "<a href='/mod/contacts/v_contacts_edit.php?id=".$contact_uuid_to."'>View</a>\n";
 	echo "</td>\n";
 	echo "</tr>\n";
 
