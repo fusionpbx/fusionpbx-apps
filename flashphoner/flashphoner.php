@@ -46,18 +46,18 @@ $sql = "";
 $sql .= "select * from v_extensions ";
 $sql .= "where domain_uuid = '$domain_uuid' ";
 $sql .= "and user_list like '%|".$_SESSION["username"]."|%' ";
-$prepstatement = $db->prepare(check_sql($sql));
-$prepstatement->execute();
+$prep_statement = $db->prepare(check_sql($sql));
+$prep_statement->execute();
 
 $x = 0;
-$result = $prepstatement->fetchAll();
+$result = $prep_statement->fetchAll();
 foreach ($result as &$row) {
 	$extension_array[$x]['extension_uuid'] = $row["extension_uuid"];
 	$extension_array[$x]['extension'] = $row["extension"];
 	$x++;
 }
 
-unset ($prepstatement);
+unset ($prep_statement);
 
 if ($x > 0) {
 	$key = uuid();

@@ -17,7 +17,7 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2010
+	Portions created by the Initial Developer are Copyright (C) 2008-2012
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
@@ -38,7 +38,7 @@ require_once "includes/header.php";
 require_once "includes/paging.php";
 
 //get the http values and set them as php variables
-	$orderby = $_GET["orderby"];
+	$order_by = $_GET["order_by"];
 	$order = $_GET["order"];
 
 //show the content
@@ -57,46 +57,45 @@ require_once "includes/paging.php";
 	$sql = "";
 	$sql .= "select * from v_users ";
 	$sql .= "where domain_uuid = '$domain_uuid' ";
-	if (strlen($orderby)> 0) { $sql .= "order by $orderby $order "; }
-	$prepstatement = $db->prepare(check_sql($sql));
-	$prepstatement->execute();
-	$result = $prepstatement->fetchAll();
-	$numrows = count($result);
-	unset ($prepstatement, $result, $sql);
+	if (strlen($order_by)> 0) { $sql .= "order by $order_by $order "; }
+	$prep_statement = $db->prepare(check_sql($sql));
+	$prep_statement->execute();
+	$result = $prep_statement->fetchAll();
+	$num_rows = count($result);
+	unset ($prep_statement, $result, $sql);
 
-	$rowsperpage = 150;
+	$rows_per_page = 150;
 	$param = "";
 	$page = $_GET['page'];
 	if (strlen($page) == 0) { $page = 0; $_GET['page'] = 0; } 
-	list($pagingcontrols, $rowsperpage, $var3) = paging($numrows, $param, $rowsperpage); 
-	$offset = $rowsperpage * $page; 
+	list($paging_controls, $rows_per_page, $var_3) = paging($num_rows, $param, $rows_per_page); 
+	$offset = $rows_per_page * $page; 
 
 	$sql = "";
 	$sql .= "select * from v_users ";
-	if (strlen($orderby)> 0) { $sql .= "order by $orderby $order "; }
+	if (strlen($order_by)> 0) { $sql .= "order by $order_by $order "; }
 	$sql .= "where domain_uuid = '$domain_uuid' ";
-	$sql .= "limit $rowsperpage offset $offset ";
-	$prepstatement = $db->prepare(check_sql($sql));
-	$prepstatement->execute();
-	$result = $prepstatement->fetchAll();
-	$resultcount = count($result);
-	unset ($prepstatement, $sql);
+	$sql .= "limit $rows_per_page offset $offset ";
+	$prep_statement = $db->prepare(check_sql($sql));
+	$prep_statement->execute();
+	$result = $prep_statement->fetchAll();
+	$result_count = count($result);
+	unset ($prep_statement, $sql);
 
 	$c = 0;
-	$rowstyle["0"] = "rowstyle0";
-	$rowstyle["1"] = "rowstyle1";
+	$row_style["0"] = "row_style0";
+	$row_style["1"] = "row_style1";
 
 	echo "<div align='center'>\n";
 	echo "<table width='100%' border='0' cellpadding='0' cellspacing='0'>\n";
-
 	echo "<tr>\n";
-	echo thorderby('username', 'Username', $orderby, $order);
-	echo thorderby('user_type', 'Type', $orderby, $order);
-	echo thorderby('user_category', 'Category', $orderby, $order);
-	echo thorderby('user_first_name', 'First Name', $orderby, $order);
-	echo thorderby('user_last_name', 'Last Name', $orderby, $order);
-	echo thorderby('user_company_name', 'Organization', $orderby, $order);
-	echo thorderby('user_phone_1', 'Phone', $orderby, $order);
+	echo thorder_by('username', 'Username', $order_by, $order);
+	echo thorder_by('user_type', 'Type', $order_by, $order);
+	echo thorder_by('user_category', 'Category', $order_by, $order);
+	echo thorder_by('user_first_name', 'First Name', $order_by, $order);
+	echo thorder_by('user_last_name', 'Last Name', $order_by, $order);
+	echo thorder_by('user_company_name', 'Organization', $order_by, $order);
+	echo thorder_by('user_phone_1', 'Phone', $order_by, $order);
 	echo "<td align='right' width='42'>\n";
 	if (permission_exists('contacts_add')) {
 		echo "	<a href='users_edit.php' alt='add'>$v_link_label_add</a>\n";
@@ -104,36 +103,33 @@ require_once "includes/paging.php";
 	echo "</td>\n";
 	echo "<tr>\n";
 
-	if ($resultcount == 0) {
-		//no results
-	}
-	else { //received results
+	if ($result_count > 0) {
 		foreach($result as $row) {
 			echo "<tr >\n";
 			if (strlen($row[username]) == 0) {
-				echo "	<td valign='top' class='".$rowstyle[$c]."'>contact&nbsp;</td>\n";
+				echo "	<td valign='top' class='".$row_style[$c]."'>contact&nbsp;</td>\n";
 			}
 			else {
-				echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[username]."&nbsp;</td>\n";
+				echo "	<td valign='top' class='".$row_style[$c]."'>".$row['username']."&nbsp;</td>\n";
 			}
-			echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[user_type]."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[user_category]."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[user_first_name]."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[user_last_name]."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[user_company_name]."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$rowstyle[$c]."'>".$row[user_phone_1]."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['user_type']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['user_category']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['user_first_name']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['user_last_name']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['user_company_name']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['user_phone_1']."&nbsp;</td>\n";
 			echo "	<td valign='top' align='right'>\n";
 			if (permission_exists('contacts_edit')) {
-				echo "		<a href='users_edit.php?id=".$row[id]."' alt='edit'>$v_link_label_edit</a>\n";
+				echo "		<a href='users_edit.php?id=".$row['user_uuid']."' alt='edit'>$v_link_label_edit</a>\n";
 			}
 			if (permission_exists('contacts_delete')) {
-				echo "		<a href='users_delete.php?id=".$row[id]."' alt='delete' onclick=\"return confirm('Do you really want to delete this?')\">$v_link_label_delete</a>\n";
+				echo "		<a href='users_delete.php?id=".$row['user_uuid']."' alt='delete' onclick=\"return confirm('Do you really want to delete this?')\">$v_link_label_delete</a>\n";
 			}
 			echo "	</td>\n";
 			echo "</tr>\n";
 			if ($c==0) { $c=1; } else { $c=0; }
 		} //end foreach
-		unset($sql, $result, $rowcount);
+		unset($sql, $result);
 	} //end if results
 
 	echo "<tr>\n";
@@ -141,7 +137,7 @@ require_once "includes/paging.php";
 	echo "	<table width='100%' cellpadding='0' cellspacing='0'>\n";
 	echo "	<tr>\n";
 	echo "		<td width='33.3%' nowrap>&nbsp;</td>\n";
-	echo "		<td width='33.3%' align='center' nowrap>$pagingcontrols</td>\n";
+	echo "		<td width='33.3%' align='center' nowrap>$paging_controls</td>\n";
 	echo "		<td width='33.3%' align='right'>\n";
 	if (permission_exists('contacts_add')) {
 		echo "			<a href='users_edit.php' alt='add'>$v_link_label_add</a>\n";

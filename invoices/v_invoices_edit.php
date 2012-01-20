@@ -17,7 +17,7 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2010
+	Portions created by the Initial Developer are Copyright (C) 2008-2012
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
@@ -77,9 +77,11 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	//add or update the database
 		if ($_POST["persistformvar"] != "true") {
 			if ($action == "add") {
+				$invoice_uuid = uuid();
 				$sql = "insert into v_invoices ";
 				$sql .= "(";
 				$sql .= "domain_uuid, ";
+				$sql .= "invoice_uuid, ";
 				$sql .= "invoice_number, ";
 				$sql .= "contact_uuid_from, ";
 				$sql .= "contact_uuid_to, ";
@@ -89,6 +91,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				$sql .= "values ";
 				$sql .= "(";
 				$sql .= "'$domain_uuid', ";
+				$sql .= "'$invoice_uuid', ";
 				$sql .= "'$invoice_number', ";
 				$sql .= "'$contact_uuid_from', ";
 				$sql .= "'$contact_uuid_to', ";
@@ -214,10 +217,10 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	$sql .= " select contact_uuid, org, n_given, n_family from v_contacts ";
 	$sql .= " where domain_uuid = '$domain_uuid' ";
 	$sql .= " order by org asc ";
-	$prepstatement = $db->prepare(check_sql($sql));
-	$prepstatement->execute();
-	$result = $prepstatement->fetchAll();
-	unset ($prepstatement, $sql);
+	$prep_statement = $db->prepare(check_sql($sql));
+	$prep_statement->execute();
+	$result = $prep_statement->fetchAll();
+	unset ($prep_statement, $sql);
 	echo "<select name=\"contact_uuid_from\" id=\"contact_uuid_from\" class=\"formfld\">\n";
 	echo "<option value=\"\"></option>\n";
 	foreach($result as $row) {
@@ -240,7 +243,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			echo "<option value=\"".$row['contact_uuid']."\">".$contact_name."</option>\n";
 		}
 	}
-	unset($sql, $result, $rowcount);
+	unset($sql, $result, $row_count);
 	echo "</select>\n";
 	echo "<br />\n";
 	echo "Select the Contact to send the send the invoice from. \n";
@@ -257,10 +260,10 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	$sql .= " select contact_uuid, org, n_given, n_family from v_contacts ";
 	$sql .= " where domain_uuid = '$domain_uuid' ";
 	$sql .= " order by org asc ";
-	$prepstatement = $db->prepare(check_sql($sql));
-	$prepstatement->execute();
-	$result = $prepstatement->fetchAll();
-	unset ($prepstatement, $sql);
+	$prep_statement = $db->prepare(check_sql($sql));
+	$prep_statement->execute();
+	$result = $prep_statement->fetchAll();
+	unset ($prep_statement, $sql);
 	echo "<select name=\"contact_uuid_to\" id=\"contact_uuid_to\" class=\"formfld\">\n";
 	echo "<option value=\"\"></option>\n";
 	foreach($result as $row) {
@@ -283,7 +286,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			echo "<option value=\"".$row['contact_uuid']."\">".$contact_name."</option>\n";
 		}
 	}
-	unset($sql, $result, $rowcount);
+	unset($sql, $result, $row_count);
 	echo "</select>\n";
 	echo "<br />\n";
 	echo "Select the Contact to send the send the invoice to. \n";

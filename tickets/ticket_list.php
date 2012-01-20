@@ -23,18 +23,18 @@
 </td>
 </tr>
 <?php
-$rowstyle[0] = 'rowstyle0';
-$rowstyle[1] = 'rowstyle1';
+$row_style[0] = 'row_style0';
+$row_style[1] = 'row_style1';
 $rs = 1;
 foreach($tickets as $ticket){
 if ($rs == 1) { $rs = 0; } else { $rs = 1; }
 ?>
 <tr>
-	<td class="<?php echo $rowstyle[$rs]; ?>"><?php echo $ticket['ticket_number']; ?></td>
-	<td class="<?php echo $rowstyle[$rs]; ?>"><?php echo $queues[$ticket['queue_id']]; ?></td>
-        <td class="<?php echo $rowstyle[$rs]; ?>"><?php echo $statuses[$ticket['ticket_status']]; ?></td>
-	<td class="<?php echo $rowstyle[$rs]; ?>"><?php echo $ticket['last_update_stamp']; ?></td>
-	<td class="<?php echo $rowstyle[$rs]; ?>"><?php echo $ticket['subject']; ?></td>
+	<td class="<?php echo $row_style[$rs]; ?>"><?php echo $ticket['ticket_number']; ?></td>
+	<td class="<?php echo $row_style[$rs]; ?>"><?php echo $queues[$ticket['queue_id']]; ?></td>
+        <td class="<?php echo $row_style[$rs]; ?>"><?php echo $statuses[$ticket['ticket_status']]; ?></td>
+	<td class="<?php echo $row_style[$rs]; ?>"><?php echo $ticket['last_update_stamp']; ?></td>
+	<td class="<?php echo $row_style[$rs]; ?>"><?php echo $ticket['subject']; ?></td>
 <td align='right' width='42'>
 	<?php if (permission_exists('ticket_update')) { ?>
 	<a href='v_ticket_update.php?id=<?php echo $ticket['ticket_id']; ?>' alt='Update Ticket'><?php echo $v_link_label_edit; ?></a>

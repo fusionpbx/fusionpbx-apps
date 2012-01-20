@@ -17,7 +17,7 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2010
+	Portions created by the Initial Developer are Copyright (C) 2008-2012
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
@@ -37,7 +37,7 @@ else {
 //set the action to an add or update
 	if (isset($_REQUEST["id"])) {
 		$action = "update";
-		$id = check_str($_REQUEST["id"]);
+		$user_uuid = check_str($_REQUEST["id"]);
 	}
 	else {
 		$action = "add";
@@ -164,6 +164,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 					$sql = "insert into v_users ";
 					$sql .= "(";
 					$sql .= "domain_uuid, ";
+					$sql .= "user_uuid, ";
 					//$sql .= "username, ";
 					//$sql .= "password, ";
 					$sql .= "user_type, ";
@@ -213,6 +214,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 					$sql .= "values ";
 					$sql .= "(";
 					$sql .= "'$domain_uuid', ";
+					$sql .= "'".uuid()."', ";
 					//$sql .= "'$username', ";
 					//$sql .= "'$password', ";
 					$sql .= "'$user_type', ";
@@ -321,7 +323,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 					//$sql .= "user_add_user = '$user_add_user', ";
 					//$sql .= "user_add_date = '$user_add_date' ";
 					$sql .= "where domain_uuid = '$domain_uuid' ";
-					$sql .= "and id = '$id' ";
+					$sql .= "and user_uuid = '$id' ";
 					$db->exec(check_sql($sql));
 					unset($sql);
 
@@ -343,9 +345,9 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			$sql .= "select * from v_users ";
 			$sql .= "where domain_uuid = '$domain_uuid' ";
 			$sql .= "and id = '$id' ";
-			$prepstatement = $db->prepare(check_sql($sql));
-			$prepstatement->execute();
-			$result = $prepstatement->fetchAll();
+			$prep_statement = $db->prepare(check_sql($sql));
+			$prep_statement->execute();
+			$result = $prep_statement->fetchAll();
 			foreach ($result as &$row) {
 				//$username = $row["username"];
 				//$password = $row["password"];
@@ -394,7 +396,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				//$user_add_date = $row["user_add_date"];
 				break; //limit to 1 row
 			}
-			unset ($prepstatement);
+			unset ($prep_statement);
 		}
 
 	//show the header
@@ -1008,7 +1010,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			echo "	<tr>\n";
 			echo "		<td colspan='2' align='right'>\n";
 			if ($action == "update") {
-				echo "				<input type='hidden' name='id' value='$id'>\n";
+				echo "				<input type='hidden' name='id' value='$user_uuid'>\n";
 			}
 			echo "				<input type='submit' name='submit' class='btn' value='Save'>\n";
 			echo "		</td>\n";

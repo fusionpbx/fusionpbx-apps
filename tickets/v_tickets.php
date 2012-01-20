@@ -18,7 +18,7 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2010
+	Portions created by the Initial Developer are Copyright (C) 2008-2012
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
@@ -50,41 +50,41 @@ if (!$show_closed) {
 	$sql .= "and ticket_status < 6 ";
 }
 if (!ifgroup("superadmin") && !ifgroup("admin")){
-	$sql .= "and user_id = " . $_SESSION['user_id'] . " ";
+	$sql .= "and user_uuid = " . $_SESSION['user_uuid'] . " ";
 }
 $sql .= "order by ticket_status, queue_id ";
-$prepstatement = $db->prepare(check_sql($sql));
-$prepstatement->execute();
+$prep_statement = $db->prepare(check_sql($sql));
+$prep_statement->execute();
 $x = 0;
-$result = $prepstatement->fetchAll();
+$result = $prep_statement->fetchAll();
 foreach ($result as &$row) {
 	$tickets[$x] = $row;
 	$x++;
 }
-unset ($prepstatement);
+unset ($prep_statement);
 
 $sql = "";
 $sql .= "select * from v_ticket_statuses ";
-$prepstatement = $db->prepare(check_sql($sql));
-$prepstatement->execute();
+$prep_statement = $db->prepare(check_sql($sql));
+$prep_statement->execute();
 $x = 0;
-$result = $prepstatement->fetchAll();
+$result = $prep_statement->fetchAll();
 foreach ($result as &$row) {
 	$statuses[$row['status_id']] = $row['status_name'];
 }
-unset ($prepstatement);
+unset ($prep_statement);
 
 $sql = "";
 $sql .= "select * from v_ticket_queues ";
 $sql .= "where domain_uuid = $domain_uuid ";
-$prepstatement = $db->prepare(check_sql($sql));
-$prepstatement->execute();
+$prep_statement = $db->prepare(check_sql($sql));
+$prep_statement->execute();
 $x = 0;
-$result = $prepstatement->fetchAll();
+$result = $prep_statement->fetchAll();
 foreach ($result as &$row) {
 	$queues[$row['queue_id']] = $row['queue_name'];
 }
-unset ($prepstatement);
+unset ($prep_statement);
 
 //include the view
 include "ticket_list.php";

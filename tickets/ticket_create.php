@@ -59,7 +59,7 @@ Please include any addition contact information as may be required for us to wor
 </tr> 
 	<tr> 
 		<td colspan='2' align='right'> 
-				<input type='hidden' name='profile_id' value='<?php echo $profile['xmpp_profile_id']; ?>'> 
+				<input type='hidden' name='profile_id' value='<?php echo $profile['xmpp_profile_uuid']; ?>'> 
 				<input type='submit' name='submit' class='btn' value='Save'> 
 		</td> 
 	</tr></table></form>	</td>	</tr></table></div>

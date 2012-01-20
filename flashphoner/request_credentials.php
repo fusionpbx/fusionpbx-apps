@@ -48,15 +48,15 @@ $sql = sprintf("select * from v_flashphone_auth where auth_key = '%s' and hostad
 		$_SERVER['REMOTE_ADDR'],
 		$username);
 	
-$prepstatement = $db->prepare(check_sql($sql));
-if (!$prepstatement) {
+$prep_statement = $db->prepare(check_sql($sql));
+if (!$prep_statement) {
 	echo "\nPDO::errorInfo():\n";
 	print_r($db->errorInfo());
 }
 
-$prepstatement->execute();
+$prep_statement->execute();
 $x = 0;
-$result = $prepstatement->fetchAll();
+$result = $prep_statement->fetchAll();
 
 // There is probably a better way to do this but this will work on anything
 foreach ($result as &$row) {
@@ -66,15 +66,15 @@ foreach ($result as &$row) {
 if ($x < 1) {
 	die("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<ERROR>UNAUTHORIZED ACCESS</ERROR>");
 }
-unset ($prepstatement);
+unset ($prep_statement);
 
 //get a list of assigned extensions for this user
 $sql = sprintf("select * from v_extensions where extension_uuid = '%s' and user_list like '%%|%s|%%'", $extension_uuid, $username);
 
-$prepstatement = $db->prepare(check_sql($sql));
-$prepstatement->execute();
+$prep_statement = $db->prepare(check_sql($sql));
+$prep_statement->execute();
 $x = 0;
-$result = $prepstatement->fetchAll();
+$result = $prep_statement->fetchAll();
 foreach ($result as &$row) {
 	$extension_array[$x]['extension_uuid'] = $row["extension_uuid"];
 	$extension_array[$x]['extension'] = $row["extension"];
@@ -83,7 +83,7 @@ foreach ($result as &$row) {
 	$x++;
 }
 
-unset ($prepstatement);
+unset ($prep_statement);
 
 if ($x == 1) {
 header('Content-Type: text/xml');

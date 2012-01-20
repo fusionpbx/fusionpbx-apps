@@ -17,7 +17,7 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2010
+	Portions created by the Initial Developer are Copyright (C) 2008-2012
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
@@ -37,7 +37,7 @@ require_once "includes/header.php";
 require_once "includes/paging.php";
 
 //get variables used to control the order
-	$orderby = $_GET["orderby"];
+	$order_by = $_GET["order_by"];
 	$order = $_GET["order"];
 
 //get the contact id
@@ -85,7 +85,7 @@ require_once "includes/paging.php";
 		$param = "";
 		$page = $_GET['page'];
 		if (strlen($page) == 0) { $page = 0; $_GET['page'] = 0; } 
-		list($paging_controls, $rows_per_page, $var3) = paging($num_rows, $param, $rows_per_page); 
+		list($paging_controls, $rows_per_page, $var_3) = paging($num_rows, $param, $rows_per_page); 
 		$offset = $rows_per_page * $page; 
 
 	//get the contact list
@@ -97,7 +97,7 @@ require_once "includes/paging.php";
 		if (strlen($contact_uuid) > 0) {
 			$sql .= "and v_invoices.contact_uuid_to = '$contact_uuid' ";
 		}
-		if (strlen($orderby)> 0) { $sql .= "order by v_invoices.$orderby $order "; }
+		if (strlen($order_by)> 0) { $sql .= "order by v_invoices.$order_by $order "; }
 		$sql .= " limit $rows_per_page offset $offset ";
 		$prep_statement = $db->prepare(check_sql($sql));
 		$prep_statement->execute();
@@ -106,17 +106,17 @@ require_once "includes/paging.php";
 		unset ($prep_statement, $sql);
 
 	$c = 0;
-	$row_style["0"] = "rowstyle0";
-	$row_style["1"] = "rowstyle1";
+	$row_style["0"] = "row_style0";
+	$row_style["1"] = "row_style1";
 
 	echo "<div align='center'>\n";
 	echo "<table width='100%' border='0' cellpadding='0' cellspacing='0'>\n";
 	echo "<tr>\n";
-	echo thorderby('invoice_number', 'Invoice Number', $orderby, $order);
-	echo thorderby('org', 'Organization', $orderby, $order);
-	echo thorderby('n_given', 'Given Name', $orderby, $order);
-	echo thorderby('n_family', 'Family Name', $orderby, $order);
-	echo thorderby('invoice_date', 'Date', $orderby, $order);
+	echo thorder_by('invoice_number', 'Invoice Number', $order_by, $order);
+	echo thorder_by('org', 'Organization', $order_by, $order);
+	echo thorder_by('n_given', 'Given Name', $order_by, $order);
+	echo thorder_by('n_family', 'Family Name', $order_by, $order);
+	echo thorder_by('invoice_date', 'Date', $order_by, $order);
 	echo "<td align='right' width='42'>\n";
 	echo "	<a href='v_invoices_edit.php?contact_uuid=".$_GET['id']."' alt='add'>$v_link_label_add</a>\n";
 	echo "</td>\n";

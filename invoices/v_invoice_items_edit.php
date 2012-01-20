@@ -51,18 +51,21 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	//add or update the database
 	if ($_POST["persistformvar"] != "true") {
 		if ($action == "add") {
+			$invoice_item_uuid = uuid();
 			$sql = "insert into v_invoice_items ";
 			$sql .= "(";
-			$sql .= "invoice_uuid, ";
 			$sql .= "domain_uuid, ";
+			$sql .= "invoice_uuid, ";
+			$sql .= "invoice_item_uuid, ";
 			$sql .= "item_qty, ";
 			$sql .= "item_desc, ";
 			$sql .= "item_unit_price ";
 			$sql .= ")";
 			$sql .= "values ";
 			$sql .= "(";
-			$sql .= "'$invoice_uuid', ";
 			$sql .= "'$domain_uuid', ";
+			$sql .= "'$invoice_uuid', ";
+			$sql .= "'$invoice_item_uuid', ";
 			$sql .= "'$item_qty', ";
 			$sql .= "'$item_desc', ";
 			$sql .= "'$item_unit_price' ";
@@ -99,7 +102,6 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			return;
 		} //if ($action == "update")
 	} //if ($_POST["persistformvar"] != "true") 
-
 } //(count($_POST)>0 && strlen($_POST["persistformvar"]) == 0)
 
 //pre-populate the form
@@ -120,14 +122,12 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 		unset ($prep_statement);
 	}
 
-
 //show the header
 	require_once "includes/header.php";
 
 //show the content
 	echo "<div align='center'>";
 	echo "<table width='100%' border='0' cellpadding='0' cellspacing=''>\n";
-
 	echo "<tr class='border'>\n";
 	echo "	<td align=\"left\">\n";
 	echo "	  <br>";

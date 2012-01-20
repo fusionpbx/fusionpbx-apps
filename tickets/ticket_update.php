@@ -96,8 +96,8 @@
 	<select name="ticket_owner">
 		<option value=''>--</option>
 		<?php foreach ($queue_members as $qm) {
-			echo "<option value='" . $qm['user_id'] . "' ";
-			if ($qm['user_id'] == $ticket_header['ticket_owner']) echo "selected='selected'";
+			echo "<option value='" . $qm['user_uuid'] . "' ";
+			if ($qm['user_uuid'] == $ticket_header['ticket_owner']) echo "selected='selected'";
 			echo ">" . $qm['username'] . "</option>\n";
 		}
 		?>
@@ -161,28 +161,28 @@
 <tr><td colspan='2'><table width='100%' border="0" cellpadding="0" cellspacing="0">
 	<tr><th colspan='2'>Ticket Notes</th></tr>
 	<tr>
-	<td width="30%" class='rowstyle0' valign='top' align='left' nowrap='nowrap'>
+	<td width="30%" class='row_style0' valign='top' align='left' nowrap='nowrap'>
 			<input type="checkbox" name="alert_user" value="1"/>Alert User<br>
 			Attach File<br />
 			<input type="file" name="file" id="file" />
 	</td>
-	<td class='rowstyle0' align='left'>
+	<td class='row_style0' align='left'>
 		<textarea rows='5' cols='80' class='formfld' type='text' name='new_note'></textarea>
 	</td>
 	</tr>
 	<?php 
-$rowstyle[0] = 'rowstyle0';
-$rowstyle[1] = 'rowstyle1';
+$row_style[0] = 'row_style0';
+$row_style[1] = 'row_style1';
 $rs = 0;
 foreach($ticket_notes as $tn) { 
 if ($rs == 1) { $rs = 0; } else { $rs = 1; }
 ?>
 	<tr>
-		<td width="30%" class="<?php echo $rowstyle[$rs]; ?>" valign='top' align='left' nowrap='nowrap'>
+		<td width="30%" class="<?php echo $row_style[$rs]; ?>" valign='top' align='left' nowrap='nowrap'>
 			Updated: <?php echo $tn['create_stamp']; ?><br/>By: <?php echo $ticket_header['username']; ?>
 			<?php if (strlen($tn['file_pointer']) > 1) echo "<br>File Attachment: " . $tn['file_pointer']; ?>
 		</td>
-		<td class="<?php echo $rowstyle[$rs]; ?>" align='left'>
+		<td class="<?php echo $row_style[$rs]; ?>" align='left'>
 			<?php echo base64_decode($tn['ticket_note']); ?>
 		</td>
 	</tr>

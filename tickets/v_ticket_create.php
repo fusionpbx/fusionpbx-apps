@@ -18,7 +18,7 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2010
+	Portions created by the Initial Developer are Copyright (C) 2008-2012
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
@@ -47,15 +47,15 @@ $sql = "";
 $sql .= "select * from v_ticket_queues ";
 $sql .= "where domain_uuid = '$domain_uuid' ";
 $sql .= "order by queue_name ";
-$prepstatement = $db->prepare(check_sql($sql));
-$prepstatement->execute();
+$prep_statement = $db->prepare(check_sql($sql));
+$prep_statement->execute();
 $x = 0; 
-$result = $prepstatement->fetchAll();
+$result = $prep_statement->fetchAll();
 foreach ($result as &$row) { 
         $queues[$x] = $row;
         $x++;
 }
-unset ($prepstatement);
+unset ($prep_statement);
 
 //add or update the database
 if (isset($_REQUEST["id"])) {
@@ -99,12 +99,12 @@ if ($action == "add" && permission_exists('ticket_add')) {
 	$sql .= "insert into v_tickets (";
  	$sql .= "domain_uuid, ";
  	$sql .= "queue_id, ";
- 	$sql .= "user_id, ";
+ 	$sql .= "user_uuid, ";
  	$sql .= "customer_id, ";
  	$sql .= "subject, ";
  	$sql .= "create_user_id, ";
  	$sql .= "create_stamp, ";
- 	$sql .= "last_update_user_id, ";
+ 	$sql .= "last_update_user_uuid, ";
  	$sql .= "last_update_stamp, ";
  	$sql .= "ticket_uuid, ";
  	$sql .= "ticket_status, ";
@@ -112,12 +112,12 @@ if ($action == "add" && permission_exists('ticket_add')) {
 	$sql .= ") values (";
  	$sql .= "$domain_uuid, ";
  	$sql .= "'" . $request['queue_id'] . "', ";
- 	$sql .= "'" . $_SESSION['user_id'] . "', ";
+ 	$sql .= "'" . $_SESSION['user_uuid'] . "', ";
  	$sql .= "'" . $_SESSION['customer_id'] . "', ";
  	$sql .= "'" . $request['subject'] . "', ";
- 	$sql .= "'" . $_SESSION['user_id'] . "', ";
+ 	$sql .= "'" . $_SESSION['user_uuid'] . "', ";
  	$sql .= "now(), ";
- 	$sql .= "'" . $_SESSION['user_id'] . "', ";
+ 	$sql .= "'" . $_SESSION['user_uuid'] . "', ";
  	$sql .= "now(), ";
  	$sql .= "'" . $ticket_uuid . "', ";
  	$sql .= "'1', ";
@@ -125,9 +125,9 @@ if ($action == "add" && permission_exists('ticket_add')) {
 	$sql .= ") ";
 	if ($db_type == "pgsql") {
 	 	$sql .= "RETURNING ticket_id;";
-		$prepstatement = $db->prepare(check_sql($sql));
-		$prepstatement->execute();
-        	$result = $prepstatement->fetchAll();
+		$prep_statement = $db->prepare(check_sql($sql));
+		$prep_statement->execute();
+        	$result = $prep_statement->fetchAll();
 		$ticket_id = $result[0]['ticket_id'];
 	} elseif ($db_type == "sqlite" || $db_type == "mysql" ) {
                 $db->exec(check_sql($sql));
@@ -147,7 +147,7 @@ if ($action == "add" && permission_exists('ticket_add')) {
 	$sql .= "ticket_note ";
 	$sql .= ") VALUES ( ";
 	$sql .= "$ticket_id, ";
-	$sql .= "'" . $_SESSION['user_id'] . "', ";
+	$sql .= "'" . $_SESSION['user_uuid'] . "', ";
 	$sql .= "now(), ";
 	$sql .= "'" . base64_encode($request['problem_description']) . "' ";
 	$sql .= ") ";
@@ -158,10 +158,10 @@ if ($action == "add" && permission_exists('ticket_add')) {
 	$sql .= "SELECT * from v_ticket_queues ";
 	$sql .= "where queue_id = " . $request['queue_id'] . " ";
 	$sql .= "and domain_uuid = $domain_uuid ";
-	$prepstatement = $db->prepare(check_sql($sql));
-	$prepstatement->execute();
+	$prep_statement = $db->prepare(check_sql($sql));
+	$prep_statement->execute();
 	$x = 0; 
-	$result = $prepstatement->fetchAll();
+	$result = $prep_statement->fetchAll();
 	foreach ($result as &$row) { 
         	$queue = $row;
         	break;
@@ -177,7 +177,7 @@ if ($action == "add" && permission_exists('ticket_add')) {
 	$from = "From: " . $_SESSION['support_email'];
 	mail($to, $subject, $message, $from);
 
-unset ($prepstatement);
+unset ($prep_statement);
 
 
 
