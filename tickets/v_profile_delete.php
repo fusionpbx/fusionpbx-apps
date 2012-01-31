@@ -67,7 +67,7 @@ $sql .= "and xmpp_profile_uuid = '$profile_id' ";
 
 $db->exec(check_sql($sql));
 
-$filename = $v_conf_dir . "/jingle_profiles/" . "v_" . $v_domain . "_" . 
+$filename = $switch_conf_dir . "/jingle_profiles/" . "v_" . $v_domain . "_" . 
 	preg_replace("/[^A-Za-z0-9]/", "", $profile['profile_name']) . "_" . $profile_id . ".xml";
 
 unlink($filename);
