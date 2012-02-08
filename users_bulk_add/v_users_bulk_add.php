@@ -29,14 +29,14 @@ $self = $_SERVER['PHP_SELF'];
 ini_set('auto_detect_line_endings', '1');
 
 function get_domain_uuids(PDO $db) {
-	$query 				= sprintf("SELECT domain_uuid, domain FROM v_system_settings;");
+	$query 				= sprintf("SELECT domain_uuid, domain_name FROM v_domains;");
 	$stmt 				= $db->query($query);
 	$results 			= $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$result_count 		= count($results);
 	for ($i = 0; $i < $result_count; $i++) {
-		$domain 		= $results[$i]['domain'];
-		$domain_uuid 			= $results[$i]['domain_uuid'];
-		$domain_uuids[$domain]	= $domain_uuid;
+		$domain_name 		= $results[$i]['domain_name'];
+		$domain_uuid 		= $results[$i]['domain_uuid'];
+		$domain_uuids[$domain_name]	= $domain_uuid;
 	}
 	return $domain_uuids;
 }
@@ -213,12 +213,9 @@ if (is_array($_FILES) && array_key_exists('users_file', $_FILES)) {
 	}
 }
 
-
-
 printf("<form method=${dq}POST${dq} action=${dq}$self${dq} enctype=${dq}multipart/form-data${dq}");
 printf("<input type=${dq}file${dq} name=${dq}users_file${dq}");
 printf("<input type=${dq}submit${dq} value=${dq}Upload${dq}");
 printf("</form>");
-
 
 require_once "includes/footer.php";
