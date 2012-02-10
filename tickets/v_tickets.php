@@ -49,7 +49,7 @@ $sql .= "where domain_uuid = '$domain_uuid' ";
 if (!$show_closed) {
 	$sql .= "and ticket_status < 6 ";
 }
-if (!ifgroup("superadmin") && !ifgroup("admin")){
+if (!if_group("superadmin") && !if_group("admin")){
 	$sql .= "and user_uuid = " . $_SESSION['user_uuid'] . " ";
 }
 $sql .= "order by ticket_status, queue_id ";

@@ -43,7 +43,7 @@ require_once "includes/header.php";
 $v_domain = $_SESSION['domains'][$domain_uuid]['domain'];
 
 // Check to see if we're an admin and if we are set the $isadmin to true for use in the template and sql query building
-if (ifgroup("superadmin") || ifgroup("admin")){
+if (if_group("superadmin") || if_group("admin")){
 	$isadmin = true;
 }
 
