@@ -1,7 +1,7 @@
 <?php
 	//application details
 		$apps[$x]['name'] = "Ticket Tracker";
-		$apps[$x]['uuid'] = '375715DC-F852-4A7B-B5C4-32FF163B3953';
+		$apps[$x]['uuid'] = '375715dc-f852-4a7b-b5c4-32ff163b3953';
 		$apps[$x]['category'] = '';
 		$apps[$x]['subcategory'] = '';
 		$apps[$x]['version'] = '';
@@ -11,7 +11,7 @@
 
 	//menu details
 		$apps[$x]['menu'][0]['title']['en'] = 'Ticket Tracker';
-		$apps[$x]['menu'][0]['uuid'] = '77048E9F-B946-AD35-5D6B-7838DD9EA81E';
+		$apps[$x]['menu'][0]['uuid'] = '77048e9f-b946-ad35-5d6b-7838dd9ea81e';
 		$apps[$x]['menu'][0]['parent_uuid'] = '';
 		$apps[$x]['menu'][0]['category'] = 'internal';
 		$apps[$x]['menu'][0]['path'] = '/mod/tickets/v_tickets.php';
@@ -20,8 +20,8 @@
 		//$apps[$x]['menu'][0]['groups'][] = 'superadmin';
 
 		$apps[$x]['menu'][1]['title']['en'] = 'My Tickets';
-		$apps[$x]['menu'][1]['uuid'] = '5BFA588D-5880-5A9D-206E-C876403D9161';
-		$apps[$x]['menu'][1]['parent_uuid'] = '77048E9F-B946-AD35-5D6B-7838DD9EA81E';
+		$apps[$x]['menu'][1]['uuid'] = '5bfa588d-5880-5a9d-206e-c876403d9161';
+		$apps[$x]['menu'][1]['parent_uuid'] = '77048e9f-b946-ad35-5d6b-7838dd9ea81e';
 		$apps[$x]['menu'][1]['category'] = 'internal';
 		$apps[$x]['menu'][1]['path'] = '/mod/tickets/v_tickets.php';
 		$apps[$x]['menu'][1]['groups'][] = 'user';
@@ -29,8 +29,8 @@
 		$apps[$x]['menu'][1]['groups'][] = 'superadmin';
 
 		$apps[$x]['menu'][2]['title']['en'] = 'Create Ticket';
-		$apps[$x]['menu'][2]['uuid'] = '87A8F1E7-CF47-29DB-8A5F-46318E119D67';
-		$apps[$x]['menu'][2]['parent_uuid'] = '77048E9F-B946-AD35-5D6B-7838DD9EA81E';
+		$apps[$x]['menu'][2]['uuid'] = '87a8f1e7-cf47-29db-8a5f-46318e119d67';
+		$apps[$x]['menu'][2]['parent_uuid'] = '77048e9f-b946-ad35-5d6b-7838dd9ea81e';
 		$apps[$x]['menu'][2]['category'] = 'internal';
 		$apps[$x]['menu'][2]['path'] = '/mod/tickets/v_ticket_create.php';
 		$apps[$x]['menu'][2]['groups'][] = 'user';
@@ -38,8 +38,8 @@
 		$apps[$x]['menu'][2]['groups'][] = 'superadmin';
 
 		$apps[$x]['menu'][3]['title']['en'] = 'Ticket System Manager';
-		$apps[$x]['menu'][3]['uuid'] = 'A4F3B307-BD62-1D04-E3AD-43DA091FA2F8';
-		$apps[$x]['menu'][3]['parent_uuid'] = '77048E9F-B946-AD35-5D6B-7838DD9EA81E';
+		$apps[$x]['menu'][3]['uuid'] = 'a4f3b307-bd62-1d04-e3ad-43da091fa2f8';
+		$apps[$x]['menu'][3]['parent_uuid'] = '77048e9f-b946-ad35-5d6b-7838dd9ea81e';
 		$apps[$x]['menu'][3]['category'] = 'internal';
 		$apps[$x]['menu'][3]['path'] = '/mod/tickets/v_manager.php';
 		$apps[$x]['menu'][3]['groups'][] = 'admin';
