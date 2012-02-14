@@ -1,6 +1,6 @@
 <?php
 require_once "root.php";
-require_once "includes/config.php";
+require_once "includes/require.php";
 
 //action add or update
 	if (isset($_REQUEST["id"])) {

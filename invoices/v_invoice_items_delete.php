@@ -1,6 +1,6 @@
 <?php
 require_once "root.php";
-require_once "includes/config.php";
+require_once "includes/require.php";
 
 if (count($_GET)>0) {
 	$id = check_str($_GET["id"]);
