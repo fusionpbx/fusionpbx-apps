@@ -88,7 +88,7 @@ else {
 
 //get contact from address
 	$sql = "";
-	$sql .= "select * from v_contacts_adr ";
+	$sql .= "select * from v_contact_adr ";
 	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "and contact_uuid = '$contact_uuid_from' ";
 	$prep_statement = $db->prepare(check_sql($sql));
@@ -142,7 +142,7 @@ else {
 
 //get contact to address
 	$sql = "";
-	$sql .= "select * from v_contacts_adr ";
+	$sql .= "select * from v_contact_adr ";
 	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "and contact_uuid = '$contact_uuid_to' ";
 	$prep_statement = $db->prepare(check_sql($sql));

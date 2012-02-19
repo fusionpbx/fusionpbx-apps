@@ -152,7 +152,7 @@ if (!if_group("admin") && !if_group("superadmin")) {
 require_once "includes/header.php";
 require_once "includes/paging.php";
 
-$inserted = array('v_users' => 0, 'v_extensions' => 0, 'v_group_members' => 0);
+$inserted = array('v_users' => 0, 'v_extensions' => 0, 'v_group_users' => 0);
 if (is_array($_FILES) && array_key_exists('users_file', $_FILES)) {
 	$domain_uuids 				= get_domain_uuids($db);
 	$user_fields 		= get_db_field_names($db, 'v_users');
@@ -186,7 +186,7 @@ if (is_array($_FILES) && array_key_exists('users_file', $_FILES)) {
 				// add user to members group
 				$grp_line 	= array('member', $line[$user_places['username']]);
 				$grp_places	= array('group_name' => 0, 'username' => 1);
-				insert_db_row($db, $grp_line, $grp_places, 'v_group_members', $domain_uuids);
+				insert_db_row($db, $grp_line, $grp_places, 'v_group_users', $domain_uuids);
 				
 				// add user's extension
 				insert_db_row($db, $line, $extension_places, 'v_extensions', $domain_uuids);
