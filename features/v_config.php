@@ -16,7 +16,7 @@
 		$apps[$x]['menu'][0]['uuid'] = '';
 		$apps[$x]['menu'][0]['parent_uuid'] = '';
 		$apps[$x]['menu'][0]['category'] = 'internal';
-		$apps[$x]['menu'][0]['path'] = '/mod/zzz/zzz.php';
+		$apps[$x]['menu'][0]['path'] = '/app/zzz/zzz.php';
 		$apps[$x]['menu'][0]['groups'][] = 'admin';
 		$apps[$x]['menu'][0]['groups'][] = 'superadmin';
 

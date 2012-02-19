@@ -14,7 +14,7 @@
 		$apps[$x]['menu'][0]['uuid'] = '55e19438-63b9-da36-415b-b0219f304426';
 		$apps[$x]['menu'][0]['parent_uuid'] = 'fd29e39c-c936-f5fc-8e2b-611681b266b5';
 		$apps[$x]['menu'][0]['category'] = 'internal';
-		$apps[$x]['menu'][0]['path'] = '/mod/flashphoner/flashphoner.php';
+		$apps[$x]['menu'][0]['path'] = '/app/flashphoner/flashphoner.php';
 
 	//permission details
 		$apps[$x]['permissions'][0]['name'] = 'flashphoner_view';

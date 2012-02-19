@@ -15,7 +15,7 @@
 		$apps[$x]['menu'][0]['uuid'] = '0875598d-bf25-d348-2e87-8d05aef3cf78';
 		$apps[$x]['menu'][0]['parent_uuid'] = 'fd29e39c-c936-f5fc-8e2b-611681b266b5';
 		$apps[$x]['menu'][0]['category'] = 'internal';
-		$apps[$x]['menu'][0]['path'] = '/mod/soft_phone/v_softphone.php';
+		$apps[$x]['menu'][0]['path'] = '/app/soft_phone/v_softphone.php';
 		$apps[$x]['menu'][0]['groups'][] = 'admin';
 		$apps[$x]['menu'][0]['groups'][] = 'superadmin';
 
