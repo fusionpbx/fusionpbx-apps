@@ -40,7 +40,7 @@ else {
 
 require_once "includes/header.php";
 
-$domain_name = $_SESSION['domains'][$domain_uuid]['domain'];
+$domain_name = $_SESSION['domains'][$domain_uuid]['domain_name'];
 
 // Check to see if we're an admin and if we are set the $isadmin to true for use in the template and sql query building
 if (if_group("superadmin") || if_group("admin")){

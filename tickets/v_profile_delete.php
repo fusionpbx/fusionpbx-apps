@@ -38,7 +38,7 @@ else {
 
 require_once "includes/header.php";
 
-$domain_name = $_SESSION['domains'][$domain_uuid]['domain'];
+$domain_name = $_SESSION['domains'][$domain_uuid]['domain_name'];
 
 $profile_id = $_REQUEST['id'];
 
