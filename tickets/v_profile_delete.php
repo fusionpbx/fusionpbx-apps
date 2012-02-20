@@ -38,7 +38,7 @@ else {
 
 require_once "includes/header.php";
 
-$v_domain = $_SESSION['domains'][$domain_uuid]['domain'];
+$domain_name = $_SESSION['domains'][$domain_uuid]['domain'];
 
 $profile_id = $_REQUEST['id'];
 
@@ -67,7 +67,7 @@ $sql .= "and xmpp_profile_uuid = '$profile_id' ";
 
 $db->exec(check_sql($sql));
 
-$filename = $_SESSION['switch']['conf']['dir'] . "/jingle_profiles/" . "v_" . $v_domain . "_" . 
+$filename = $_SESSION['switch']['conf']['dir'] . "/jingle_profiles/" . "v_" . $domain_name . "_" . 
 	preg_replace("/[^A-Za-z0-9]/", "", $profile['profile_name']) . "_" . $profile_id . ".xml";
 
 unlink($filename);

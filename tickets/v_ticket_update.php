@@ -40,7 +40,7 @@ else {
 
 require_once "includes/header.php";
 
-$v_domain = $_SESSION['domains'][$domain_uuid]['domain'];
+$domain_name = $_SESSION['domains'][$domain_uuid]['domain'];
 
 // Check to see if we're an admin and if we are set the $isadmin to true for use in the template and sql query building
 if (if_group("superadmin") || if_group("admin")){
@@ -220,7 +220,7 @@ if ($action == "update" && permission_exists('ticket_update')) {
 			$to = $user_email;
 			$message = "";
 			$message .= "Ticket Number $ticketnumber has been update\n";
-			$message .= "Ticket Link: http://" . $_SESSION['v_domain'] . PROJECT_PATH . "/app/tickets/v_ticket_update.php?uuid=" . urlencode($ticket_uuid). "\n";
+			$message .= "Ticket Link: http://" . $_SESSION['domain_name'] . PROJECT_PATH . "/app/tickets/v_ticket_update.php?uuid=" . urlencode($ticket_uuid). "\n";
 			$message .= "Ticket update: \n";
 			$message .= $request['new_notes'] . "\n";
 			$from = "From: " . $_SESSION['support_email'];
@@ -245,7 +245,7 @@ if ($action == "update" && permission_exists('ticket_update')) {
 			$to = $user_email;
 			$message = "";
 			$message .= "Ticket Number $ticketnumber has been update\n";
-			$message .= "Ticket Link: http://" . $_SESSION['v_domain'] . PROJECT_PATH . "/app/tickets/v_ticket_update.php?uuid=" . urlencode($ticket_uuid). "\n";
+			$message .= "Ticket Link: http://" . $_SESSION['domain_name'] . PROJECT_PATH . "/app/tickets/v_ticket_update.php?uuid=" . urlencode($ticket_uuid). "\n";
 			$from = "From: " . $_SESSION['support_email'];
 			mail($to, $subject, $message, $from);
 		}

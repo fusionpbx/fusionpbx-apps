@@ -40,7 +40,7 @@ else {
 
 require_once "includes/header.php";
 
-$v_domain = $_SESSION['domains'][$domain_uuid]['domain'];
+$domain_name = $_SESSION['domains'][$domain_uuid]['domain'];
 
 //get a list of Available Queues
 $sql = "";
@@ -171,7 +171,7 @@ if ($action == "add" && permission_exists('ticket_add')) {
 	$to = $queue['queue_email'];
 	$message = "";
 	$message .= "Ticket Number $ticketnumber has been created by $username in " . $queue['queue_name'] . "\n";
-	$message .= "Ticket Link: http://" . $_SESSION['v_domain'] . PROJECT_PATH . "/app/tickets/v_ticket_update.php?uuid=" . urlencode($ticket_uuid). "\n";
+	$message .= "Ticket Link: http://" . $_SESSION['domain_name'] . PROJECT_PATH . "/app/tickets/v_ticket_update.php?uuid=" . urlencode($ticket_uuid). "\n";
 	$message .= "Ticket body: \n";
 	$message .= $request['problem_description'] . "\n";
 	$from = "From: " . $_SESSION['support_email'];
