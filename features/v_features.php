@@ -34,7 +34,6 @@ else {
 	exit;
 }
 
-require_once "includes/v_dialplan_entry_exists.php";
 require_once "includes/header.php";
 
 ?><br />
