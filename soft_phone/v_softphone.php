@@ -180,7 +180,7 @@ function ajaxFunction()
 
 	var api_cmd = document.getElementById('api_cmd').value;
 	//alert('cmd:'. api_cmd);
-	xmlhttp.open("GET","<?php echo PROJECT_PATH; ?>/includes/v_cmd.php?cmd="+escape(api_cmd)+"&rdr=false",true);
+	xmlhttp.open("GET","<?php echo PROJECT_PATH; ?>/includes/cmd.php?cmd="+escape(api_cmd)+"&rdr=false",true);
 	xmlhttp.send(null);
 }
 
