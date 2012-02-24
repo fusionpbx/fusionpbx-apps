@@ -22,9 +22,7 @@ echo "<meta http-equiv=\"refresh\" content=\"2;contact_url=v_invoices_edit.php?i
 echo "<div align='center'>\n";
 echo "Delete Complete\n";
 echo "</div>\n";
-
 require_once "includes/footer.php";
 return;
 
 ?>
-
