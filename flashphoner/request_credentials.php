@@ -69,8 +69,25 @@ if ($x < 1) {
 unset ($prep_statement);
 
 //get a list of assigned extensions for this user
-$sql = sprintf("select * from v_extensions where extension_uuid = '%s' and user_list like '%%|%s|%%'", $extension_uuid, $username);
-
+$sql = "";
+$sql .= " select * from v_extensions ";
+$sql .= "where domain_uuid = '$domain_uuid' ";
+$sql .= "and enabled = 'true' ";
+if (count($_SESSION['user']['extension']) > 0) {
+	$sql .= "and (";
+	$x = 0;
+	foreach($_SESSION['user']['extension'] as $row) {
+		if ($x > 0) { $sql .= "or "; }
+		$sql .= "extension = '".$row['user']."' ";
+		$x++;
+	}
+	$sql .= ")";
+}
+else {
+	//hide any results when a user has not been assigned an extension
+	$sql .= "and extension = 'disabled' ";
+}
+$sql .= "order by extension asc ";
 $prep_statement = $db->prepare(check_sql($sql));
 $prep_statement->execute();
 $x = 0;
