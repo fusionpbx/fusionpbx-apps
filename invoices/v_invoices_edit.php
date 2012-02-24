@@ -102,8 +102,8 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				unset($sql);
 
 				//require_once "includes/header.php";
-				echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices.php\">\n";
-				//echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices.php?id=$contact_uuid\">\n";
+				echo "<meta http-equiv=\"refresh\" content=\"2;contact_url=v_invoices.php\">\n";
+				//echo "<meta http-equiv=\"refresh\" content=\"2;contact_url=v_invoices.php?id=$contact_uuid\">\n";
 				echo "<div align='center'>\n";
 				echo "Add Complete\n";
 				echo "</div>\n";
@@ -123,7 +123,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				unset($sql);
 
 				require_once "includes/header.php";
-				echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices.php\">\n";
+				echo "<meta http-equiv=\"refresh\" content=\"2;contact_url=v_invoices.php\">\n";
 				echo "<div align='center'>\n";
 				echo "Update Complete\n";
 				echo "</div>\n";
@@ -214,9 +214,9 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
 	$sql = "";
-	$sql .= " select contact_uuid, org, n_given, n_family from v_contacts ";
+	$sql .= " select contact_uuid, contact_organization, contact_name_given, contact_name_family from v_contacts ";
 	$sql .= " where domain_uuid = '$domain_uuid' ";
-	$sql .= " order by org asc ";
+	$sql .= " order by contact_organization asc ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
 	$result = $prep_statement->fetchAll();
@@ -225,16 +225,16 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "<option value=\"\"></option>\n";
 	foreach($result as $row) {
 		$contact_name = '';
-		if (strlen($row['org']) > 0) {
-			$contact_name = $row['org'];
+		if (strlen($row['contact_organization']) > 0) {
+			$contact_name = $row['contact_organization'];
 		}
-		if (strlen($row['n_family']) > 0) {
+		if (strlen($row['contact_name_family']) > 0) {
 			if (strlen($contact_name) > 0) { $contact_name .= ", "; }
-			$contact_name .= $row['n_family'];
+			$contact_name .= $row['contact_name_family'];
 		}
-		if (strlen($row['n_given']) > 0) {
+		if (strlen($row['contact_name_given']) > 0) {
 			if (strlen($contact_name) > 0) { $contact_name .= ", "; }
-			$contact_name .= $row['n_given'];
+			$contact_name .= $row['contact_name_given'];
 		}
 		if ($row['contact_uuid'] == $contact_uuid_from) {
 			echo "<option value=\"".$row['contact_uuid']."\" selected=\"selected\">".$contact_name." $contact_uuid</option>\n";
@@ -257,9 +257,9 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
 	$sql = "";
-	$sql .= " select contact_uuid, org, n_given, n_family from v_contacts ";
+	$sql .= " select contact_uuid, contact_organization, contact_name_given, contact_name_family from v_contacts ";
 	$sql .= " where domain_uuid = '$domain_uuid' ";
-	$sql .= " order by org asc ";
+	$sql .= " order by contact_organization asc ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
 	$result = $prep_statement->fetchAll();
@@ -268,16 +268,16 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "<option value=\"\"></option>\n";
 	foreach($result as $row) {
 		$contact_name = '';
-		if (strlen($row['org']) > 0) {
-			$contact_name = $row['org'];
+		if (strlen($row['contact_organization']) > 0) {
+			$contact_name = $row['contact_organization'];
 		}
-		if (strlen($row['n_family']) > 0) {
+		if (strlen($row['contact_name_family']) > 0) {
 			if (strlen($contact_name) > 0) { $contact_name .= ", "; }
-			$contact_name .= $row['n_family'];
+			$contact_name .= $row['contact_name_family'];
 		}
-		if (strlen($row['n_given']) > 0) {
+		if (strlen($row['contact_name_given']) > 0) {
 			if (strlen($contact_name) > 0) { $contact_name .= ", "; }
-			$contact_name .= $row['n_given'];
+			$contact_name .= $row['contact_name_given'];
 		}
 		if ($row['contact_uuid'] == $contact_uuid_to) {
 			echo "<option value=\"".$row['contact_uuid']."\" selected=\"selected\">".$contact_name." $contact_uuid</option>\n";

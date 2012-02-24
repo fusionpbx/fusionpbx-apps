@@ -6,11 +6,11 @@
 		$apps[$x]['subcategory'] = '';
 		$apps[$x]['version'] = '';
 		$apps[$x]['license'] = 'Mozilla Public License 1.1';
-		$apps[$x]['url'] = 'http://www.fusionpbx.com';
+		$apps[$x]['contact_url'] = 'http://www.fusionpbx.com';
 		$apps[$x]['description']['en'] = '';
 
 	//menu details
-		$apps[$x]['menu'][$y]['title']['en'] = 'Invoices';
+		$apps[$x]['menu'][$y]['contact_title']['en'] = 'Invoices';
 		$apps[$x]['menu'][$y]['uuid'] = '6ebe753b-0f83-dc34-1c0b-51df2c6f0c3b';
 		$apps[$x]['menu'][$y]['parent_uuid'] = 'fd29e39c-c936-f5fc-8e2b-611681b266b5';
 		$apps[$x]['menu'][$y]['category'] = 'internal';

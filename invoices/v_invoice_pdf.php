@@ -79,48 +79,48 @@ else {
 	$prep_statement->execute();
 	$result = $prep_statement->fetchAll();
 	foreach ($result as &$row) {
-		$from_org = $row["org"];
-		$from_n_given = $row["n_given"];
-		$from_n_family = $row["n_family"];
+		$from_contact_organization = $row["contact_organization"];
+		$from_contact_name_given = $row["contact_name_given"];
+		$from_contact_name_family = $row["contact_name_family"];
 		break; //limit to 1 row
 	}
 	unset ($prep_statement);
 
 //get contact from address
 	$sql = "";
-	$sql .= "select * from v_contact_adr ";
+	$sql .= "select * from v_contact_addresses ";
 	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "and contact_uuid = '$contact_uuid_from' ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
 	$result = $prep_statement->fetchAll();
 	foreach ($result as &$row) {
-		$from_adr_type = $row["adr_type"];
-		$from_adr_street = $row["adr_street"];
-		$from_adr_extended = $row["adr_extended"];
-		$from_adr_locality = $row["adr_locality"];
-		$from_adr_region = $row["adr_region"];
-		$from_adr_postal_code = $row["adr_postal_code"];
-		$from_adr_country = $row["adr_country"];
+		$from_address_type = $row["address_type"];
+		$from_address_street = $row["address_street"];
+		$from_address_extended = $row["address_extended"];
+		$from_address_locality = $row["address_locality"];
+		$from_address_region = $row["address_region"];
+		$from_address_postal_code = $row["address_postal_code"];
+		$from_address_country = $row["address_country"];
 		break; //limit to 1 row
 	}
 	unset ($prep_statement);
 	$pdf->SetY(10);
 	$pdf->SetFont('Arial','B',9);
-	if (strlen($from_org) > 0) {
-		$pdf->Cell(40,5,$from_org);
+	if (strlen($from_contact_organization) > 0) {
+		$pdf->Cell(40,5,$from_contact_organization);
 		$pdf->Ln();
 	}
 	else {
-		if (strlen($from_n_given.$from_n_family) > 0) {
-			$pdf->Cell(40,5,$from_n_given.' '.$from_n_family);
+		if (strlen($from_contact_name_given.$from_contact_name_family) > 0) {
+			$pdf->Cell(40,5,$from_contact_name_given.' '.$from_contact_name_family);
 			$pdf->Ln();
 		}
 	}
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(40,5,$from_adr_street.' '.$from_adr_extended);
+	$pdf->Cell(40,5,$from_address_street.' '.$from_address_extended);
 	$pdf->Ln();
-	$pdf->Cell(40,5,$from_adr_locality.', '.$from_adr_region.' '.$from_adr_country.' '.$from_adr_postal_code);
+	$pdf->Cell(40,5,$from_address_locality.', '.$from_address_region.' '.$from_address_country.' '.$from_address_postal_code);
 	$pdf->Ln();
 	$pdf->Ln();
 
@@ -133,48 +133,48 @@ else {
 	$prep_statement->execute();
 	$result = $prep_statement->fetchAll();
 	foreach ($result as &$row) {
-		$to_org = $row["org"];
-		$to_n_given = $row["n_given"];
-		$to_n_family = $row["n_family"];
+		$to_contact_organization = $row["contact_organization"];
+		$to_contact_name_given = $row["contact_name_given"];
+		$to_contact_name_family = $row["contact_name_family"];
 		break; //limit to 1 row
 	}
 	unset ($prep_statement);
 
 //get contact to address
 	$sql = "";
-	$sql .= "select * from v_contact_adr ";
+	$sql .= "select * from v_contact_addresses ";
 	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "and contact_uuid = '$contact_uuid_to' ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
 	$result = $prep_statement->fetchAll();
 	foreach ($result as &$row) {
-		$to_adr_type = $row["adr_type"];
-		$to_adr_street = $row["adr_street"];
-		$to_adr_extended = $row["adr_extended"];
-		$to_adr_locality = $row["adr_locality"];
-		$to_adr_region = $row["adr_region"];
-		$to_adr_postal_code = $row["adr_postal_code"];
-		$to_adr_country = $row["adr_country"];
+		$to_address_type = $row["address_type"];
+		$to_address_street = $row["address_street"];
+		$to_address_extended = $row["address_extended"];
+		$to_address_locality = $row["address_locality"];
+		$to_address_region = $row["address_region"];
+		$to_address_postal_code = $row["address_postal_code"];
+		$to_address_country = $row["address_country"];
 		break; //limit to 1 row
 	}
 	unset ($prep_statement);
 	$pdf->SetY(40);
 	$pdf->SetFont('Arial','B',9);
-	if (strlen($to_org) > 0) {
-		$pdf->Cell(40,5,$to_org);
+	if (strlen($to_contact_organization) > 0) {
+		$pdf->Cell(40,5,$to_contact_organization);
 		$pdf->Ln();
 	}
 	else {
-		if (strlen($to_n_given.$to_n_family) > 0) {
-			$pdf->Cell(40,5,$to_n_given.' '.$to_n_family);
+		if (strlen($to_contact_name_given.$to_contact_name_family) > 0) {
+			$pdf->Cell(40,5,$to_contact_name_given.' '.$to_contact_name_family);
 			$pdf->Ln();
 		}
 	}
 	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(40,5,$to_adr_street.' '.$to_adr_extended);
+	$pdf->Cell(40,5,$to_address_street.' '.$to_address_extended);
 	$pdf->Ln();
-	$pdf->Cell(40,5,$to_adr_locality.', '.$to_adr_region.' '.$to_adr_country.' '.$to_adr_postal_code);
+	$pdf->Cell(40,5,$to_address_locality.', '.$to_address_region.' '.$to_address_country.' '.$to_address_postal_code);
 	$pdf->Ln();
 	$pdf->Ln();
 	$pdf->Ln();
