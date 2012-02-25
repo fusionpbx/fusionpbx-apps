@@ -102,8 +102,8 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				unset($sql);
 
 				//require_once "includes/header.php";
-				echo "<meta http-equiv=\"refresh\" content=\"2;contact_url=v_invoices.php\">\n";
-				//echo "<meta http-equiv=\"refresh\" content=\"2;contact_url=v_invoices.php?id=$contact_uuid\">\n";
+				echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices.php\">\n";
+				//echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices.php?id=$contact_uuid\">\n";
 				echo "<div align='center'>\n";
 				echo "Add Complete\n";
 				echo "</div>\n";
@@ -123,7 +123,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				unset($sql);
 
 				require_once "includes/header.php";
-				echo "<meta http-equiv=\"refresh\" content=\"2;contact_url=v_invoices.php\">\n";
+				echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices.php\">\n";
 				echo "<div align='center'>\n";
 				echo "Update Complete\n";
 				echo "</div>\n";
