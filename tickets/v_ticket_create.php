@@ -50,7 +50,7 @@ $sql .= "order by queue_name ";
 $prep_statement = $db->prepare(check_sql($sql));
 $prep_statement->execute();
 $x = 0; 
-$result = $prep_statement->fetchAll();
+$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 foreach ($result as &$row) { 
         $queues[$x] = $row;
         $x++;
@@ -127,7 +127,7 @@ if ($action == "add" && permission_exists('ticket_add')) {
 	 	$sql .= "RETURNING ticket_id;";
 		$prep_statement = $db->prepare(check_sql($sql));
 		$prep_statement->execute();
-        	$result = $prep_statement->fetchAll();
+        	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 		$ticket_id = $result[0]['ticket_id'];
 	} elseif ($db_type == "sqlite" || $db_type == "mysql" ) {
                 $db->exec(check_sql($sql));
@@ -161,7 +161,7 @@ if ($action == "add" && permission_exists('ticket_add')) {
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
 	$x = 0; 
-	$result = $prep_statement->fetchAll();
+	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 	foreach ($result as &$row) { 
         	$queue = $row;
         	break;

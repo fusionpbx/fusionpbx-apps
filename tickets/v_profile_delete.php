@@ -51,7 +51,7 @@ $prep_statement = $db->prepare(check_sql($sql));
 $prep_statement->execute();
 
 $x = 0;
-$result = $prep_statement->fetchAll();
+$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 foreach ($result as &$row) {
 	$profiles_array[$x] = $row;
 	$x++;

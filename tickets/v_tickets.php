@@ -56,7 +56,7 @@ $sql .= "order by ticket_status, queue_id ";
 $prep_statement = $db->prepare(check_sql($sql));
 $prep_statement->execute();
 $x = 0;
-$result = $prep_statement->fetchAll();
+$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 foreach ($result as &$row) {
 	$tickets[$x] = $row;
 	$x++;
@@ -68,7 +68,7 @@ $sql .= "select * from v_ticket_statuses ";
 $prep_statement = $db->prepare(check_sql($sql));
 $prep_statement->execute();
 $x = 0;
-$result = $prep_statement->fetchAll();
+$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 foreach ($result as &$row) {
 	$statuses[$row['status_id']] = $row['status_name'];
 }
@@ -80,7 +80,7 @@ $sql .= "where domain_uuid = $domain_uuid ";
 $prep_statement = $db->prepare(check_sql($sql));
 $prep_statement->execute();
 $x = 0;
-$result = $prep_statement->fetchAll();
+$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 foreach ($result as &$row) {
 	$queues[$row['queue_id']] = $row['queue_name'];
 }

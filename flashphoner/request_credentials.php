@@ -56,7 +56,7 @@ if (!$prep_statement) {
 
 $prep_statement->execute();
 $x = 0;
-$result = $prep_statement->fetchAll();
+$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 
 // There is probably a better way to do this but this will work on anything
 foreach ($result as &$row) {
@@ -91,7 +91,7 @@ $sql .= "order by extension asc ";
 $prep_statement = $db->prepare(check_sql($sql));
 $prep_statement->execute();
 $x = 0;
-$result = $prep_statement->fetchAll();
+$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 foreach ($result as &$row) {
 	$extension_array[$x]['extension_uuid'] = $row["extension_uuid"];
 	$extension_array[$x]['extension'] = $row["extension"];

@@ -77,7 +77,7 @@ else {
 	$sql .= "and contact_uuid = '$contact_uuid_from' ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
-	$result = $prep_statement->fetchAll();
+	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 	foreach ($result as &$row) {
 		$from_contact_organization = $row["contact_organization"];
 		$from_contact_name_given = $row["contact_name_given"];
@@ -93,7 +93,7 @@ else {
 	$sql .= "and contact_uuid = '$contact_uuid_from' ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
-	$result = $prep_statement->fetchAll();
+	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 	foreach ($result as &$row) {
 		$from_address_type = $row["address_type"];
 		$from_address_street = $row["address_street"];
@@ -131,7 +131,7 @@ else {
 	$sql .= "and contact_uuid = '$contact_uuid_to' ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
-	$result = $prep_statement->fetchAll();
+	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 	foreach ($result as &$row) {
 		$to_contact_organization = $row["contact_organization"];
 		$to_contact_name_given = $row["contact_name_given"];
@@ -147,7 +147,7 @@ else {
 	$sql .= "and contact_uuid = '$contact_uuid_to' ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
-	$result = $prep_statement->fetchAll();
+	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 	foreach ($result as &$row) {
 		$to_address_type = $row["address_type"];
 		$to_address_street = $row["address_street"];
@@ -236,7 +236,7 @@ else {
 	$sql .= "and invoice_uuid = '$invoice_uuid' ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
-	$result = $prep_statement->fetchAll();
+	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 	$fill = false;
 	$total = 0;
 	foreach ($result as &$row) {

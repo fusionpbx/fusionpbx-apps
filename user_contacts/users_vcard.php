@@ -45,7 +45,7 @@ if (count($_GET)>0) {
 	$sql .= "and id = '$id' ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
-	$result = $prep_statement->fetchAll();
+	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 	foreach ($result as &$row) {
 
 		$vc->data[display_name] = $row["user_first_name"]." ".$row["user_last_name"];

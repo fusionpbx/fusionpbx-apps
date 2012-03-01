@@ -86,7 +86,7 @@ if ($action == "update") {
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
 	$x = 0;
-	$result = $prep_statement->fetchAll();
+	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 	foreach ($result as &$row) {
 		$ticket_header = $row;
 		$x++;
@@ -106,7 +106,7 @@ if ($action == "update") {
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
 	$x = 0;
-	$result = $prep_statement->fetchAll();
+	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 	foreach ($result as &$row) {
 		$ticket_notes[$x] = $row;
 		$x++;
@@ -120,7 +120,7 @@ if ($action == "update") {
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
 	$x = 0;
-	$result = $prep_statement->fetchAll();
+	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 	foreach ($result as &$row) {
 		$queue_members[$x] = $row;
 		$x++;
@@ -134,7 +134,7 @@ if ($action == "update") {
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
 	$x = 0;
-	$result = $prep_statement->fetchAll();
+	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 	foreach ($result as &$row) {
 		$ticket_statuses[$x] = $row;
 		$x++;
@@ -148,7 +148,7 @@ if ($action == "update") {
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
 	$x = 0;
-	$result = $prep_statement->fetchAll();
+	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 	foreach ($result as &$row) {
 		$ticket_queues[$x] = $row;
 		$x++;
@@ -208,7 +208,7 @@ if ($action == "update" && permission_exists('ticket_update')) {
 	        $prep_statement = $db->prepare(check_sql($sql));
 		$prep_statement->execute();
 		$x = 0;
-		$result = $prep_statement->fetchAll();
+		$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 		foreach ($result as &$row) {
 			$user_email = $row['user_email'];
 			break;
@@ -233,7 +233,7 @@ if ($action == "update" && permission_exists('ticket_update')) {
 	        $prep_statement = $db->prepare(check_sql($sql));
 		$prep_statement->execute();
 		$x = 0;
-		$result = $prep_statement->fetchAll();
+		$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 		foreach ($result as &$row) {
 			$user_email = $row['user_email'];
 			break;
