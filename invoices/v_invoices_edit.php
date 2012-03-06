@@ -247,7 +247,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "</select>\n";
 	echo "<br />\n";
 	echo "Select the Contact to send the send the invoice from. \n";
-	echo "<a href='/app/contacts/contacts_edit.php?id=".$contact_uuid_from."'>View</a>\n";
+	echo "<a href='".PROJECT_PATH."/app/contacts/contacts_edit.php?id=".$contact_uuid_from."'>View</a>\n";
 	echo "</td>\n";
 	echo "</tr>\n";
 
@@ -290,7 +290,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "</select>\n";
 	echo "<br />\n";
 	echo "Select the Contact to send the send the invoice to. \n";
-	echo "<a href='/app/contacts/contacts_edit.php?id=".$contact_uuid_to."'>View</a>\n";
+	echo "<a href='".PROJECT_PATH."/app/contacts/contacts_edit.php?id=".$contact_uuid_to."'>View</a>\n";
 	echo "</td>\n";
 	echo "</tr>\n";
 
