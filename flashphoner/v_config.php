@@ -30,24 +30,24 @@
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'serial';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['sqlite'] = 'integer';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['mysql'] = 'INT NOT NULL AUTO_INCREMENT';
-		$apps[$x]['db'][$y]['fields'][$z]['description'] = '';
+		$apps[$x]['db'][$y]['fields'][$z]['description']['en'] = '';
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'auth_key';
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'text';
-		$apps[$x]['db'][$y]['fields'][$z]['description'] = '';
+		$apps[$x]['db'][$y]['fields'][$z]['description']['en'] = '';
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'hostaddr';
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'text';
-		$apps[$x]['db'][$y]['fields'][$z]['description'] = '';
+		$apps[$x]['db'][$y]['fields'][$z]['description']['en'] = '';
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'createtime';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'timestamp';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['sqlite'] = 'date';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['mysql'] = 'timestamp';
-		$apps[$x]['db'][$y]['fields'][$z]['description'] = '';
+		$apps[$x]['db'][$y]['fields'][$z]['description']['en'] = '';
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'username';
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'text';
-		$apps[$x]['db'][$y]['fields'][$z]['description'] = '';
+		$apps[$x]['db'][$y]['fields'][$z]['description']['en'] = '';
 
 ?>
