@@ -3,7 +3,7 @@
 	//application details
 		$apps[$x]['name'] = "Soft Phone";
 		$apps[$x]['uuid'] = 'd49d1e25-2240-dcb3-8a40-643232472a2d';
-		$apps[$x]['category'] = 'PBX';
+		$apps[$x]['category'] = 'Switch';;
 		$apps[$x]['subcategory'] = '';
 		$apps[$x]['version'] = '';
 		$apps[$x]['license'] = 'Mozilla Public License 1.1';
