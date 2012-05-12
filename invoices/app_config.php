@@ -85,6 +85,7 @@
 		$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'] = 'v_id';
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'text';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = '';
+		$apps[$x]['db'][$y]['fields'][$z]['deprecated'] = 'true';
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'contact_uuid_from';
 		$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'] = 'contact_id_from';
