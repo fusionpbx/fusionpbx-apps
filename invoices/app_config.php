@@ -89,12 +89,16 @@
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'contact_uuid_from';
 		$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'] = 'contact_id_from';
-		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'numeric';
+		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'uuid';
+		$apps[$x]['db'][$y]['fields'][$z]['type']['sqlite'] = 'text';
+		$apps[$x]['db'][$y]['fields'][$z]['type']['mysql'] = 'char(36)';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'Contact ID invoice is sent from';
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'contact_uuid_to';
 		$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'] = 'contact_id_to';
-		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'numeric';
+		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'uuid';
+		$apps[$x]['db'][$y]['fields'][$z]['type']['sqlite'] = 'text';
+		$apps[$x]['db'][$y]['fields'][$z]['type']['mysql'] = 'char(36)';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'Contact ID invoice is sent to';
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'invoice_number';
