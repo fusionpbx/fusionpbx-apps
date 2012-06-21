@@ -136,8 +136,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 //pre-populate the form
 	if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
 		$invoice_uuid = $_GET["id"];
-		$sql = "";
-		$sql .= "select * from v_invoices ";
+		$sql = "select * from v_invoices ";
 		$sql .= "where domain_uuid = '$domain_uuid' ";
 		$sql .= "and invoice_uuid = '$invoice_uuid' ";
 		$prep_statement = $db->prepare(check_sql($sql));
@@ -159,10 +158,9 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 
 //get the default invoice number and contact_uuid_from
 	if ($action == "add") {
-		$sql = "";
-		$sql .= "select * from v_invoices ";
+		$sql = "select * from v_invoices ";
 		$sql .= "where domain_uuid = '$domain_uuid' ";
-		$sql .= "order by invoice_uuid desc ";
+		$sql .= "order by invoice_number desc ";
 		$sql .= "limit 1 ";
 		$prep_statement = $db->prepare(check_sql($sql));
 		if ($prep_statement) {

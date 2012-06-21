@@ -52,7 +52,7 @@ require_once "includes/paging.php";
 
 	echo "<table width='100%' border='0'>\n";
 	echo "	<tr>\n";
-	echo "		<td width='50%' align=\"left\" nowrap=\"nowrap\"><b>Invoice List</b></td>\n";
+	echo "		<td width='50%' align=\"left\" nowrap=\"nowrap\"><b>Invoices</b></td>\n";
 	echo "		<td width='50%' align=\"right\">\n";
 	echo "			<input type='button' class='btn' name='' alt='back' onclick=\"history.go(-1);\" value='Back'>\n";
 	echo "		</td>\n";
@@ -60,8 +60,7 @@ require_once "includes/paging.php";
 	echo "</table>\n";
 
 	//prepare to page the results
-		$sql = "";
-		$sql .= "SELECT count(*) as num_rows FROM v_invoices ";
+		$sql = "SELECT count(*) as num_rows FROM v_invoices ";
 		$sql .= "LEFT OUTER JOIN v_contacts ";
 		$sql .= "ON v_invoices.contact_uuid_to = v_contacts.contact_uuid ";
 		$sql .= "where v_invoices.domain_uuid = '$domain_uuid' ";
@@ -89,15 +88,19 @@ require_once "includes/paging.php";
 		$offset = $rows_per_page * $page; 
 
 	//get the contact list
-		$sql = "";
-		$sql .= "SELECT * FROM v_invoices ";
+		$sql = "SELECT * FROM v_invoices ";
 		$sql .= "LEFT OUTER JOIN v_contacts ";
 		$sql .= "ON v_invoices.contact_uuid_to = v_contacts.contact_uuid ";
 		$sql .= "where v_invoices.domain_uuid = '$domain_uuid' ";
 		if (strlen($contact_uuid) > 0) {
 			$sql .= "and v_invoices.contact_uuid_to = '$contact_uuid' ";
 		}
-		if (strlen($order_by)> 0) { $sql .= "order by v_invoices.$order_by $order "; }
+		if (strlen($order_by) == 0) { 
+			$sql .= "order by v_invoices.invoice_number asc ";
+		}
+		else { 
+			$sql .= "order by v_invoices.$order_by $order ";
+		}
 		$sql .= " limit $rows_per_page offset $offset ";
 		$prep_statement = $db->prepare(check_sql($sql));
 		$prep_statement->execute();
