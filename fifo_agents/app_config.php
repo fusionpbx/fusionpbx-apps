@@ -8,10 +8,10 @@
 		$apps[$x]['version'] = '';
 		$apps[$x]['license'] = 'Mozilla Public License 1.1';
 		$apps[$x]['url'] = 'http://www.fusionpbx.com';
-		$apps[$x]['description']['en'] = '';
+		$apps[$x]['description']['en-us'] = '';
 
 	//menu details
-		$apps[$x]['menu'][0]['title']['en'] = 'Fifo Agents';
+		$apps[$x]['menu'][0]['title']['en-us'] = 'Fifo Agents';
 		$apps[$x]['menu'][0]['uuid'] = 'zzz';
 		$apps[$x]['menu'][0]['parent_uuid'] = 'zzz';
 		$apps[$x]['menu'][0]['category'] = 'internal';
