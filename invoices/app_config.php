@@ -1,16 +1,35 @@
 <?php
 	//application details
-		$apps[$x]['name'] = 'invoice';
+		$apps[$x]['name'] = 'Invoices';
 		$apps[$x]['uuid'] = 'e5a1f4f5-7766-ec9c-118b-50f76b0788c0';
 		$apps[$x]['category'] = '';
 		$apps[$x]['subcategory'] = '';
 		$apps[$x]['version'] = '';
 		$apps[$x]['license'] = 'Mozilla Public License 1.1';
 		$apps[$x]['contact_url'] = 'http://www.fusionpbx.com';
-		$apps[$x]['description']['en'] = '';
+		$apps[$x]['description']['en-us'] = '';
+		$apps[$x]['description']['es-mx'] = '';
+		$apps[$x]['description']['de'] = '';
+		$apps[$x]['description']['de-ch'] = '';
+		$apps[$x]['description']['de-at'] = '';
+		$apps[$x]['description']['fr'] = '';
+		$apps[$x]['description']['fr-ca'] = '';
+		$apps[$x]['description']['fr-ch'] = '';
+		$apps[$x]['description']['pt-pt'] = '';
+		$apps[$x]['description']['pt-br'] = '';
 
 	//menu details
-		$apps[$x]['menu'][$y]['title']['en'] = 'Invoices';
+		$y = 0;
+		$apps[$x]['menu'][$y]['title']['en-us'] = 'Invoices';
+		$apps[$x]['menu'][$y]['title']['es-mx'] = '';
+		$apps[$x]['menu'][$y]['title']['de'] = '';
+		$apps[$x]['menu'][$y]['title']['de-ch'] = '';
+		$apps[$x]['menu'][$y]['title']['de-at'] = '';
+		$apps[$x]['menu'][$y]['title']['fr'] = '';
+		$apps[$x]['menu'][$y]['title']['fr-ca'] = '';
+		$apps[$x]['menu'][$y]['title']['fr-ch'] = '';
+		$apps[$x]['menu'][$y]['title']['pt-pt'] = '';
+		$apps[$x]['menu'][$y]['title']['pt-br'] = '';
 		$apps[$x]['menu'][$y]['uuid'] = '6ebe753b-0f83-dc34-1c0b-51df2c6f0c3b';
 		$apps[$x]['menu'][$y]['parent_uuid'] = 'fd29e39c-c936-f5fc-8e2b-611681b266b5';
 		$apps[$x]['menu'][$y]['category'] = 'internal';
@@ -20,41 +39,42 @@
 		$apps[$x]['menu'][$y]['groups'][] = 'superadmin';
 
 	//permission details
+		$y = 0;
 		$apps[$x]['permissions'][$y]['name'] = 'invoice_view';
 		$apps[$x]['permissions'][$y]['groups'][] = 'superadmin';
 		//$apps[$x]['permissions'][$y]['groups'][] = 'user';
 		//$apps[$x]['permissions'][$y]['groups'][] = 'admin';
-
-		$apps[$x]['permissions'][1]['name'] = 'invoice_add';
-		$apps[$x]['permissions'][1]['groups'][] = 'superadmin';
-		//$apps[$x]['permissions'][1]['groups'][] = 'admin';
-
-		$apps[$x]['permissions'][2]['name'] = 'invoice_edit';
-		$apps[$x]['permissions'][2]['groups'][] = 'superadmin';
-		//$apps[$x]['permissions'][2]['groups'][] = 'admin';
-		//$apps[$x]['permissions'][2]['groups'][] = 'user';
-
+		$y++;
+		$apps[$x]['permissions'][$y]['name'] = 'invoice_add';
+		$apps[$x]['permissions'][$y]['groups'][] = 'superadmin';
+		//$apps[$x]['permissions'][$y]['groups'][] = 'admin';
+		$y++;
+		$apps[$x]['permissions'][$y]['name'] = 'invoice_edit';
+		$apps[$x]['permissions'][$y]['groups'][] = 'superadmin';
+		//$apps[$x]['permissions'][$y]['groups'][] = 'admin';
+		//$apps[$x]['permissions'][$y]['groups'][] = 'user';
+		$y++;
 		$apps[$x]['permissions'][$y]['name'] = 'invoice_item_view';
 		$apps[$x]['permissions'][$y]['groups'][] = 'superadmin';
 		//$apps[$x]['permissions'][$y]['groups'][] = 'user';
 		//$apps[$x]['permissions'][$y]['groups'][] = 'admin';
-
-		$apps[$x]['permissions'][1]['name'] = 'invoice_item_add';
-		$apps[$x]['permissions'][1]['groups'][] = 'superadmin';
-		//$apps[$x]['permissions'][1]['groups'][] = 'admin';
-
-		$apps[$x]['permissions'][2]['name'] = 'invoice_item_edit';
-		$apps[$x]['permissions'][2]['groups'][] = 'superadmin';
-		//$apps[$x]['permissions'][2]['groups'][] = 'admin';
-		//$apps[$x]['permissions'][2]['groups'][] = 'user';
-
-		$apps[$x]['permissions'][3]['name'] = 'invoice_item_delete';
-		$apps[$x]['permissions'][3]['groups'][] = 'superadmin';
-		//$apps[$x]['permissions'][3]['groups'][] = 'admin';
-
-		$apps[$x]['permissions'][3]['name'] = 'invoice_delete';
-		$apps[$x]['permissions'][3]['groups'][] = 'superadmin';
-		//$apps[$x]['permissions'][3]['groups'][] = 'admin';
+		$y++;
+		$apps[$x]['permissions'][$y]['name'] = 'invoice_item_add';
+		$apps[$x]['permissions'][$y]['groups'][] = 'superadmin';
+		//$apps[$x]['permissions'][$y]['groups'][] = 'admin';
+		$y++;
+		$apps[$x]['permissions'][$y]['name'] = 'invoice_item_edit';
+		$apps[$x]['permissions'][$y]['groups'][] = 'superadmin';
+		//$apps[$x]['permissions'][$y]['groups'][] = 'admin';
+		//$apps[$x]['permissions'][$y]['groups'][] = 'user';
+		$y++;
+		$apps[$x]['permissions'][$y]['name'] = 'invoice_item_delete';
+		$apps[$x]['permissions'][$y]['groups'][] = 'superadmin';
+		//$apps[$x]['permissions'][$y]['groups'][] = 'admin';
+		$y++;
+		$apps[$x]['permissions'][$y]['name'] = 'invoice_delete';
+		$apps[$x]['permissions'][$y]['groups'][] = 'superadmin';
+		//$apps[$x]['permissions'][$y]['groups'][] = 'admin';
 
 	//schema details
 		$y = 0; //table array index
