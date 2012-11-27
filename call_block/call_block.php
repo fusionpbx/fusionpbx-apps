@@ -139,10 +139,10 @@ else {
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['block_call_enabled']."&nbsp;</td>\n";
 			echo "	<td valign='top' align='right'>\n";
 			if (permission_exists('call_block_edit')) {
-				echo "		<a href='call_block_edit.php?id=".$row['blocked_caller_uuid']."' alt=$text['button-edit']>$v_link_label_edit</a>\n";
+				echo "		<a href='call_block_edit.php?id=".$row['blocked_caller_uuid']."' alt='".$text['button-edit']."'>$v_link_label_edit</a>\n";
 			}
 			if (permission_exists('call_block_delete')) {
-				echo "		<a href='call_block_delete.php?id=".$row['blocked_caller_uuid']."' alt=$text['button-delete'] onclick=\"return confirm(".$text['confirm-delete'].")\">$v_link_label_delete</a>\n";
+				echo "		<a href='call_block_delete.php?id=".$row['blocked_caller_uuid']."' alt='".$text['button-delete']."' onclick=\"return confirm(".$text['confirm-delete'].")\">$v_link_label_delete</a>\n";
 			};
 			echo "</tr>\n";
 			if ($c==0) { $c=1; } else { $c=0; }
@@ -158,7 +158,7 @@ else {
 	echo "		<td width='33.3%' align='center' nowrap>$paging_controls</td>\n";
 		echo "		<td width='33.3%' align='right'>\n";
 		if (permission_exists('call_block_add')) {
-			echo "			<a href='call_block_edit.php' alt=$text['button-add']>$v_link_label_add</a>\n";
+			echo "			<a href='call_block_edit.php' alt='".$text['button-add']."'>$v_link_label_add</a>\n";
 		}
 		echo "		</td>\n";
 	echo "	</tr>\n";
