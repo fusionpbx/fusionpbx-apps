@@ -42,7 +42,7 @@ else {
 	foreach($text as $key => $value) {
 		$text[$key] = $value[$_SESSION['domain']['language']['code']];                
 	}
-	
+
 require_once "includes/header.php";
 require_once "includes/paging.php";
 
