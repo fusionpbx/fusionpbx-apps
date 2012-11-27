@@ -64,7 +64,7 @@ else {
 	echo "<div align='center'>\n";
 	echo "	<table width='40%'>\n";
 	echo "		<tr>\n";
-	echo "			<th align='left'>"$text['label-message']."</th>\n";
+	echo "			<th align='left'>".$text['label-message']."</th>\n";
 	echo "		</tr>\n";
 	echo "		<tr>\n";
 	echo "			<td class='row_style1'><strong>".$text['label-delete-complete']."</strong></td>\n";
