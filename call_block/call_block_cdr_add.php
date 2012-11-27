@@ -40,7 +40,7 @@ else {
 //add multi-lingual support
 	require_once "app_languages.php";
 	foreach($text as $key => $value) {
-		$text[$key] = $value[$_SESSION['domain']['language']['code']];                
+		$text[$key] = $value[$_SESSION['domain']['language']['code']];
 	}
 
 //action add from cdr

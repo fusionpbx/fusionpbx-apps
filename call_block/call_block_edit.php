@@ -40,32 +40,33 @@ else {
 //add multi-lingual support
 	require_once "app_languages.php";
 	foreach($text as $key => $value) {
-		$text[$key] = $value[$_SESSION['domain']['language']['code']];                
+		$text[$key] = $value[$_SESSION['domain']['language']['code']];
 	}
 
-function callblock_get_extensions($select_extension) {
-	global $db
+//define the callblock_get_extensions function
+	function call_block_get_extensions($select_extension) {
+		global $db;
 
-//list voicemail
-	$sql = "select extension, user_context, description from v_extensions ";
-	$sql .= "where domain_uuid = '".$_SESSION['domain_uuid']."' ";
-	$sql .= "and enabled = 'true' ";
-	$sql .= "order by extension asc ";
-	$prep_statement = $db->prepare(check_sql($sql));
-	$prep_statement->execute();
-	$result = $prep_statement->fetchAll(PDO::FETCH_ASSOC);
+		//list voicemail
+		$sql = "select extension, user_context, description from v_extensions ";
+		$sql .= "where domain_uuid = '".$_SESSION['domain_uuid']."' ";
+		$sql .= "and enabled = 'true' ";
+		$sql .= "order by extension asc ";
+		$prep_statement = $db->prepare(check_sql($sql));
+		$prep_statement->execute();
+		$result = $prep_statement->fetchAll(PDO::FETCH_ASSOC);
 
-	echo "<optgroup label='Voicemail'>\n";
-	foreach ($result as &$row) {
-		$extension = $row["extension"];
-		$context = $row["user_context"];
-		$description = $row["description"];
-		if ($extension == $select_extension) $selected = "SELECTED";
-		echo "		<option value='Voicemail $context $extension' $selected>".$extension." ".$description."</option>\n";
-		$selected = "";
+		echo "<optgroup label='Voicemail'>\n";
+		foreach ($result as &$row) {
+			$extension = $row["extension"];
+			$context = $row["user_context"];
+			$description = $row["description"];
+			if ($extension == $select_extension) $selected = "SELECTED";
+			echo "		<option value='Voicemail $context $extension' $selected>".$extension." ".$description."</option>\n";
+			$selected = "";
+		}
+		echo "</optgroup>\n";
 	}
-	echo "</optgroup>\n";
-}
 
 //action add or update
 	if (isset($_REQUEST["id"])) {
@@ -329,7 +330,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	} else {
 		echo "   <option value='Busy' >".$text['label-busy']."</option>\n";
 	}
-	callblock_get_extensions($extension);
+	call_block_get_extensions($extension);
 	echo "	</select>\n";
 	echo "<br />\n";
 	echo $text['label-action-message']."\n";
