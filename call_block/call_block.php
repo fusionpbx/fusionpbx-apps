@@ -118,7 +118,7 @@ else {
 	echo th_order_by('block_call_enabled', $text['label-enabled'], $order_by, $order);
 	echo "<td align='right' width='42'>\n";
 	if (permission_exists('call_block_add')) {
-		echo "	<a href='call_block_edit.php' alt=$text['button-add']>$v_link_label_add</a>\n";
+		echo "	<a href='call_block_edit.php' alt='".$text['button-add']."'>$v_link_label_add</a>\n";
 	}
 	echo "</td>\n";
 	echo "<tr>\n";
