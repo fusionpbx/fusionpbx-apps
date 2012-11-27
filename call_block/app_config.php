@@ -7,7 +7,7 @@
 		$apps[$x]['version'] = '';
 		$apps[$x]['license'] = 'Mozilla Public License 1.1';
 		$apps[$x]['url'] = 'http://www.fusionpbx.com';
-		$apps[$x]['description']['en'] = 'A tool to block incoming numbers.';
+		$apps[$x]['description']['en-us'] = 'A tool to block incoming numbers.';
 
 	//menu details
 		$apps[$x]['menu'][0]['title']['en'] = 'Call Block';
