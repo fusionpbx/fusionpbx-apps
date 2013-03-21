@@ -43,7 +43,7 @@ else {
 		$text[$key] = $value[$_SESSION['domain']['language']['code']];
 	}
 
-//define the callblock_get_extensions function
+//define the call_block_get_extensions function
 	function call_block_get_extensions($select_extension) {
 		global $db;
 
@@ -241,7 +241,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				echo "	</td>\n";
 				echo "	<td valign='top' class='".$row_style[$c]."'>".$tmp_start_epoch."</td>\n";
 				echo "	<td valign='top' align='right'>\n";
-				echo "		<a href='callblock_cdr_add.php?cdr_id=".$row['uuid']."' alt='add'>$v_link_label_add</a>\n";
+				echo "		<a href='call_block_cdr_add.php?cdr_id=".$row['uuid']."' alt='add'>$v_link_label_add</a>\n";
 				echo "</tr>\n";
 				if ($c==0) { $c=1; } else { $c=0; }
 			}
