@@ -102,8 +102,8 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				unset($sql);
 
 				//require_once "includes/header.php";
-				echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices.php\">\n";
-				//echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices.php?id=$contact_uuid\">\n";
+				echo "<meta http-equiv=\"refresh\" content=\"2;url=invoices.php\">\n";
+				//echo "<meta http-equiv=\"refresh\" content=\"2;url=invoices.php?id=$contact_uuid\">\n";
 				echo "<div align='center'>\n";
 				echo "Add Complete\n";
 				echo "</div>\n";
@@ -123,7 +123,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				unset($sql);
 
 				require_once "includes/header.php";
-				echo "<meta http-equiv=\"refresh\" content=\"2;url=v_invoices.php\">\n";
+				echo "<meta http-equiv=\"refresh\" content=\"2;url=invoices.php\">\n";
 				echo "<div align='center'>\n";
 				echo "Update Complete\n";
 				echo "</div>\n";
@@ -190,7 +190,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 		echo "<td align='left' width='30%' nowrap='nowrap'><b>Invoice Edit</b></td>\n";
 	}
 	echo "<td width='70%' align='right'>\n";
-	echo "	<input type='button' class='btn' name='' alt='back' onclick=\"window.location='v_invoice_pdf.php?id=".$_GET["id"]."'\" value='PDF'>\n";
+	echo "	<input type='button' class='btn' name='' alt='back' onclick=\"window.location='invoice_pdf.php?id=".$_GET["id"]."'\" value='PDF'>\n";
 	echo "	<input type='button' class='btn' name='' alt='back' onclick=\"history.go(-1);\" value='Back'>\n";
 	echo "</td>\n";
 	echo "</tr>\n";
@@ -329,7 +329,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "</form>";
 
 	if ($action == "update") {
-		require "v_invoice_items.php";
+		require "invoice_items.php";
 	}
 
 	echo "	</td>";

@@ -1,7 +1,6 @@
 <?php
 /* $Id$ */
 /*
-	v_exec.php
 	Copyright (C) 2008 Mark J Crane
 	All rights reserved.
 
@@ -101,7 +100,7 @@ require_once "includes/paging.php";
 	echo th_order_by('item_desc', 'Description', $order_by, $order);
 	echo "<th nowrap='nowrap'>Amount</th>\n";
 	echo "<td align='right' width='42'>\n";
-	echo "	<a href='v_invoice_items_edit.php?invoice_uuid=".$_GET['id']."&contact_uuid=".$contact_uuid."' alt='add'>$v_link_label_add</a>\n";
+	echo "	<a href='invoice_item_edit.php?invoice_uuid=".$_GET['id']."&contact_uuid=".$contact_uuid."' alt='add'>$v_link_label_add</a>\n";
 	echo "</td>\n";
 	echo "<tr>\n";
 
@@ -115,8 +114,8 @@ require_once "includes/paging.php";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$item_desc."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".number_format(($row['item_qty'] * $row['item_unit_price']), 2)."&nbsp;</td>\n";
 			echo "	<td valign='top' align='right'>\n";
-			echo "		<a href='v_invoice_items_edit.php?invoice_uuid=".$row['invoice_uuid']."&id=".$row['invoice_item_uuid']."&contact_uuid=".$contact_uuid."' alt='edit'>$v_link_label_edit</a>\n";
-			echo "		<a href='v_invoice_items_delete.php?invoice_uuid=".$row['invoice_uuid']."&id=".$row['invoice_item_uuid']."&contact_uuid=".$contact_uuid."' alt='delete' onclick=\"return confirm('Do you really want to delete this?')\">$v_link_label_delete</a>\n";
+			echo "		<a href='invoice_item_edit.php?invoice_uuid=".$row['invoice_uuid']."&id=".$row['invoice_item_uuid']."&contact_uuid=".$contact_uuid."' alt='edit'>$v_link_label_edit</a>\n";
+			echo "		<a href='invoice_item_delete.php?invoice_uuid=".$row['invoice_uuid']."&id=".$row['invoice_item_uuid']."&contact_uuid=".$contact_uuid."' alt='delete' onclick=\"return confirm('Do you really want to delete this?')\">$v_link_label_delete</a>\n";
 			echo "	</td>\n";
 			echo "</tr>\n";
 			if ($c==0) { $c=1; } else { $c=0; }
@@ -131,7 +130,7 @@ require_once "includes/paging.php";
 	echo "		<td width='33.3%' nowrap>&nbsp;</td>\n";
 	echo "		<td width='33.3%' align='center' nowrap>$paging_controls</td>\n";
 	echo "		<td width='33.3%' align='right'>\n";
-	echo "			<a href='v_invoice_items_edit.php?invoice_uuid=".$_GET['id']."&contact_uuid=".$contact_uuid."' alt='add'>$v_link_label_add</a>\n";
+	echo "			<a href='invoice_item_edit.php?invoice_uuid=".$_GET['id']."&contact_uuid=".$contact_uuid."' alt='add'>$v_link_label_add</a>\n";
 	echo "		</td>\n";
 	echo "	</tr>\n";
  	echo "	</table>\n";
