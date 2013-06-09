@@ -62,8 +62,8 @@ else {
 	$invoice_date = date("d", strtotime($invoice_date)).' '.date("M", strtotime($invoice_date)).' '.date("Y", strtotime($invoice_date));
 
 //prepare to use fpdf
-	define('FPDF_FONTPATH',$_SERVER["DOCUMENT_ROOT"].PROJECT_PATH.'/includes/fpdf/font/');
-	require('includes/fpdf/fpdf.php');
+	define('FPDF_FONTPATH',$_SERVER["DOCUMENT_ROOT"].PROJECT_PATH.'/resources/fpdf/font/');
+	require('resources/fpdf/fpdf.php');
 
 //create the fpdf object and add the first page
 	$pdf = new FPDF();
