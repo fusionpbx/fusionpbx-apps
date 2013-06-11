@@ -26,7 +26,7 @@
 require_once "root.php";
 require_once "includes/require.php";
 require_once "includes/checkauth.php";
-if (if_group("admin") || if_group("superadmin")) {
+if (permission_exists('invoice_delete')) {
 	//access granted
 }
 else {
@@ -34,26 +34,35 @@ else {
 	exit;
 }
 
-if (count($_GET) > 0) {
-	$id = check_str($_GET["id"]);
-	$contact_uuid = check_str($_GET["contact_uuid"]);
-}
+//add multi-lingual support
+	require_once "app_languages.php";
+	foreach($text as $key => $value) {
+		$text[$key] = $value[$_SESSION['domain']['language']['code']];
+	}
 
-if (strlen($id )> 0) {
-	$sql = "delete from v_invoices ";
-	$sql .= "where invoice_uuid = '$id' ";
-	$prep_statement = $db->prepare(check_sql($sql));
-	$prep_statement->execute();
-	unset($sql);
-}
+//get the id
+	if (count($_GET) > 0) {
+		$id = check_str($_GET["id"]);
+		$contact_uuid = check_str($_GET["contact_uuid"]);
+	}
 
-require_once "includes/header.php";
-echo "<meta http-equiv=\"refresh\" content=\"2;url=invoices.php?id=$contact_uuid\">\n";
-echo "<div align='center'>\n";
-echo "Delete Complete\n";
-echo "</div>\n";
+//delete invoice
+	if (strlen($id )> 0) {
+		$sql = "delete from v_invoices ";
+		$sql .= "where domain_uuid = '$domain_uuid' ";
+		$sql .= "and invoice_uuid = '$id' ";
+		$prep_statement = $db->prepare(check_sql($sql));
+		$prep_statement->execute();
+		unset($sql);
+	}
 
-require_once "includes/footer.php";
-return;
+//redirect the user
+	require_once "includes/header.php";
+	echo "<meta http-equiv=\"refresh\" content=\"2;url=invoices.php?id=$contact_uuid\">\n";
+	echo "<div align='center'>\n";
+	echo $text['message-delete']."\n";
+	echo "</div>\n";
+	require_once "includes/footer.php";
+	return;
 
 ?>

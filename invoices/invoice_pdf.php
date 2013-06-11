@@ -34,14 +34,19 @@ else {
 	exit;
 }
 
+//add multi-lingual support
+	require_once "app_languages.php";
+	foreach($text as $key => $value) {
+		$text[$key] = $value[$_SESSION['domain']['language']['code']];
+	}
+
 //action invoice_uuid
 	if (isset($_REQUEST["id"])) {
 		$invoice_uuid = check_str($_REQUEST["id"]);
 	}
 
 //get the invoice details
-	$sql = "";
-	$sql .= "select * from v_invoices ";
+	$sql = "select * from v_invoices ";
 	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "and invoice_uuid = '$invoice_uuid' ";
 	$sql .= "order by invoice_uuid desc ";
@@ -71,8 +76,7 @@ else {
 	$pdf->SetFont('Arial','B',9);
 
 //get contact from name
-	$sql = "";
-	$sql .= "select * from v_contacts ";
+	$sql = "select * from v_contacts ";
 	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "and contact_uuid = '$contact_uuid_from' ";
 	$prep_statement = $db->prepare(check_sql($sql));
@@ -87,8 +91,7 @@ else {
 	unset ($prep_statement);
 
 //get contact from address
-	$sql = "";
-	$sql .= "select * from v_contact_addresses ";
+	$sql = "select * from v_contact_addresses ";
 	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "and contact_uuid = '$contact_uuid_from' ";
 	$prep_statement = $db->prepare(check_sql($sql));
@@ -125,8 +128,7 @@ else {
 	$pdf->Ln();
 
 //get contact to name
-	$sql = "";
-	$sql .= "select * from v_contacts ";
+	$sql = "select * from v_contacts ";
 	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "and contact_uuid = '$contact_uuid_to' ";
 	$prep_statement = $db->prepare(check_sql($sql));
@@ -136,13 +138,11 @@ else {
 		$to_contact_organization = $row["contact_organization"];
 		$to_contact_name_given = $row["contact_name_given"];
 		$to_contact_name_family = $row["contact_name_family"];
-		break; //limit to 1 row
 	}
 	unset ($prep_statement);
 
 //get contact to address
-	$sql = "";
-	$sql .= "select * from v_contact_addresses ";
+	$sql = "select * from v_contact_addresses ";
 	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "and contact_uuid = '$contact_uuid_to' ";
 	$prep_statement = $db->prepare(check_sql($sql));
@@ -183,14 +183,14 @@ else {
 	$pdf->SetY(10);
 	$pdf->Cell(150,10,'');
 	$pdf->SetFont('Arial','',23);
-	$pdf->Cell(40,10,"INVOICE");
+	$pdf->Cell(40,10,$text['label-invoice']);
 	$pdf->Ln();
 	$pdf->SetFont('Arial','',9);
 	$pdf->Cell(150,5,'');
-	$pdf->Cell(40,5,'Invoice Date: '.$invoice_date);
+	$pdf->Cell(40,5,$text['label-invoice_date'].' '.$invoice_date);
 	$pdf->Ln();
 	$pdf->Cell(150,5,'');
-	$pdf->Cell(40,5,'Invoice Number: '.$invoice_number);
+	$pdf->Cell(40,5,$text['label-invoice_date'].' '.$invoice_number);
 	$pdf->Ln();
 	$pdf->Ln();
 	$pdf->Ln();
@@ -199,7 +199,7 @@ else {
 	$pdf->SetY(65);
 
 //table headers array
-	$header = array('Qty', 'Description', 'Unit Price', 'Amount');
+	$header = array($text['label-item_qty'], $text['label-item_desc'], $text['label-item_unit_price'], $text['label-item_amount']);
 
 //set the table header styles
 	$pdf->SetFillColor(200,200,200);
@@ -213,7 +213,7 @@ else {
 	$w[2] = 25;
 	$w[3] = 25;
 	for($i=0;$i<count($header);$i++) {
-		if ($header[$i] == "Description") {
+		if ($header[$i] == $text['label-item_desc']) {
 			//left align
 			$pdf->Cell($w[$i],5,$header[$i],1,0,'L',true);
 		}
@@ -230,8 +230,7 @@ else {
 	$pdf->SetFont('Arial','',9);
 
 //itemized list
-	$sql = "";
-	$sql .= "select * from v_invoice_items ";
+	$sql = "select * from v_invoice_items ";
 	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "and invoice_uuid = '$invoice_uuid' ";
 	$prep_statement = $db->prepare(check_sql($sql));
@@ -299,12 +298,12 @@ else {
 	$pdf->Cell($w[0],6,'','',0,'L','');
 	$pdf->Cell($w[1],6,'','',0,'L','');
 	$pdf->Cell($w[2],6,'','',0,'R','');
-	$pdf->Cell($w[3],6,'Total: '.number_format($total,2),'',0,'R','');
+	$pdf->Cell($w[3],6,$text['label-invoice_total'].' '.number_format($total,2),'',0,'R','');
 	$pdf->Ln();
 
 	if (strlen($invoice_note) > 0) {
 		$pdf->SetFont('Arial','B',9);
-		$pdf->Cell($w[0],6,'Notes','',0,'L',$fill);
+		$pdf->Cell($w[0],6,$text['label-invoice_notes'],'',0,'L',$fill);
 		$pdf->Ln();
 		$pdf->Cell($w[0],6,''.$invoice_note,'',0,'L',$fill);
 		$pdf->Ln();

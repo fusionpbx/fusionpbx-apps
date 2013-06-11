@@ -26,13 +26,19 @@
 require_once "root.php";
 require_once "includes/require.php";
 require_once "includes/checkauth.php";
-if (if_group("admin") || if_group("superadmin")) {
+if (permission_exists('invoice_add') || permission_exists('invoice_edit')) {
 	//access granted
 }
 else {
 	echo "access denied";
 	exit;
 }
+
+//add multi-lingual support
+	require_once "app_languages.php";
+	foreach($text as $key => $value) {
+		$text[$key] = $value[$_SESSION['domain']['language']['code']];
+	}
 
 //action add or update
 	if (isset($_REQUEST["id"])) {
@@ -44,7 +50,7 @@ else {
 	}
 
 //get http post variables and set them to php variables
-	if (count($_POST)>0) {
+	if (count($_POST) > 0) {
 		$invoice_number = check_str($_POST["invoice_number"]);
 		$contact_uuid_from = check_str($_POST["contact_uuid_from"]);
 		$contact_uuid_to = check_str($_POST["contact_uuid_to"]);
@@ -59,8 +65,13 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	}
 
 	//check for all required data
-		//if (strlen($invoice_number) == 0) { $msg .= "Please provide: Invoice Number<br>\n"; }
-		//if (strlen($invoice_date) == 0) { $msg .= "Please provide: Date<br>\n"; }
+		//if (strlen($invoice_uuid) == 0) { $msg .= $text['message-required']." ".$text['label-invoice_uuid']."<br>\n"; }
+		//if (strlen($domain_uuid) == 0) { $msg .= $text['message-required']." ".$text['label-domain_uuid']."<br>\n"; }
+		//if (strlen($contact_uuid_from) == 0) { $msg .= $text['message-required']." ".$text['label-contact_uuid_from']."<br>\n"; }
+		//if (strlen($contact_uuid_to) == 0) { $msg .= $text['message-required']." ".$text['label-contact_uuid_to']."<br>\n"; }
+		//if (strlen($invoice_number) == 0) { $msg .= $text['message-required']." ".$text['label-invoice_number']."<br>\n"; }
+		//if (strlen($invoice_date) == 0) { $msg .= $text['message-required']." ".$text['label-invoice_date']."<br>\n"; }
+		//if (strlen($invoice_notes) == 0) { $msg .= $text['message-required']." ".$text['label-invoice_notes']."<br>\n"; }
 		if (strlen($msg) > 0 && strlen($_POST["persistformvar"]) == 0) {
 			require_once "includes/header.php";
 			require_once "includes/persistformvar.php";
@@ -76,7 +87,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 
 	//add or update the database
 		if ($_POST["persistformvar"] != "true") {
-			if ($action == "add") {
+			if ($action == "add" && permission_exists('invoice_add')) {
 				$invoice_uuid = uuid();
 				$sql = "insert into v_invoices ";
 				$sql .= "(";
@@ -101,17 +112,16 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				$db->exec(check_sql($sql));
 				unset($sql);
 
-				//require_once "includes/header.php";
+				require_once "includes/header.php";
 				echo "<meta http-equiv=\"refresh\" content=\"2;url=invoices.php\">\n";
-				//echo "<meta http-equiv=\"refresh\" content=\"2;url=invoices.php?id=$contact_uuid\">\n";
 				echo "<div align='center'>\n";
-				echo "Add Complete\n";
+				echo "	".$text['message-add']."\n";
 				echo "</div>\n";
 				require_once "includes/footer.php";
 				return;
 			} //if ($action == "add")
 
-			if ($action == "update") {
+			if ($action == "update" && permission_exists('invoice_edit')) {
 				$sql = "update v_invoices set ";
 				$sql .= "invoice_number = '$invoice_number', ";
 				$sql .= "contact_uuid_from = '$contact_uuid_from', ";
@@ -125,7 +135,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				require_once "includes/header.php";
 				echo "<meta http-equiv=\"refresh\" content=\"2;url=invoices.php\">\n";
 				echo "<div align='center'>\n";
-				echo "Update Complete\n";
+				echo "	".$text['message-update']."\n";
 				echo "</div>\n";
 				require_once "includes/footer.php";
 				return;
@@ -135,7 +145,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 
 //pre-populate the form
 	if (count($_GET)>0 && $_POST["persistformvar"] != "true") {
-		$invoice_uuid = $_GET["id"];
+		$invoice_uuid = check_str($_GET["id"]);
 		$sql = "select * from v_invoices ";
 		$sql .= "where domain_uuid = '$domain_uuid' ";
 		$sql .= "and invoice_uuid = '$invoice_uuid' ";
@@ -177,38 +187,33 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "<table width='100%' border='0' cellpadding='0' cellspacing=''>\n";
 	echo "<tr class='border'>\n";
 	echo "	<td align=\"left\">\n";
-	echo "	  <br>";
+	echo "		<br>";
 
 	echo "<form method='post' name='frm' action=''>\n";
 	echo "<div align='center'>\n";
 	echo "<table width='100%'  border='0' cellpadding='6' cellspacing='0'>\n";
 	echo "<tr>\n";
-	if ($action == "add") {
-		echo "<td align='left' width='30%' nowrap='nowrap'><b>Invoice Add</b></td>\n";
-	}
-	if ($action == "update") {
-		echo "<td align='left' width='30%' nowrap='nowrap'><b>Invoice Edit</b></td>\n";
-	}
+	echo "<td align='left' width='30%' nowrap='nowrap'><b>".$text['title-invoice']."</b></td>\n";
 	echo "<td width='70%' align='right'>\n";
-	echo "	<input type='button' class='btn' name='' alt='back' onclick=\"window.location='invoice_pdf.php?id=".$_GET["id"]."'\" value='PDF'>\n";
-	echo "	<input type='button' class='btn' name='' alt='back' onclick=\"history.go(-1);\" value='Back'>\n";
+	echo "	<input type='button' class='btn' name='' alt='".$text['button-pdf']."' onclick=\"window.location='invoice_pdf.php?id=".$_GET["id"]."'\" value='".$text['button-pdf']."'>\n";
+	echo "	<input type='button' class='btn' name='' alt='".$text['button-back']."' onclick=\"window.location='invoices.php'\" value='".$text['button-back']."'>\n";
 	echo "</td>\n";
 	echo "</tr>\n";
 
 	echo "<tr>\n";
 	echo "<td class='vncell' valign='top' align='left' nowrap='nowrap'>\n";
-	echo "	Invoice Number:\n";
+	echo "	".$text['label-invoice_number'].":\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
 	echo "  <input class='formfld' type='text' name='invoice_number' maxlength='255' value='$invoice_number'>\n";
 	echo "<br />\n";
-	echo "Enter the invoice number.\n";
+	echo $text['description-invoice_number']."\n";
 	echo "</td>\n";
 	echo "</tr>\n";
 
 	echo "<tr>\n";
 	echo "<td class='vncell' valign='top' align='left' nowrap='nowrap'>\n";
-	echo "	From:\n";
+	echo "	".$text['label-contact_uuid_from'].":\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
 	$sql = "";
@@ -244,14 +249,14 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	unset($sql, $result, $row_count);
 	echo "</select>\n";
 	echo "<br />\n";
-	echo "Select the Contact to send the send the invoice from. \n";
-	echo "<a href='".PROJECT_PATH."/app/contacts/contacts_edit.php?id=".$contact_uuid_from."'>View</a>\n";
+	echo $text['description-contact_uuid_from']." \n";
+	echo "<a href='".PROJECT_PATH."/app/contacts/contacts_edit.php?id=".$contact_uuid_from."'>".$text['button-view']."</a>\n";
 	echo "</td>\n";
 	echo "</tr>\n";
 
 	echo "<tr>\n";
 	echo "<td class='vncell' valign='top' align='left' nowrap='nowrap'>\n";
-	echo "	To:\n";
+	echo "	".$text['label-contact_uuid_to'].":\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
 	$sql = "";
@@ -287,8 +292,8 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	unset($sql, $result, $row_count);
 	echo "</select>\n";
 	echo "<br />\n";
-	echo "Select the Contact to send the send the invoice to. \n";
-	echo "<a href='".PROJECT_PATH."/app/contacts/contacts_edit.php?id=".$contact_uuid_to."'>View</a>\n";
+	echo $text['description-contact_uuid_to']." \n";
+	echo "<a href='".PROJECT_PATH."/app/contacts/contacts_edit.php?id=".$contact_uuid_to."'>".$text['button-view']."</a>\n";
 	echo "</td>\n";
 	echo "</tr>\n";
 
@@ -298,7 +303,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 		//show the formatted date
 			echo "<tr>\n";
 			echo "<td class='vncell' valign='top' align='left' nowrap='nowrap'>\n";
-			echo "	Date:\n";
+			echo "	".$text['label-invoice_date'].":\n";
 			echo "</td>\n";
 			echo "<td class='vtable' align='left'>\n";
 			echo "  $invoice_date\n";
@@ -308,12 +313,12 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 
 	echo "<tr>\n";
 	echo "<td class='vncell' valign='top' align='left' nowrap='nowrap'>\n";
-	echo "	Notes:\n";
+	echo "	".$text['label-invoice_notes'].":\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "  <textarea class='formfld' type='text' name='invoice_notes'>$invoice_notes</textarea>\n";
+	echo "	<textarea class='formfld' type='text' name='invoice_notes'>$invoice_notes</textarea>\n";
 	echo "<br />\n";
-	echo "Enter the invoice note.\n";
+	echo $text['description-invoice_notes']."\n";
 	echo "</td>\n";
 	echo "</tr>\n";
 
@@ -322,7 +327,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	if ($action == "update") {
 		echo "				<input type='hidden' name='invoice_uuid' value='$invoice_uuid'>\n";
 	}
-	echo "				<input type='submit' name='submit' class='btn' value='Save'>\n";
+	echo "				<input type='submit' name='submit' class='btn' value='".$text['button-save']."'>\n";
 	echo "		</td>\n";
 	echo "	</tr>";
 	echo "</table>";
