@@ -34,11 +34,12 @@ This method causes the script to get its manadatory arguments directly from the 
 	15 Jun, 2011: Added loglevel parameter and logger function to simplify control of debug output
 	4 May, 2012: tested with FusionPBX V3
 	4 May, 2012: added per_tenant capability (domain based)
+	12 Jun, 2013: update the database connection, change table name from v_callblock to v_call_block
 ]]
 
 -- Command line parameters
 	local	params = {	cmd="",
-						cid_num = tostring(session:getVariable("caller_id_number")),
+						cid_num = string.gsub(tostring(session:getVariable("caller_id_number")), "+", ""),
 						cid_name = session:getVariable("caller_id_name"),
 						domain = session:getVariable("domain"),
 						userid= "", -- session:getVariable("id")
@@ -56,20 +57,14 @@ This method causes the script to get its manadatory arguments directly from the 
 		end
 	end
 
---include the lua script
+--include config.lua
 	scripts_dir = string.sub(debug.getinfo(1).source,2,string.len(debug.getinfo(1).source)-(string.len(argv[0])+1));
-	include = assert(loadfile(scripts_dir .. "/resources/config.lua"));
-	include();
+	dofile(scripts_dir.."/resources/functions/config.lua");
+	dofile(config());
 
 --connect to the database
-	--ODBC - data source name
-		if (dsn_name) then
-			dbh = freeswitch.Dbh(dsn_name,dsn_username,dsn_password);
-		end
-	--FreeSWITCH core db handler
-		if (db_type == "sqlite") then
-			dbh = freeswitch.Dbh("core:"..db_path.."/"..db_name);
-		end
+	dofile(scripts_dir.."/resources/functions/database_handle.lua");
+	dbh = database_handle('system');
 
 --log if not connect 
 	if dbh:connected() == false then
@@ -91,7 +86,7 @@ This method causes the script to get its manadatory arguments directly from the 
 --Check if number is in call_block list
 	--	If it is, then increment the counter and block the call
 	if (params["cmd"] == "C") then
-		sql = "SELECT * FROM v_callblock as c "
+		sql = "SELECT * FROM v_call_block as c "
 		sql = sql .. "JOIN v_domains as d ON c.domain_uuid=d.domain_uuid "
 		sql = sql .. "WHERE c.blocked_caller_number = '" .. params["cid_num"] .. "' AND d.domain_name = '" .. params["domain"] .."'"
 		status = dbh:query(sql, function(rows)
@@ -111,7 +106,7 @@ This method causes the script to get its manadatory arguments directly from the 
 					--logger("W", "INFO", "Details: " .. details[k])
 					k = k + 1
 				end
-				dbh:query("UPDATE v_callblock SET blocked_call_count = " .. found_count + 1 .. " WHERE blocked_caller_uuid = '" .. found_uuid .. "'")
+				dbh:query("UPDATE v_call_block SET blocked_call_count = " .. found_count + 1 .. " WHERE blocked_caller_uuid = '" .. found_uuid .. "'")
 				session:setVariable("call_block", "block")
 				logger("W", "NOTICE", "number " .. params["cid_num"] .. " blocked with " .. found_count .. " previous hits, domain: " .. params["domain"])
 				if (found_action == "Reject") then
