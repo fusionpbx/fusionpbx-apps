@@ -35,6 +35,7 @@ This method causes the script to get its manadatory arguments directly from the 
 	4 May, 2012: tested with FusionPBX V3
 	4 May, 2012: added per_tenant capability (domain based)
 	12 Jun, 2013: update the database connection, change table name from v_callblock to v_call_block
+	14 Jun, 2013: Change Voicemail option to use Transfer, avoids mod_voicemail dependency
 ]]
 
 -- Command line parameters
@@ -117,7 +118,7 @@ This method causes the script to get its manadatory arguments directly from the 
 				end
 				if (details[0] =="Voicemail") then
 					session:setAutoHangup(false)
-					session:execute("voicemail", details[1] .. " " .. session:getVariable("domain") .. " " .. details[2])
+					session:execute("transfer", "*99" .. details[2] .. " XML  " .. details[1])
 				end
 			end
 		end
