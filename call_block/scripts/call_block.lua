@@ -102,7 +102,7 @@ This method causes the script to get its manadatory arguments directly from the 
 			if (found_enabled == "true") then
 				details = {}
 				k = 0
-				for v in string.gmatch(found_action, "%w+") do
+				for v in string.gmatch(found_action, "[%w%.]+") do
 					details[k] = v
 					--logger("W", "INFO", "Details: " .. details[k])
 					k = k + 1
