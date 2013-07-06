@@ -30,7 +30,7 @@ if(php_sapi_name() == 'cli') {
 }
 else {
 	//require authentication
-	require_once "includes/checkauth.php";
+	require_once "resources/check_auth.php";
 	if (permission_exists('cdr_csv_view')) {
 		//access granted
 	}

@@ -25,7 +25,7 @@
 */
 include "root.php";
 require "includes/require.php";
-require_once "includes/checkauth.php";
+require_once "resources/check_auth.php";
 require_once "app_languages.php";
 if (permission_exists('voicemail_delete')) {
 	//access granted

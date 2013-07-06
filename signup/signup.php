@@ -25,10 +25,10 @@
 */
 include "root.php";
 require_once "includes/require.php";
-require_once "includes/recaptchalib.php";
-//require_once "includes/email_address_validator.php";
+require_once "resources/recaptchalib.php";
+//require_once "resources/email_address_validator.php";
 include "config.php";
-include "v_fields.php";
+include "fields.php";
 
 # the response from reCAPTCHA
 $resp = null;
