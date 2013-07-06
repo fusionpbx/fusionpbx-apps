@@ -34,7 +34,7 @@ else {
 	exit;
 }
 
-require_once "includes/lib_cdr.php";
+require_once "lib_cdr.php";
 
 if (count($_REQUEST)>0) {
 	$cdr_id = $_REQUEST["cdr_id"];

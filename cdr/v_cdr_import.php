@@ -40,7 +40,7 @@ else {
 	}
 }
 
-require "includes/lib_cdr.php";
+require "lib_cdr.php";
 
 //---- begin import cdr records -----------------------------------------------------------------------------------
 

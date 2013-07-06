@@ -37,7 +37,7 @@ require_once "resources/header.php";
 require_once "resources/paging.php";
 
 require_once "v_cdr_import.php";
-require "includes/lib_cdr.php";
+require "lib_cdr.php";
 	
 $order_by = $_GET["order_by"];
 $order = $_GET["order"];
