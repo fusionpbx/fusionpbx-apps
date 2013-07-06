@@ -143,7 +143,7 @@ function insert_db_row($db, $line, $places, $table, $domain_uuids) {
 
 
 include "root.php";
-require_once "includes/require.php";
+require_once "resources/require.php";
 require_once "resources/check_auth.php";
 if (!if_group("admin") && !if_group("superadmin")) {
 	printf("access denied");

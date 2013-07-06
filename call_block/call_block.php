@@ -26,7 +26,7 @@
 	Call Block is written by Gerrit Visser <gerrit308@gmail.com>
 */
 require_once "root.php";
-require_once "includes/require.php";
+require_once "resources/require.php";
 require_once "resources/check_auth.php";
 
 if (permission_exists('call_block_view')) {
