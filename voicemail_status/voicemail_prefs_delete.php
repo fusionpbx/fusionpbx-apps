@@ -39,7 +39,7 @@ if (count($_GET)>0) {
 }
 
 //pdo voicemail database connection
-	include "includes/lib_pdo_vm.php";
+	include "resources/pdo_vm.php";
 
 //delete the data
 	if (strlen($id)>0) {

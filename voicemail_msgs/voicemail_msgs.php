@@ -44,7 +44,7 @@ else {
 	if ($_GET['a'] == "download") {
 
 		//pdo voicemail database connection
-			include "includes/lib_pdo_vm.php";
+			include "resources/pdo_vm.php";
 
 		session_cache_limiter('public');
 
@@ -121,7 +121,7 @@ else {
 	}
 
 //pdo voicemail database connection
-	include "includes/lib_pdo_vm.php";
+	include "resources/pdo_vm.php";
 
 //show the content
 	echo "<div align='center'>";

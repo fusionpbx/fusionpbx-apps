@@ -147,7 +147,7 @@ $order = $_GET["order"];
 	unset ($prep_statement, $sql);
 
 	//pdo voicemail database connection
-//		include "includes/lib_pdo_vm.php";
+//		include "resources/pdo_vm.php";
 
 	if ($result_count > 0) {
 		foreach($result as $row) {
