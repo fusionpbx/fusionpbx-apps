@@ -34,7 +34,7 @@ else {
 	exit;
 }
 
-require_once "includes/class_vcard.php";
+require_once "resources/classes/vcard.php";
 $vc = new vcard();
 
 if (count($_GET)>0) {
