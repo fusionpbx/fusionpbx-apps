@@ -33,7 +33,7 @@ else {
 	echo "access denied";
 	exit;
 }
-require_once "includes/header.php";
+require_once "resources/header.php";
 
 
 //notes
@@ -273,5 +273,5 @@ function pa_hangup () {
 </script>
 <?php
 
-require_once "includes/footer.php";
+require_once "resources/footer.php";
 ?>

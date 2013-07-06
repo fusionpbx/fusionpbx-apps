@@ -33,8 +33,8 @@ else {
 	echo "access denied";
 	exit;
 }
-require_once "includes/header.php";
-require_once "includes/paging.php";
+require_once "resources/header.php";
+require_once "resources/paging.php";
 
 $order_by = $_GET["order_by"];
 $order = $_GET["order"];
@@ -147,7 +147,7 @@ $order = $_GET["order"];
 	echo "<br><br>";
 
 
-require_once "includes/footer.php";
+require_once "resources/footer.php";
 unset ($result_count);
 unset ($result);
 unset ($key);

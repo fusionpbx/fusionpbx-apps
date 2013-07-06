@@ -36,7 +36,7 @@ else {
 	echo "access denied";
 	exit;
 }
-require_once "includes/header.php";
+require_once "resources/header.php";
 
 unset ($prep_statement);
 
@@ -61,5 +61,5 @@ if (count($_SESSION['user']['extension']) < 1) {
 }
 
 //show the footer
-require_once "includes/footer.php";
+require_once "resources/footer.php";
 ?>

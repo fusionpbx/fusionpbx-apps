@@ -58,7 +58,7 @@ else {
 
 //show the error message or show the content
 	if (strlen($msg) > 0) {
-		require_once "includes/header.php";
+		require_once "resources/header.php";
 		echo "<div align='center'>\n";
 		echo "	<table width='40%'>\n";
 		echo "		<tr>\n";
@@ -69,7 +69,7 @@ else {
 		echo "		</tr>\n";
 		echo "	</table>\n";
 		echo "</div>\n";
-		require_once "includes/footer.php";
+		require_once "resources/footer.php";
 		return;
 	}
 
@@ -85,12 +85,12 @@ else {
 	}
 
 //redirect the user
-	require_once "includes/header.php";
+	require_once "resources/header.php";
 	echo "<meta http-equiv=\"refresh\" content=\"2;url=voicemail_msgs.php\">\n";
 	echo "<div align='center'>\n";
 	echo "".$text['confirm-delete-2']." $msg\n";
 	echo "</div>\n";
-	require_once "includes/footer.php";
+	require_once "resources/footer.php";
 	return;
 
 ?>

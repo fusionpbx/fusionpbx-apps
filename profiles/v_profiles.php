@@ -63,7 +63,7 @@ if ($_GET['a'] == "del" && permission_exists('sip_profiles_edit')) {
 	}
 }
 
-require_once "includes/header.php";
+require_once "resources/header.php";
 
 $c = 0;
 $row_style["0"] = "row_style0";
@@ -190,5 +190,5 @@ if ($v_path_show) {
 
 <?php 
 //show the footer
-	require_once "includes/footer.php";
+	require_once "resources/footer.php";
 ?>

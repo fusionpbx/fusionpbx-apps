@@ -47,13 +47,13 @@ if (strlen($id)>0) {
 	unset($sql);
 }
 
-require_once "includes/header.php";
+require_once "resources/header.php";
 echo "<meta http-equiv=\"refresh\" content=\"2;url=v_fifo_agent_status_logs.php\">\n";
 echo "<div align='center'>\n";
 echo "Delete Complete\n";
 echo "</div>\n";
 
-require_once "includes/footer.php";
+require_once "resources/footer.php";
 return;
 
 ?>

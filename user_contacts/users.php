@@ -34,8 +34,8 @@ else {
 	exit;
 }
 
-require_once "includes/header.php";
-require_once "includes/paging.php";
+require_once "resources/header.php";
+require_once "resources/paging.php";
 
 //get the http values and set them as php variables
 	$order_by = $_GET["order_by"];
@@ -160,5 +160,5 @@ require_once "includes/paging.php";
 	echo "<br><br>";
 
 //show the footer
-	require_once "includes/footer.php";
+	require_once "resources/footer.php";
 ?>

@@ -160,19 +160,19 @@ if (count($_POST)>0 && $_POST["persistform"] != "1") {
 	$db->exec(check_sql($sql));
 	unset($sql);
 
-	require_once "includes/header.php";
+	require_once "resources/header.php";
 	echo "<meta http-equiv=\"refresh\" content=\"3;url=".PROJECT_PATH."/index.php\">\n";
 	echo "<div align='center'>Add Complete</div>";
-	require_once "includes/footer.php";
+	require_once "resources/footer.php";
 	// This should probably be an exit or die() call;
 	return;
 }
 
 showform:
 
-require_once "includes/header.php";
+require_once "resources/header.php";
 
 include "user_template.php";
 
-require_once "includes/footer.php";
+require_once "resources/footer.php";
 ?>

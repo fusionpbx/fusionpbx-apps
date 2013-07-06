@@ -149,8 +149,8 @@ if (!if_group("admin") && !if_group("superadmin")) {
 	printf("access denied");
 	exit;
 }
-require_once "includes/header.php";
-require_once "includes/paging.php";
+require_once "resources/header.php";
+require_once "resources/paging.php";
 
 $inserted = array('v_users' => 0, 'v_extensions' => 0, 'v_group_users' => 0);
 if (is_array($_FILES) && array_key_exists('users_file', $_FILES)) {
@@ -218,4 +218,4 @@ printf("<input type=${dq}file${dq} name=${dq}users_file${dq}");
 printf("<input type=${dq}submit${dq} value=${dq}Upload${dq}");
 printf("</form>");
 
-require_once "includes/footer.php";
+require_once "resources/footer.php";

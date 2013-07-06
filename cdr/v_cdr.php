@@ -33,8 +33,8 @@ else {
 	echo "access denied";
 	exit;
 }
-require_once "includes/header.php";
-require_once "includes/paging.php";
+require_once "resources/header.php";
+require_once "resources/paging.php";
 
 require_once "v_cdr_import.php";
 require "includes/lib_cdr.php";
@@ -406,5 +406,5 @@ if (count($_REQUEST)>0) {
 	echo "<br><br>";
 
 require "resources/require.php";
-require_once "includes/footer.php";
+require_once "resources/footer.php";
 ?>

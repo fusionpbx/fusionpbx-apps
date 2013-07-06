@@ -38,7 +38,7 @@ $fd = fopen($_SESSION['switch']['conf']['dir']."/sip_profiles/".$_GET['f'], "r")
 $v_content = fread($fd, filesize($_SESSION['switch']['conf']['dir']."/sip_profiles/".$_GET['f']));
 fclose($fd);
 
-require_once "includes/header.php";
+require_once "resources/header.php";
 
 ?>
 
@@ -125,5 +125,5 @@ function sf() { document.forms[0].savetopath.focus(); }
 
 <?php
 //show the footer
-	require_once "includes/footer.php";
+	require_once "resources/footer.php";
 ?>
