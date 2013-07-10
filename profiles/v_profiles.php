@@ -37,7 +37,7 @@ else {
 if ($_GET['a'] == "default" && permission_exists('sip_profiles_edit')) {
 
 	//get the contents of the sip profile
-	$sip_profile = file_get_contents($_SERVER["DOCUMENT_ROOT"].PROJECT_PATH.'/includes/templates/conf/sip_profiles/'.$_GET['f']);
+	$sip_profile = file_get_contents($_SERVER["DOCUMENT_ROOT"].PROJECT_PATH.'/resources/templates/conf/sip_profiles/'.$_GET['f']);
 
 	//write the default config fget
 	$fd = fopen($_SESSION['switch']['conf']['dir']."/sip_profiles/".$_GET['f'], "w");

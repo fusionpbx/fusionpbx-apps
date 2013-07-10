@@ -47,7 +47,7 @@ if ($db_type == "sqlite") {
 		else { //file doese not exist
 
 			//--- begin: create the sqlite db file -----------------------------------------
-				$filename = $_SERVER["DOCUMENT_ROOT"].PROJECT_PATH.'/includes/install/sql/sqlite.sql';
+				$filename = $_SERVER["DOCUMENT_ROOT"].PROJECT_PATH.'/resources/install/sql/sqlite.sql';
 				$file_contents = file_get_contents($filename);
 				//echo "<pre>\n";
 				//echo $file_contents;

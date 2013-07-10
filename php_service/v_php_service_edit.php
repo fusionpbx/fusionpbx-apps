@@ -424,7 +424,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	require_once "resources/header.php";
 
 // edit area
-	echo "    <script language=\"javascript\" type=\"text/javascript\" src=\"".PROJECT_PATH."/includes/edit_area/edit_area_full.js\"></script>\n";
+	echo "    <script language=\"javascript\" type=\"text/javascript\" src=\"".PROJECT_PATH."/resources/edit_area/edit_area_full.js\"></script>\n";
 	echo "    <!-- -->\n";
 
 	echo "	<script language=\"Javascript\" type=\"text/javascript\">\n";
