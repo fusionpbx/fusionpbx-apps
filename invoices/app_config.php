@@ -9,10 +9,10 @@
 		$apps[$x]['contact_url'] = 'http://www.fusionpbx.com';
 		$apps[$x]['description']['en-us'] = '';
 		$apps[$x]['description']['es-mx'] = '';
-		$apps[$x]['description']['de'] = '';
+		$apps[$x]['description']['de-de'] = '';
 		$apps[$x]['description']['de-ch'] = '';
 		$apps[$x]['description']['de-at'] = '';
-		$apps[$x]['description']['fr'] = '';
+		$apps[$x]['description']['fr-fr'] = '';
 		$apps[$x]['description']['fr-ca'] = '';
 		$apps[$x]['description']['fr-ch'] = '';
 		$apps[$x]['description']['pt-pt'] = '';
@@ -22,10 +22,10 @@
 		$y = 0;
 		$apps[$x]['menu'][$y]['title']['en-us'] = 'Invoices';
 		$apps[$x]['menu'][$y]['title']['es-mx'] = '';
-		$apps[$x]['menu'][$y]['title']['de'] = '';
+		$apps[$x]['menu'][$y]['title']['de-de'] = '';
 		$apps[$x]['menu'][$y]['title']['de-ch'] = '';
 		$apps[$x]['menu'][$y]['title']['de-at'] = '';
-		$apps[$x]['menu'][$y]['title']['fr'] = '';
+		$apps[$x]['menu'][$y]['title']['fr-fr'] = '';
 		$apps[$x]['menu'][$y]['title']['fr-ca'] = '';
 		$apps[$x]['menu'][$y]['title']['fr-ch'] = '';
 		$apps[$x]['menu'][$y]['title']['pt-pt'] = '';

@@ -9,10 +9,10 @@
 		$apps[$x]['url'] = 'http://www.fusionpbx.com';
 		$apps[$x]['description']['en-us'] = 'A Hunt Group is a list of destinations that can be called in sequence or simultaneously.';
 		$apps[$x]['description']['es-mx'] = 'Un grupo en caza es una lista de destinos que pueden ser llamados en sequencia o simultáneamente.';
-		$apps[$x]['description']['de'] = '';
+		$apps[$x]['description']['de-de'] = '';
 		$apps[$x]['description']['de-ch'] = '';
 		$apps[$x]['description']['de-at'] = '';
-		$apps[$x]['description']['fr'] = "Un groupe chasse est une liste de destinataires qui peuvent être appellés en séquence ou simultanément.";
+		$apps[$x]['description']['fr-fr'] = "Un groupe chasse est une liste de destinataires qui peuvent être appellés en séquence ou simultanément.";
 		$apps[$x]['description']['fr-ca'] = '';
 		$apps[$x]['description']['fr-ch'] = '';
 		$apps[$x]['description']['pt-pt'] = 'Um grupo de busca é uma lista de destinos que podem ser chamados em sequência ou simultaneamente.';
@@ -21,10 +21,10 @@
 	//menu details
 		$apps[$x]['menu'][0]['title']['en-us'] = 'Hunt Groups';
 		$apps[$x]['menu'][0]['title']['es-mx'] = 'Grupos de Caza';
-		$apps[$x]['menu'][0]['title']['de'] = '';
+		$apps[$x]['menu'][0]['title']['de-de'] = '';
 		$apps[$x]['menu'][0]['title']['de-ch'] = '';
 		$apps[$x]['menu'][0]['title']['de-at'] = '';
-		$apps[$x]['menu'][0]['title']['fr'] = 'Group chasse';
+		$apps[$x]['menu'][0]['title']['fr-fr'] = 'Group chasse';
 		$apps[$x]['menu'][0]['title']['fr-ca'] = '';
 		$apps[$x]['menu'][0]['title']['fr-ch'] = '';
 		$apps[$x]['menu'][0]['title']['pt-pt'] = 'Grupo de Busca';
