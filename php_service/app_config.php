@@ -7,7 +7,7 @@
 		$apps[$x]['version'] = '';
 		$apps[$x]['license'] = 'Mozilla Public License 1.1';
 		$apps[$x]['url'] = 'http://www.fusionpbx.com';
-                $apps[$x]['description']['en-us'] = 'Manages multiple dynamic and customizable services. There are many possible uses including alerts, ssh access control, scheduling commands to run, and many others uses that are yet to be discovered.';
+		$apps[$x]['description']['en-us'] = 'Manages multiple dynamic and customizable services. There are many possible uses including alerts, ssh access control, scheduling commands to run, and many others uses that are yet to be discovered.';
 		$apps[$x]['description']['es-mx'] = '';
 		$apps[$x]['description']['de-de'] = '';
 		$apps[$x]['description']['de-ch'] = '';
@@ -17,7 +17,7 @@
 		$apps[$x]['description']['fr-ch'] = '';
 		$apps[$x]['description']['pt-pt'] = 'Gerir múltiplos serviços dinâmicos e personalizável. Há muitos usos possíveis, incluindo alertas, controle de acesso ssh, comandos de programação para executar, e muitos usos outros que estão ainda a ser descoberto.';
 		$apps[$x]['description']['pt-br'] = '';
-                
+
 	//menu details
 		$apps[$x]['menu'][0]['title']['en-us'] = 'PHP Service';
 		$apps[$x]['menu'][0]['title']['es-mx'] = '';
