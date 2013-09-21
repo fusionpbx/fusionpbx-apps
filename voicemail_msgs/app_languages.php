@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 	$text['title']['en-us'] = 'Voicemail Messages';
 	$text['title']['pt-pt'] = 'Mensagens de correio de voz';
