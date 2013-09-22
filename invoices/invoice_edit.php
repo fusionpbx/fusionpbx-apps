@@ -250,7 +250,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "</select>\n";
 	echo "<br />\n";
 	echo $text['description-contact_uuid_from']." \n";
-	echo "<a href='".PROJECT_PATH."/app/contacts/contacts_edit.php?id=".$contact_uuid_from."'>".$text['button-view']."</a>\n";
+	echo "<a href='".PROJECT_PATH."/app/contacts/contact_edit.php?id=".$contact_uuid_from."'>".$text['button-view']."</a>\n";
 	echo "</td>\n";
 	echo "</tr>\n";
 
@@ -293,7 +293,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "</select>\n";
 	echo "<br />\n";
 	echo $text['description-contact_uuid_to']." \n";
-	echo "<a href='".PROJECT_PATH."/app/contacts/contacts_edit.php?id=".$contact_uuid_to."'>".$text['button-view']."</a>\n";
+	echo "<a href='".PROJECT_PATH."/app/contacts/contact_edit.php?id=".$contact_uuid_to."'>".$text['button-view']."</a>\n";
 	echo "</td>\n";
 	echo "</tr>\n";
 

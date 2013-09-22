@@ -26,7 +26,7 @@
 include "root.php";
 require_once "resources/require.php";
 require_once "resources/check_auth.php";
-if (permission_exists('contacts_add') || permission_exists('contacts_edit')) {
+if (permission_exists('contact_add') || permission_exists('contact_edit')) {
 	//access granted
 }
 else {
@@ -160,7 +160,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 
 		//add or update the database
 			if ($_POST["persistformvar"] != "true") {
-				if ($action == "add" && permission_exists('contacts_add')) {
+				if ($action == "add" && permission_exists('contact_add')) {
 					$sql = "insert into v_users ";
 					$sql .= "(";
 					$sql .= "domain_uuid, ";
@@ -273,7 +273,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 					return;
 				} //if ($action == "add")
 
-				if ($action == "update" || permission_exists('contacts_edit')) {
+				if ($action == "update" || permission_exists('contact_edit')) {
 					$sql = "update v_users set ";
 					//$sql .= "username = '$username', ";
 					//if (strlen($password) > 0) {

@@ -26,7 +26,7 @@
 include "root.php";
 require_once "resources/require.php";
 require_once "resources/check_auth.php";
-if (permission_exists('contacts_delete')) {
+if (permission_exists('contact_delete')) {
 	//access granted
 }
 else {
