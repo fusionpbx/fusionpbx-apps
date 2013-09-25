@@ -151,7 +151,7 @@ if (strlen($save_msg) > 0) {
 			if (permission_exists('sip_profiles_edit')) {
 				echo "		  <td valign='middle'><a href='v_profile_edit.php?type=profile&f=".$file."' alt='edit'>$v_link_label_edit</a></td>\n";
 			}
-			if (permission_exists('sip_profiles_delete')) {
+			if (permission_exists('sip_profile_delete')) {
 				echo "		  <td><a href='v_profiles.php?type=profile&a=del&f=".$file."'  alt='delete' onclick=\"return confirm('Do you really want to delete this?')\">$v_link_label_delete</a></td>\n";
 			}
 			echo "		</tr>\n";

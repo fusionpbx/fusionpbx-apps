@@ -27,6 +27,6 @@
 		$apps[$x]['permissions'][2]['name'] = 'sip_profiles_edit';
 		$apps[$x]['permissions'][2]['groups'][] = 'superadmin';
 
-		$apps[$x]['permissions'][3]['name'] = 'sip_profiles_delete';
+		$apps[$x]['permissions'][3]['name'] = 'sip_profile_delete';
 		$apps[$x]['permissions'][3]['groups'][] = 'superadmin';
 ?>
