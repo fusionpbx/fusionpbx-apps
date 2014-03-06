@@ -483,13 +483,20 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	else {
 		$select_options .= "		<option value='\${rs-ring}'>rs-ring</option>\n";
 	}
-	require_once "app/music_on_hold/resources/classes/switch_music_on_hold.php";
-	$moh = new switch_music_on_hold;
-	$moh->select_name = "hunt_group_ringback";
-	$moh->select_value = $hunt_group_ringback;
-	$moh->select_options = $select_options;
-	echo $moh->select();
-
+	if (is_dir($_SERVER["DOCUMENT_ROOT"].PROJECT_PATH.'/app/music_on_hold')) {
+		require_once "app/music_on_hold/resources/classes/switch_music_on_hold.php";
+		$moh = new switch_music_on_hold;
+		$moh->select_name = "hunt_group_ringback";
+		$moh->select_value = $hunt_group_ringback;
+		$moh->select_options = $select_options;
+		echo $moh->select();
+	}
+	else {
+		echo "	<select class='formfld' name='hunt_group_ringback'>\n";
+		//echo "	<option value=''></option>\n";
+		echo $select_options;
+		echo "	</select>\n";
+	}
 	echo "<br />\n";
 	echo $text['description-ring_back']."\n";
 	echo "</td>\n";
