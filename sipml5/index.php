@@ -1089,22 +1089,6 @@ require_once "resources/header.php";
 
 </script>
 <body style="cursor:wait">
-    <div class="navbar navbar-fixed-top">
-        <div id="divNavbarInner" class="navbar-inner">
-            <div class="container">
-                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
-                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                </a>
-                <img alt="sipML5" class="brand" src="./images/sipml-34x39.png" />
-                <div class="nav-collapse">
-                    <ul class="nav">
-                        <li class="active"><a href="index.html?svn=224">Home</a></li>
-                    </ul>
-                </div>
-                <!--/.nav-collapse -->
-            </div>
-        </div>
-    </div>
     <div class="container">
         <div class="row-fluid">
             <div class="span4 well">
