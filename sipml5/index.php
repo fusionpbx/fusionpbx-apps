@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+<?php
+
+require_once "root.php";
+require_once "resources/require.php";
+require_once "resources/check_auth.php";
+
+?>
+
+<!DOCTYPE html>
 <!--
 * Copyright (C) 2012 Doubango Telecom <http://www.doubango.org>
 * License: BSD
