@@ -1325,5 +1325,5 @@ require_once "resources/header.php";
     </script>
 
 <?php
-require_once "resources/header.php";
+require_once "resources/footer.php";
 ?>
