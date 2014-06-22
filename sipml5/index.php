@@ -1,11 +1,4 @@
-﻿<?php
-
-require_once "root.php";
-require_once "resources/require.php";
-require_once "resources/check_auth.php";
-
-?>
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--
 * Copyright (C) 2012 Doubango Telecom <http://www.doubango.org>
 * License: BSD
@@ -57,12 +50,12 @@ require_once "resources/check_auth.php";
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="./index.html">Doubango Telecom</a>
+          <a class="brand" target=_blank href="http://doubango.org">Doubango Telecom</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="index.html?svn=179">Home</a></li>
+              <li class="active"><a href="index.html?svn=224">Home</a></li>
               <li><a href="http://code.google.com/p/sipml5/source/checkout" target="_blank">Source code</a></li>
-              <li><a href="docgen/index.html?svn=179">Programmer's Guide</a></li>
+              <li><a href="docgen/index.html?svn=224">Programmer's Guide</a></li>
               <li><a href="contact.htm">Contact</a></li>
             </ul>
           </div><!--/.nav-collapse -->
@@ -78,7 +71,7 @@ require_once "resources/check_auth.php";
         <p>This is the world's first open source (<a target=_blank href="http://opensource.org/licenses/BSD-3-Clause">BSD license</a>) HTML5 SIP client entirely written in javascript for integration in social networks (FaceBook, Twitter, Google+), online games, e-commerce websites, email signatures... No extension, plugin or gateway is needed. The media stack rely on <a href="http://en.wikipedia.org/wiki/WebRTC" target="_blank">WebRTC</a>.<br />
          The client can be used to connect to any SIP or IMS network from your preferred browser to make and receive audio/video calls and instant messages.<br />
         </p>
-        <p><a class="btn btn-primary btn-large" href="call.htm?svn=179" target="_blank">Enjoy our live demo &raquo;</a></p>
+        <p><a class="btn btn-primary btn-large" href="call.htm?svn=224" target="_blank">Enjoy our live demo &raquo;</a></p>
       </div>
 
 
@@ -88,12 +81,13 @@ require_once "resources/check_auth.php";
                   <tr><td><h2><a name="aSipSdpStack">Javascript SIP/SDP stack</a></h2></td></tr>
                   <tr class="spaceUnder"><td>
                        <p>The SIP and SDP stacks (<b>~1 Mo</b>) are entirely written in javascript and the network transport uses WebSockets as per <a href="http://tools.ietf.org/html/draft-ibc-sipcore-sip-websocket">draft-ibc-sipcore-sip-websocket</a>.
-                       The <a href="call.htm?svn=179" target="_blank">live demo</a> doesn't require any installation and can be used to connect to any SIP server using UDP, TCP or TLS transports.
+                       The <a href="call.htm?svn=224" target="_blank">live demo</a> doesn't require any installation and can be used to connect to any SIP server using UDP, TCP or TLS transports.
                        </p>
                        <p>Short but not exhaustive list of supported features:</p>
                       <ul>
                         <li><b>Works on Chrome, Firefox, IE, Safari, Opera and Bowser</b></li>
                         <li>Audio / Video call</li>
+                        <li><a href="https://code.google.com/p/sipml5/wiki/ScreenShare" target=_blank>Screen/Desktop sharing from Chrome to <b><u>any</u></b> SIP client</a></li>
                         <li>Instant messaging</li>
                         <li>Presence</li>
                         <li>Call Hold / Resume</li>
@@ -101,6 +95,8 @@ require_once "resources/check_auth.php";
                         <li>Multi-line and multi-account</li>
                         <li>Dual-tone multi-frequency signaling (DTMF) using SIP INFO</li>
                         <li><a href="http://click2dial.org" target=_blank>Click-to-Call</a></li>
+                        <li><a href="https://code.google.com/p/telepresence/" target=_blank>SIP TelePresence (Video Group chat)</a></li>
+                        <li>3GPP IMS standards</li>
                       </ul>
                       <p><a class="btn" href="http://code.google.com/p/sipml5/" target="_blank">View details &raquo;</a></p>       
                    </td></tr>
@@ -154,9 +150,9 @@ require_once "resources/check_auth.php";
                                     var stack =  new <a href="docgen/symbols/SIPml.Stack.html#constructor">SIPml.Stack</a>({realm: 'example.org', impi: 'bob', impu: 'sip:bob@example.org', password: 'mysecret',
                                         events_listener: { events: 'started', listener: function(<a href="docgen/symbols/SIPml.Stack.Event.html">e</a>){
                                                     var callSession = stack.<a href="docgen/symbols/SIPml.Stack.html#newSession">newSession</a>('call-audiovideo', {
-                                                            video_local: document.getElementById('video-local'),
-                                                            video_remote: document.getElementById('video-remote'),
-                                                            audio_remote: document.getElementById('audio-remote')
+                                                            video_local: document.getElementById('video-local'), // &lt;video id="video-local" .../&gt;
+                                                            video_remote: document.getElementById('video-remote'), // &lt;video id="video-remote" .../&gt;
+                                                            audio_remote: document.getElementById('audio-remote') // &lt;audio id="audio-remote" .../&gt;
                                                         });
                                                     callSession.<a href="docgen/symbols/SIPml.Session.Call.html#call">call</a>('alice');
                                                 } 
