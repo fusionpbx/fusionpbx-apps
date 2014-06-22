@@ -3,24 +3,17 @@
 require_once "root.php";
 require_once "resources/require.php";
 require_once "resources/check_auth.php";
+require_once "resources/header.php";
 
 ?>
 
-<!DOCTYPE html>
 <!--
 * Copyright (C) 2012 Doubango Telecom <http://www.doubango.org>
 * License: BSD
 * This file is part of Open Source sipML5 solution <http://www.sipml5.org>
+*/
 -->
-<html>
-<!-- head -->
-<head>
-    <meta charset="utf-8" />
-    <title>sipML5 live demo</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="Keywords" content="doubango, sipML5, VoIP, HTML5, WebRTC, RTCWeb, SIP, IMS, Video chat, VP8, live demo " />
-    <meta name="Description" content="HTML5 SIP client using WebRTC framework" />
-    <meta name="author" content="Doubango Telecom" />
+
 
     <!-- SIPML5 API:
     DEBUG VERSION: 'SIPml-api.js'
@@ -1331,5 +1324,6 @@ require_once "resources/check_auth.php";
         } catch (err) { }
     </script>
 
-</body>
-</html>
+<?php
+require_once "resources/header.php";
+?>
