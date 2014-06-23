@@ -27,8 +27,8 @@ include "root.php";
 require_once "resources/require.php";
 require_once "resources/recaptchalib.php";
 //require_once "resources/email_address_validator.php";
-include "config.php";
-include "fields.php";
+include "app_config.php";
+include "v_fields.php";
 
 # the response from reCAPTCHA
 $resp = null;
