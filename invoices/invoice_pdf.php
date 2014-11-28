@@ -17,7 +17,7 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2012
+	Portions created by the Initial Developer are Copyright (C) 2008-2014
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
@@ -156,6 +156,7 @@ else {
 		$to_address_region = $row["address_region"];
 		$to_address_postal_code = $row["address_postal_code"];
 		$to_address_country = $row["address_country"];
+		$to_address_description = $row["address_description"];
 		break; //limit to 1 row
 	}
 	unset ($prep_statement);
@@ -174,7 +175,14 @@ else {
 	$pdf->SetFont('Arial','',9);
 	$pdf->Cell(40,5,$to_address_street.' '.$to_address_extended);
 	$pdf->Ln();
-	$pdf->Cell(40,5,$to_address_locality.', '.$to_address_region.' '.$to_address_country.' '.$to_address_postal_code);
+	if (strtolower($to_address_country) == 'portugal') {
+		$pdf->Cell(40,5,$to_address_postal_code.' '.$to_address_locality.' '.$to_address_region.' '.$to_address_country);
+	}
+	else {
+		$pdf->Cell(40,5,$to_address_locality.', '.$to_address_region.' '.$to_address_country.' '.$to_address_postal_code);
+	}
+	$pdf->Ln();
+	$pdf->Cell(40,5,$to_address_description);
 	$pdf->Ln();
 	$pdf->Ln();
 	$pdf->Ln();
@@ -298,7 +306,7 @@ else {
 	$pdf->Cell($w[0],6,'','',0,'L','');
 	$pdf->Cell($w[1],6,'','',0,'L','');
 	$pdf->Cell($w[2],6,'','',0,'R','');
-	$pdf->Cell($w[3],6,$text['label-invoice_total'].' '.number_format($total,2),'',0,'R','');
+	$pdf->Cell($w[3],6,$text['label-invoice_total'].' $'.number_format($total,2).' USD','',0,'R','');
 	$pdf->Ln();
 
 	if (strlen($invoice_note) > 0) {
