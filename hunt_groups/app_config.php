@@ -1,4 +1,5 @@
 <?php
+
 	//application details
 		$apps[$x]['name'] = "Hunt Group";
 		$apps[$x]['uuid'] = '0610f841-2e27-4c5f-7926-08ab3aad02e0';
@@ -18,37 +19,19 @@
 		$apps[$x]['description']['pt-pt'] = 'Um grupo de busca é uma lista de destinos que podem ser chamados em sequência ou simultaneamente.';
 		$apps[$x]['description']['pt-br'] = '';
 
-	//menu details
-		$apps[$x]['menu'][0]['title']['en-us'] = 'Hunt Groups';
-		$apps[$x]['menu'][0]['title']['es-mx'] = 'Grupos de Caza';
-		$apps[$x]['menu'][0]['title']['de-de'] = '';
-		$apps[$x]['menu'][0]['title']['de-ch'] = '';
-		$apps[$x]['menu'][0]['title']['de-at'] = '';
-		$apps[$x]['menu'][0]['title']['fr-fr'] = 'Group chasse';
-		$apps[$x]['menu'][0]['title']['fr-ca'] = '';
-		$apps[$x]['menu'][0]['title']['fr-ch'] = '';
-		$apps[$x]['menu'][0]['title']['pt-pt'] = 'Grupo de Busca';
-		$apps[$x]['menu'][0]['title']['pt-br'] = '';
-		$apps[$x]['menu'][0]['uuid'] = '632f87de-7f86-b68f-c629-4c2d2b3ce545';
-		$apps[$x]['menu'][0]['parent_uuid'] = 'fd29e39c-c936-f5fc-8e2b-611681b266b5';
-		$apps[$x]['menu'][0]['category'] = 'internal';
-		$apps[$x]['menu'][0]['path'] = '/app/hunt_groups/hunt_groups.php';
-		$apps[$x]['menu'][0]['groups'][] = 'admin';
-		$apps[$x]['menu'][0]['groups'][] = 'superadmin';
-
 	//permission details
 		$apps[$x]['permissions'][0]['name'] = 'hunt_group_view';
 		$apps[$x]['permissions'][0]['groups'][] = 'admin';
 		$apps[$x]['permissions'][0]['groups'][] = 'superadmin';
-		
+
 		$apps[$x]['permissions'][1]['name'] = 'hunt_group_add';
 		$apps[$x]['permissions'][1]['groups'][] = 'admin';
 		$apps[$x]['permissions'][1]['groups'][] = 'superadmin';
-	
+
 		$apps[$x]['permissions'][2]['name'] = 'hunt_group_edit';
 		$apps[$x]['permissions'][2]['groups'][] = 'admin';
 		$apps[$x]['permissions'][2]['groups'][] = 'superadmin';
-	
+
 		$apps[$x]['permissions'][3]['name'] = 'hunt_group_delete';
 		$apps[$x]['permissions'][3]['groups'][] = 'admin';
 		$apps[$x]['permissions'][3]['groups'][] = 'superadmin';
@@ -278,4 +261,5 @@
 		$apps[$x]['db'][$y]['fields'][$z]['key']['reference']['table'] = 'v_users';
 		$apps[$x]['db'][$y]['fields'][$z]['key']['reference']['field'] = 'user_uuid';
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = '';
+
 ?>

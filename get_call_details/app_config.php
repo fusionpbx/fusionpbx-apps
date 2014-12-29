@@ -1,4 +1,5 @@
 <?php
+
 	//application details
 		$apps[$x]['name'] = "Get Call Details";
 		$apps[$x]['uuid'] = 'a1200636-cc9e-4636-852c-3ac4ad1bbaa6';

@@ -1,5 +1,5 @@
 <?php
-/*
+
 	//application details
 		$apps[$x]['name'] = 'Servers';
 		$apps[$x]['guid'] = '0f390134-071e-83d7-a79a-ebb7ae139d71';
@@ -9,14 +9,6 @@
 		$apps[$x]['license'] = 'Mozilla Public License 1.1';
 		$apps[$x]['url'] = 'http://www.fusionpbx.com';
 		$apps[$x]['description']['en-us'] = '';
-
-	//menu details
-		$apps[$x]['menu'][0]['title']['en-us'] = 'Servers';
-		$apps[$x]['menu'][0]['uuid'] = 'f35ee905-1f30-7529-7420-35fc77e47882';
-		$apps[$x]['menu'][0]['parent_uuid'] = '594d99c5-6128-9c88-ca35-4b33392cec0f';
-		$apps[$x]['menu'][0]['category'] = 'internal';
-		$apps[$x]['menu'][0]['path'] = '/core/servers/servers.php';
-		$apps[$x]['menu'][0]['groups'][] = 'superadmin';
 
 	//permission details
 		$y = 0;
@@ -94,5 +86,5 @@
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'server_setting_description';
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'text';
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = '';
-*/
+
 ?>
