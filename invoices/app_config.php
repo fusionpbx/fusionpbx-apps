@@ -184,7 +184,9 @@
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'uuid';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['sqlite'] = 'text';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['mysql'] = 'char(36)';
-		$apps[$x]['db'][$y]['fields'][$z]['key']['type'] = 'primary';
+		$apps[$x]['db'][$y]['fields'][$z]['key']['type'] = 'foreign';
+		$apps[$x]['db'][$y]['fields'][$z]['key']['reference']['table'] = 'v_invoices';
+		$apps[$x]['db'][$y]['fields'][$z]['key']['reference']['field'] = 'invoice_uuid';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = '';
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'item_qty';
