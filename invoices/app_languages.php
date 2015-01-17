@@ -31,20 +31,47 @@
 		$text['description-contact_uuid_to']['en-us'] = 'Select the Contact to send the send the invoice to.';
 		$text['description-contact_uuid_to']['pt-pt'] = '';
 
-		$text['label-invoice_number']['en-us'] = 'Invoice Number';
+		$text['label-invoice_number']['en-us'] = 'Number';
 		$text['label-invoice_number']['pt-pt'] = '';
 
 		$text['description-invoice_number']['en-us'] = 'Enter the invoice number.';
 		$text['description-invoice_number']['pt-pt'] = '';
 
-		$text['label-invoice_date']['en-us'] = 'Date';
-		$text['label-invoice_date']['pt-pt'] = '';
+		$text['label-invoice_type']['en-us'] = 'Type';
+		$text['label-invoice_type']['pt-pt'] = '';
+
+		$text['description-invoice_type']['en-us'] = 'Select the record type.';
+		$text['description-invoice_type']['pt-pt'] = '';
+
+		$text['label-invoice_type_invoice']['en-us'] = 'Invoice';
+		$text['label-invoice_type_invoice']['pt-pt'] = '';
+
+		$text['label-invoice_type_quote']['en-us'] = 'Quote';
+		$text['label-invoice_type_quote']['pt-pt'] = '';
+
+		$text['label-invoice_created']['en-us'] = 'Created';
+		$text['label-invoice_created']['pt-pt'] = '';
+
+		$text['label-invoice_paid']['en-us'] = 'Paid';
+		$text['label-invoice_paid']['pt-pt'] = '';
+
+		$text['label-invoice_method_paypal']['en-us'] = 'PayPal';
+		$text['label-invoice_method_paypal']['pt-pt'] = '';
+
+		$text['label-invoice_method_check']['en-us'] = 'Check';
+		$text['label-invoice_method_check']['pt-pt'] = '';
+
+		$text['label-invoice_method_credit_card']['en-us'] = 'Credit Card';
+		$text['label-invoice_method_credit_card']['pt-pt'] = '';
+
+		$text['label-invoice_method_cash']['en-us'] = 'Cash';
+		$text['label-invoice_method_cash']['pt-pt'] = '';
 
 		$text['label-invoice_notes']['en-us'] = 'Invoice Notes';
 		$text['label-invoice_notes']['pt-pt'] = '';
 
 	//Invoice Items
-		$text['title-invoice_items']['en-us'] = 'Invoice Items';
+		$text['title-invoice_items']['en-us'] = 'Items';
 		$text['title-invoice_items']['pt-pt'] = '';
 
 		$text['title-invoice_item']['en-us'] = 'Invoice Item';
@@ -117,19 +144,25 @@
 		$text['label-invoice']['en-us'] = 'INVOICE';
 		$text['label-invoice']['pt-pt'] = '';
 
-		$text['label-invoice_date']['en-us'] = 'Invoice Date:';
+		$text['label-quote']['en-us'] = 'QUOTE';
+		$text['label-quote']['pt-pt'] = '';
+
+		$text['label-estimate']['en-us'] = 'ESTIMATE';
+		$text['label-estimate']['pt-pt'] = '';
+
+		$text['label-invoice_date']['en-us'] = 'Date';
 		$text['label-invoice_date']['pt-pt'] = '';
 
-		$text['label-invoice_number']['en-us'] = 'Invoice Number:';
+		$text['label-invoice_number']['en-us'] = 'Number';
 		$text['label-invoice_number']['pt-pt'] = '';
 
-		$text['label-invoice_notes']['en-us'] = 'Note:';
+		$text['label-invoice_notes']['en-us'] = 'Note';
 		$text['label-invoice_notes']['pt-pt'] = '';
 
-		$text['label-invoice_total']['en-us'] = 'Total:';
+		$text['label-invoice_total']['en-us'] = 'Total';
 		$text['label-invoice_total']['pt-pt'] = '';
 
-		$text['label-invoice_total']['en-us'] = 'Total:';
+		$text['label-invoice_total']['en-us'] = 'Total';
 		$text['label-invoice_total']['pt-pt'] = '';
 
 ?>

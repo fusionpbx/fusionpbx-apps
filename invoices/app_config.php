@@ -1,4 +1,5 @@
 <?php
+
 	//application details
 		$apps[$x]['name'] = 'Invoices';
 		$apps[$x]['uuid'] = 'e5a1f4f5-7766-ec9c-118b-50f76b0788c0';
@@ -9,10 +10,10 @@
 		$apps[$x]['contact_url'] = 'http://www.fusionpbx.com';
 		$apps[$x]['description']['en-us'] = '';
 		$apps[$x]['description']['es-mx'] = '';
-		$apps[$x]['description']['de-de'] = '';
+		$apps[$x]['description']['de'] = '';
 		$apps[$x]['description']['de-ch'] = '';
 		$apps[$x]['description']['de-at'] = '';
-		$apps[$x]['description']['fr-fr'] = '';
+		$apps[$x]['description']['fr'] = '';
 		$apps[$x]['description']['fr-ca'] = '';
 		$apps[$x]['description']['fr-ch'] = '';
 		$apps[$x]['description']['pt-pt'] = '';
@@ -71,14 +72,16 @@
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'uuid';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['sqlite'] = 'text';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['mysql'] = 'char(36)';
-		$apps[$x]['db'][$y]['fields'][$z]['key'] = 'primary';
+		$apps[$x]['db'][$y]['fields'][$z]['key']['type'] = 'primary';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = '';
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'domain_uuid';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'uuid';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['sqlite'] = 'text';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['mysql'] = 'char(36)';
-		$apps[$x]['db'][$y]['fields'][$z]['key'] = 'foreign';
+		$apps[$x]['db'][$y]['fields'][$z]['key']['type'] = 'foreign';
+		$apps[$x]['db'][$y]['fields'][$z]['key']['reference']['table'] = 'v_domains';
+		$apps[$x]['db'][$y]['fields'][$z]['key']['reference']['field'] = 'domain_uuid';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = '';
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = 'domain_id ';
@@ -92,6 +95,9 @@
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'uuid';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['sqlite'] = 'text';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['mysql'] = 'char(36)';
+		$apps[$x]['db'][$y]['fields'][$z]['key']['type'] = 'foreign';
+		$apps[$x]['db'][$y]['fields'][$z]['key']['reference']['table'] = 'v_contacts';
+		$apps[$x]['db'][$y]['fields'][$z]['key']['reference']['field'] = 'contact_uuid';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'Contact ID invoice is sent from';
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'contact_uuid_to';
@@ -99,21 +105,44 @@
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'uuid';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['sqlite'] = 'text';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['mysql'] = 'char(36)';
+		$apps[$x]['db'][$y]['fields'][$z]['key']['type'] = 'foreign';
+		$apps[$x]['db'][$y]['fields'][$z]['key']['reference']['table'] = 'v_contacts';
+		$apps[$x]['db'][$y]['fields'][$z]['key']['reference']['field'] = 'contact_uuid';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'Contact ID invoice is sent to';
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'invoice_number';
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'numeric';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'Enter the invoice number.';
 		$z++;
+		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'invoice_type';
+		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'text';
+		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'Select the record type.';
+		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'invoice_date';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'timestamp with time zone';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['sqlite'] = 'datetime';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['mysql'] = 'timestamp';
-		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'Enter the date.';
+		$apps[$x]['db'][$y]['fields'][$z]['description'] = '';
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'invoice_notes';
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'text';
-		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'Enter the invoice notes.';
+		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'Enter invoice notes.';
+		$z++;
+		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'invoice_paid';
+		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'numeric';
+		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'Check if invoice has been paid';
+		$z++;
+		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'invoice_paid_date';
+		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'timestamp';
+		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = 'Date the invoice was paid.';
+		$z++;
+		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'invoice_paid_method';
+		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'text';
+		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = 'Select the payment method used.';
+		$z++;
+		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'invoice_paid_method_ref';
+		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'text';
+		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = 'Enter a payment method reference number.';
 		$z++;
 
 		$y = 1; //table array index
@@ -129,14 +158,16 @@
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'uuid';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['sqlite'] = 'text';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['mysql'] = 'char(36)';
-		$apps[$x]['db'][$y]['fields'][$z]['key'] = 'primary';
+		$apps[$x]['db'][$y]['fields'][$z]['key']['type'] = 'primary';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = '';
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'domain_uuid';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'uuid';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['sqlite'] = 'text';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['mysql'] = 'char(36)';
-		$apps[$x]['db'][$y]['fields'][$z]['key'] = 'foreign';
+		$apps[$x]['db'][$y]['fields'][$z]['key']['type'] = 'foreign';
+		$apps[$x]['db'][$y]['fields'][$z]['key']['reference']['table'] = 'v_domains';
+		$apps[$x]['db'][$y]['fields'][$z]['key']['reference']['field'] = 'domain_uuid';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = '';
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'v_id';
@@ -153,7 +184,7 @@
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'uuid';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['sqlite'] = 'text';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['mysql'] = 'char(36)';
-		$apps[$x]['db'][$y]['fields'][$z]['key'] = 'primary';
+		$apps[$x]['db'][$y]['fields'][$z]['key']['type'] = 'primary';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = '';
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'item_qty';

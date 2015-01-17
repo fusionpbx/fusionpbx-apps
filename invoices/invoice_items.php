@@ -41,15 +41,9 @@ else {
 	$order = $_GET["order"];
 
 //show the content
-	echo "<div align='center'>";
-	echo "<table width='100%' border='0' cellpadding='0' cellspacing='2'>\n";
-	echo "<tr class='border'>\n";
-	echo "	<td align=\"center\">\n";
-	echo "		<br />";
-
-	echo "<table width='100%' border='0'>\n";
+	echo "<table width='100%' cellpadding='0' cellspacing='0' border='0'>\n";
 	echo "	<tr>\n";
-	echo "		<td width='50%' align='left' nowrap='nowrap'><b>".$text['title-invoice_items']."</b></td>\n";
+	echo "		<td width='50%' align='left' nowrap='nowrap'><b>".$text['title-invoice_items']."</b><br><br></td>\n";
 	echo "		<td width='50%' align='right'>&nbsp;</td>\n";
 	echo "	</tr>\n";
 	echo "</table>\n";
@@ -77,7 +71,7 @@ else {
 		$page = $_GET['page'];
 		if (strlen($page) == 0) { $page = 0; $_GET['page'] = 0; }
 		//list($paging_controls, $rows_per_page, $var_3) = paging($num_rows, $param, $rows_per_page);
-		$offset = $rows_per_page * $page; 
+		$offset = $rows_per_page * $page;
 
 	//get the list
 		$sql = "select * from v_invoice_items ";
@@ -95,16 +89,16 @@ else {
 	$row_style["0"] = "row_style0";
 	$row_style["1"] = "row_style1";
 
-	echo "<div align='center'>\n";
-	echo "<table width='100%' border='0' cellpadding='0' cellspacing='0'>\n";
+	echo "<table class='tr_hover' width='100%' border='0' cellpadding='0' cellspacing='0'>\n";
 	echo "<tr>\n";
 	echo th_order_by('item_qty', $text['label-item_qty'], $order_by, $order);
 	echo th_order_by('item_unit_price', $text['label-item_unit_price'], $order_by, $order);
 	echo th_order_by('item_desc', $text['label-item_desc'], $order_by, $order);
 	echo "<th nowrap='nowrap'>".$text['label-item_amount']."</th>\n";
 	echo "<td align='right' width='42'>\n";
+	$back = ($back != '') ? "&back=".$back : null;
 	if (permission_exists('invoice_item_add')) {
-		echo "	<a href='invoice_item_edit.php?invoice_uuid=".$_GET['id']."&contact_uuid=".$contact_uuid."' alt='".$text['button-add']."'>$v_link_label_add</a>\n";
+		echo "	<a href='invoice_item_edit.php?invoice_uuid=".$_GET['id']."&contact_uuid=".$contact_uuid_to.$back."' alt='".$text['button-add']."'>$v_link_label_add</a>\n";
 	}
 	else {
 		echo "	&nbsp;\n";
@@ -116,17 +110,18 @@ else {
 		foreach($result as $row) {
 			$item_desc = $row['item_desc'];
 			$item_desc = str_replace("\n", "<br />", $item_desc);
-			echo "<tr >\n";
+			$tr_link = (permission_exists('invoice_item_edit')) ? "href='invoice_item_edit.php?invoice_uuid=".$row['invoice_uuid']."&id=".$row['invoice_item_uuid']."&contact_uuid=".$contact_uuid_to.$back."'" : null;
+			echo "<tr ".$tr_link.">\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['item_qty']."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".number_format($row['item_unit_price'], 2)."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$item_desc."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".number_format(($row['item_qty'] * $row['item_unit_price']), 2)."&nbsp;</td>\n";
-			echo "	<td valign='top' align='right'>\n";
+			echo "	<td class='list_control_icons'>\n";
 			if (permission_exists('invoice_item_edit')) {
-				echo "		<a href='invoice_item_edit.php?invoice_uuid=".$row['invoice_uuid']."&id=".$row['invoice_item_uuid']."&contact_uuid=".$contact_uuid."' alt='".$text['button-edit']."'>$v_link_label_edit</a>\n";
+				echo 	"<a href='invoice_item_edit.php?invoice_uuid=".$row['invoice_uuid']."&id=".$row['invoice_item_uuid']."&contact_uuid=".$contact_uuid_to.$back."' alt='".$text['button-edit']."'>$v_link_label_edit</a>";
 			}
 			if (permission_exists('invoice_item_delete')) {
-				echo "		<a href='invoice_item_delete.php?invoice_uuid=".$row['invoice_uuid']."&id=".$row['invoice_item_uuid']."&contact_uuid=".$contact_uuid."' alt='".$text['button-delete']."' onclick=\"return confirm('".$text['confirm-delete']."')\">$v_link_label_delete</a>\n";
+				echo 	"<a href='invoice_item_delete.php?invoice_uuid=".$row['invoice_uuid']."&id=".$row['invoice_item_uuid']."&contact_uuid=".$contact_uuid_to.$back."' alt='".$text['button-delete']."' onclick=\"return confirm('".$text['confirm-delete']."')\">$v_link_label_delete</a>";
 			}
 			echo "	</td>\n";
 			echo "</tr>\n";
@@ -143,7 +138,7 @@ else {
 	echo "		<td width='33.3%' align='center' nowrap='nowrap'>$paging_controls</td>\n";
 	echo "		<td width='33.3%' align='right'>\n";
 	if (permission_exists('invoice_item_add')) {
-		echo "			<a href='invoice_item_edit.php?invoice_uuid=".$_GET['id']."&contact_uuid=".$contact_uuid."' alt='".$text['button-add']."'>$v_link_label_add</a>\n";
+		echo "			<a href='invoice_item_edit.php?invoice_uuid=".$_GET['id']."&contact_uuid=".$contact_uuid_to.$back."' alt='".$text['button-add']."'>$v_link_label_add</a>\n";
 	}
 	else {
 		echo "			&nbsp;\n";
@@ -155,13 +150,6 @@ else {
 	echo "</tr>\n";
 
 	echo "</table>";
-	echo "</div>";
-	echo "<br /><br />";
-
-	echo "</td>";
-	echo "</tr>";
-	echo "</table>";
-	echo "</div>";
 	echo "<br /><br />";
 
 //include the footer

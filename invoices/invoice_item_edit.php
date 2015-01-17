@@ -46,9 +46,11 @@ else {
 	if (isset($_REQUEST["id"])) {
 		$action = "update";
 		$invoice_item_uuid = check_str($_REQUEST["id"]);
+		$back = check_str($_REQUEST['back']);
 	}
 	else {
 		$action = "add";
+		$back = check_str($_REQUEST['back']);
 	}
 
 if (strlen(count($_REQUEST)) > 0) {
@@ -115,13 +117,12 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				$db->exec(check_sql($sql));
 				unset($sql);
 
-				require_once "resources/header.php";
-				echo "<meta http-equiv=\"refresh\" content=\"2;url=invoice_edit.php?id=$invoice_uuid&contact_uuid=$contact_uuid\">\n";
-				echo "<div align='center'>\n";
-				echo "	".$text['message-add']."\n";
-				echo "</div>\n";
-				require_once "resources/footer.php";
-				return;
+				//set redirect
+				$_SESSION['message'] = $text['message-add'];
+				$back = ($back != '') ? "&back=".$back : null;
+				header("Location: invoice_edit.php?id=".$invoice_uuid."&contact_uuid=".$contact_uuid.$back);
+				exit;
+
 			} //if ($action == "add")
 
 			if ($action == "update" && permission_exists('invoice_item_edit')) {
@@ -134,15 +135,14 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				$db->exec(check_sql($sql));
 				unset($sql);
 
-				require_once "resources/header.php";
-				echo "<meta http-equiv=\"refresh\" content=\"2;url=invoice_items.php\">\n";
-				echo "<div align='center'>\n";
-				echo "	".$text['message-update']."\n";
-				echo "</div>\n";
-				require_once "resources/footer.php";
-				return;
+				//set redirect
+				$_SESSION['message'] = $text['message-update'];
+				$back = ($back != '') ? "&back=".$back : null;
+				header("Location: invoice_edit.php?id=".$invoice_uuid."&contact_uuid=".$contact_uuid.$back);
+				exit;
+
 			} //if ($action == "update")
-		} //if ($_POST["persistformvar"] != "true") 
+		} //if ($_POST["persistformvar"] != "true")
 } //(count($_POST)>0 && strlen($_POST["persistformvar"]) == 0)
 
 //pre-populate the form
@@ -167,25 +167,18 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	require_once "resources/header.php";
 
 //show the content
-	echo "<div align='center'>";
-	echo "<table width='100%' border='0' cellpadding='0' cellspacing=''>\n";
-	echo "<tr class='border'>\n";
-	echo "	<td align=\"left\">\n";
-	echo "		<br>";
-
 	echo "<form method='post' name='frm' action=''>\n";
-	echo "<div align='center'>\n";
-	echo "<table width='100%'  border='0' cellpadding='6' cellspacing='0'>\n";
+	echo "<table width='100%'  border='0' cellpadding='0' cellspacing='0'>\n";
 	echo "<tr>\n";
-	echo "<td align='left' width='30%' nowrap='nowrap'><b>".$text['title-invoice_item']."</b></td>\n";
-	echo "<td width='70%' align='right'>\n";
+	echo "<td align='left' width='30%' valign='top' nowrap='nowrap'><b>".$text['title-invoice_item']."</b></td>\n";
+	echo "<td width='70%' align='right' valign='top'>\n";
 	echo "	<input type='button' class='btn' name='' alt='".$text['button-back']."' onclick=\"history.go(-1);\" value='".$text['button-back']."'>\n";
 	echo "</td>\n";
 	echo "</tr>\n";
 
 	echo "<tr>\n";
 	echo "<td class='vncell' valign='top' align='left' nowrap='nowrap'>\n";
-	echo "	".$text['label-item_qty'].":\n";
+	echo "	".$text['label-item_qty']."\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
 	echo "  <input class='formfld' type='text' name='item_qty' maxlength='255' value='$item_qty'>\n";
@@ -196,7 +189,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 
 	echo "<tr>\n";
 	echo "<td class='vncell' valign='top' align='left' nowrap='nowrap'>\n";
-	echo "	".$text['label-item_unit_price'].":\n";
+	echo "	".$text['label-item_unit_price']."\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
 	echo "  <input class='formfld' type='text' name='item_unit_price' maxlength='255' value='$item_unit_price'>\n";
@@ -207,7 +200,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 
 	echo "<tr>\n";
 	echo "<td class='vncell' valign='top' align='left' nowrap='nowrap'>\n";
-	echo "	".$text['label-item_desc'].":\n";
+	echo "	".$text['label-item_desc']."\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
 	echo "  <textarea class='formfld' type='text' rows='15' name='item_desc'>$item_desc</textarea>\n";
@@ -218,21 +211,20 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 
 	echo "	<tr>\n";
 	echo "		<td colspan='2' align='right'>\n";
-	echo "				<input type='hidden' name='invoice_uuid' value='$invoice_uuid'>\n";
-	echo "				<input type='hidden' name='contact_uuid' value='$contact_uuid'>\n";
+	echo "			<input type='hidden' name='invoice_uuid' value='$invoice_uuid'>\n";
+	echo "			<input type='hidden' name='contact_uuid' value='$contact_uuid'>\n";
 	if ($action == "update") {
-		echo "				<input type='hidden' name='invoice_item_uuid' value='$invoice_item_uuid'>\n";
+		if ($back != '') {
+			echo "		<input type='hidden' name='back' value='".$back."'>";
+		}
+		echo "		<input type='hidden' name='invoice_item_uuid' value='$invoice_item_uuid'>\n";
 	}
-	echo "				<input type='submit' name='submit' class='btn' value='".$text['button-save']."'>\n";
+	echo "			<br><input type='submit' name='submit' class='btn' value='".$text['button-save']."'>\n";
 	echo "		</td>\n";
 	echo "	</tr>";
 	echo "</table>";
+	echo "<br><br>";
 	echo "</form>";
-
-	echo "	</td>";
-	echo "	</tr>";
-	echo "</table>";
-	echo "</div>";
 
 //include the footer
 	require_once "resources/footer.php";

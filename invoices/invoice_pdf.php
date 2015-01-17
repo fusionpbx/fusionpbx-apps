@@ -17,7 +17,7 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2014
+	Portions created by the Initial Developer are Copyright (C) 2008-2012
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
@@ -43,6 +43,7 @@ else {
 //action invoice_uuid
 	if (isset($_REQUEST["id"])) {
 		$invoice_uuid = check_str($_REQUEST["id"]);
+		$type = check_str($_REQUEST["type"]);
 	}
 
 //get the invoice details
@@ -191,14 +192,19 @@ else {
 	$pdf->SetY(10);
 	$pdf->Cell(150,10,'');
 	$pdf->SetFont('Arial','',23);
-	$pdf->Cell(40,10,$text['label-invoice']);
+	if ($type == "quote") {
+		$pdf->Cell(40,10,$text['label-quote']);	
+	}
+	else {
+		$pdf->Cell(40,10,$text['label-invoice']);
+	}
 	$pdf->Ln();
 	$pdf->SetFont('Arial','',9);
 	$pdf->Cell(150,5,'');
 	$pdf->Cell(40,5,$text['label-invoice_date'].' '.$invoice_date);
 	$pdf->Ln();
 	$pdf->Cell(150,5,'');
-	$pdf->Cell(40,5,$text['label-invoice_date'].' '.$invoice_number);
+	$pdf->Cell(40,5,$text['label-invoice_number'].' '.$invoice_number);
 	$pdf->Ln();
 	$pdf->Ln();
 	$pdf->Ln();

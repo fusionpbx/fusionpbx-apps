@@ -40,6 +40,7 @@ if (count($_GET) > 0) {
 	$id = check_str($_GET["id"]);
 	$invoice_uuid = check_str($_GET["invoice_uuid"]);
 	$contact_uuid = check_str($_GET["contact_uuid"]);
+	$back = check_str($_GET["back"]);
 }
 
 //add multi-lingual support
@@ -59,14 +60,8 @@ if (strlen($id) > 0) {
 }
 
 //redirect the user
-	require_once "resources/header.php";
-	echo "<meta http-equiv=\"refresh\" content=\"2;url=invoice_items.php\">\n";
-	echo "<div align='center'>\n";
-	echo $text['message-delete']."\n";
-	echo "</div>\n";
-
-//include the footer
-	require_once "resources/footer.php";
-	return;
-
+	$_SESSION['message'] = $text['message-delete'];
+	$back = ($back != '') ? "&back=".$back : null;
+	header("Location: invoice_edit.php?id=".$invoice_uuid."&contact_uuid=".$contact_uuid.$back);
+	exit;
 ?>

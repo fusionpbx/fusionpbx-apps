@@ -44,6 +44,7 @@ else {
 	if (count($_GET) > 0) {
 		$id = check_str($_GET["id"]);
 		$contact_uuid = check_str($_GET["contact_uuid"]);
+		$back = check_str($_GET["back"]);
 	}
 
 //delete invoice
@@ -57,12 +58,7 @@ else {
 	}
 
 //redirect the user
-	require_once "resources/header.php";
-	echo "<meta http-equiv=\"refresh\" content=\"2;url=invoices.php?id=$contact_uuid\">\n";
-	echo "<div align='center'>\n";
-	echo $text['message-delete']."\n";
-	echo "</div>\n";
-	require_once "resources/footer.php";
-	return;
-
+	$_SESSION['message'] = $text['message-delete'];
+	header("Location: ".(($back != '') ? $back : "invoices.php?id=".$contact_uuid));
+	exit;
 ?>

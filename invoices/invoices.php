@@ -50,17 +50,13 @@ require_once "resources/paging.php";
 	$contact_uuid = check_str($_REQUEST["id"]);
 
 //show the content
-	echo "<div align='center'>";
-	echo "<table width='100%' border='0' cellpadding='0' cellspacing='2'>\n";
-	echo "<tr class='border'>\n";
-	echo "	<td align=\"center\">\n";
-	echo "		<br />";
-
-	echo "<table width='100%' border='0'>\n";
+	echo "<table width='100%' cellpadding='0' cellspacing='0' border='0'>\n";
 	echo "	<tr>\n";
-	echo "		<td width='50%' align='left' nowrap='nowrap'><b>".$text['title-invoices']."</b></td>\n";
-	echo "		<td width='50%' align=\"right\">\n";
-	echo "			<input type='button' class='btn' name='' alt='back' onclick=\"history.go(-1);\" value='Back'>\n";
+	echo "		<td width='50%' align='left' valign='top' nowrap='nowrap'><b>".$text['title-invoices']."</b><br><br></td>\n";
+	echo "		<td width='50%' align=\"right\" valign='top'>\n";
+	if ($contact_uuid != '') {
+		echo "			<input type='button' class='btn' name='' alt='back' onclick=\"history.go(-1);\" value='Back'>\n";
+	}
 	echo "		</td>\n";
 	echo "	</tr>\n";
 	echo "</table>\n";
@@ -89,9 +85,9 @@ require_once "resources/paging.php";
 		$rows_per_page = 150;
 		$param = "";
 		$page = $_GET['page'];
-		if (strlen($page) == 0) { $page = 0; $_GET['page'] = 0; } 
-		list($paging_controls, $rows_per_page, $var3) = paging($num_rows, $param, $rows_per_page); 
-		$offset = $rows_per_page * $page; 
+		if (strlen($page) == 0) { $page = 0; $_GET['page'] = 0; }
+		list($paging_controls, $rows_per_page, $var3) = paging($num_rows, $param, $rows_per_page);
+		$offset = $rows_per_page * $page;
 
 	//get the list
 		$sql = "SELECT * FROM v_invoices ";
@@ -101,10 +97,10 @@ require_once "resources/paging.php";
 		if (strlen($contact_uuid) > 0) {
 			$sql .= "and v_invoices.contact_uuid_to = '$contact_uuid' ";
 		}
-		if (strlen($order_by) == 0) { 
+		if (strlen($order_by) == 0) {
 			$sql .= "order by v_invoices.invoice_number asc ";
 		}
-		else { 
+		else {
 			$sql .= "order by v_invoices.$order_by $order ";
 		}
 		$sql .= "limit $rows_per_page offset $offset ";
@@ -118,9 +114,9 @@ require_once "resources/paging.php";
 	$row_style["0"] = "row_style0";
 	$row_style["1"] = "row_style1";
 
-	echo "<div align='center'>\n";
-	echo "<table width='100%' border='0' cellpadding='0' cellspacing='0'>\n";
+	echo "<table class='tr_hover' width='100%' border='0' cellpadding='0' cellspacing='0'>\n";
 	echo "<tr>\n";
+	echo "<th>&nbsp;</th>\n";
 	echo th_order_by('invoice_number', $text['label-invoice_number'], $order_by, $order);
 	echo th_order_by('contact_organization', $text['label-contact_to_organization'], $order_by, $order);
 	echo th_order_by('contact_name_given', $text['label-contact_to_given_name'], $order_by, $order);
@@ -138,20 +134,30 @@ require_once "resources/paging.php";
 
 	if ($result_count > 0) {
 		foreach($result as $row) {
-			echo "<tr >\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['invoice_number']."&nbsp;</td>\n";
+			$back = ($contact_uuid != '') ? "&back=".urlencode("invoices.php?id=".$contact_uuid) : null;
+			$tr_link = (permission_exists('invoice_edit')) ? "href='invoice_edit.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid'].$back."'" : null;
+			echo "<tr ".$tr_link.">\n";
+			echo "	<td align='center' valign='middle' class='".$row_style[$c]."' style='padding: 0px 0px 0px 5px;'>";
+			if ($row['invoice_paid'] == 1) {
+				echo "<img src='paid.png' style='width: 16px; height: 16px; border; none;'>";
+			}
+			else {
+				echo "<img src='unpaid.png' style='width: 16px; height: 16px; border; none;'>";
+			}
+			echo "	</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'><a href='invoice_edit.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid'].$back."' alt='".$text['button-edit']."'>".$row['invoice_number']."</a>&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['contact_organization']."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['contact_name_given']."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['contact_name_family']."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['invoice_date']."&nbsp;</td>\n";
-			echo "	<td valign='top' align='right'>\n";
+			echo "	<td class='list_control_icons'>\n";
 			if (permission_exists('invoice_edit')) {
-				echo "		<a href='invoice_edit.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid']."' alt='".$text['button-edit']."'>$v_link_label_edit</a>\n";
+				echo 	"<a href='invoice_edit.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid'].$back."' alt='".$text['button-edit']."'>$v_link_label_edit</a>";
 			}
 			if (permission_exists('invoice_delete')) {
-				echo "		<a href='invoices_delete.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid']."' alt='".$text['button-delete']."' onclick=\"return confirm('".$text['confirm-delete']."')\">$v_link_label_delete</a>\n";
+				echo 	"<a href='invoices_delete.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid'].$back."' alt='".$text['button-delete']."' onclick=\"return confirm('".$text['confirm-delete']."')\">$v_link_label_delete</a>";
 			}
-			echo "	</td>\n";
+			echo 	"</td>\n";
 			echo "</tr>\n";
 			if ($c==0) { $c=1; } else { $c=0; }
 		} //end foreach
@@ -159,7 +165,7 @@ require_once "resources/paging.php";
 	} //end if results
 
 	echo "<tr>\n";
-	echo "<td colspan='8' align='left'>\n";
+	echo "<td colspan='9' align='left'>\n";
 	echo "	<table width='100%' cellpadding='0' cellspacing='0'>\n";
 	echo "	<tr>\n";
 	echo "		<td width='33.3%' nowrap='nowrap'>&nbsp;</td>\n";
@@ -169,7 +175,7 @@ require_once "resources/paging.php";
 	echo "			<a href='invoice_edit.php?contact_uuid=".$_GET['id']."' alt='".$text['button-add']."'>$v_link_label_add</a>\n";
 	}
 	else {
-		echo "			&nbsp;\n";
+		echo "		&nbsp;\n";
 	}
 	echo "		</td>\n";
 	echo "	</tr>\n";
@@ -178,13 +184,6 @@ require_once "resources/paging.php";
 	echo "</tr>\n";
 
 	echo "</table>";
-	echo "</div>";
-	echo "<br /><br />";
-
-	echo "</td>";
-	echo "</tr>";
-	echo "</table>";
-	echo "</div>";
 	echo "<br /><br />";
 
 //include the footer
