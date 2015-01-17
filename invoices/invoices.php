@@ -118,6 +118,7 @@ require_once "resources/paging.php";
 	echo "<tr>\n";
 	echo "<th>&nbsp;</th>\n";
 	echo th_order_by('invoice_number', $text['label-invoice_number'], $order_by, $order);
+	echo th_order_by('invoice_type', $text['label-invoice_type'], $order_by, $order);
 	echo th_order_by('contact_organization', $text['label-contact_to_organization'], $order_by, $order);
 	echo th_order_by('contact_name_given', $text['label-contact_to_given_name'], $order_by, $order);
 	echo th_order_by('contact_name_family', $text['label-contact_to_family_name'], $order_by, $order);
@@ -146,6 +147,7 @@ require_once "resources/paging.php";
 			}
 			echo "	</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'><a href='invoice_edit.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid'].$back."' alt='".$text['button-edit']."'>".$row['invoice_number']."</a>&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$text['label-invoice_type_'.$row['invoice_type']]."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['contact_organization']."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['contact_name_given']."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['contact_name_family']."&nbsp;</td>\n";
@@ -165,7 +167,7 @@ require_once "resources/paging.php";
 	} //end if results
 
 	echo "<tr>\n";
-	echo "<td colspan='9' align='left'>\n";
+	echo "<td colspan='10' align='left'>\n";
 	echo "	<table width='100%' cellpadding='0' cellspacing='0'>\n";
 	echo "	<tr>\n";
 	echo "		<td width='33.3%' nowrap='nowrap'>&nbsp;</td>\n";
