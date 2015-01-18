@@ -37,15 +37,12 @@ require_once "resources/header.php";
 require_once "resources/paging.php";
 
 //add multi-lingual support
-	echo "<!--\n";
-	require_once "app_languages.php";
-	echo "-->\n";
-	foreach($text as $key => $value) {
-		$text[$key] = $value[$_SESSION['domain']['language']['code']];
-	}
+	$language = new text;
+	$text = $language->get();
 
-$order_by = $_GET["order_by"];
-$order = $_GET["order"];
+//get the http values and set as variables
+	$order_by = $_GET["order_by"];
+	$order = $_GET["order"];
 
 //show the content
 	echo "<div align='center'>";

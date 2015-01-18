@@ -1,4 +1,5 @@
 <?php
+
 	// Add/Edit Form Fields
 	$forms[1]['header'] = "Please fill out this form completely. All BOLD fields are required.";
 	$forms[1]['fields'][1] = array('username', "Username:", "text", TRUE, "Please provid a Username.<br>\n");

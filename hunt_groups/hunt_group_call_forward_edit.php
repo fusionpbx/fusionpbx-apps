@@ -36,11 +36,9 @@ require_once "resources/check_auth.php";
 		exit;
 	}
 
-	//add multi-lingual support
-	require_once "app_languages.php";
-	foreach($text as $key => $value) {
-		$text[$key] = $value[$_SESSION['domain']['language']['code']];
-	}
+//add multi-lingual support
+	$language = new text;
+	$text = $language->get();
 
 function destination_select($select_name, $select_value, $select_default) {
 	if (strlen($select_value) == 0) { $select_value = $select_default; }

@@ -44,10 +44,8 @@ if (count($_GET) > 0) {
 }
 
 //add multi-lingual support
-	require_once "app_languages.php";
-	foreach($text as $key => $value) {
-		$text[$key] = $value[$_SESSION['domain']['language']['code']];
-	}
+	$language = new text;
+	$text = $language->get();
 
 if (strlen($id) > 0) {
 	//delete invoice_item

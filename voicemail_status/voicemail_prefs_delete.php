@@ -51,12 +51,8 @@ if (count($_GET)>0) {
 	}
 
 //add multi-lingual support
-	echo "<!--\n";
-	require_once "app_languages.php";
-	echo "-->\n";
-	foreach($text as $key => $value) {
-		$text[$key] = $value[$_SESSION['domain']['language']['code']];
-	}
+	$language = new text;
+	$text = $language->get();
 
 //redirect the user
 	require "resources/require.php";

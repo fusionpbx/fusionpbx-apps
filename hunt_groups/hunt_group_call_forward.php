@@ -32,15 +32,11 @@ if (permission_exists('hunt_group_call_forward')) {
 
 	require_once "resources/header.php";
 	$page["title"] = $text['title-hunt-group_call_forward'];
-
 	require_once "resources/paging.php";
 
-
 	//add multi-lingual support
-	require_once "app_languages.php";
-	foreach($text as $key => $value) {
-		$text[$key] = $value[$_SESSION['domain']['language']['code']];
-	}
+		$language = new text;
+		$text = $language->get();
 
 	$order_by = $_GET["order_by"];
 	$order = $_GET["order"];
