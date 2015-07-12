@@ -209,6 +209,11 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 		}
 	}
 
+//set the contact 'to' when adding an invoice
+	if ($action == "add") {
+		$contact_uuid_to = $_REQUEST['contact_uuid'];
+	}
+
 //show the content
 	echo "<form method='post' name='frm' action=''>\n";
 	echo "<table width='100%'  border='0' cellpadding='0' cellspacing='0'>\n";
