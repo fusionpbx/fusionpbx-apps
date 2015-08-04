@@ -21,6 +21,23 @@
 		$apps[$x]['description']['pt-pt'] = "Permitir que o utilizador abra um Telefone Flash para a sua extensão.";
 		$apps[$x]['description']['pt-br'] = "";
 
+	//destination details
+		/*
+		$y = 0;
+		$apps[$x]['destinations'][$y]['type'] = "sql";
+		$apps[$x]['destinations'][$y]['label'] = "xmpp";
+		$apps[$x]['destinations'][$y]['name'] = "xmpp";
+		$apps[$x]['destinations'][$y]['sql'] = "select x.xmpp_profile_uuid as uuid, x.profile_name as name, d.domain_name as domain_name from v_xmpp as x, v_domains as d ";
+		$apps[$x]['destinations'][$y]['where'] = "where x.domain_uuid = '${domain_uuid}' and x.domain_uuid=d.domain_uuid and x.enabled = 'true' ";
+		$apps[$x]['destinations'][$y]['order_by'] = "profile_name asc";
+		$apps[$x]['destinations'][$y]['field']['uuid'] = "xmpp_profile_uuid";
+		$apps[$x]['destinations'][$y]['field']['name'] = "profile_name";
+		$apps[$x]['destinations'][$y]['field']['destination'] = "profile_name";
+		$apps[$x]['destinations'][$y]['select_value']['dialplan'] = "bridge:dingaling/\${destination}/";
+		$apps[$x]['destinations'][$y]['select_value']['ivr'] = "menu-exec-app:transfer \${destination} XML \${context}";
+		$apps[$x]['destinations'][$y]['select_label'] = "\${name}";
+		*/
+
 	//permission details
 		$apps[$x]['permissions'][0]['name'] = "xmpp_view";
 		$apps[$x]['permissions'][0]['menu']['uuid'] = "1808365b-0f7c-7555-89d0-31b3d9a75abb";
