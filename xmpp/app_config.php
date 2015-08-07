@@ -28,7 +28,7 @@
 		$apps[$x]['destinations'][$y]['label'] = "xmpp";
 		$apps[$x]['destinations'][$y]['name'] = "xmpp";
 		$apps[$x]['destinations'][$y]['sql'] = "select x.xmpp_profile_uuid as uuid, x.profile_name as name, d.domain_name as domain_name from v_xmpp as x, v_domains as d ";
-		$apps[$x]['destinations'][$y]['where'] = "where x.domain_uuid = '${domain_uuid}' and x.domain_uuid=d.domain_uuid and x.enabled = 'true' ";
+		$apps[$x]['destinations'][$y]['where'] = "where x.domain_uuid = '\${domain_uuid}' and x.domain_uuid=d.domain_uuid and x.enabled = 'true' ";
 		$apps[$x]['destinations'][$y]['order_by'] = "profile_name asc";
 		$apps[$x]['destinations'][$y]['field']['uuid'] = "xmpp_profile_uuid";
 		$apps[$x]['destinations'][$y]['field']['name'] = "profile_name";
