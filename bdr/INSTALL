@@ -1,0 +1,23 @@
+This adds a BDR Management interface so that you can see your BDR version, node count, delete a node and also see your LAG Bytes which is helpful to see if a node is not replicating.
+
+On your server
+git clone https://github.com/fusionpbx/fusionpbx-apps
+Copy or move the directory 'bdr' into your main FusionPBX directory
+cp -R fusionpbx-app/bdr /var/www/fusionpbx/apps
+chown -R www-data:www-data /var/www/fusionpbx/apps/bdr
+
+Log into the FusionPBX webpage
+Advanced -> Upgrade
+Menu Defaults and Permission Defaults.
+Log out and back in
+
+Advanced -> Default Settings
+Add a Default Setting
+Category: server
+Subcategory: bdr_fusionpbx_enable
+Type: boolean
+Value: true
+Enabled: True
+Save
+
+Then go to Advanced -> BDR Management
