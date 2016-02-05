@@ -3,8 +3,8 @@ This adds a BDR Management interface so that you can see your BDR version, node 
 On your server
 git clone https://github.com/fusionpbx/fusionpbx-apps
 Copy or move the directory 'bdr' into your main FusionPBX directory
-cp -R fusionpbx-app/bdr /var/www/fusionpbx/apps
-chown -R www-data:www-data /var/www/fusionpbx/apps/bdr
+cp -R fusionpbx-apps/bdr /var/www/fusionpbx/app
+chown -R www-data:www-data /var/www/fusionpbx/app/bdr
 
 Log into the FusionPBX webpage
 Advanced -> Upgrade

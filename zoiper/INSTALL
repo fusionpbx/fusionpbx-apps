@@ -13,8 +13,8 @@ Copy the page ID
 On your server
 git clone https://github.com/fusionpbx/fusionpbx-apps
 Copy or move the directory 'zoiper' into your main FusionPBX directory
-cp -R fusionpbx-app/zoiper /var/www/fusionpbx/apps
-chown -R www-data:www-data /var/www/fusionpbx/apps/zoiper
+cp -R fusionpbx-apps/zoiper /var/www/fusionpbx/app
+chown -R www-data:www-data /var/www/fusionpbx/app/zoiper
 
 Log into the FusionPBX webpage
 Advanced -> Upgrade
