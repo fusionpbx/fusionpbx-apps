@@ -17,7 +17,7 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2012
+	Portions created by the Initial Developer are Copyright (C) 2008-2016
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
@@ -93,6 +93,7 @@ else {
 	$sql = "select * from v_contact_addresses ";
 	$sql .= "where domain_uuid = '$domain_uuid' ";
 	$sql .= "and contact_uuid = '$contact_uuid_from' ";
+	$sql .= "order by address_primary desc ";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
 	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
