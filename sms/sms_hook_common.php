@@ -51,7 +51,7 @@ require_once "resources/require.php";
 }
 */
 
-function route_and_send_sms($to, $from, $body) {
+function route_and_send_sms($from, $to, $body) {
 	global $db, $debug, $domain_uuid, $domain_name;
 	if ($debug) {
 		error_log('DATA: ' .  print_r($to, true));
