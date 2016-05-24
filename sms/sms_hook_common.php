@@ -51,12 +51,12 @@ require_once "resources/require.php";
 }
 */
 
-function route_and_send_sms($data) {
+function route_and_send_sms($to, $from, $body) {
 	global $db, $debug, $domain_uuid, $domain_name;
 	if ($debug) {
-		error_log('DATA: ' .  print_r($data, true));
+		error_log('DATA: ' .  print_r($to, true));
 	}
-	
+
 	//create the even socket connection and send the event socket command
 		$fp = event_socket_create($_SESSION['event_socket_ip_address'], $_SESSION['event_socket_port'], $_SESSION['event_socket_password']);
 		if (!$fp) {
@@ -65,13 +65,13 @@ function route_and_send_sms($data) {
 		}
 		else {
 
-				$to = intval(preg_replace('/(^[1])/','', $data->to));
-				$from = intval($data->from);
+				$to = intval(preg_replace('/(^[1])/','', $to));
+				$from = intval($from);
 				if ($debug) {
 					error_log("TO: " . print_r($to,true));
 					error_log("FROM: " . print_r($from,true));
 				}
-				
+
 				$sql = "select domain_name, ";
 				$sql .= "dialplan_detail_data, ";
 				$sql .= "v_domains.domain_uuid as domain_uuid ";
@@ -121,14 +121,14 @@ function route_and_send_sms($data) {
 					foreach ($result as &$row) {
 						$switch_cmd = "api luarun app.lua sms inbound ";
 						$switch_cmd .= $row['destination_number'] . "@" . $domain_name;
-						$switch_cmd .= " " . $from . " '" . $data->body . "'";
+						$switch_cmd .= " " . $from . " '" . $body . "'";
 						if ($debug) {
 							error_log(print_r($switch_cmd,true));
 						}
 						$result2 = trim(event_socket_request($fp, $switch_cmd));
 					}
 				} else {
-					$switch_cmd = "api luarun app.lua sms inbound " . $match[0] . "@" . $domain_name . " " . $from . " '" . $data->body . "'";
+					$switch_cmd = "api luarun app.lua sms inbound " . $match[0] . "@" . $domain_name . " " . $from . " '" . $body . "'";
 					if ($debug) {
 						error_log(print_r($switch_cmd,true));
 					}
@@ -137,8 +137,8 @@ function route_and_send_sms($data) {
 				if ($debug) {
 					error_log("RESULT: " . print_r($result2,true));
 				}
-				
-				unset ($prep_statement);		
+
+				unset ($prep_statement);
 		}
 }
 ?>

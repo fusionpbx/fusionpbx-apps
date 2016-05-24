@@ -8,11 +8,7 @@ require_once "../sms_hook_common.php";
 if (check_acl()) {
 	if  ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			error_log('REQUEST: ' .  print_r($_REQUEST, true));
-			$data = (object) ['body' => $_REQUEST['Body'],
-				'to' => str_replace("+", "", $_REQUEST['To']),
-				'from' => intval(str_replace("+", "", $_REQUEST['From']))
-				];
-		route_and_send_sms($data);
+		route_and_send_sms($_REQUEST['From'], $_REQUEST['To'], $_REQUEST['Body']);
 	} else {
 	  die("no");
 	}
