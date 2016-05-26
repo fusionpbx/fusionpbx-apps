@@ -52,10 +52,10 @@ else {
 
 	$rows_per_page = ($_SESSION['domain']['paging']['numeric'] != '') ? $_SESSION['domain']['paging']['numeric'] : 50;
 
-	$sql = "select domain_name, extension, sms_message_uuid,start_stamp,from_numer,to_number,message,direction from v_sms_messages, v_domains, v_extensions where v_sms_messages.domain_uuid = v_domains.domain_uuid and v_sms_messages.extension_uuid = v_extensions.extension_uuid and v_domains.domain_uuid = '" . $domain_uuid . "' order by start_stamp";
+	$sql = "select domain_name, extension, sms_message_uuid,start_stamp,from_numer,to_number,message,direction from v_sms_messages, v_domains, v_extensions where v_sms_messages.domain_uuid = v_domains.domain_uuid and v_sms_messages.extension_uuid = v_extensions.extension_uuid and v_domains.domain_uuid = :domain_uuid order by start_stamp DESC";
 	error_log("SQL: " . print_r($sql,true));
 	$prep_statement = $db->prepare(check_sql($sql));
-	$prep_statement->execute();
+	$prep_statement->execute(array(':domain_uuid' => $domain_uuid));
 	$result = $prep_statement->fetchAll(PDO::FETCH_ASSOC);
 	$result_count = count($result);
 	unset ($prep_statement, $sql);
@@ -132,7 +132,7 @@ else {
 		} // end foreach
 		unset($sql, $result, $row_count);
 	} // end if
-	
+
 	echo "</table>\n";
 	echo "</form>\n";
 
