@@ -208,7 +208,7 @@
 
 
 	sql = "insert into v_sms_messages";
-   	sql = sql .. "(sms_message_uuid,extension_uuid,domain_uuid,start_stamp,from_numer,to_number,message,direction,response,carrier)";
+   	sql = sql .. "(sms_message_uuid,extension_uuid,domain_uuid,start_stamp,from_number,to_number,message,direction,response,carrier)";
    	sql = sql .. " values ('" .. uuid() .. "','" .. extension_uuid .. "','" .. domain_uuid .."',now(),'" .. from .. "','" .. to .. "','" .. body .. "','" .. direction .. "','','" .. carrier .."')";
    	if (debug["sql"]) then
 		freeswitch.consoleLog("notice", "[sms] "..sql.."\n");
