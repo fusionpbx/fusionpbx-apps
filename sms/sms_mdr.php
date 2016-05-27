@@ -124,7 +124,7 @@ else {
 			}
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['extension']."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['start_stamp']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['from_numer']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['from_number']."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['to_number']."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['message']."&nbsp;</td>\n";
 			echo "</tr>\n";
