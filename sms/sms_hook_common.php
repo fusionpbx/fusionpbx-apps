@@ -34,22 +34,9 @@ include "root.php";
 
 //luarun /var/www/fusionpbx/app/sms/sms.lua TO FROM 'BODY'
 
-$debug = true;
+$debug = false;
 
 require_once "resources/require.php";
-
-/*if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	if  ($_SERVER['CONTENT_TYPE'] == 'application/json') {
-		$data = json_decode(file_get_contents("php://input"));
-	} else {
-		error_log('REQUEST: ' .  print_r($_REQUEST, true));
-		$data = (object) ['body' => $_REQUEST['Body'],
-			'to' => str_replace("+", "", $_REQUEST['To']),
-			'from' => intval(str_replace("+", "", $_REQUEST['From']))
-			];
-	}
-}
-*/
 
 function route_and_send_sms($from, $to, $body) {
 	global $db, $debug, $domain_uuid, $domain_name;
@@ -70,6 +57,7 @@ function route_and_send_sms($from, $to, $body) {
 				if ($debug) {
 					error_log("TO: " . print_r($to,true));
 					error_log("FROM: " . print_r($from,true));
+					error_log("BODY: " . print_r($body,true));
 				}
 
 				$sql = "select domain_name, ";
@@ -82,10 +70,15 @@ function route_and_send_sms($from, $to, $body) {
 				$sql .= "and v_destinations.domain_uuid = v_domains.domain_uuid";
 				$sql .= " and destination_number like :to and dialplan_detail_type = 'transfer'";
 
+				if ($debug) {
+					error_log("SQL: " . print_r($sql,true));
+				}
+
 				$prep_statement = $db->prepare(check_sql($sql));
 				$prep_statement->execute(array(':to' => $to));
 				$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 				if (count($result) == 0) {
+					error_log("Cannot find a destination: " . print_r($result,true));
 					die("Invalid Destination");
 				}
 				foreach ($result as &$row) {

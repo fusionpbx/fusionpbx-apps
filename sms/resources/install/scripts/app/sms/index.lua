@@ -62,6 +62,7 @@
 		extension = string.match(to,'%d+');
 
 		if (debug["info"]) then
+			freeswitch.consoleLog("notice", "[sms] DIRECTION: " .. direction .. "\n");
 			freeswitch.consoleLog("notice", "[sms] TO: " .. to .. "\n");
 			freeswitch.consoleLog("notice", "[sms] Extension: " .. extension .. "\n");
 			freeswitch.consoleLog("notice", "[sms] FROM: " .. from .. "\n");
@@ -87,15 +88,38 @@
 		end
 		event:fire();
 		to = extension;
-
 	elseif direction == "outbound" then
-		to = message:getHeader("to_user");
-		domain_name = message:getHeader("from_host");
-		from = message:getHeader("from_user");
-		body = message:getBody();
+		if (argv[3] ~= nil) then
+			to_user = argv[3];
+			to = string.match(to_user,'%d+');
+		else 
+			to = message:getHeader("to_user");
+		end
+		if (argv[3] ~= nil) then
+			domain_name = string.match(to_user,'%@+(.+)');
+		else
+			domain_name = message:getHeader("from_host");
+		end
+		if (argv[4] ~= nil) then
+			from = argv[4];
+			extension = string.match(from,'%d+');
+			if extension:len() > 7 then
+				outbound_caller_id_number = extension;
+			end 
+		else
+			from = message:getHeader("from_user");
+		end
+		if (argv[5] ~= nil) then
+			body = argv[5];
+		else
+			body = message:getBody();
+		end
 
 		if (debug["info"]) then
-			freeswitch.consoleLog("info", message:serialize());
+			if (message ~= nil) then
+				freeswitch.consoleLog("info", message:serialize());
+			end
+			freeswitch.consoleLog("notice", "[sms] DIRECTION: " .. direction .. "\n");
 			freeswitch.consoleLog("notice", "[sms] TO: " .. to .. "\n");
 			freeswitch.consoleLog("notice", "[sms] FROM: " .. from .. "\n");
 			freeswitch.consoleLog("notice", "[sms] BODY: " .. body .. "\n");
@@ -106,7 +130,7 @@
 			--get the domain_uuid using the domain name required for multi-tenant
 				if (domain_name ~= nil) then
 					sql = "SELECT domain_uuid FROM v_domains ";
-					sql = sql .. "WHERE domain_name = '" .. domain_name .. "' ";
+					sql = sql .. "WHERE domain_name = '" .. domain_name .. "' and domain_enabled = 'true' ";
 					if (debug["sql"]) then
 						freeswitch.consoleLog("notice", "[voicemail] SQL: " .. sql .. "\n");
 					end
@@ -122,13 +146,31 @@
 					sql = "SELECT outbound_caller_id_number, extension_uuid, carrier FROM v_extensions ";
 					sql = sql .. ", v_sms_destinations ";
 					sql = sql .. "WHERE outbound_caller_id_number = destination and  ";
-					sql = sql .. "v_extensions.domain_uuid = '" .. domain_uuid .. "' and extension = '" .. from .."' ";
+					sql = sql .. "v_extensions.domain_uuid = '" .. domain_uuid .. "' and extension = '" .. from .."' and ";
+					sql = sql .. "v_sms_destinations.enabled = 'true' and ";
+					sql = sql .. "v_extensions.enabled = 'true'";
+
 					if (debug["sql"]) then
 						freeswitch.consoleLog("notice", "[sms] SQL: " .. sql .. "\n");
 					end
 					status = dbh:query(sql, function(rows)
 						outbound_caller_id_number = rows["outbound_caller_id_number"];
 						extension_uuid = rows["extension_uuid"];
+						carrier = rows["carrier"];
+					end);
+				end
+		elseif (outbound_caller_id_number ~= nil) then
+			--get the outbound_caller_id_number using the domain_uuid and the extension number
+				if (domain_uuid ~= nil) then
+					sql = "SELECT carrier FROM  ";
+					sql = sql .. " v_sms_destinations ";
+					sql = sql .. "WHERE destination = '" .. from .. "' and ";
+					sql = sql .. "v_sms_destinations.domain_uuid = '" .. domain_uuid .. "' and ";
+					sql = sql .. "enabled = 'true'";
+					if (debug["sql"]) then
+						freeswitch.consoleLog("notice", "[sms] SQL: " .. sql .. "\n");
+					end
+					status = dbh:query(sql, function(rows)
 						carrier = rows["carrier"];
 					end);
 				end
@@ -165,7 +207,7 @@
 			cmd = "curl -u ".. access_key ..":" .. secret_key .. " -H \"Content-Type: application/json\" -X POST -d '{\"to\":\"" .. to .. "\",\"from\":\"" .. outbound_caller_id_number .."\",\"body\":\"" .. body .. "\"}' " .. api_url;
 		elseif (carrier == "twilio") then
 			cmd ="curl -X POST '" .. api_url .."' --data-urlencode 'To=+" .. to .."' --data-urlencode 'From=+" .. outbound_caller_id_number .. "' --data-urlencode 'Body=" .. body .. "' -u ".. access_key ..":" .. secret_key .. " --insecure";
-		end		
+		end
 		if (debug["info"]) then
 			freeswitch.consoleLog("notice", "[sms] CMD: " .. cmd .. "\n");
 		end
@@ -206,11 +248,12 @@
 	end
 
 
-
-	sql = "insert into v_sms_messages";
-   	sql = sql .. "(sms_message_uuid,extension_uuid,domain_uuid,start_stamp,from_number,to_number,message,direction,response,carrier)";
-   	sql = sql .. " values ('" .. uuid() .. "','" .. extension_uuid .. "','" .. domain_uuid .."',now(),'" .. from .. "','" .. to .. "','" .. body .. "','" .. direction .. "','','" .. carrier .."')";
-   	if (debug["sql"]) then
-		freeswitch.consoleLog("notice", "[sms] "..sql.."\n");
+	if (extension_uuid ~= nil) then
+		sql = "insert into v_sms_messages";
+		sql = sql .. "(sms_message_uuid,extension_uuid,domain_uuid,start_stamp,from_number,to_number,message,direction,response,carrier)";
+		sql = sql .. " values ('" .. uuid() .. "','" .. extension_uuid .. "','" .. domain_uuid .."',now(),'" .. from .. "','" .. to .. "','" .. body .. "','" .. direction .. "','','" .. carrier .."')";
+		if (debug["sql"]) then
+			freeswitch.consoleLog("notice", "[sms] "..sql.."\n");
+		end
+		dbh:query(sql);
 	end
-	dbh:query(sql);

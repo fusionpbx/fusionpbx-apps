@@ -37,6 +37,13 @@ if ($domains_processed == 1) {
 	$array[$x]['default_setting_category'] = 'sms';
 	$array[$x]['default_setting_subcategory'] = 'carriers';
 	$array[$x]['default_setting_name'] = 'array';
+	$array[$x]['default_setting_value'] = 'teli';
+	$array[$x]['default_setting_enabled'] = 'true';
+	$array[$x]['default_setting_description'] = '';
+	$x++;
+	$array[$x]['default_setting_category'] = 'sms';
+	$array[$x]['default_setting_subcategory'] = 'carriers';
+	$array[$x]['default_setting_name'] = 'array';
 	$array[$x]['default_setting_value'] = 'twilio';
 	$array[$x]['default_setting_enabled'] = 'true';
 	$array[$x]['default_setting_description'] = '';
