@@ -49,6 +49,85 @@ if ($domains_processed == 1) {
 	$array[$x]['default_setting_description'] = '';
 	$x++;
 
+	$array[$x]['default_setting_category'] = 'sms';
+	$array[$x]['default_setting_subcategory'] = 'flowroute_access_key';
+	$array[$x]['default_setting_name'] = 'text';
+	$array[$x]['default_setting_value'] = '';
+	$array[$x]['default_setting_enabled'] = 'false';
+	$array[$x]['default_setting_description'] = '';
+	$x++;
+	$array[$x]['default_setting_category'] = 'sms';
+	$array[$x]['default_setting_subcategory'] = 'flowroute_secret_key';
+	$array[$x]['default_setting_name'] = 'text';
+	$array[$x]['default_setting_value'] = '';
+	$array[$x]['default_setting_enabled'] = 'false';
+	$array[$x]['default_setting_description'] = '';
+	$x++;
+
+	$array[$x]['default_setting_category'] = 'sms';
+	$array[$x]['default_setting_subcategory'] = 'teli_access_key';
+	$array[$x]['default_setting_name'] = 'text';
+	$array[$x]['default_setting_value'] = '';
+	$array[$x]['default_setting_enabled'] = 'false';
+	$array[$x]['default_setting_description'] = '';
+	$x++;
+	$array[$x]['default_setting_category'] = 'sms';
+	$array[$x]['default_setting_subcategory'] = 'teli_secret_key';
+	$array[$x]['default_setting_name'] = 'text';
+	$array[$x]['default_setting_value'] = '';
+	$array[$x]['default_setting_enabled'] = 'false';
+	$array[$x]['default_setting_description'] = '';
+	$x++;
+
+	$array[$x]['default_setting_category'] = 'sms';
+	$array[$x]['default_setting_subcategory'] = 'twilio_access_key';
+	$array[$x]['default_setting_name'] = 'text';
+	$array[$x]['default_setting_value'] = '';
+	$array[$x]['default_setting_enabled'] = 'false';
+	$array[$x]['default_setting_description'] = '';
+	$x++;
+	$array[$x]['default_setting_category'] = 'sms';
+	$array[$x]['default_setting_subcategory'] = 'twilio_secret_key';
+	$array[$x]['default_setting_name'] = 'text';
+	$array[$x]['default_setting_value'] = '';
+	$array[$x]['default_setting_enabled'] = 'false';
+	$array[$x]['default_setting_description'] = '';
+	$x++;
+
+		
+	//get an array of the default settings
+		$sql = "select * from v_default_settings ";
+		$prep_statement = $db->prepare($sql);
+		$prep_statement->execute();
+		$default_settings = $prep_statement->fetchAll(PDO::FETCH_NAMED);
+		unset ($prep_statement, $sql);
+
+	//find the missing default settings
+		$x = 0;
+		foreach ($array as $setting) {
+			$found = false;
+			$missing[$x] = $setting;
+			foreach ($default_settings as $row) {
+				if (trim($row['default_setting_subcategory']) == trim($setting['default_setting_subcategory'])) {
+					$found = true;
+					//remove items from the array that were found
+					unset($missing[$x]);
+				}
+			}
+			$x++;
+		}
+
+	//add the missing default settings
+		if (count($missing) > 0) foreach ($missing as $row) {
+			//add the default settings
+			$orm = new orm;
+			$orm->name('default_settings');
+			$orm->save($row);
+			$message = $orm->message;
+			unset($orm);
+		}
+		unset($missing);
+
 }
 
 ?>
