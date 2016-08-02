@@ -207,11 +207,24 @@
 			cmd = "curl -u ".. access_key ..":" .. secret_key .. " -H \"Content-Type: application/json\" -X POST -d '{\"to\":\"" .. to .. "\",\"from\":\"" .. outbound_caller_id_number .."\",\"body\":\"" .. body .. "\"}' " .. api_url;
 		elseif (carrier == "twilio") then
 			cmd ="curl -X POST '" .. api_url .."' --data-urlencode 'To=+" .. to .."' --data-urlencode 'From=+" .. outbound_caller_id_number .. "' --data-urlencode 'Body=" .. body .. "' -u ".. access_key ..":" .. secret_key .. " --insecure";
+		elseif (carrier == "teli") then
+			cmd ="curl -X POST '" .. api_url .."' --data-urlencode 'destination=" .. to .."' --data-urlencode 'source=" .. outbound_caller_id_number .. "' --data-urlencode 'message=" .. body .. "' --data-urlencode 'token=" .. access_key .. "' --insecure";
+		elseif (carrier == "plivo") then
+			if to:len() <11 then
+				to = "1"..to;
+			end
+			cmd="curl -i --user " .. access_key .. ":" .. secret_key .. " -H \"Content-Type: application/json\" -d '{\"src\": \"" .. outbound_caller_id_number .. "\",\"dst\": \"" .. to .."\", \"text\": \"" .. body .. "\"}' " .. api_url;
 		end
 		if (debug["info"]) then
 			freeswitch.consoleLog("notice", "[sms] CMD: " .. cmd .. "\n");
 		end
-		os.execute(cmd)
+		local handle = io.popen(cmd)
+		local result = handle:read("*a")
+		handle:close()
+		if (debug["info"]) then
+			freeswitch.consoleLog("notice", "[sms] CURL Returns: " .. result .. "\n");
+		end
+--		os.execute(cmd)
 
 	end
 	
