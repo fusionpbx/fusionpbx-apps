@@ -85,6 +85,7 @@ if ($domains_processed == 1) {
 	$array[$x]['default_setting_description'] = '';
 	$x++;
 
+
 /*	$array[$x]['default_setting_category'] = 'sms';
 	$array[$x]['default_setting_subcategory'] = 'flowroute_access_key';
 	$array[$x]['default_setting_name'] = 'text';

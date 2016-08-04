@@ -206,6 +206,13 @@
 		if (carrier == "flowroute") then
 			cmd = "curl -u ".. access_key ..":" .. secret_key .. " -H \"Content-Type: application/json\" -X POST -d '{\"to\":\"" .. to .. "\",\"from\":\"" .. outbound_caller_id_number .."\",\"body\":\"" .. body .. "\"}' " .. api_url;
 		elseif (carrier == "twilio") then
+			if to:len() < 11 then
+				to = "1" .. to;
+			end
+			if outbound_caller_id_number:len() < 11 then
+				outbound_caller_id_number = "1" .. outbound_caller_id_number;
+			end
+		-- Can be either +1NANNNNXXXX or NANNNNXXXX
 			cmd ="curl -X POST '" .. api_url .."' --data-urlencode 'To=+" .. to .."' --data-urlencode 'From=+" .. outbound_caller_id_number .. "' --data-urlencode 'Body=" .. body .. "' -u ".. access_key ..":" .. secret_key .. " --insecure";
 		elseif (carrier == "teli") then
 			cmd ="curl -X POST '" .. api_url .."' --data-urlencode 'destination=" .. to .."' --data-urlencode 'source=" .. outbound_caller_id_number .. "' --data-urlencode 'message=" .. body .. "' --data-urlencode 'token=" .. access_key .. "' --insecure";
