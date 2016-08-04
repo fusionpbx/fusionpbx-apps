@@ -48,7 +48,6 @@ if ($domains_processed == 1) {
 	$array[$x]['default_setting_enabled'] = 'true';
 	$array[$x]['default_setting_description'] = '';
 	$x++;
-<<<<<<< HEAD
 	$array[$x]['default_setting_category'] = 'sms';
 	$array[$x]['default_setting_subcategory'] = 'carriers';
 	$array[$x]['default_setting_name'] = 'array';
@@ -83,13 +82,6 @@ if ($domains_processed == 1) {
 	$array[$x]['default_setting_name'] = 'text';
 	$array[$x]['default_setting_value'] = 'https://sms.teleapi.net/sms/send';
 	$array[$x]['default_setting_enabled'] = 'false';
-=======
-	$array[$x]['default_setting_category'] = 'sms';
-	$array[$x]['default_setting_subcategory'] = 'carriers';
-	$array[$x]['default_setting_name'] = 'array';
-	$array[$x]['default_setting_value'] = 'plivo';
-	$array[$x]['default_setting_enabled'] = 'true';
->>>>>>> fusionpbx/master
 	$array[$x]['default_setting_description'] = '';
 	$x++;
 
