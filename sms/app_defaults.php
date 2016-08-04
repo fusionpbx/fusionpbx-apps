@@ -48,6 +48,7 @@ if ($domains_processed == 1) {
 	$array[$x]['default_setting_enabled'] = 'true';
 	$array[$x]['default_setting_description'] = '';
 	$x++;
+<<<<<<< HEAD
 	$array[$x]['default_setting_category'] = 'sms';
 	$array[$x]['default_setting_subcategory'] = 'carriers';
 	$array[$x]['default_setting_name'] = 'array';
@@ -82,6 +83,42 @@ if ($domains_processed == 1) {
 	$array[$x]['default_setting_name'] = 'text';
 	$array[$x]['default_setting_value'] = 'https://sms.teleapi.net/sms/send';
 	$array[$x]['default_setting_enabled'] = 'false';
+	$array[$x]['default_setting_description'] = '';
+	$x++;
+
+	$array[$x]['default_setting_category'] = 'sms';
+	$array[$x]['default_setting_subcategory'] = 'twilio_api_url';
+	$array[$x]['default_setting_name'] = 'text';
+	$array[$x]['default_setting_value'] = 'https://api.twilio.com/2010-04-01/Accounts/{ACCOUNTSID}/Messages.json';
+	$array[$x]['default_setting_enabled'] = 'false';
+	$array[$x]['default_setting_description'] = '';
+	$x++;
+	$array[$x]['default_setting_category'] = 'sms';
+	$array[$x]['default_setting_subcategory'] = 'plivo_api_url';
+	$array[$x]['default_setting_name'] = 'text';
+	$array[$x]['default_setting_value'] = 'https://api.plivo.com/v1/Account/{ACCOUNTID}/Message/';
+	$array[$x]['default_setting_enabled'] = 'false';
+	$array[$x]['default_setting_description'] = '';
+	$x++;
+	$array[$x]['default_setting_category'] = 'sms';
+	$array[$x]['default_setting_subcategory'] = 'flowroute_api_url';
+	$array[$x]['default_setting_name'] = 'text';
+	$array[$x]['default_setting_value'] = 'https://api.flowroute.com/v2/messages';
+	$array[$x]['default_setting_enabled'] = 'false';
+	$array[$x]['default_setting_description'] = '';
+	$x++;
+	$array[$x]['default_setting_category'] = 'sms';
+	$array[$x]['default_setting_subcategory'] = 'teli_api_url';
+	$array[$x]['default_setting_name'] = 'text';
+	$array[$x]['default_setting_value'] = 'https://sms.teleapi.net/sms/send';
+	$array[$x]['default_setting_enabled'] = 'false';
+=======
+	$array[$x]['default_setting_category'] = 'sms';
+	$array[$x]['default_setting_subcategory'] = 'carriers';
+	$array[$x]['default_setting_name'] = 'array';
+	$array[$x]['default_setting_value'] = 'plivo';
+	$array[$x]['default_setting_enabled'] = 'true';
+>>>>>>> fusionpbx/master
 	$array[$x]['default_setting_description'] = '';
 	$x++;
 
