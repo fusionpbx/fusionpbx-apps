@@ -1,6 +1,7 @@
 This adds a BDR Management interface so that you can see your BDR version, node count, delete a node and also see your LAG Bytes which is helpful to see if a node is not replicating.
 
 On your server
+cd /usr/src
 git clone https://github.com/fusionpbx/fusionpbx-apps
 Copy or move the directory 'bdr' into your main FusionPBX directory
 cp -R fusionpbx-apps/bdr /var/www/fusionpbx/app
