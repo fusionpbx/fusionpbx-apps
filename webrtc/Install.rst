@@ -7,7 +7,7 @@ WebRTC app for FusionPBX is made by editing an existing FusionPBX app code and a
 **Note**
 ~~~~~~~~~
  
-This app is a shell and you must provide the rest of the code to make the app functional.  This was done to respect the work of the original work put into the authoring of the "Master FreeSWITCH" book and can be obtained from the download code section from https://www.packtpub.com/networking-and-servers/mastering-freeswitch
+There are two "sets" of code in this app. One being an existing app from FusionPBX and the code example from "Master FreeSWITCH" book.
 
 Prerequisites
 ^^^^^^^^^^^^^^
@@ -15,5 +15,4 @@ Prerequisites
 * Working install of FusionPBX
 * Working set of SSL certs (Not self signed) on said install of FusionPBX
 * Working mod_verto setup.
-* Code from the "Master FreeSWITCH" book
 * Patience
