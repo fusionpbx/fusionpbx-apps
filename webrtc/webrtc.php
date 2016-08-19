@@ -26,7 +26,6 @@
 	Len Graham <Len.PGH@gmail.com>
 */
 
-	<?php
 //includes
 	require_once "root.php";
 	require_once "resources/require.php";
