@@ -32,7 +32,7 @@
 
 //check permissions
 	require_once "resources/check_auth.php";
-	if (permission_exists('access_control_view')) {
+	if (permission_exists('webrtc')) {
 		//access granted
 	}
 	else {
@@ -51,6 +51,18 @@
 //additional includes
 	require_once "resources/header.php";
 	require_once "resources/paging.php";
+
+	echo "  <meta charset=\"utf-8\">\n"; 
+	echo "  <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n"; 
+	echo "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"; 
+	echo "  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->\n"; 
+	echo "  <meta name=\"description\" content=\"A WebRTC client for Verto FreeSWITCH module\">\n"; 
+	echo "  <meta name=\"author\" content=\"Giovanni Maruzzelli\">\n"; 
+	echo "  <link rel=\"icon\" href=\"favicon.ico\">\n"; 
+	echo "  <!-- Bootstrap core CSS -->\n"; 
+	echo "  <link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">\n"; 
+	echo "  <!-- Custom styles for this template -->\n"; 
+	//echo "  <link href=\"high.css\" rel=\"stylesheet\">\n"; 
 
 //prepare to page the results
 	$sql = "select count(*) as num_rows from v_webrtc ";
@@ -75,33 +87,34 @@
 	list($paging_controls, $rows_per_page, $var3) = paging($num_rows, $param, $rows_per_page);
 	$offset = $rows_per_page * $page;
 
-echo "<!DOCTYPE html> <html lang=\"en\">\n"; 
-echo " <head>\n"; 
-echo "  <meta charset=\"utf-8\">\n"; 
-echo "  <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n"; 
-echo "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"; 
-echo "  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->\n"; 
-echo "  <meta name=\"description\" content=\"A WebRTC client for Verto FreeSWITCH module\">\n"; 
-echo "  <meta name=\"author\" content=\"Giovanni Maruzzelli\">\n"; 
-echo "  <link rel=\"icon\" href=\"favicon.ico\">\n"; 
-echo "  <title>WebRTC Space</title>\n"; 
-echo "  <!-- Bootstrap core CSS -->\n"; 
-//echo "  <link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">\n"; 
-echo "  <!-- Custom styles for this template -->\n"; 
-//echo "  <link href=\"high.css\" rel=\"stylesheet\">\n"; 
-echo " </head>\n"; 
-echo " <body>\n"; 
+//get the user ID
+	$sql = "SELECT extension,v_extensions.password,effective_caller_id_name FROM ";
+	$sql .= "v_extension_users, v_extensions, v_users ";
+	$sql .= "WHERE v_users.user_uuid = v_extension_users.user_uuid ";
+	$sql .= "AND v_extensions.extension_uuid = v_extension_users.extension_uuid ";
+	$sql .= "AND v_users.user_uuid = '" . $_SESSION['user_uuid'] . "' ";
+	$sql .= "AND v_extensions.domain_uuid = '" . $_SESSION["domain_uuid"] . "' LIMIT 1";
+	
+	$prep_statement = $db->prepare($sql);
+	if ($prep_statement) {
+		$prep_statement->execute();
+		$row = $prep_statement->fetch(PDO::FETCH_ASSOC);
+		$user_extension = $row['extension'];
+		$user_password = $row['password'];
+		$effective_caller_id_name = $row['effective_caller_id_name'];
+	}
+
 echo "  <div id=\"conference\">\n"; 
-echo "   <input type=\"hidden\" id=\"hostName\" value=\"hostname.tld\"/>\n"; 
-echo "   <input type=\"hidden\" id=\"wsURL\" value=\"wss://hostname.tld:8082\"/>\n"; 
-echo "   <input type=\"hidden\" id=\"login\" value=\"1008\"/>\n"; 
-echo "   <input type=\"hidden\" id=\"passwd\" value=\"1234\"/>\n"; 
-echo "   <input type=\"hidden\" id=\"cidnumber\" value=\"WebRTC\"/>\n"; 
+echo "   <input type=\"hidden\" id=\"hostName\" value=\"" . $_SESSION['domain_name'] . "\"/>\n"; 
+echo "   <input type=\"hidden\" id=\"wsURL\" value=\"wss://" . $_SESSION['domain_name'] . ":8082\"/>\n"; 
+echo "   <input type=\"hidden\" id=\"login\" value=\"" . $user_extension . "\"/>\n"; 
+echo "   <input type=\"hidden\" id=\"passwd\" value=\"" . $user_password . "\"/>\n"; 
+echo "   <input type=\"hidden\" id=\"cidnumber\" value=\"" . $effective_caller_id_name . "\"/>\n"; 
 echo "   <div class=\"form-signin\">\n"; 
-echo "    <h2 class=\"form-signin-heading\">WebRTC Space</h2>\n"; 
+echo "    <h2 class=\"form-signin-heading\">" . $_SESSION['theme']['webrtc_title']['text'] . "</h2>\n"; 
 echo "    <div id=\"content\" class=\"form-signin-content\">\n"; 
 echo "     <input type=number id=\"ext\" min=3000 max=3999 step=1 class=\"form-control\"\n"; 
-echo "	placeholder=\"Conference Room's Number ? (eg: 3000)\" required autofocus>\n"; 
+echo "	placeholder=\"Conference Number ? (eg: 3000)\" required autofocus>\n"; 
 echo "     <button class=\"btn btn-lg btn-primary btn-success\" data-inline=\"true\"\n"; 
 echo "	id=\"extbtn\">Choose Room</button>\n"; 
 echo "     <input type=\"text\" id=\"cidname\" class=\"form-control\"\n"; 
@@ -123,9 +136,6 @@ echo "    <textarea id=\"chatmsg\" class=\"form-control\" rows=\"1\"\n";
 echo "	placeholder=\"type here your chat msg\" autofocus></textarea>\n"; 
 echo "    <button class=\"btn btn-primary btn-success\" data-inline=\"true\"\n"; 
 echo "	id=\"chatsend\">Send Msg</button>\n"; 
-echo "   </div>\n"; 
-echo "   <div align=\"center\" class=\"inner\">\n"; 
-echo "    <p>2016<br/>Techlacom.com</p>\n"; 
 echo "   </div>\n"; 
 echo "  </div>\n"; 
 echo "  <script type=\"text/javascript\" src=\"js/jquery.min.js\"></script>\n"; 
