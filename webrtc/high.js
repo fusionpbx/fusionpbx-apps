@@ -19,6 +19,7 @@ var callbacks = {
        $("#br").hide();
        $("#backbtn").hide();
        $("#ext").hide();
+       $("#extbtn").hide();
        $("#callbtn").hide();
        $("#cidname").hide();
        $("#hupbtn").show();
@@ -31,30 +32,22 @@ var callbacks = {
       case "conference-liveArray-part":
        $("#content").show();
        $("#ask").show();
+       $("#ext").show();
+       $("#extbtn").show();
        $("#cidname").hide();
+       $("#callbtn").hide();
        $("#hupbtn").hide();
        $("#chatwin").hide();
        $("#chatmsg").hide();
        $("#chatsend").hide();
-       $("#backbtn").show();
+       $("#backbtn").hide();
        $("#webcam").hide();
        $("#video1").hide();
-    $("#login").hide();
-    $("#loginbtn").hide();
-    $("#callbtn").show();
-    $("#ext").show();
-  $("#ext").focus();
        cur_call = null;
-chatting_with = false;
        break;
      }
     }
     break;
-
-   case $.verto.enum.message.display:
-       console.error("display");
-	//dialog.handleDisplay();
-       break;
    case $.verto.enum.message.info:
     var body = data.body;
     var from = data.from_msg_name || data.from;
@@ -79,47 +72,20 @@ chatting_with = false;
    cur_call = d;
   }
   switch (d.state) {
-   case $.verto.enum.state.ringing:
-    console.error("RINGING");
-
-    $("#webcam").show();
-    $("#video1").show();
-//setTimeout(function(){ 
-                    cur_call.answer({
-                    callee_id_name: "ciao",
-                    callee_id_number: "1234567",
-                        useVideo: true,
-    //dedEnc: false,
-     //                   mirrorInput: true,
-                        useStereo: true,
-                        useCamera: true,
-                        //useSpeak: true,
-                        useMic: true
-                    });
-
-  //}, 3000); 
-
-/*
-*/
- 
-
-    break;
    case $.verto.enum.state.hangup:
     $("#content").show();
     $("#ask").show();
+    $("#ext").show();
+    $("#extbtn").show();
     $("#cidname").hide();
+    $("#callbtn").hide();
     $("#hupbtn").hide();
     $("#chatwin").hide();
     $("#chatmsg").hide();
     $("#chatsend").hide();
-    $("#backbtn").show();
+    $("#backbtn").hide();
     $("#webcam").hide();
     $("#video1").hide();
-    $("#login").hide();
-    $("#loginbtn").hide();
-    $("#callbtn").show();
-    $("#ext").show();
-  $("#ext").focus();
     cur_call = null;
     console.error("HANGUP");
     break;
@@ -127,21 +93,18 @@ chatting_with = false;
    case $.verto.enum.state.destroy:
     $("#content").show();
     $("#ask").show();
+    $("#ext").show();
+    $("#extbtn").show();
     $("#cidname").hide();
+    $("#callbtn").hide();
     $("#hupbtn").hide();
     $("#chatwin").hide();
     $("#chatmsg").hide();
     $("#chatsend").hide();
-    $("#backbtn").show();
+    $("#backbtn").hide();
     $("#webcam").hide();
     $("#video1").hide();
-    $("#login").hide();
-    $("#loginbtn").hide();
-    $("#callbtn").show();
-    $("#ext").show();
-  $("#ext").focus();
     cur_call = null;
-chatting_with = false;
     console.error("DESTROY");
     break;
    case $.verto.enum.state.active:
@@ -150,34 +113,15 @@ chatting_with = false;
     $("#br").hide();
     $("#backbtn").hide();
     $("#ext").hide();
+    $("#extbtn").hide();
     $("#callbtn").hide();
     $("#cidname").hide();
     $("#hupbtn").show();
-    $("#chatwin").hide();
-    $("#chatmsg").hide();
-    $("#chatsend").hide();
-if(chatting_with) {
-
     $("#chatwin").show();
     $("#chatmsg").show();
     $("#chatsend").show();
-}
     $("#webcam").show();
     $("#video1").show();
-
-
- $(document).keypress(function(event) {
-  var key = String.fromCharCode(event.keyCode || event.charCode);
-  var i = parseInt(key);
-  var tag = event.target.tagName.toLowerCase();
-
-if ( tag != 'input') {
-  if (key === "#" || key === "*" || key === "0" || (i > 0 && i <= 9)) {
-   cur_call.dtmf(key);
-  }
-}
- });
-
     console.error("ACTIVE");
     break;
    default:
@@ -192,17 +136,17 @@ function docall() {
  }
  cur_call = verto.newCall({
   destination_number: $("#ext").val(),
-  caller_id_name: $("#login").val(),
-  caller_id_number: $("#login").val(),
+  caller_id_name: $("#cidname").val(),
+  caller_id_number: $("#cidnumber").val(),
   useVideo: true,
-  useStereo: true,
-  useCamera: true,
-  useMic: true
+  useStereo: false,
+  useCamera: $("#usecamera").find(":selected").val(),
+  useMic: $("#usemic").find(":selected").val()
  });
 }
 
 $("#callbtn").click(function() {
- if($("#ext").val() ){
+ if($("#cidname").val() ){
   docall();
  }
 });
@@ -210,33 +154,23 @@ $("#callbtn").click(function() {
 $("#hupbtn").click(function() {
  verto.hangup();
  cur_call = null;
-chatting_with = false;
-  $("#br").show();
-  $("#ext").show();
-  $("#ext").focus();
 });
 
-$("#loginbtn").click(function() {
-		if($("#login").val()){
-		init();
-		$("#loginbtn").hide();
-		$("#login").hide();
-		$("#cidname").show();
-		$("#callbtn").show();
-		$("#backbtn").show();
-		$("#br").show();
-		$("#ext").show();
-		$("#ext").focus();
-		}
-		});
-
-
-
+$("#extbtn").click(function() {
+ if($("#ext").val()){
+  $("#ext").hide();
+  $("#extbtn").hide();
+  $("#cidname").show();
+  $("#callbtn").show();
+  $("#backbtn").show();
+  $("#cidname").focus();
+  $("#br").show();
+ }
+});
 
 $("#backbtn").click(function() {
- $("#login").show();
- $("#loginbtn").show();
- $("#ext").hide();
+ $("#ext").show();
+ $("#extbtn").show();
  $("#cidname").hide();
  $("#callbtn").hide();
  $("#hupbtn").hide();
@@ -245,7 +179,6 @@ $("#backbtn").click(function() {
  $("#chatsend").hide();
  $("#backbtn").hide();
  cur_call = null;
-chatting_with = false;
 
 });
 
@@ -273,7 +206,6 @@ function setupChat() {
 
 function init() {
  cur_call = null;
-chatting_with = false;
 
  verto = new $.verto({
   login: $("#login").val() + "@" + $("#hostName").val(),
@@ -283,9 +215,24 @@ chatting_with = false;
   iceServers: true
  },callbacks);
 
+ $("#ext").keyup(function (event) {
+  if (event.keyCode == 13 && !event.shiftKey) {
+   $( "#extbtn" ).trigger( "click" );
+  }
+ });
+
  $("#cidname").keyup(function (event) {
   if (event.keyCode == 13 && !event.shiftKey) {
    $( "#callbtn" ).trigger( "click" );
+  }
+ });
+
+ $(document).keypress(function(event) {
+  var key = String.fromCharCode(event.keyCode || event.charCode);
+  var i = parseInt(key);
+
+  if (key === "#" || key === "*" || key === "0" || (i > 0 && i <= 9)) {
+   cur_call.dtmf(key);
   }
  });
 
@@ -294,9 +241,7 @@ chatting_with = false;
 
 $(window).load(function() {
  cur_call = null;
-chatting_with = false;
  $("#conference").show();
- $("#ext").hide();
  $("#backbtn").hide();
  $("#cidname").hide();
  $("#callbtn").hide();
@@ -306,21 +251,6 @@ chatting_with = false;
  $("#chatsend").hide();
  $("#webcam").hide();
  $("#video1").hide();
-// init();
-$("#login").keyup(function (event) {
-  if (event.keyCode == 13 && !event.shiftKey) {
-   $( "#loginbtn" ).trigger( "click" );
-  }
- });
-
- $("#ext").keyup(function (event) {
-  if (event.keyCode == 13 && !event.shiftKey) {
-   $( "#callbtn" ).trigger( "click" );
-  }
- });
-
-
-
+ init();
 });
-
 
