@@ -23,8 +23,10 @@
 	Contributor(s):
 	Mark J Crane <markjcrane@fusionpbx.com>
 */
-require_once "root.php";
-require_once "resources/require.php";
+
+//includes
+	require_once "root.php";
+	require_once "resources/require.php";
 
 //check permissions
 	require_once "resources/check_auth.php";
@@ -43,8 +45,7 @@ require_once "resources/require.php";
 //additional includes
 	require_once "resources/header.php";
 	require_once "resources/paging.php";
-	
-if ($_SESSION['server']['bdr_fusionpbx_enable']['boolean'] == true) {	
+
 //get the  my node id
 	$sql = "select bdr.bdr_get_local_nodeid()";
 	$prep_statement = $db->prepare(check_sql($sql));
@@ -177,7 +178,6 @@ if ($_SESSION['server']['bdr_fusionpbx_enable']['boolean'] == true) {
 	}
  	echo "	</table>\n";
 
-}
 //include the footer
 	require_once "resources/footer.php";
 
