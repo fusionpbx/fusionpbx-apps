@@ -17,7 +17,7 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2012
+	Portions created by the Initial Developer are Copyright (C) 2008-2016
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
@@ -46,7 +46,7 @@
 	require_once "resources/header.php";
 	require_once "resources/paging.php";
 
-if ($_SESSION['server']['bdr_fusionpbx_enable']['boolean'] == true) {
+//show the header
 	echo "<h2>FusionPBX BDR</h2>";
 
 //get the  my node id
@@ -101,9 +101,9 @@ if ($_SESSION['server']['bdr_fusionpbx_enable']['boolean'] == true) {
 	$row_style["0"] = "row_style0";
 	$row_style["1"] = "row_style1";
 	echo "<table class='tr_hover' width='100%' border='0' cellpadding='0' cellspacing='0'>\n";
-//	echo "<tr>\n";
-//	echo "<td class=\"th\" colspan=\"8\" align=\"left\">Nodes</td>\n";
-//	echo "</tr>\n";
+	//echo "<tr>\n";
+	//echo "<td class=\"th\" colspan=\"8\" align=\"left\">Nodes</td>\n";
+	//echo "</tr>\n";
 	echo "<tr>\n";
 	echo "<th class=\"th\" align=\"left\">ID</th>\n";
 	echo "<th class=\"th\" align=\"left\">Status</th>\n";
@@ -169,9 +169,9 @@ if ($_SESSION['server']['bdr_fusionpbx_enable']['boolean'] == true) {
 		echo "	<td valign='top' class='".$row_style[$c]."'>" . $result1[0]['retained_bytes'] . "</td>\n";
 		echo "	<td valign='top' class='".$row_style[$c]."'>" . $result2[0]['lag_bytes'] . "</td>\n";
 		echo "	<td class='list_control_icons'>";
-/*		if (permission_exists('extension_edit')) {
-			echo "<a href='extension_edit.php?id=".$row['extension_uuid']."' alt='".$text['button-edit']."'>$v_link_label_edit</a>";
-		}*/
+		//if (permission_exists('extension_edit')) {
+		//	echo "<a href='extension_edit.php?id=".$row['extension_uuid']."' alt='".$text['button-edit']."'>$v_link_label_edit</a>";
+		//}
 		if (permission_exists('bdr_delete')) {
 			echo "<a href='bdr_delete.php?action=delete&id=".$row['node_name']."' alt='".$text['button-delete']."' onclick=\"return confirm('".$text['confirm-delete']."')\">$v_link_label_delete</a>";
 		}
@@ -181,12 +181,13 @@ if ($_SESSION['server']['bdr_fusionpbx_enable']['boolean'] == true) {
 		if ($c==0) { $c=1; } else { $c=0; }
 	}
  	echo "	</table>\n";
-}
 
-if ($_SESSION['server']['bdr_freeswitch_enable']['boolean'] == true ) {
+//show the header
 	echo "<h2>Freeswitch BDR</h2>";
-//FREESWITCH
+
+//connect to the switch database
 	$db_fs = new PDO("pgsql:host=$db_host port=$db_port dbname=freeswitch user=$db_username password=$db_password");
+
 //get the  my node id
 	$sql = "select bdr.bdr_get_local_nodeid()";
 	$prep_statement = $db_fs->prepare(check_sql($sql));
@@ -304,9 +305,9 @@ if ($_SESSION['server']['bdr_freeswitch_enable']['boolean'] == true ) {
 		echo "	<td valign='top' class='".$row_style[$c]."'>" . $result1[0]['retained_bytes'] . "</td>\n";
 		echo "	<td valign='top' class='".$row_style[$c]."'>" . $result2[0]['lag_bytes'] . "</td>\n";
 		echo "	<td class='list_control_icons'>";
-/*		if (permission_exists('extension_edit')) {
-			echo "<a href='extension_edit.php?id=".$row['extension_uuid']."' alt='".$text['button-edit']."'>$v_link_label_edit</a>";
-		}*/
+		//if (permission_exists('extension_edit')) {
+		//	echo "<a href='extension_edit.php?id=".$row['extension_uuid']."' alt='".$text['button-edit']."'>$v_link_label_edit</a>";
+		//}
 		if (permission_exists('bdr_delete')) {
 			echo "<a href='bdr_delete.php?action=delete&id=".$row['node_name']."' alt='".$text['button-delete']."' onclick=\"return confirm('".$text['confirm-delete']."')\">$v_link_label_delete</a>";
 		}
@@ -316,7 +317,6 @@ if ($_SESSION['server']['bdr_freeswitch_enable']['boolean'] == true ) {
 		if ($c==0) { $c=1; } else { $c=0; }
 	}
  	echo "	</table>\n";
-}
 
 //include the footer
 	require_once "resources/footer.php";
