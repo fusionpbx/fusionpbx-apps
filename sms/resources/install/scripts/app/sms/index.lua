@@ -132,7 +132,7 @@
 					sql = "SELECT domain_uuid FROM v_domains ";
 					sql = sql .. "WHERE domain_name = '" .. domain_name .. "' and domain_enabled = 'true' ";
 					if (debug["sql"]) then
-						freeswitch.consoleLog("notice", "[voicemail] SQL: " .. sql .. "\n");
+						freeswitch.consoleLog("notice", "[sms] SQL: " .. sql .. "\n");
 					end
 					status = dbh:query(sql, function(rows)
 						domain_uuid = rows["domain_uuid"];
@@ -221,6 +221,15 @@
 				to = "1"..to;
 			end
 			cmd="curl -i --user " .. access_key .. ":" .. secret_key .. " -H \"Content-Type: application/json\" -d '{\"src\": \"" .. outbound_caller_id_number .. "\",\"dst\": \"" .. to .."\", \"text\": \"" .. body .. "\"}' " .. api_url;
+		elseif (carrier == "bandwidth") then
+			if to:len() <11 then
+				to = "1"..to;
+			end
+			if outbound_caller_id_number:len() < 11 then
+				outbound_caller_id_number = "1" .. outbound_caller_id_number;
+			end
+			cmd="curl -v -X POST " .. api_url .." -u " .. access_key .. ":" .. secret_key .. " -H \"Content-type: application/json\" -d '{\"from\": \"+" .. outbound_caller_id_number .. "\", \"to\": \"+" .. to .."\", \"text\": " .. body .."}'"		
+		
 		end
 		if (debug["info"]) then
 			freeswitch.consoleLog("notice", "[sms] CMD: " .. cmd .. "\n");
