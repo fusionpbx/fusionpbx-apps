@@ -92,7 +92,6 @@ if ($domains_processed == 1) {
 	$array[$x]['default_setting_description'] = '';
 	$x++;
 
-/*
 	$array[$x]['default_setting_uuid'] = '14101c26-c3f9-46aa-a67a-3642752e56f4';
 	$array[$x]['default_setting_category'] = 'sms';
 	$array[$x]['default_setting_subcategory'] = 'flowroute_access_key';
@@ -118,6 +117,7 @@ if ($domains_processed == 1) {
 	$array[$x]['default_setting_enabled'] = 'false';
 	$array[$x]['default_setting_description'] = '';
 	$x++;
+	
 	$array[$x]['default_setting_uuid'] = 'c7607430-1b55-41ff-934e-7f9142b29df0';
 	$array[$x]['default_setting_category'] = 'sms';
 	$array[$x]['default_setting_subcategory'] = 'teli_secret_key';
@@ -135,6 +135,7 @@ if ($domains_processed == 1) {
 	$array[$x]['default_setting_enabled'] = 'false';
 	$array[$x]['default_setting_description'] = '';
 	$x++;
+	
 	$array[$x]['default_setting_uuid'] = '784196cb-d012-4a74-8183-4fc0b738c06a';
 	$array[$x]['default_setting_category'] = 'sms';
 	$array[$x]['default_setting_subcategory'] = 'twilio_secret_key';
@@ -143,11 +144,9 @@ if ($domains_processed == 1) {
 	$array[$x]['default_setting_enabled'] = 'false';
 	$array[$x]['default_setting_description'] = '';
 	$x++;
-*/
-		
+
 	//get an array of the default settings
-		$sql = "select * from v_default_settings ";
-		$sql .= "where default_setting_category = 'sms' ";
+		$sql = "select * from v_default_settings where default_setting_category = 'sms'";
 		$prep_statement = $db->prepare($sql);
 		$prep_statement->execute();
 		$default_settings = $prep_statement->fetchAll(PDO::FETCH_NAMED);
@@ -162,7 +161,7 @@ if ($domains_processed == 1) {
 				if (trim($row['default_setting_subcategory']) == trim($setting['default_setting_subcategory'])) {
 					$found = true;
 					//remove items from the array that were found
-					unset($missing[$x]);
+					unset($array[$x]);
 				}
 			}
 			$x++;
@@ -175,6 +174,14 @@ if ($domains_processed == 1) {
 			unset($missing);
 		}
 
+	//add the default settings
+		if (is_array($array)) {
+			$database = new database;
+			$database->app_name = 'default_settings';
+			$database->app_uuid = '2c2453c0-1bea-4475-9f44-4d969650de09';
+			$database->save($array);
+			$message = $database->message;
+			unset($database);
+		}
 }
-
 ?>
