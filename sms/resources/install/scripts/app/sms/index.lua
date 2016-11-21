@@ -29,8 +29,8 @@
 	dbh = database_handle('system');
 
 --debug
-	debug["info"] = false;
-	debug["sql"] = false;
+	debug["info"] = true;
+	debug["sql"] = true;
 
 --set the api
 	api = freeswitch.API();
@@ -228,7 +228,7 @@
 			if outbound_caller_id_number:len() < 11 then
 				outbound_caller_id_number = "1" .. outbound_caller_id_number;
 			end
-			cmd="curl -v -X POST " .. api_url .." -u " .. access_key .. ":" .. secret_key .. " -H \"Content-type: application/json\" -d '{\"from\": \"+" .. outbound_caller_id_number .. "\", \"to\": \"+" .. to .."\", \"text\": " .. body .."}'"		
+			cmd="curl -v -X POST " .. api_url .." -u " .. access_key .. ":" .. secret_key .. " -H \"Content-type: application/json\" -d '{\"from\": \"+" .. outbound_caller_id_number .. "\", \"to\": \"+" .. to .."\", \"text\": \"" .. body .."\"}'"		
 		
 		end
 		if (debug["info"]) then
