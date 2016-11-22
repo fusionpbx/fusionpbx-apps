@@ -133,14 +133,14 @@
 		//get lag bytes
 		$sql = "select pg_xlog_location_diff(pg_current_xlog_insert_location(), flush_location) AS lag_bytes";
 		$sql .= " FROM pg_stat_replication WHERE ";
-		$sql .= " application_name like '%" . $row['node_sysid'] . "%' ";
+		$sql .= " application_name like '%" . $row['node_sysid'] . "%". $row['node_dboid'] ."%' ";
 		$prep_statement = $db->prepare(check_sql($sql));
 		$prep_statement->execute();
 		$result2 = $prep_statement->fetchAll();
 		unset ($prep_statement, $sql);
 		
 		echo "<tr>\n";
-		echo "	<td valign='top' class='".$row_style[$c]."'>" . $row['node_sysid'] . "</td>\n";
+		echo "	<td valign='top' class='".$row_style[$c]."'>" . $row['node_sysid'] . "_" . $row['node_dboid'] . "</td>\n";
 		echo "	<td valign='top' class='".$row_style[$c]."'>";
 		if ($row['node_status'] == "r") { 
 			echo "Ready"; 
@@ -269,14 +269,14 @@
 		//get lag bytes
 		$sql = "select pg_xlog_location_diff(pg_current_xlog_insert_location(), flush_location) AS lag_bytes";
 		$sql .= " FROM pg_stat_replication WHERE ";
-		$sql .= " application_name like '%" . $row['node_sysid'] . "%' ";
+		$sql .= " application_name like '%" . $row['node_sysid'] . "%". $row['node_dboid'] ."%' ";
 		$prep_statement = $db_fs->prepare(check_sql($sql));
 		$prep_statement->execute();
 		$result2 = $prep_statement->fetchAll();
 		unset ($prep_statement, $sql);
 		
 		echo "<tr>\n";
-		echo "	<td valign='top' class='".$row_style[$c]."'>" . $row['node_sysid'] . "</td>\n";
+		echo "	<td valign='top' class='".$row_style[$c]."'>" . $row['node_sysid'] . "_" . $row['node_dboid'] . "</td>\n";
 		echo "	<td valign='top' class='".$row_style[$c]."'>";
 		if ($row['node_status'] == "r") { 
 			echo "Ready"; 
