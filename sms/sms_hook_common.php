@@ -34,7 +34,7 @@ include "root.php";
 
 //luarun /var/www/fusionpbx/app/sms/sms.lua TO FROM 'BODY'
 
-$debug = false;
+$debug = true;
 
 require_once "resources/require.php";
 
