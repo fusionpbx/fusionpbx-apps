@@ -75,7 +75,8 @@ function route_and_send_sms($from, $to, $body) {
 				}
 
 				$prep_statement = $db->prepare(check_sql($sql));
-				$prep_statement->execute(array(':to' => $to));
+				$prep_statement->bindValue(':to', "%{$to}%");
+				$prep_statement->execute();
 				$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 				if (count($result) == 0) {
 					error_log("Cannot find a destination: " . print_r($result,true));

@@ -74,13 +74,18 @@
 		event:addHeader("proto", "sip");
 		event:addHeader("dest_proto", "sip");
 		event:addHeader("from", "sip:" .. from);
+		event:addHeader("from_user", from);
+		event:addHeader("from_host", domain_name);
 		event:addHeader("from_full", "sip:" .. from);
 		event:addHeader("sip_profile","internal");
 		event:addHeader("to", to);
-		event:addHeader("subject", "sip:" .. to);
-		event:addHeader("type", "text/html");
+		event:addHeader("to_user", extension);
+		event:addHeader("to_host", domain_name);
+		event:addHeader("subject", "SIMPLE MESSAGE");
+		event:addHeader("type", "text/plain");
 		event:addHeader("hint", "the hint");
 		event:addHeader("replying", "true");
+		event:addHeader("DP_MATCH", to);
 		event:addBody(body);
 
 		if (debug["info"]) then
