@@ -41,6 +41,13 @@
 		json = require "resources.functions.lunajson"
 	end
 
+local function urlencode(s)
+	s = string.gsub(s, "([^%w])",function(c)
+		return string.format("%%%02X", string.byte(c))
+	end)
+	return s
+end
+
 --define uuid function
 	local random = math.random;
 	local function uuid()
@@ -63,7 +70,7 @@
 	if direction == "inbound" then
 		to = argv[3];
 		from = argv[4];
-		body = argv[5];
+		body = urlencode(argv[5]);
 		domain_name = string.match(to,'%@+(.+)');
 		extension = string.match(to,'%d+');
 
@@ -121,9 +128,9 @@
 			from = message:getHeader("from_user");
 		end
 		if (argv[5] ~= nil) then
-			body = argv[5];
+			body = urlencode(argv[5]);
 		else
-			body = message:getBody();
+			body = urlencode(message:getBody());
 		end
 
 		if (debug["info"]) then
