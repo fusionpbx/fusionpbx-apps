@@ -23,81 +23,71 @@
 	Contributor(s):
 	Mark J Crane <markjcrane@fusionpbx.com>
 */
-include "root.php";
-require_once "resources/require.php";
-require_once "resources/check_auth.php";
-if (permission_exists('zoiper')) {
-	//access granted
-}
-else {
-	echo "access denied";
-	exit;
-}
 
+//includes
+	include "root.php";
+	require_once "resources/require.php";
+	require_once "resources/check_auth.php";
+	require_once "resources/paging.php";
+
+//check permissions	
+	if (permission_exists('zoiper')) {
+		//access granted
+	}
+	else {
+		echo "access denied";
+		exit;
+	}
+
+//add multi-lingual support
+	$language = new text;
+	$text = $language->get();
+	
 //get the https values and set as variables
 	$order_by = check_str($_GET["order_by"]);
 	$order = check_str($_GET["order"]);
 
-//add multi-lingual support
-	$language = new text;
-	$text = $language->get($_SESSION['domain']['language']['code'], 'app/zoiper');
-
-//begin the content
-	require_once "resources/header.php";
-	require_once "resources/paging.php";
-
-	if ($is_included != "true") {
-		echo "		<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n";
-		echo "		<tr>\n";
-		echo "		<td align='left'><b>".$text['title']."</b><br>\n";
-		echo "			".$text['description-2']."\n";
-		echo "			".$text['description-3']." \n";
-		echo "		</td>\n";
-		echo "		</tr>\n";
-		echo "		</table>\n";
-		echo "		<br />";
+//handle search term
+	$search = check_str($_GET["search"]);
+	if (strlen($search) > 0) {
+		$sql_mod = "and ( ";
+		$sql_mod .= "extension ILIKE '%".$search."%' ";
+		$sql_mod .= "or description ILIKE '%".$search."%' ";
+		$sql_mod .= ") ";
+	}
+	if (strlen($order_by) < 1) {
+		$order_by = "extension";
+		$order = "ASC";
 	}
 
-	$sql = "select * from v_extensions ";
-	$sql .= "where domain_uuid = '$domain_uuid' ";
-	$sql .= "and enabled = 'true' ";
-	if (!(if_group("admin") || if_group("superadmin"))) {
-		if (count($_SESSION['user']['extension']) > 0) {
-			$sql .= "and (";
-			$x = 0;
-			foreach($_SESSION['user']['extension'] as $row) {
-				if ($x > 0) { $sql .= "or "; }
-				$sql .= "extension = '".$row['user']."' ";
-				$x++;
-			}
-			$sql .= ")";
-		}
-		else {
-			//used to hide any results when a user has not been assigned an extension
-			$sql .= "and extension = 'disabled' ";
+//get total extension count from the database
+	$sql = "select count(*) as num_rows from v_extensions where domain_uuid = '".$_SESSION['domain_uuid']."' ".$sql_mod." ";
+	//$sql .= "where domain_uuid = '".$_SESSION['domain_uuid']."' ";
+	$prep_statement = $db->prepare($sql);
+	if ($prep_statement) {
+		$prep_statement->execute();
+		$row = $prep_statement->fetch(PDO::FETCH_ASSOC);
+		$total_extensions = $row['num_rows'];
+		if (($db_type == "pgsql") or ($db_type == "mysql")) {
+			$numeric_extensions = $row['num_rows'];
 		}
 	}
-	if (strlen($order_by)> 0) {
-		$sql .= "order by $order_by $order ";
-	}
-	else {
-		$sql .= "order by extension asc ";
-	}
-	$prep_statement = $db->prepare(check_sql($sql));
-	$prep_statement->execute();
-	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
-	$num_rows = count($result);
-	unset ($prep_statement, $result, $sql);
+	unset($prep_statement, $row);
 
-	$rows_per_page = 150;
-	$param = "";
-	$page = $_GET['page'];
-	if (strlen($page) == 0) { $page = 0; $_GET['page'] = 0; }
-	list($paging_controls, $rows_per_page, $var_3) = paging($num_rows, $param, $rows_per_page);
-	$offset = $rows_per_page * $page;
 
+//prepare to page the results
+	$rows_per_page = ($_SESSION['domain']['paging']['numeric'] != '') ? $_SESSION['domain']['paging']['numeric'] : 50;
+	$param = "&search=".$search."&order_by=".$order_by."&order=".$order;
+	if (!isset($_GET['page'])) { $_GET['page'] = 0; }
+	$_GET['page'] = check_str($_GET['page']);
+	list($paging_controls_mini, $rows_per_page, $var_3) = paging($total_extensions, $param, $rows_per_page, true); //top
+	list($paging_controls, $rows_per_page, $var_3) = paging($total_extensions, $param, $rows_per_page); //bottom
+	$offset = $rows_per_page * $_GET['page'];
+
+//get all the extensions from the database
 	$sql = "select * from v_extensions ";
 	$sql .= "where domain_uuid = '$domain_uuid' ";
+	$sql .= $sql_mod; //add search mod from above	
 	$sql .= "and enabled = 'true' ";
 	if (!(if_group("admin") || if_group("superadmin"))) {
 		if (count($_SESSION['user']['extension']) > 0) {
@@ -132,21 +122,51 @@ else {
 	$row_style["0"] = "row_style0";
 	$row_style["1"] = "row_style1";
 
+//begin the content
+	require_once "resources/header.php";
+	echo "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n";
+	echo "  <tr>\n";
+	echo "	<td align='left' width='100%'>\n";
+	echo "		<b>".$text['title']."</b><br>\n";
+	echo "	</td>\n";
+	echo "		<td align='right' width='100%' style='vertical-align: top;'>";
+	if ((if_group("admin") || if_group("superadmin"))) {
+		echo "		<form method='get' action=''>\n";
+		echo "			<td style='vertical-align: top; text-align: right; white-space: nowrap;'>\n";
+		echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".$search."'>";
+		echo "				<input type='submit' class='btn' name='submit' value='".$text['button-search']."'>";
+		if ($paging_controls_mini != '') {
+			echo 			"<span style='margin-left: 15px;'>".$paging_controls_mini."</span>\n";
+		}
+		echo "			</td>\n";
+		echo "			</td>\n";
+		echo "		</form>\n";	
+	}
+	echo "  </tr>\n";
+
+	echo "	<tr>\n";
+	echo "		<td colspan='2'>\n";
+	echo "			".$text['description-zoiper']."\n";
+	echo "		</td>\n";
+	echo "	</tr>\n";
+	echo "</table>\n";
+	echo "<br>";
+	
 	echo "<table class='tr_hover' width='100%' border='0' cellpadding='0' cellspacing='0'>\n";
 	echo "<tr>\n";
-	echo "<th>".$text['table-extension']."</th>\n";
+	echo th_order_by('extension', $text['table-extension'], $order_by,$order);
 	echo "<th>".$text['table-tools']."</th>\n";
-	echo "<th>".$text['table-description']."</th>\n";
+	echo th_order_by('description', $text['table-description'], $order_by, $order);
 	echo "</tr>\n";
 
 	if ($result_count > 0) {
 		foreach($result as $row) {
 			$tr_url = "https://www.zoiper.com/en/page/" . $_SESSION['zoiper']['page_id']['text'] . "?u=" . $row['extension'] . "&h=" . $row['user_context'] . "&p=" . $row['password'] . "&o=&t=&x=&a=" . $row['extension'] . "&tr=";
 			$tr_link = (permission_exists('zoiper')) ? "href='".$tr_url."'" : null;
-			echo "<tr ".$tr_link.">\n";
+			echo "<tr>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['extension']."</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>\n";
-			if (permission_exists('zoiper')) { 	echo "<a href='".$tr_url."'>" . $text['label-zoiper'] . "</a>&nbsp;&nbsp;&nbsp;"; }
+			if (permission_exists('zoiper')) { 	echo "<a href='".$tr_url."' target='_blank'>" . $text['label-zoiper'] . "</a>&nbsp;&nbsp;&nbsp;"; }
 			echo "	</td>\n";
 			echo "	<td valign='top' class='row_stylebg' width='40%'>".$row['description']."&nbsp;</td>\n";
 			echo "</tr>\n";
@@ -155,19 +175,11 @@ else {
 		unset($sql, $result, $row_count);
 	} //end if results
 
-	if (strlen($paging_controls) > 0) {
-		echo "<tr>\n";
-		echo "<td colspan='5' align='left'>\n";
-		echo "	<table border='0' width='100%' cellpadding='0' cellspacing='0'>\n";
-		echo "	<tr>\n";
-		echo "		<td width='33.3%' nowrap>&nbsp;</td>\n";
-		echo "		<td width='33.3%' align='center' nowrap>$paging_controls</td>\n";
-		echo "	</tr>\n";
-		echo "	</table>\n";
-		echo "</td>\n";
-		echo "</tr>\n";
-	}
 	echo "</table>";
+	if (strlen($paging_controls) > 0) {
+		echo "<br />";
+		echo $paging_controls."\n";
+	}
 	echo "<br><br>";
 
 	if ($is_included != "true") {
