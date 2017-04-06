@@ -109,10 +109,11 @@ end
 	elseif direction == "outbound" then
 		if (argv[3] ~= nil) then
 			to_user = argv[3];
-			to_user = to_user:gsub("%sip%3A%40","");
+			to_user = to_user:gsub("^+?sip%%3A%%40","");
 			to = string.match(to_user,'%d+');
 		else 
 			to = message:getHeader("to_user");
+			to = to:gsub("^+?sip%%3A%%40","");
 		end
 		if (argv[3] ~= nil) then
 			domain_name = string.match(to_user,'%@+(.+)');
