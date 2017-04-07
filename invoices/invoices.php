@@ -155,7 +155,7 @@ require_once "resources/paging.php";
 				echo 	"<a href='invoice_edit.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid'].$back."' alt='".$text['button-edit']."'>$v_link_label_edit</a>";
 			}
 			if (permission_exists('invoice_delete')) {
-				echo 	"<a href='invoices_delete.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid'].$back."' alt='".$text['button-delete']."' onclick=\"return confirm('".$text['confirm-delete']."')\">$v_link_label_delete</a>";
+				echo 	"<a href='invoice_delete.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid'].$back."' alt='".$text['button-delete']."' onclick=\"return confirm('".$text['confirm-delete']."')\">$v_link_label_delete</a>";
 			}
 			echo 	"</td>\n";
 			echo "</tr>\n";

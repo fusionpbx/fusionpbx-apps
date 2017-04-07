@@ -25,15 +25,28 @@
 --	POSSIBILITY OF SUCH DAMAGE.
 
 --connect to the database
-	require "resources.functions.database_handle";
-	dbh = database_handle('system');
+	local Database = require "resources.functions.database";
+	dbh = Database.new('system');
 
 --debug
-	debug["info"] = false;
-	debug["sql"] = false;
+	debug["info"] = true;
+	debug["sql"] = true;
 
 --set the api
 	api = freeswitch.API();
+
+--include json library
+	local json
+	if (debug["sql"]) then
+		json = require "resources.functions.lunajson"
+	end
+
+local function urlencode(s)
+	s = string.gsub(s, "([^%w])",function(c)
+		return string.format("%%%02X", string.byte(c))
+	end)
+	return s
+end
 
 --define uuid function
 	local random = math.random;
@@ -57,7 +70,7 @@
 	if direction == "inbound" then
 		to = argv[3];
 		from = argv[4];
-		body = argv[5];
+		body = urlencode(argv[5]);
 		domain_name = string.match(to,'%@+(.+)');
 		extension = string.match(to,'%d+');
 
@@ -74,13 +87,18 @@
 		event:addHeader("proto", "sip");
 		event:addHeader("dest_proto", "sip");
 		event:addHeader("from", "sip:" .. from);
+		event:addHeader("from_user", from);
+		event:addHeader("from_host", domain_name);
 		event:addHeader("from_full", "sip:" .. from);
 		event:addHeader("sip_profile","internal");
 		event:addHeader("to", to);
-		event:addHeader("subject", "sip:" .. to);
-		event:addHeader("type", "text/html");
+		event:addHeader("to_user", extension);
+		event:addHeader("to_host", domain_name);
+		event:addHeader("subject", "SIMPLE MESSAGE");
+		event:addHeader("type", "text/plain");
 		event:addHeader("hint", "the hint");
 		event:addHeader("replying", "true");
+		event:addHeader("DP_MATCH", to);
 		event:addBody(body);
 
 		if (debug["info"]) then
@@ -91,9 +109,11 @@
 	elseif direction == "outbound" then
 		if (argv[3] ~= nil) then
 			to_user = argv[3];
+			to_user = to_user:gsub("^+?sip%%3A%%40","");
 			to = string.match(to_user,'%d+');
 		else 
 			to = message:getHeader("to_user");
+			to = to:gsub("^+?sip%%3A%%40","");
 		end
 		if (argv[3] ~= nil) then
 			domain_name = string.match(to_user,'%@+(.+)');
@@ -110,9 +130,9 @@
 			from = message:getHeader("from_user");
 		end
 		if (argv[5] ~= nil) then
-			body = argv[5];
+			body = urlencode(argv[5]);
 		else
-			body = message:getBody();
+			body = urlencode(message:getBody());
 		end
 
 		if (debug["info"]) then
@@ -130,11 +150,13 @@
 			--get the domain_uuid using the domain name required for multi-tenant
 				if (domain_name ~= nil) then
 					sql = "SELECT domain_uuid FROM v_domains ";
-					sql = sql .. "WHERE domain_name = '" .. domain_name .. "' and domain_enabled = 'true' ";
+					sql = sql .. "WHERE domain_name = :domain_name and domain_enabled = 'true' ";
+					local params = {domain_name = domain_name}
+
 					if (debug["sql"]) then
-						freeswitch.consoleLog("notice", "[voicemail] SQL: " .. sql .. "\n");
+						freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
 					end
-					status = dbh:query(sql, function(rows)
+					status = dbh:query(sql, params, function(rows)
 						domain_uuid = rows["domain_uuid"];
 					end);
 				end
@@ -146,14 +168,15 @@
 					sql = "SELECT outbound_caller_id_number, extension_uuid, carrier FROM v_extensions ";
 					sql = sql .. ", v_sms_destinations ";
 					sql = sql .. "WHERE outbound_caller_id_number = destination and  ";
-					sql = sql .. "v_extensions.domain_uuid = '" .. domain_uuid .. "' and extension = '" .. from .."' and ";
+					sql = sql .. "v_extensions.domain_uuid = :domain_uuid and extension = :from and ";
 					sql = sql .. "v_sms_destinations.enabled = 'true' and ";
 					sql = sql .. "v_extensions.enabled = 'true'";
+					local params = {domain_uuid = domain_uuid, from = from}
 
 					if (debug["sql"]) then
-						freeswitch.consoleLog("notice", "[sms] SQL: " .. sql .. "\n");
+						freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
 					end
-					status = dbh:query(sql, function(rows)
+					status = dbh:query(sql, params, function(rows)
 						outbound_caller_id_number = rows["outbound_caller_id_number"];
 						extension_uuid = rows["extension_uuid"];
 						carrier = rows["carrier"];
@@ -164,38 +187,43 @@
 				if (domain_uuid ~= nil) then
 					sql = "SELECT carrier FROM  ";
 					sql = sql .. " v_sms_destinations ";
-					sql = sql .. "WHERE destination = '" .. from .. "' and ";
-					sql = sql .. "v_sms_destinations.domain_uuid = '" .. domain_uuid .. "' and ";
+					sql = sql .. "WHERE destination = :from and ";
+					sql = sql .. "v_sms_destinations.domain_uuid = :domain_uuid and ";
 					sql = sql .. "enabled = 'true'";
+					local params = {from = from, domain_uuid = domain_uuid};
+
 					if (debug["sql"]) then
-						freeswitch.consoleLog("notice", "[sms] SQL: " .. sql .. "\n");
+						freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
 					end
-					status = dbh:query(sql, function(rows)
+					status = dbh:query(sql, params, function(rows)
 						carrier = rows["carrier"];
 					end);
 				end
 		end
 		
 		sql = "SELECT default_setting_value FROM v_default_settings ";
-		sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_access_key'";
+		sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_access_key' and default_setting_enabled = 'true'";
+		local params = {carrier = carrier}
+
 		if (debug["sql"]) then
-			freeswitch.consoleLog("notice", "[sms] SQL: " .. sql .. "\n");
+			freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
 		end
 		status = dbh:query(sql, function(rows)
 			access_key = rows["default_setting_value"];
 		end);
 
 		sql = "SELECT default_setting_value FROM v_default_settings ";
-		sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_secret_key'";
+		sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_secret_key' and default_setting_enabled = 'true'";
+
 		if (debug["sql"]) then
-			freeswitch.consoleLog("notice", "[sms] SQL: " .. sql .. "\n");
+			freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
 		end
 		status = dbh:query(sql, function(rows)
 			secret_key = rows["default_setting_value"];
 		end);
 
 		sql = "SELECT default_setting_value FROM v_default_settings ";
-		sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_api_url'";
+		sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_api_url' and default_setting_enabled = 'true'";
 		if (debug["sql"]) then
 			freeswitch.consoleLog("notice", "[sms] SQL: " .. sql .. "\n");
 		end
@@ -221,6 +249,15 @@
 				to = "1"..to;
 			end
 			cmd="curl -i --user " .. access_key .. ":" .. secret_key .. " -H \"Content-Type: application/json\" -d '{\"src\": \"" .. outbound_caller_id_number .. "\",\"dst\": \"" .. to .."\", \"text\": \"" .. body .. "\"}' " .. api_url;
+		elseif (carrier == "bandwidth") then
+			if to:len() <11 then
+				to = "1"..to;
+			end
+			if outbound_caller_id_number:len() < 11 then
+				outbound_caller_id_number = "1" .. outbound_caller_id_number;
+			end
+			cmd="curl -v -X POST " .. api_url .." -u " .. access_key .. ":" .. secret_key .. " -H \"Content-type: application/json\" -d '{\"from\": \"+" .. outbound_caller_id_number .. "\", \"to\": \"+" .. to .."\", \"text\": \"" .. body .."\"}'"		
+		
 		end
 		if (debug["info"]) then
 			freeswitch.consoleLog("notice", "[sms] CMD: " .. cmd .. "\n");
@@ -241,11 +278,13 @@
 		--get the domain_uuid using the domain name required for multi-tenant
 			if (domain_name ~= nil) then
 				sql = "SELECT domain_uuid FROM v_domains ";
-				sql = sql .. "WHERE domain_name = '" .. domain_name .. "' ";
+				sql = sql .. "WHERE domain_name = :domain_name";
+				local params = {domain_name = domain_name}
+
 				if (debug["sql"]) then
-					freeswitch.consoleLog("notice", "[voicemail] SQL: " .. sql .. "\n");
+					freeswitch.consoleLog("notice", "[sms] SQL DOMAIN_NAME: "..sql.."; params:" .. json.encode(params) .. "\n");
 				end
-				status = dbh:query(sql, function(rows)
+				status = dbh:query(sql, params, function(rows)
 					domain_uuid = rows["domain_uuid"];
 				end);
 			end
@@ -254,11 +293,13 @@
 		--get the extension_uuid using the domain_uuid and the extension number
 			if (domain_uuid ~= nil) then
 				sql = "SELECT extension_uuid FROM v_extensions ";
-				sql = sql .. "WHERE domain_uuid = '" .. domain_uuid .. "' and extension = '" .. extension .."' ";
+				sql = sql .. "WHERE domain_uuid = :domain_uuid and extension = :extension";
+				local params = {domain_uuid = domain_uuid, extension_uuid = extension_uuid}
+
 				if (debug["sql"]) then
-					freeswitch.consoleLog("notice", "[sms] SQL EXTENSION: " .. sql .. "\n");
+					freeswitch.consoleLog("notice", "[sms] SQL EXTENSION: "..sql.."; params:" .. json.encode(params) .. "\n");
 				end
-				status = dbh:query(sql, function(rows)
+				status = dbh:query(sql, params, function(rows)
 					extension_uuid = rows["extension_uuid"];
 				end);
 			end
@@ -271,9 +312,11 @@
 	if (extension_uuid ~= nil) then
 		sql = "insert into v_sms_messages";
 		sql = sql .. "(sms_message_uuid,extension_uuid,domain_uuid,start_stamp,from_number,to_number,message,direction,response,carrier)";
-		sql = sql .. " values ('" .. uuid() .. "','" .. extension_uuid .. "','" .. domain_uuid .."',now(),'" .. from .. "','" .. to .. "','" .. body .. "','" .. direction .. "','','" .. carrier .."')";
+		sql = sql .. " values (:uuid,:extension_uuid,:domain_uuid,now(),:from,:to,:body,:direction,'',:carrier)";
+		local params = {uuid = uuid(), extension_uuid = extension_uuid, domain_uuid = domain_uuid, from = from, to = to, body = body, direction = direction, carrier = carrier }
+
 		if (debug["sql"]) then
-			freeswitch.consoleLog("notice", "[sms] "..sql.."\n");
+			freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
 		end
-		dbh:query(sql);
+		dbh:query(sql,params);
 	end
