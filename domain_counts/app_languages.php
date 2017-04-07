@@ -3,7 +3,11 @@ $text['title-domain_counts']['en-us'] = "Domain Counts";
 
 $text['header-domain_counts']['en-us'] = "Domain Counts";
 
+$text['header-domain_counts_accountcodes']['en-us'] = "Accountcodes";
+
 $text['description-domain_counts']['en-us'] = "Displays the number of items from all domains";
+
+$text['description-domain_counts_accountcodes']['en-us'] = "Displays the number of extensions assigned to each domain accountcode.";
 
 $text['label-domain_name']['en-us'] = "Domain Name";
 
@@ -27,5 +31,14 @@ $text['label-cc_queues']['en-us'] = "CC Queues";
 
 $text['label-contacts']['en-us'] = "Contacts";
 
+$text['label-accountcodes']['en-us'] = "Accountcodes";
+
+$text['label-accountcode']['en-us'] = "Accountcode";
+
+$text['label-count']['en-us'] = "Extension Count";
+
 $text['button-export']['en-us'] = "Export";
+
+$text['title-domain_counts_accountcodes']['en-us'] = "Accountcodes";
+
 ?>
