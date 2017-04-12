@@ -28,6 +28,7 @@
 	include "root.php";
 	require_once "resources/require.php";
 	require_once "resources/check_auth.php";
+	require_once "resources/paging.php";	
 
 //include the class
 	require_once "resources/check_auth.php";
@@ -123,7 +124,13 @@
 	$sql .= "(\n";
 	$sql .= "select count(*) from v_contacts \n";
 	$sql .= "where domain_uuid = d.domain_uuid\n";
-	$sql .= ") as contact_count \n";
+	$sql .= ") as contact_count, \n";
+	
+	//accountcodes
+	$sql .= "(\n";
+	$sql .= "select count(DISTINCT accountcode) from v_extensions \n";
+	$sql .= "where domain_uuid = d.domain_uuid\n";
+	$sql .= ") as accountcode_count \n";	
 	
 	$sql .= "FROM v_domains as d \n";
 	$sql .= $sql_mod; //add search mod from above
@@ -240,6 +247,7 @@
 	echo th_order_by('ring_group_count', $text['label-ring_groups'], $order_by, $order);
 	echo th_order_by('cc_queue_count', $text['label-cc_queues'], $order_by, $order);	
 	echo th_order_by('contact_count', $text['label-contacts'], $order_by, $order);
+	echo th_order_by('accountcode_count', $text['label-accountcodes'], $order_by, $order);	
 	echo "</tr>\n";
 
 	if (isset($domain_counts)) foreach ($domain_counts as $key => $row) {
@@ -254,6 +262,7 @@
 		echo "	<td valign='top' class='".$row_style[$c]."'>".$row['ring_group_count']."&nbsp;</td>\n";
 		echo "	<td valign='top' class='".$row_style[$c]."'>".$row['cc_queue_count']."&nbsp;</td>\n";
 		echo "	<td valign='top' class='".$row_style[$c]."'>".$row['contact_count']."&nbsp;</td>\n";
+		echo "	<td valign='top' class='".$row_style[$c]."'><a href='domain_counts_accountcodes.php?id=".$row['domain_uuid']."'>".$row['accountcode_count']."&nbsp;</td>\n";		
 		
 		
 		echo "</tr>\n";

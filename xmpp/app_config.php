@@ -39,24 +39,25 @@
 		*/
 
 	//permission details
-		$apps[$x]['permissions'][0]['name'] = "xmpp_view";
-		$apps[$x]['permissions'][0]['menu']['uuid'] = "1808365b-0f7c-7555-89d0-31b3d9a75abb";
-		$apps[$x]['permissions'][0]['groups'][] = "superadmin";
-
-		$apps[$x]['permissions'][1]['name'] = "xmpp_add";
-		$apps[$x]['permissions'][1]['groups'][] = "superadmin";
-
-		$apps[$x]['permissions'][2]['name'] = "xmpp_edit";
-		$apps[$x]['permissions'][2]['groups'][] = "superadmin";
-
-		$apps[$x]['permissions'][3]['name'] = "xmpp_delete";
-		$apps[$x]['permissions'][3]['groups'][] = "superadmin";
+		$y=0;
+		$apps[$x]['permissions'][$y]['name'] = "xmpp_view";
+		$apps[$x]['permissions'][$y]['menu']['uuid'] = "1808365b-0f7c-7555-89d0-31b3d9a75abb";
+		$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
+		$y++;
+		$apps[$x]['permissions'][$y]['name'] = "xmpp_add";
+		$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
+		$y++;
+		$apps[$x]['permissions'][$y]['name'] = "xmpp_edit";
+		$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
+		$y++;
+		$apps[$x]['permissions'][$y]['name'] = "xmpp_delete";
+		$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
 
 	//schema details
-		$y = 0; //table array index
-		$z = 0; //field array index
+		$y=0;
 		$apps[$x]['db'][$y]['table']['name'] = "v_xmpp";
 		$apps[$x]['db'][$y]['table']['parent'] = "";
+		$z=0;
 		$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = "id";
 		$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'] = "xmpp_profile_id";
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = "serial";
