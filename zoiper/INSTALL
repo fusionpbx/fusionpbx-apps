@@ -10,6 +10,11 @@ This will give you a LINK with a PAGE ID:
 https://www.zoiper.com/en/page/MYPAGEID?u=&h=&p=&o=&t=&x=&a=&tr="
 Copy the page ID
 
+Then click "CONFIGURE" Under Mobile. 
+This will give you a LINK with a MOBILE PAGE ID:
+https://www.zoiper.com/en/page/MYMOBILEPAGEID?u=&h=&p=&o=&t=&x=&a=&tr="
+Copy the mobile page ID
+
 On your server
 git clone https://github.com/fusionpbx/fusionpbx-apps
 Copy or move the directory 'zoiper' into your main FusionPBX directory
@@ -23,10 +28,18 @@ Log out and back in
 
 Advanced -> Default Settings
 Add a Default Setting
+
 Category: zoiper
 Subcategory: page_id
 Type: text
 Value: MYPAGEID
+Enabled: True
+Save
+
+Category: zoiper
+Subcategory: mobile_id
+Type: text
+Value: MYMOBILEPAGEID
 Enabled: True
 Save
 
