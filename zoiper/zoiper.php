@@ -149,6 +149,16 @@
 	echo "			".$text['description-zoiper']."\n";
 	echo "		</td>\n";
 	echo "	</tr>\n";
+	echo "	<tr>\n";
+	echo "		<td colspan='2'>\n";
+	echo "			<b>".$text['title-mobile']."</b><br>\n";
+	echo "		</td>\n";
+	echo "	</tr>\n";
+	echo "	<tr>\n";
+	echo "		<td colspan='2'>\n";
+	echo "			".$text['description-zoiper2']."\n";	
+	echo "		</td>\n";
+	echo "	</tr>\n";	
 	echo "</table>\n";
 	echo "<br>";
 	
@@ -156,18 +166,31 @@
 	echo "<tr>\n";
 	echo th_order_by('extension', $text['table-extension'], $order_by,$order);
 	echo "<th>".$text['table-tools']."</th>\n";
+	echo "<th>".$text['table-qr']."</th>\n";
+//	echo "<th>".$text['table-password']."</th>\n";	
 	echo th_order_by('description', $text['table-description'], $order_by, $order);
 	echo "</tr>\n";
 
 	if ($result_count > 0) {
 		foreach($result as $row) {
 			$tr_url = "https://www.zoiper.com/en/page/" . $_SESSION['zoiper']['page_id']['text'] . "?u=" . $row['extension'] . "&h=" . $row['user_context'] . "&p=" . $row['password'] . "&o=&t=&x=&a=" . $row['extension'] . "&tr=";
+			$qr_img = "https://oem.zoiper.com/qr.php?provider_id=" . $_SESSION['zoiper']['mobile_id']['text'] . "&u=" . $row['extension'] . "&h=" . $row['user_context'] . "&p=" . $row['password'] . "&o=&t=&x=&a=" . $row['extension'] . "&tr=";
 			$tr_link = (permission_exists('zoiper')) ? "href='".$tr_url."'" : null;
 			echo "<tr>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['extension']."</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>\n";
 			if (permission_exists('zoiper')) { 	echo "<a href='".$tr_url."' target='_blank'>" . $text['label-zoiper'] . "</a>&nbsp;&nbsp;&nbsp;"; }
 			echo "	</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>\n";
+			echo "	<a href='".$qr_img."' target='_blank'>" . $text['label-qr'] . "</a>&nbsp;&nbsp;&nbsp;";
+			echo "	</td>\n";
+//			echo "	<td valign='top' class='".$row_style[$c]."'>";
+//			echo "			<option data-toggle='tooltip' ";
+//			echo 				"title='User: ".$row['extension']."\n";
+//			echo 				"Password: ".$row['password']."' ";
+//			echo "			</option>\n";			
+//			echo "******";
+//			echo "&nbsp;</td>\n";
 			echo "	<td valign='top' class='row_stylebg' width='40%'>".$row['description']."&nbsp;</td>\n";
 			echo "</tr>\n";
 			if ($c==0) { $c=1; } else { $c=0; }
