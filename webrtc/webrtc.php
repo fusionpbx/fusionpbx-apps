@@ -104,46 +104,41 @@
 		$effective_caller_id_name = $row['effective_caller_id_name'];
 	}
 
-echo "  <div id=\"conference\">\n"; 
-echo "   <input type=\"hidden\" id=\"hostName\" value=\"" . $_SESSION['domain_name'] . "\"/>\n"; 
-echo "   <input type=\"hidden\" id=\"wsURL\" value=\"wss://" . $_SESSION['domain_name'] . ":8082\"/>\n"; 
-echo "   <input type=\"hidden\" id=\"login\" value=\"" . $user_extension . "\"/>\n"; 
-echo "   <input type=\"hidden\" id=\"passwd\" value=\"" . $user_password . "\"/>\n"; 
-echo "   <input type=\"hidden\" id=\"cidnumber\" value=\"" . $effective_caller_id_name . "\"/>\n"; 
-echo "   <div class=\"form-signin\">\n"; 
-echo "    <h2 class=\"form-signin-heading\">" . $_SESSION['theme']['webrtc_title']['text'] . "</h2>\n"; 
-echo "    <div id=\"content\" class=\"form-signin-content\">\n"; 
-echo "     <input type=number id=\"ext\" min=3000 max=3999 step=1 class=\"form-control\"\n"; 
-echo "	placeholder=\"Conference Number ? (eg: 3000)\" required autofocus>\n"; 
-echo "     <button class=\"btn btn-lg btn-primary btn-success\" data-inline=\"true\"\n"; 
-echo "	id=\"extbtn\">Choose Room</button>\n"; 
-echo "     <input type=\"text\" id=\"cidname\" class=\"form-control\"\n"; 
-echo "	placeholder=\"insert here your NAME (eg: Squidward)\" required autofocus>\n"; 
-echo "     <button class=\"btn btn-lg btn-primary btn-success\" data-inline=\"true\"\n"; 
-echo "	id=\"callbtn\">Call Conference</button>\n"; 
-echo "     <button class=\"btn btn-lg btn-primary btn-danger\" data-inline=\"true\"\n"; 
-echo "	id=\"backbtn\">Back</button>\n"; 
-echo "    </div>\n"; 
-echo "    <div id=\"video1\" align=\"center\" class=\"embed-responsive embed-responsive-4by3\">\n"; 
-echo "     <video id=\"webcam\" autoplay=\"autoplay\" class=\"embed-responsive-item\"> </video>\n"; 
-echo "    </div>\n"; 
-echo "    <button class=\"btn btn-lg btn-primary btn-danger\" data-inline=\"true\"\n"; 
-echo "	id=\"hupbtn\">Hangup</button>\n"; 
-echo "    <br id=\"br\"/>\n"; 
-echo "    <textarea id=\"chatwin\" class=\"form-control\" rows=\"5\" readonly></textarea>\n"; 
-echo "    <br id=\"br\"/>\n"; 
-echo "    <textarea id=\"chatmsg\" class=\"form-control\" rows=\"1\"\n"; 
-echo "	placeholder=\"type here your chat msg\" autofocus></textarea>\n"; 
-echo "    <button class=\"btn btn-primary btn-success\" data-inline=\"true\"\n"; 
-echo "	id=\"chatsend\">Send Msg</button>\n"; 
-echo "   </div>\n"; 
-echo "  </div>\n"; 
-echo "  <script type=\"text/javascript\" src=\"js/jquery.min.js\"></script>\n"; 
-echo "  <script type=\"text/javascript\" src=\"js/jquery.json-2.4.min.js\"></script>\n"; 
-echo "  <script type=\"text/javascript\" src=\"js/verto-min.js\"></script>\n"; 
-echo "  <script type=\"text/javascript\" src=\"high.js\"></script>\n"; 
-echo " </body> </html>\n"; 
-echo "\n";
+//show the content
+	echo "  <div id=\"conference\">\n"; 
+	echo "   <input type=\"hidden\" id=\"hostName\" value=\"" . $_SESSION['domain_name'] . "\"/>\n"; 
+	echo "   <input type=\"hidden\" id=\"wsURL\" value=\"wss://" . $_SESSION['domain_name'] . ":8082\"/>\n"; 
+	echo "   <input type=\"hidden\" id=\"login\" value=\"" . $user_extension . "\"/>\n"; 
+	echo "   <input type=\"hidden\" id=\"passwd\" value=\"" . $user_password . "\"/>\n"; 
+	echo "   <input type=\"hidden\" id=\"cidnumber\" value=\"" . $effective_caller_id_name . "\"/>\n"; 
+	echo "   <div class=\"form-signin\">\n";
+	echo "    <h2 class=\"form-signin-heading\">" . $_SESSION['theme']['webrtc_title']['text'] . "</h2>\n"; 
+	echo "    <div id=\"content\" class=\"form-signin-content\">\n"; 
+	echo "     <input type=\"text\" id=\"ext\" class=\"form-control\" placeholder=\"Number to dial ? (eg: 3000)\" required autofocus>\n"; 
+	echo "     <button class=\"btn btn-lg btn-primary btn-success\" data-inline=\"true\" id=\"extbtn\">Call</button>\n"; 
+	echo "     <input type=\"text\" id=\"cidname\" class=\"form-control\" placeholder=\"insert here your NAME (eg: Squidward)\" required autofocus>\n"; 
+	echo "     <button class=\"btn btn-lg btn-primary btn-success\" data-inline=\"true\" id=\"callbtn\">Call</button>\n"; 
+	echo "     <button class=\"btn btn-lg btn-primary btn-danger\" data-inline=\"true\" id=\"backbtn\">Back</button>\n"; 
+	echo "    </div>\n";
+	echo "    <div id=\"video1\" align=\"center\" class=\"embed-responsive embed-responsive-4by3\">\n"; 
+	echo "     <video id=\"webcam\" autoplay=\"autoplay\" class=\"embed-responsive-item\"> </video>\n"; 
+	echo "    </div>\n";
+	echo "    <button class=\"btn btn-lg btn-primary btn-danger\" data-inline=\"true\" id=\"hupbtn\">Hangup</button>\n"; 
+	echo "    <br id=\"br\"/>\n"; 
+	echo "    <textarea id=\"chatwin\" class=\"form-control\" rows=\"5\" readonly></textarea>\n"; 
+	echo "    <br id=\"br\"/>\n"; 
+	echo "    <textarea id=\"chatmsg\" class=\"form-control\" rows=\"1\" placeholder=\"type here your chat msg\" autofocus></textarea>\n"; 
+	echo "    <button class=\"btn btn-primary btn-success\" data-inline=\"true\" id=\"chatsend\">Send Msg</button>\n"; 
+	echo "   </div>\n"; 
+	echo "  </div>\n"; 
+	echo "  <script type=\"text/javascript\" src=\"js/jquery.min.js\"></script>\n"; 
+	echo "  <script type=\"text/javascript\" src=\"js/jquery.json-2.4.min.js\"></script>\n"; 
+	echo "  <script type=\"text/javascript\" src=\"js/verto-min.js\"></script>\n"; 
+	echo "  <script type=\"text/javascript\" src=\"high.js\"></script>\n"; 
+	echo " </body> </html>\n"; 
+	echo "\n";
+
 //include the footer
 	require_once "resources/footer.php";
+
 ?>
