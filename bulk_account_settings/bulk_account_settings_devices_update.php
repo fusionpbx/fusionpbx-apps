@@ -48,29 +48,50 @@
 		$device_uuids = $_REQUEST["id"];
 		$option_selected = $_REQUEST["option_selected"];
 		$new_setting = $_REQUEST["new_setting"];
+
 		foreach($device_uuids as $device_uuid) {
 			$device_uuid = check_str($device_uuid);
 			if ($device_uuid != '') {
-				//get the devices array
-					$sql = "select * from v_devices ";
+				//line settings
+				if (preg_match ('/line/', $option_selected)) {
+					
+					preg_match ('/line_(.)/', $option_selected, $matches);
+					$line_number = $matches[1];
+					$matches = null;
+					preg_match ('/line_._(.*$)/', $option_selected, $matches);
+					$option_line = $matches[1];
+
+					$sql = "select * from v_device_lines ";
 					$sql .= "where domain_uuid = '".$_SESSION['domain_uuid']."' ";
 					$sql .= "and device_uuid = '".$device_uuid."' ";
+					$sql .= "and line_number = '".$line_number."' ";
 					$database = new database;
 					$database->select($sql);
 					$devices = $database->result;
 					if (is_array($devices)) { 
 						foreach ($devices as &$row) {
-							$device = $row["device"];
-							//$user_context = $row["user_context"];
+							$device_line_uuid = $row["device_line_uuid"];
 						}
 						unset ($prep_statement);
 					}
+					
+					$array["device_lines"][$i]["device_line_uuid"] = $device_line_uuid;
+					$array["device_lines"][$i][$option_line] = $new_setting;
+					$array["device_lines"][$i]["domain_uuid"] = $domain_uuid;
+					$array["device_lines"][$i]["device_uuid"] = $device_uuid;					
 
-						$array["devices"][$i]["domain_uuid"] = $domain_uuid;
-						$array["devices"][$i]["device_uuid"] = $device_uuid;
-						$array["devices"][$i][$option_selected] = $new_setting;
+					$database = new database;
+					$database->app_name = 'bulk_account_settings';
+					$database->app_uuid = null;
+					$database->save($array);
+					$message = $database->message;
+				}
+				//other device settings
+				else {
+					$array["devices"][$i]["domain_uuid"] = $domain_uuid;
+					$array["devices"][$i]["device_uuid"] = $device_uuid;
+					$array["devices"][$i][$option_selected] = $new_setting;
 
-				
 					$database = new database;
 					$database->app_name = 'bulk_account_settings';
 					$database->app_uuid = null;
@@ -81,6 +102,7 @@
 					//exit;
 					
 					unset($database,$array,$i);
+				}   
 			}
 		}
 	}
