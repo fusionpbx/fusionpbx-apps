@@ -121,6 +121,28 @@
 	$directory = $database->result;
 	unset($database,$result);
 
+//lookup the lines
+	$x = 0;
+	foreach ($directory as $key => $row) {
+		$sql = "SELECT * \n";
+		$sql .= "FROM v_device_lines \n";
+		$sql .= "WHERE domain_uuid = '$domain_uuid' \n";
+		$sql .= "and device_uuid = '".$row['device_uuid']."' ";
+		$sql .= "and line_number = '1' ";
+		$database = new database;
+		$database->select($sql);
+		$sqlview1 = $sql;
+		$result = $database->result;
+		$directory[$key]['line_1_server_address'] = $result[0]['server_address'];
+		$directory[$key]['line_1_outbound_proxy_primary'] = $result[0]['outbound_proxy_primary'];
+		$directory[$key]['line_1_sip_port'] = $result[0]['sip_port'];
+		$directory[$key]['line_1_sip_transport'] = $result[0]['sip_transport'];
+		$directory[$key]['line_1_register_expires'] = $result[0]['register_expires'];
+		$directory[$key]['line_1_outbound_proxy_secondary'] = $result[0]['outbound_proxy_secondary'];
+		unset($result,$database);
+		$x++;
+	}
+	
 //additional includes
 	require_once "resources/header.php";
 	$document['title'] = $text['title-devices_settings'];
@@ -129,7 +151,7 @@
 	$c = 0;
 	$row_style["0"] = "row_style0";
 	$row_style["1"] = "row_style1";
-	
+
 //show the content
 	echo "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n";
 	echo "  <tr>\n";
@@ -137,36 +159,78 @@
 	echo "		<b>".$text['header-devices']." (".$numeric_devices.")</b><br>\n";
 
 //options list
-		echo "<form name='frm' method='get' id=option_selected>\n";
-		echo "    <select class='formfld' name='option_selected'  onchange=\"this.form.submit();\">\n";
-		echo "    <option value=''>".$text['label-devices_null']."</option>\n";
-		if ($option_selected == "device_enabled") {
-			echo "    <option value='device_enabled' selected='selected'>".$text['label-enabled']."</option>\n";
-		}
-		else {
-			echo "    <option value='device_enabled'>".$text['label-enabled']."</option>\n";
-		}
-		if ($option_selected == "device_profile_uuid") {
-			echo "    <option value='device_profile_uuid' selected='selected'>".$text['label-device_profile']."</option>\n";
-		}
-		else {
-			echo "    <option value='device_profile_uuid'>".$text['label-device_profile']."</option>\n";
-		}
-		if ($option_selected == "device_template") {
-			echo "    <option value='device_template' selected='selected'>".$text['label-device_template']."</option>\n";
-		}
-		else {
-			echo "    <option value='device_template'>".$text['label-device_template']."</option>\n";
-		}
+	echo "<form name='frm' method='get' id=option_selected>\n";
+	echo "    <select class='formfld' name='option_selected'  onchange=\"this.form.submit();\">\n";
+	echo "    <option value=''>".$text['label-devices_null']."</option>\n";
+//Enabled		
+	if ($option_selected == "device_enabled") {
+		echo "    <option value='device_enabled' selected='selected'>".$text['label-enabled']."</option>\n";
+	}
+	else {
+		echo "    <option value='device_enabled'>".$text['label-enabled']."</option>\n";
+	}
+//Device Profile
+	if ($option_selected == "device_profile_uuid") {
+		echo "    <option value='device_profile_uuid' selected='selected'>".$text['label-device_profile']."</option>\n";
+	}
+	else {
+		echo "    <option value='device_profile_uuid'>".$text['label-device_profile']."</option>\n";
+	}
+//Device Template
+	if ($option_selected == "device_template") {
+		echo "    <option value='device_template' selected='selected'>".$text['label-device_template']."</option>\n";
+	}
+	else {
+		echo "    <option value='device_template'>".$text['label-device_template']."</option>\n";
+	}
+//Line 1 - Server Address
+	if ($option_selected == "line_1_server_address") {
+		echo "    <option value='line_1_server_address' selected='selected'>".$text['label-line_1_server_address']."</option>\n";
+	}
+	else {
+		echo "    <option value='line_1_server_address'>".$text['label-line_1_server_address']."</option>\n";
+	}
+//Line 1 - Outbound Proxy		
+	if ($option_selected == "line_1_outbound_proxy_primary") {
+		echo "    <option value='line_1_outbound_proxy_primary' selected='selected'>".$text['label-line_1_outbound_proxy_primary']."</option>\n";
+	}
+	else {
+		echo "    <option value='line_1_outbound_proxy_primary'>".$text['label-line_1_outbound_proxy_primary']."</option>\n";
+	}
+//Line 1 - SIP Port
+	if ($option_selected == "line_1_sip_port") {
+		echo "    <option value='line_1_sip_port' selected='selected'>".$text['label-line_1_sip_port']."</option>\n";
+	}
+	else {
+		echo "    <option value='line_1_sip_port'>".$text['label-line_1_sip_port']."</option>\n";
+	}
+//Line 1 - SIP Transport
+	if ($option_selected == "line_1_sip_transport") {
+		echo "    <option value='line_1_sip_transport' selected='selected'>".$text['label-line_1_sip_transport']."</option>\n";
+	}
+	else {
+		echo "    <option value='line_1_sip_transport'>".$text['label-line_1_sip_transport']."</option>\n";
+	}
+//Line 1 - Register Expires
+	if ($option_selected == "line_1_register_expires") {
+		echo "    <option value='line_1_register_expires' selected='selected'>".$text['label-line_1_register_expires']."</option>\n";
+	}
+	else {
+		echo "    <option value='line_1_register_expires'>".$text['label-line_1_register_expires']."</option>\n";
+	}
+//Line 1 - Outbound Proxy Secondary
+	if ($option_selected == "line_1_outbound_proxy_secondary") {
+		echo "    <option value='line_1_outbound_proxy_secondary' selected='selected'>".$text['label-line_1_outbound_proxy_secondary']."</option>\n";
+	}
+	else {
+		echo "    <option value='line_1_outbound_proxy_secondary'>".$text['label-line_1_outbound_proxy_secondary']."</option>\n";
+	}		
+	echo "    </select>\n";
+	echo "    </form>\n";
+	echo "<br />\n";
+	echo $text['description-device_settings_description']."\n";
+	echo "</td>\n";
 
-		echo "    </select>\n";
-		echo "    </form>\n";
-		echo "<br />\n";
-		echo $text['description-device_settings_description']."\n";
-		echo "</td>\n";
-	
-	
-	
 	echo "		<td align='right' width='100%' style='vertical-align: top;'>";
 	echo "		<form method='get' action=''>\n";
 	echo "			<td style='vertical-align: top; text-align: right; white-space: nowrap;'>\n";
@@ -273,6 +337,29 @@
 			echo "</td>\n";
 		}
 
+		//options with a free form input
+		if($option_selected == 'line_1_server_address' || $option_selected == 'line_1_outbound_proxy_primary' || $option_selected == 'line_1_sip_port' || $option_selected == 'line_1_register_expires' || $option_selected == 'line_1_outbound_proxy_secondary') {
+			echo "<td class='vtable' align='left'>\n";
+			echo "    <input class='formfld' type='text' name='new_setting' maxlength='255' value=\"$new_setting\">\n";
+			echo "<br />\n";
+			echo $text["description-".$option_selected.""]."\n";
+			echo "</td>\n";
+		}
+		
+		//option is transport
+		if($option_selected == 'line_1_sip_transport') {
+			echo "<td class='vtable' align='left'>\n";
+			echo "    <select class='formfld' name='new_setting'>\n";
+			echo "    <option value='tcp'>TCP</option>\n";
+			echo "    <option value='udp'>UDP</option>\n";
+			echo "    <option value='tls'>TLS</option>\n";
+			echo "    <option value='dns srv'>DNS SRV</option>\n";
+			echo "    </select>\n";
+			echo "    <br />\n";
+			echo $text["description-".$option_selected.""]."\n";
+			echo "</td>\n";
+		}
+
 		echo "<td align='left'>\n";
 		echo "<input type='button' class='btn' alt='".$text['button-submit']."' onclick=\"if (confirm('".$text['confirm-update']."')) { document.forms.devices.submit(); }\" value='".$text['button-submit']."'>\n";
 		echo "</td>\n";
@@ -286,7 +373,10 @@
 		echo "<th style='width: 30px; text-align: center; padding: 0px;'><input type='checkbox' id='chk_all' onchange=\"(this.checked) ? check('all') : check('none');\"></th>";
 	}
 	echo th_order_by('device_mac_address', $text['label-device_mac_address'], $order_by,$order,'','',"option_selected=".$option_selected."&search=".$search."");
-	echo th_order_by('device_label', $text['label-device_label'], $order_by, $order,'','',"option_selected=".$option_selected."&search=".$search."");	
+	echo th_order_by('device_label', $text['label-device_label'], $order_by, $order,'','',"option_selected=".$option_selected."&search=".$search."");
+	if (preg_match ('/line_(.)/',$option_selected)) {
+			echo th_order_by($option_selected, $text["label-".$option_selected.""], $order_by,$order,'','',"option_selected=".$option_selected."&search=".$search."");
+		}
 	echo th_order_by('device_vendor', $text['label-device_vendor'], $order_by, $order,'','',"option_selected=".$option_selected."&search=".$search."");
 	echo th_order_by('device_template', $text['label-device_template'], $order_by, $order,'','',"option_selected=".$option_selected."&search=".$search."");
 	echo th_order_by('device_label', $text['label-device_profile'], $order_by, $order,'','',"option_selected=".$option_selected."&search=".$search."");
@@ -308,6 +398,9 @@ if (is_array($directory)) {
 			$device_ids[] = 'checkbox_'.$row['device_uuid'];
 			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_mac_address']."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_label']."&nbsp;</td>\n";
+			if (preg_match ('/line_/',$option_selected)) {
+				echo "	<td valign='top' class='".$row_style[$c]."'> ".$row[$option_selected]."&nbsp;</td>\n";	
+			}
 			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_vendor']."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_template']."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_profile_name']."&nbsp;</td>\n";
