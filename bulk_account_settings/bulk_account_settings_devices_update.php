@@ -85,6 +85,8 @@
 					$database->app_uuid = null;
 					$database->save($array);
 					$message = $database->message;
+					
+					unset($database,$array,$i);
 				}
 				//other device settings
 				else {
