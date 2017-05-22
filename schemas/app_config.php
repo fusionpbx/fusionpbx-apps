@@ -73,9 +73,10 @@
 		$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
 
 	//schema details
-		$y = 0; //table array index
-		$z = 0; //field array index
-		$apps[$x]['db'][$y]['table'] = "v_schema_data";
+		$y=0;
+		$apps[$x]['db'][$y]['table']['name'] = "v_schema_data";
+		$apps[$x]['db'][$y]['table']['parent'] = "v_schemas";
+		$z=0;
 		//$apps[$x]['db'][$y]['table']['text'] = "v_schema_data";
 		//$apps[$x]['db'][$y]['table']['deprecated'] = "v_virtual_table_data";
 
@@ -177,9 +178,10 @@
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = "text";
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
 
-		$y = 1; //table array index
-		$z = 0; //field array index
-		$apps[$x]['db'][$y]['table'] = "v_schema_name_values";
+		$y=1; //table array index
+		$apps[$x]['db'][$y]['table']['name'] = "v_schema_name_values";
+		$apps[$x]['db'][$y]['table']['parent'] = "v_schemas";
+		$z=0;
 		//$apps[$x]['db'][$y]['table']['text'] = "v_schema_name_values";
 		//$apps[$x]['db'][$y]['table']['deprecated'] = "v_virtual_table_name_values";
 
@@ -254,9 +256,10 @@
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = "text";
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
 
-		$y = 2; //table array index
-		$z = 0; //field array index
-		$apps[$x]['db'][$y]['table'] = "v_schema_fields";
+		$y=2; //table array index
+		$apps[$x]['db'][$y]['table']['name'] = "v_schema_fields";
+		$apps[$x]['db'][$y]['table']['parent'] = "v_schemas";
+		$z=0;
 		//$apps[$x]['db'][$y]['table']['text'] = "v_schema_fields";
 		//$apps[$x]['db'][$y]['table']['deprecated'] = "v_virtual_table_fields";
 
@@ -360,9 +363,10 @@
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = "text";
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
 
-		$y = 3; //table array index
-		$z = 0; //field array index
-		$apps[$x]['db'][$y]['table'] = "v_schemas";
+		$y=3; //table array index
+		$apps[$x]['db'][$y]['table']['name'] = "v_schemas";
+		$apps[$x]['db'][$y]['table']['parent'] = "";
+		$z=0;
 		//$apps[$x]['db'][$y]['table']['text'] = "v_schemas";
 		//$apps[$x]['db'][$y]['table']['deprecated'] = "v_virtual_tables";
 
