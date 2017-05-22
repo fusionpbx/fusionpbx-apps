@@ -21,22 +21,23 @@
 		$apps[$x]['description']['pt-br'] = "";
 
 	//permission details
-		$apps[$x]['permissions'][0]['name'] = "content_view";
-		$apps[$x]['permissions'][0]['menu']['uuid'] = "90397352-395c-40f6-2087-887144abc06d";
-		$apps[$x]['permissions'][0]['groups'][] = "admin";
-		$apps[$x]['permissions'][0]['groups'][] = "superadmin";
+		$y=0;
+		$apps[$x]['permissions'][$y]['name'] = "content_view";
+		$apps[$x]['permissions'][$y]['menu']['uuid'] = "90397352-395c-40f6-2087-887144abc06d";
+		$apps[$x]['permissions'][$y]['groups'][] = "admin";
+		$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
 		$y++;
-		$apps[$x]['permissions'][1]['name'] = "content_add";
-		$apps[$x]['permissions'][1]['groups'][] = "admin";
-		$apps[$x]['permissions'][1]['groups'][] = "superadmin";
+		$apps[$x]['permissions'][$y]['name'] = "content_add";
+		$apps[$x]['permissions'][$y]['groups'][] = "admin";
+		$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
 		$y++;
-		$apps[$x]['permissions'][2]['name'] = "content_edit";
-		$apps[$x]['permissions'][2]['groups'][] = "admin";
-		$apps[$x]['permissions'][2]['groups'][] = "superadmin";
+		$apps[$x]['permissions'][$y]['name'] = "content_edit";
+		$apps[$x]['permissions'][$y]['groups'][] = "admin";
+		$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
 		$y++;
-		$apps[$x]['permissions'][3]['name'] = "content_delete";
-		$apps[$x]['permissions'][3]['groups'][] = "admin";
-		$apps[$x]['permissions'][3]['groups'][] = "superadmin";
+		$apps[$x]['permissions'][$y]['name'] = "content_delete";
+		$apps[$x]['permissions'][$y]['groups'][] = "admin";
+		$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
 		$y++;
 		$apps[$x]['permissions'][$y]['name'] = "rss_view";
 		$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
@@ -99,9 +100,10 @@
 		$apps[$x]['permissions'][$y]['groups'][] = "user";
 
 	//schema details
-		$y = 0; //table array index
-		$z = 0; //field array index
-		$apps[$x]['db'][$y]['table'] = "v_rss";
+		$y=0;
+		$apps[$x]['db'][$y]['table']['name'] = "v_rss";
+		$apps[$x]['db'][$y]['table']['parent'] = "";
+		$z=0;
 		$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = "id";
 		//$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'][0] = "rssid";
 		//$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'][1] = "rss_id";
@@ -229,9 +231,10 @@
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = "text";
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
 
-		$y = 1; //table array index
-		$z = 0; //field array index
-		$apps[$x]['db'][$y]['table'] = "v_rss_sub";
+		$y=1; //table array index
+		$apps[$x]['db'][$y]['table']['name'] = "v_rss_sub";
+		$apps[$x]['db'][$y]['table']['parent'] = "";
+		$z=0;
 		$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = "id";
 		//$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'][0] = "rsssubid";
 		//$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'][1] = "rss_sub_id";
@@ -348,9 +351,10 @@
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
 		$apps[$x]['db'][$y]['fields'][$z]['deprecated'] = "true";
 
-		$y = 2; //table array index
-		$z = 0; //field array index
-		$apps[$x]['db'][$y]['table'] = "v_rss_sub_category";
+		$y=2;
+		$apps[$x]['db'][$y]['table']['name'] = "v_rss_sub_category";
+		$apps[$x]['db'][$y]['table']['parent'] = "";
+		$z=0;
 		$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = "id";
 		//$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'][0] = "rsssubcategoryid";
 		//$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'][1] = "rss_sub_category_id";
