@@ -60,7 +60,8 @@
 	//schema details
 		$y = 0; //table array index
 		$z = 0; //field array index
-		$apps[$x]['db'][$y]['table'] = 'v_invoices';
+		$apps[$x]['db'][$y]['table']['name'] = "v_invoices";
+		$apps[$x]['db'][$y]['table']['parent'] = "";
 		$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = 'id';
 		$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'] = 'invoice_id';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'serial';
@@ -90,7 +91,7 @@
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = '';
 		$apps[$x]['db'][$y]['fields'][$z]['deprecated'] = 'true';
 		$z++;
-		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'contact_uuid_from';
+		$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = 'contact_uuid_from';
 		$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'] = 'contact_id_from';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'uuid';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['sqlite'] = 'text';
@@ -100,7 +101,7 @@
 		$apps[$x]['db'][$y]['fields'][$z]['key']['reference']['field'] = 'contact_uuid';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'Contact ID invoice is sent from';
 		$z++;
-		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'contact_uuid_to';
+		$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = 'contact_uuid_to';
 		$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'] = 'contact_id_to';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'uuid';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['sqlite'] = 'text';
@@ -124,6 +125,10 @@
 		$apps[$x]['db'][$y]['fields'][$z]['type']['mysql'] = 'timestamp';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = '';
 		$z++;
+		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'invoice_purchase_order_number';
+		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'text';
+		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'purchase order number';
+		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'invoice_notes';
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'text';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'Enter invoice notes.';
@@ -146,7 +151,8 @@
 		$z++;
 
 		$y = 1; //table array index
-		$apps[$x]['db'][$y]['table'] = 'v_invoice_items';
+		$apps[$x]['db'][$y]['table']['name'] = "v_invoice_items";
+		$apps[$x]['db'][$y]['table']['parent'] = "v_invoices";
 		$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = 'id';
 		$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'] = 'invoice_item_id';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'serial';
