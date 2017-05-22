@@ -58,10 +58,10 @@
 		//$apps[$x]['permissions'][$y]['groups'][] = 'admin';
 
 	//schema details
-		$y = 0; //table array index
-		$z = 0; //field array index
+		$y=0;
 		$apps[$x]['db'][$y]['table']['name'] = "v_invoices";
 		$apps[$x]['db'][$y]['table']['parent'] = "";
+		$z=0;
 		$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = 'id';
 		$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'] = 'invoice_id';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'serial';
@@ -150,9 +150,10 @@
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = 'Enter a payment method reference number.';
 		$z++;
 
-		$y = 1; //table array index
+		$y=1;
 		$apps[$x]['db'][$y]['table']['name'] = "v_invoice_items";
 		$apps[$x]['db'][$y]['table']['parent'] = "v_invoices";
+		$z=0
 		$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = 'id';
 		$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'] = 'invoice_item_id';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'serial';
