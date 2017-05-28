@@ -70,13 +70,13 @@ require_once "resources/require.php";
 	echo th_order_by('language_name', $text['label-name'], $order_by, $order);
 	echo "</tr>\n";
 
-	$c= 0;
+	$c = 0;
 	$warn_about_wrong_culture = false;
-	foreach($_SESSION['app']['languages'] as $lang_code){ //TODO add sorting
+	foreach($language->languages as $lang_code){
 		$tr_link = "href='languages_compare.php?target_language=$lang_code'";
 		echo "<tr $tr_link>\n";
 		echo "<td class='row_style".($c%2)."'>";
-		echo "<img src='$project_path/themes/flags/$lang_code.png' alt='$lang_code'/></td>";
+		echo "<img src='".PROJECT_PATH."/core/install/resources/images/flags/$lang_code.png' alt='$lang_code'/></td>";
 		echo "<td class='row_style".($c%2)."'>$lang_code";
 		if(strlen($lang_code) < 5){
 			$warn_about_wrong_culture = true;
