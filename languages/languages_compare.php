@@ -49,9 +49,11 @@ require_once "resources/require.php";
 			$organize_all = check_str($_POST["organize_all"]);
 	}
 
-//collect languages
+//add multi-lingual support
 	$language = new text;
+	$text = $language->get();
 
+//collect languages
 	$language_text = $language->get('all', $app_target, true);
 	foreach ($language_text as $lang_label => $lang_codes) {
 		$language_labels[] = $lang_label;
@@ -65,24 +67,22 @@ require_once "resources/require.php";
 	}
 	unset($language_text);
 
-//add multi-lingual support
-	$text = $language->get();
-
 	if($organize_app and strlen($app_target) > 0) {
 		$language->organize_language($app_target, false);
 		messages::add("Updated $app_target's app_languages.php");
 	}
 	if($organize_all) {
-		$files = glob($_SERVER["DOCUMENT_ROOT"] . PROJECT_PATH . "/*/*/app_languages.php");
+		$files = glob($_SERVER["PROJECT_ROOT"] . "/*/*/app_languages.php");
 		foreach($files as $file) {
 			$file = preg_replace('/\A.*(\/.*\/.*)\z/', '$1', dirname($file));
 			$language->organize_language($file, true);
 		}
+		$language->organize_language('resources', true);
 		messages::add("Updated All app_languages.php's");
 	}
 
 //get the list of installed apps from the core and mod directories
-	$config_list = glob($_SERVER["DOCUMENT_ROOT"] . PROJECT_PATH . "/*/*/app_config.php");
+	$config_list = glob($_SERVER["PROJECT_ROOT"] . "/*/*/app_config.php");
 	$app_list;
 	$x=0;
 	foreach ($config_list as $config_path) {
@@ -94,7 +94,7 @@ require_once "resources/require.php";
 		$app_list[$app_name] = $app_path;
 		$x++;
 	}
-	$theme_list = glob($_SERVER["DOCUMENT_ROOT"] . PROJECT_PATH . "/themes/*/app_languages.php");
+	$theme_list = glob($_SERVER["PROJECT_ROOT"] . "/themes/*/app_languages.php");
 	foreach ($theme_list as $config_path) {
 		$dirs = explode("/", $config_path);
 		$app_path = $dirs[(sizeof($dirs)-3)] . "/" . $dirs[(sizeof($dirs)-2)];
