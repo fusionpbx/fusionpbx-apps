@@ -36,17 +36,24 @@ require_once "resources/require.php";
 		exit;
 	}
 
+	if (count($_POST) > 0) {
+		//set the variables
+			$detect_all_languages = check_str($_POST["detect_all_languages"]);
+	}
+
 //add multi-lingual support
 	$language = new text;
 	$text = $language->get();
+	$language_totals = $language->language_totals();
+
+	if($detect_all_languages){
+		$language->detect_all_languages(true);
+		messages::add("Detected all Languages");
+	}
 
 //additional includes
 	require_once "resources/header.php";
 	require_once "resources/paging.php";
-
-//get variables used to control the order
-	$order_by = $_GET["order_by"];
-	$order = $_GET["order"];
 
 //show the content
 	echo "<table width='100%' cellpadding='0' cellspacing='0' border='0'>\n";
@@ -61,13 +68,20 @@ require_once "resources/require.php";
 	echo "	</tr>\n";
 	echo "</table>\n";
 
+	echo "<form method='post' name='frm' action=''>\n";
+	echo "    <button type='submit' id='organize_app' name='detect_all_languages' value='1'>Detect all languages</button>\n";
+	echo "</form>\n";
+
 
 //table headers
 	echo "<table class='tr_hover' width='100%' border='0' cellpadding='0' cellspacing='0'>\n";
 	echo "<tr>\n";
 	echo "<th nowrap='' style='width:2em'>".$text['label-flag']."</th>\n";
-	echo th_order_by('language_code', $text['label-culture_code'], $order_by, $order, '', "style='width:4em;'");
-	echo th_order_by('language_name', $text['label-name'], $order_by, $order);
+	echo "<th nowrap='' style='width:4em'>".$text['label-culture_code']."</th>\n";
+	echo "<th nowrap='' style='width:4em'>".$text['label-translations']."</th>\n";
+	echo "<th nowrap='' style='width:4em'>".$text['label-menu_items']."</th>\n";
+	echo "<th nowrap='' style='width:4em'>".$text['label-app_descriptions']."</th>\n";
+	echo "<th nowrap=''>".$text['label-name']."</th>\n";
 	echo "</tr>\n";
 
 	$c = 0;
@@ -83,6 +97,9 @@ require_once "resources/require.php";
 			echo "$nbsp;<sup>*1</sup>";
 		}
 		echo "</td>";
+		echo "<td class='row_style".($c%2)."'".($language_totals['languages'][$lang_code] == $language_totals['languages']['total'] ? " style='color:#00DD00'" : '').">".sprintf("%.1f%%", $language_totals['languages'][$lang_code] / $language_totals['languages']['total'] * 100 )."</td>";
+		echo "<td class='row_style".($c%2)."'".($language_totals['menu_items'][$lang_code] == $language_totals['menu_items']['total'] ? " style='color:#00DD00'" : '').">".sprintf("%.1f%%", $language_totals['menu_items'][$lang_code] / $language_totals['menu_items']['total'] * 100 )."</td>";
+		echo "<td class='row_style".($c%2)."'".($language_totals['app_descriptions'][$lang_code] == $language_totals['app_descriptions']['total'] ? " style='color:#00DD00'" : '').">".sprintf("%.1f%%", $language_totals['app_descriptions'][$lang_code] / $language_totals['app_descriptions']['total'] * 100 )."</td>";
 		echo "<td class='row_style".($c%2)."'>".$text["language-$lang_code"]."</td>";
 		echo "</tr>\n";
 		$c++;
