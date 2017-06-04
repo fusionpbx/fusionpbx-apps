@@ -55,6 +55,23 @@ require_once "resources/require.php";
 	require_once "resources/header.php";
 	require_once "resources/paging.php";
 
+function lineargradient($ra,$ga,$ba,$rz,$gz,$bz,$iterationnr) {
+	$colorindex = array();
+		for($iterationc=1; $iterationc<=$iterationnr; $iterationc++) {
+			$iterationdiff = $iterationnr-$iterationc;
+			$colorindex[] = sprintf('#%02x%02x%02x',
+			(($ra*$iterationc)+($rz*$iterationdiff))/$iterationnr,
+			(($ga*$iterationc)+($gz*$iterationdiff))/$iterationnr,
+			(($ba*$iterationc)+($bz*$iterationdiff))/$iterationnr);
+		}
+	return $colorindex;
+}
+
+$colorindex = lineargradient(
+	0, 200, 0,   // rgb of the start color
+	200, 0, 0, // rgb of the end color
+	101          // number of colors in your linear gradient
+);
 //show the content
 	echo "<table width='100%' cellpadding='0' cellspacing='0' border='0'>\n";
 	echo "	<tr>\n";
@@ -81,12 +98,21 @@ require_once "resources/require.php";
 	echo "<th nowrap='' style='width:4em'>".$text['label-translations']."</th>\n";
 	echo "<th nowrap='' style='width:4em'>".$text['label-menu_items']."</th>\n";
 	echo "<th nowrap='' style='width:4em'>".$text['label-app_descriptions']."</th>\n";
+	echo "<th nowrap='' style='width:4em'>".$text['label-overall']."</th>\n";
 	echo "<th nowrap=''>".$text['label-name']."</th>\n";
 	echo "</tr>\n";
 
 	$c = 0;
 	$warn_about_wrong_culture = false;
 	foreach($language->languages as $lang_code){
+		$complete['languages'] = sprintf("%.1f", $language_totals['languages'][$lang_code] / $language_totals['languages']['total'] * 100 );
+		$complete['menu_items'] = sprintf("%.1f", $language_totals['menu_items'][$lang_code] / $language_totals['menu_items']['total'] * 100 );
+		$complete['app_descriptions'] = sprintf("%.1f", $language_totals['app_descriptions'][$lang_code] / $language_totals['app_descriptions']['total'] * 100 );
+		$complete['overall'] = sprintf("%.1f",
+			( $language_totals['languages'][$lang_code] + $language_totals['menu_items'][$lang_code] + $language_totals['app_descriptions'][$lang_code] )
+			/ ($language_totals['languages']['total'] + $language_totals['menu_items']['total'] + $language_totals['app_descriptions']['total'] )
+			* 100
+		);
 		$tr_link = "href='languages_compare.php?target_language=$lang_code'";
 		echo "<tr $tr_link>\n";
 		echo "<td class='row_style".($c%2)."'>";
@@ -97,9 +123,10 @@ require_once "resources/require.php";
 			echo "$nbsp;<sup>*1</sup>";
 		}
 		echo "</td>";
-		echo "<td class='row_style".($c%2)."'".($language_totals['languages'][$lang_code] == $language_totals['languages']['total'] ? " style='color:#00DD00'" : '').">".sprintf("%.1f%%", $language_totals['languages'][$lang_code] / $language_totals['languages']['total'] * 100 )."</td>";
-		echo "<td class='row_style".($c%2)."'".($language_totals['menu_items'][$lang_code] == $language_totals['menu_items']['total'] ? " style='color:#00DD00'" : '').">".sprintf("%.1f%%", $language_totals['menu_items'][$lang_code] / $language_totals['menu_items']['total'] * 100 )."</td>";
-		echo "<td class='row_style".($c%2)."'".($language_totals['app_descriptions'][$lang_code] == $language_totals['app_descriptions']['total'] ? " style='color:#00DD00'" : '').">".sprintf("%.1f%%", $language_totals['app_descriptions'][$lang_code] / $language_totals['app_descriptions']['total'] * 100 )."</td>";
+		echo "<td class='row_style".($c%2)."' style='color:".$colorindex[intval($complete['languages'])]."'>".$complete['languages']."%</td>";
+		echo "<td class='row_style".($c%2)."' style='color:".$colorindex[intval($complete['menu_items'])]."'>".$complete['menu_items']."%</td>";
+		echo "<td class='row_style".($c%2)."' style='color:".$colorindex[intval($complete['app_descriptions'])]."'>".$complete['app_descriptions']."%</td>";
+		echo "<td class='row_style".($c%2)."' style='color:".$colorindex[intval($complete['overall'])]."'>".$complete['overall']."%</td>";
 		echo "<td class='row_style".($c%2)."'>".$text["language-$lang_code"]."</td>";
 		echo "</tr>\n";
 		$c++;
