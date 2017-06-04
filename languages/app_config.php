@@ -5,7 +5,7 @@
 		$apps[$x]['uuid'] = "23ecb350-b423-428d-9a8d-d617d27b30fe";
 		$apps[$x]['category'] = "System";
 		$apps[$x]['subcategory'] = "";
-		$apps[$x]['version'] = "3";
+		$apps[$x]['version'] = "3.1";
 		$apps[$x]['license'] = "Mozilla Public License 1.1";
 		$apps[$x]['url'] = "http://www.fusionpbx.com";
 		$apps[$x]['description']['en-us'] = "A tool to analyze languages used in the GUI following https://msdn.microsoft.com/en-gb/library/ee825488%28v=cs.20%29.aspx";
