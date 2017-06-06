@@ -121,58 +121,51 @@ require_once "resources/require.php";
 //select comparison
 	echo "<span><b>".$text['header-compare_languages']."</b><br/></span>\n";
 	echo "<form method='post' name='frm' action=''>\n";
-	echo "<table width='100%' border='0' cellpadding='0' cellspacing='0'>\n";
 
-	echo "<tr>\n";
-	echo "<td class='vncellreq' valign='top' align='left' nowrap>\n";
-	echo "	".$text['label-reference_language']."\n";
-	echo "</td>\n";
-	echo "<td class='vtable' align='left'>\n";
-	echo "<fieldset class='container'>";
+	echo "<table width='100%' border='0' cellpadding='0' cellspacing='0'>\n";
+	echo "	<tr>\n";
+	echo "	<td class='vncellreq' valign='top' align='left' nowrap='nowrap' rowspan='".(count($language->languages)+1)."'width='15%'>\n";
+	echo "		".$text['label-reference_language']."\n";
+	echo "	</td>\n";
+	echo "	<td class='vtable' align='left' width='35%'>\n";
+	echo "	".$text['description-reference_language']."\n";
+	echo "	</td>\n";
+	echo "	<td class='vncellreq' valign='top' align='left' nowrap='nowrap' rowspan='".(count($language->languages)+1)."'width='15%'>\n";
+	echo "		".$text['label-target_language']."\n";
+	echo "	</td>\n";
+	echo "	<td class='vtable' align='left' width='35%'>\n";
+	echo "	".$text['description-target_language']."\n";
+	echo "	</td>\n";
+	echo "	</tr>\n";
+	echo "	<tr>\n";
 	foreach($language->languages as $lang_code){
-		echo "<fieldset class='container'>";
-		echo "	<label class='radio' style='width:200px;'>";
-		echo "<input type='radio' name='reference_language' value='$lang_code' id='reference_language_$lang_code'";
+		echo "	<td class='vtable' align='left'>\n";
+		echo "		<label class='radio' style='padding-left:20px;margin:0;'>";
+		echo "	<input type='radio' name='reference_language' value='$lang_code' id='reference_language_$lang_code'";
 		if($lang_code == $reference_language)
 		{
 			echo " checked='checked'";
 		}
 		echo "/>";
-		echo "<img src='".PROJECT_PATH."/core/install/resources/images/flags/$lang_code.png' alt='$lang_code'/>&nbsp;".$text["language-$lang_code"];
-		echo "</label>\n";
-		echo "</fieldset>";
-	}
-	echo "</fieldset>";
-	echo "<br />".$text['description-reference_language']."\n";
-	echo "</td>\n";
-	echo "</tr>\n";
-
-	echo "<tr>\n";
-	echo "<td class='vncellreq' valign='top' align='left' nowrap>\n";
-	echo "	".$text['label-target_language']."\n";
-	echo "</td>\n";
-	echo "<td class='vtable' align='left'>\n";
-	echo "<fieldset class='container'>";
-	foreach($language->languages as $lang_code){
-		echo "<fieldset class='container'>";
-		echo "	<label class='radio' style='width:200px;'>";
-		echo "<input type='radio' name='target_language' value='$lang_code' id='target_language_$lang_code'";
+		echo "	<img src='".PROJECT_PATH."/core/install/resources/images/flags/$lang_code.png' alt='$lang_code'/>&nbsp;".$text["language-$lang_code"];
+		echo "	</label>\n";
+		echo "	</td>\n";
+		echo "	<td class='vtable' align='left'>\n";
+		echo "	<label class='radio' style='padding-left:20px;margin:0;'>";
+		echo "	<input type='radio' name='target_language' value='$lang_code' id='target_language_$lang_code'";
 		if($lang_code == $target_language)
 		{
 			echo " checked='checked'";
 		}
 		echo "/>";
-		echo "<img src='".PROJECT_PATH."/core/install/resources/images/flags/$lang_code.png' alt='$lang_code'/>&nbsp;".$text["language-$lang_code"];
-		echo "</label>\n";
-		echo "</fieldset>";
+		echo "	<img src='".PROJECT_PATH."/core/install/resources/images/flags/$lang_code.png' alt='$lang_code'/>&nbsp;".$text["language-$lang_code"];
+		echo "	</label>\n";
+		echo "	</td>\n";
+		echo "	</tr>\n";
 	}
-	echo "</fieldset>";
-	echo "<br />".$text['description-app_target']."\n";
-	echo "</td>\n";
-	echo "</tr>\n";
 	echo "<tr>\n";
 	echo "<td class='vncellreq' valign='top' align='left' nowrap>\n";
-	echo "	".$text['label-application']."\n";
+	echo "	".$text['label-app_target']."\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
 	echo "	<select name='app_target' id='app_target' class='formfld'>\n";
