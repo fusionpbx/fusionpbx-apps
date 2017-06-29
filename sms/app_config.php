@@ -42,9 +42,10 @@
 
 
 	//schema details
-		$y = 0; //table array index
-		$z = 0; //field array index
-		$apps[$x]['db'][$y]['table'] = "v_sms_messages";
+		$y = 0;
+		$apps[$x]['db'][$y]['table']['name'] = "v_sms_messages";
+		$apps[$x]['db'][$y]['table']['parent'] = "";
+		$z=0;
 		$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = "sms_message_uuid";
 		$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'] = "sms_message_uuid";
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = "uuid";
@@ -99,9 +100,10 @@
 		$z++;
 
 
-		$y = 1; //table array index
-		$z = 0; //field array index
-		$apps[$x]['db'][$y]['table'] = "v_sms_destinations";
+		$y++;
+		$apps[$x]['db'][$y]['table']['name'] = "v_sms_destinations";
+		$apps[$x]['db'][$y]['table']['parent'] = "";
+		$z=0;
 		$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = "sms_destination_uuid";
 		$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'] = "sms_destination_uuid";
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = "uuid";
