@@ -1,4 +1,4 @@
-This all adds a one-click install for both the Desktop and Mobile Zoiper APPs in the User Portal. The page is accessible by end users.
+This adds a one-click install for both the Desktop and Mobile Zoiper APPs in the User Portal. The page is accessible by end users.
 
 I used the FREE Zoiper OEM account
 
