@@ -201,13 +201,20 @@
 	echo "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n";
 	echo "  <tr>\n";
 	echo "	<td align='left' width='100%'>\n";
-	echo "		<b>".$text['header-domain_counts']." (".$numeric_domain_counts.")</b><br>\n";
+	if (permission_exists('domain_counts_view_all')) {
+		echo "		<b>".$text['header-domain_counts']."  (".$numeric_domain_counts.")</b><br>\n";
+	}
+	if (permission_exists('domain_counts_view_domain')) {
+		echo "		<b>".$text['header-domain_counts']."</b><br>\n";
+	}	
 	echo "	</td>\n";
 	echo "		<td align='right' width='100%' style='vertical-align: top;'>";
 	echo "		<form method='get' action=''>\n";
 	echo "			<td style='vertical-align: top; text-align: right; white-space: nowrap;'>\n";
-	echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".$search."'>";
-	echo "				<input type='submit' class='btn' name='submit' value='".$text['button-search']."'>";
+	if (permission_exists('domain_counts_view_all')) {
+		echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".$search."'>";
+		echo "				<input type='submit' class='btn' name='submit' value='".$text['button-search']."'>";
+	}
 	echo "				<input type='button' class='btn' value='".$text['button-export']."' ";
 	echo "onclick=\"window.location='domain_counts.php?";
 	if (strlen($_SERVER["QUERY_STRING"]) > 0) { 
@@ -251,22 +258,23 @@
 	echo "</tr>\n";
 
 	if (isset($domain_counts)) foreach ($domain_counts as $key => $row) {
-		echo "	<td valign='top' class='".$row_style[$c]."'>".$row['domain_name']."</td>\n";
-		echo "	<td valign='top' class='".$row_style[$c]."'>".$row['extension_count']."&nbsp;</td>\n";
-		echo "	<td valign='top' class='".$row_style[$c]."'>".$row['user_count']."&nbsp;</td>\n";
-		echo "	<td valign='top' class='".$row_style[$c]."'>".$row['device_count']."&nbsp;</td>\n";
-		echo "	<td valign='top' class='".$row_style[$c]."'>".$row['destination_count']."&nbsp;</td>\n";
-		echo "	<td valign='top' class='".$row_style[$c]."'>".$row['fax_count']."&nbsp;</td>\n";
-		echo "	<td valign='top' class='".$row_style[$c]."'>".$row['ivr_count']."&nbsp;</td>\n";
-		echo "	<td valign='top' class='".$row_style[$c]."'>".$row['voicemail_count']."&nbsp;</td>\n";
-		echo "	<td valign='top' class='".$row_style[$c]."'>".$row['ring_group_count']."&nbsp;</td>\n";
-		echo "	<td valign='top' class='".$row_style[$c]."'>".$row['cc_queue_count']."&nbsp;</td>\n";
-		echo "	<td valign='top' class='".$row_style[$c]."'>".$row['contact_count']."&nbsp;</td>\n";
-		echo "	<td valign='top' class='".$row_style[$c]."'><a href='domain_counts_accountcodes.php?id=".$row['domain_uuid']."'>".$row['accountcode_count']."&nbsp;</td>\n";		
 		
-		
-		echo "</tr>\n";
-		$c = ($c==0) ? 1 : 0;
+		if (permission_exists('domain_counts_view_all') || (permission_exists('domain_counts_view_domain') && $_SESSION['domain_name'] == $row['domain_name']) ) {
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['domain_name']."</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['extension_count']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['user_count']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['device_count']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['destination_count']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['fax_count']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['ivr_count']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['voicemail_count']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['ring_group_count']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['cc_queue_count']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['contact_count']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'><a href='domain_counts_accountcodes.php?id=".$row['domain_uuid']."'>".$row['accountcode_count']."&nbsp;</td>\n";		
+			echo "</tr>\n";
+			$c = ($c==0) ? 1 : 0;
+		}
 	}
 
 	echo "</table>";
