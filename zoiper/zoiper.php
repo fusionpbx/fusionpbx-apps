@@ -47,6 +47,11 @@
 	$order_by = check_str($_GET["order_by"]);
 	$order = check_str($_GET["order"]);
 
+//get the SIP port if set. If not default will be 5060 in zoiper app
+	if (isset($_SESSION['zoiper']['sip_port']['text'])) {
+		$zoiper_sip_port = ":" . $_SESSION['zoiper']['sip_port']['text'];
+	}
+
 //handle search term
 	$search = check_str($_GET["search"]);
 	if (strlen($search) > 0) {
@@ -173,8 +178,8 @@
 
 	if ($result_count > 0) {
 		foreach($result as $row) {
-			$tr_url = "https://www.zoiper.com/en/page/" . $_SESSION['zoiper']['page_id']['text'] . "?u=" . $row['extension'] . "&h=" . $row['user_context'] . "&p=" . $row['password'] . "&o=&t=&x=&a=" . $row['extension'] . "&tr=";
-			$qr_img = "https://oem.zoiper.com/qr.php?provider_id=" . $_SESSION['zoiper']['mobile_id']['text'] . "&u=" . $row['extension'] . "&h=" . $row['user_context'] . "&p=" . $row['password'] . "&o=&t=&x=&a=" . $row['extension'] . "&tr=";
+			$tr_url = "https://www.zoiper.com/en/page/" . $_SESSION['zoiper']['page_id']['text'] . "?u=" . $row['extension'] . "&h=" . $row['user_context'] . rawurlencode($zoiper_sip_port) . "&p=" . $row['password'] . "&o=&t=&x=&a=" . $row['extension'] . "&tr=";
+			$qr_img = "https://oem.zoiper.com/qr.php?provider_id=" . $_SESSION['zoiper']['mobile_id']['text'] . "&u=" . $row['extension'] . "&h=" . $row['user_context'] . rawurlencode($zoiper_sip_port) . "&p=" . $row['password'] . "&o=&t=&x=&a=" . $row['extension'] . "&tr=";
 			$tr_link = (permission_exists('zoiper')) ? "href='".$tr_url."'" : null;
 			echo "<tr>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['extension']."</td>\n";
