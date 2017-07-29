@@ -16,7 +16,12 @@
 		$apps[$x]['permissions'][$y]['name'] = "domain_counts_view";
 		$apps[$x]['permissions'][$y]['menu']['uuid'] = "8db32ec2-85dc-4782-a7b1-d0caf8a4e44e";
 		$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
+		$apps[$x]['permissions'][$y]['groups'][] = "admin";
 		$y++;		
+		$apps[$x]['permissions'][$y]['name'] = "domain_counts_view_domain";
+		$apps[$x]['permissions'][$y]['groups'][] = "admin";
+		$y++;
+		$apps[$x]['permissions'][$y]['name'] = "domain_counts_view_all";
+		$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
+		$y++;			
 		
-
-?>

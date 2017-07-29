@@ -5,7 +5,7 @@ $text['header-domain_counts']['en-us'] = "Domain Counts";
 
 $text['header-domain_counts_accountcodes']['en-us'] = "Accountcodes";
 
-$text['description-domain_counts']['en-us'] = "Displays the number of items from all domains";
+$text['description-domain_counts']['en-us'] = "Displays the number of items for each domain";
 
 $text['description-domain_counts_accountcodes']['en-us'] = "Displays the number of extensions assigned to each domain accountcode.";
 
