@@ -40,8 +40,12 @@
 		$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
 		$y++;
 
-
 	//schema details
+		$y=0;
+		$apps[$x]['db'][$y]['table']['name'] = "v_call_center_agents";
+		$apps[$x]['db'][$y]['table']['parent'] = "";
+		$z=0;
+
 		$y = 0; //table array index
 		$z = 0; //field array index
 		$apps[$x]['db'][$y]['table'] = "v_sms_messages";
