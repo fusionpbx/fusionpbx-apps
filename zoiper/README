@@ -37,7 +37,7 @@ Enabled: True
 Save
 
 Category: zoiper
-Subcategory: mobile_id
+Subcategory: provider_id
 Type: text
 Value: MYMOBILEPAGEID
 Enabled: True
