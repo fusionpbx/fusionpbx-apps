@@ -153,7 +153,7 @@
 		$y=1;
 		$apps[$x]['db'][$y]['table']['name'] = "v_invoice_items";
 		$apps[$x]['db'][$y]['table']['parent'] = "v_invoices";
-		$z=0
+		$z=0;
 		$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = 'id';
 		$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'] = 'invoice_item_id';
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = 'serial';
