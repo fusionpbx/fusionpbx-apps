@@ -201,74 +201,76 @@ end
 				end
 		end
 		
-		sql = "SELECT default_setting_value FROM v_default_settings ";
-		sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_access_key' and default_setting_enabled = 'true'";
-		local params = {carrier = carrier}
+		if (carrier ~= nil) then
+			sql = "SELECT default_setting_value FROM v_default_settings ";
+			sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_access_key' and default_setting_enabled = 'true'";
+			local params = {carrier = carrier}
 
-		if (debug["sql"]) then
-			freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
-		end
-		status = dbh:query(sql, function(rows)
-			access_key = rows["default_setting_value"];
-		end);
+			if (debug["sql"]) then
+				freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
+			end
+			status = dbh:query(sql, function(rows)
+				access_key = rows["default_setting_value"];
+			end);
 
-		sql = "SELECT default_setting_value FROM v_default_settings ";
-		sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_secret_key' and default_setting_enabled = 'true'";
+			sql = "SELECT default_setting_value FROM v_default_settings ";
+			sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_secret_key' and default_setting_enabled = 'true'";
 
-		if (debug["sql"]) then
-			freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
-		end
-		status = dbh:query(sql, function(rows)
-			secret_key = rows["default_setting_value"];
-		end);
+			if (debug["sql"]) then
+				freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
+			end
+			status = dbh:query(sql, function(rows)
+				secret_key = rows["default_setting_value"];
+			end);
 
-		sql = "SELECT default_setting_value FROM v_default_settings ";
-		sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_api_url' and default_setting_enabled = 'true'";
-		if (debug["sql"]) then
-			freeswitch.consoleLog("notice", "[sms] SQL: " .. sql .. "\n");
-		end
-		status = dbh:query(sql, function(rows)
-			api_url = rows["default_setting_value"];
-		end);
+			sql = "SELECT default_setting_value FROM v_default_settings ";
+			sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_api_url' and default_setting_enabled = 'true'";
+			if (debug["sql"]) then
+				freeswitch.consoleLog("notice", "[sms] SQL: " .. sql .. "\n");
+			end
+			status = dbh:query(sql, function(rows)
+				api_url = rows["default_setting_value"];
+			end);
 
-		if (carrier == "flowroute") then
-			cmd = "curl -u ".. access_key ..":" .. secret_key .. " -H \"Content-Type: application/json\" -X POST -d '{\"to\":\"" .. to .. "\",\"from\":\"" .. outbound_caller_id_number .."\",\"body\":\"" .. body .. "\"}' " .. api_url;
-		elseif (carrier == "twilio") then
-			if to:len() < 11 then
-				to = "1" .. to;
+			if (carrier == "flowroute") then
+				cmd = "curl -u ".. access_key ..":" .. secret_key .. " -H \"Content-Type: application/json\" -X POST -d '{\"to\":\"" .. to .. "\",\"from\":\"" .. outbound_caller_id_number .."\",\"body\":\"" .. body .. "\"}' " .. api_url;
+			elseif (carrier == "twilio") then
+				if to:len() < 11 then
+					to = "1" .. to;
+				end
+				if outbound_caller_id_number:len() < 11 then
+					outbound_caller_id_number = "1" .. outbound_caller_id_number;
+				end
+			-- Can be either +1NANNNNXXXX or NANNNNXXXX
+				cmd ="curl -X POST '" .. api_url .."' --data-urlencode 'To=+" .. to .."' --data-urlencode 'From=+" .. outbound_caller_id_number .. "' --data-urlencode 'Body=" .. body .. "' -u ".. access_key ..":" .. secret_key .. " --insecure";
+			elseif (carrier == "teli") then
+				cmd ="curl -X POST '" .. api_url .."' --data-urlencode 'destination=" .. to .."' --data-urlencode 'source=" .. outbound_caller_id_number .. "' --data-urlencode 'message=" .. body .. "' --data-urlencode 'token=" .. access_key .. "' --insecure";
+			elseif (carrier == "plivo") then
+				if to:len() <11 then
+					to = "1"..to;
+				end
+				cmd="curl -i --user " .. access_key .. ":" .. secret_key .. " -H \"Content-Type: application/json\" -d '{\"src\": \"" .. outbound_caller_id_number .. "\",\"dst\": \"" .. to .."\", \"text\": \"" .. body .. "\"}' " .. api_url;
+			elseif (carrier == "bandwidth") then
+				if to:len() <11 then
+					to = "1"..to;
+				end
+				if outbound_caller_id_number:len() < 11 then
+					outbound_caller_id_number = "1" .. outbound_caller_id_number;
+				end
+				cmd="curl -v -X POST " .. api_url .." -u " .. access_key .. ":" .. secret_key .. " -H \"Content-type: application/json\" -d '{\"from\": \"+" .. outbound_caller_id_number .. "\", \"to\": \"+" .. to .."\", \"text\": \"" .. body .."\"}'"		
+
 			end
-			if outbound_caller_id_number:len() < 11 then
-				outbound_caller_id_number = "1" .. outbound_caller_id_number;
+			if (debug["info"]) then
+				freeswitch.consoleLog("notice", "[sms] CMD: " .. cmd .. "\n");
 			end
-		-- Can be either +1NANNNNXXXX or NANNNNXXXX
-			cmd ="curl -X POST '" .. api_url .."' --data-urlencode 'To=+" .. to .."' --data-urlencode 'From=+" .. outbound_caller_id_number .. "' --data-urlencode 'Body=" .. body .. "' -u ".. access_key ..":" .. secret_key .. " --insecure";
-		elseif (carrier == "teli") then
-			cmd ="curl -X POST '" .. api_url .."' --data-urlencode 'destination=" .. to .."' --data-urlencode 'source=" .. outbound_caller_id_number .. "' --data-urlencode 'message=" .. body .. "' --data-urlencode 'token=" .. access_key .. "' --insecure";
-		elseif (carrier == "plivo") then
-			if to:len() <11 then
-				to = "1"..to;
+			local handle = io.popen(cmd)
+			local result = handle:read("*a")
+			handle:close()
+			if (debug["info"]) then
+				freeswitch.consoleLog("notice", "[sms] CURL Returns: " .. result .. "\n");
 			end
-			cmd="curl -i --user " .. access_key .. ":" .. secret_key .. " -H \"Content-Type: application/json\" -d '{\"src\": \"" .. outbound_caller_id_number .. "\",\"dst\": \"" .. to .."\", \"text\": \"" .. body .. "\"}' " .. api_url;
-		elseif (carrier == "bandwidth") then
-			if to:len() <11 then
-				to = "1"..to;
-			end
-			if outbound_caller_id_number:len() < 11 then
-				outbound_caller_id_number = "1" .. outbound_caller_id_number;
-			end
-			cmd="curl -v -X POST " .. api_url .." -u " .. access_key .. ":" .. secret_key .. " -H \"Content-type: application/json\" -d '{\"from\": \"+" .. outbound_caller_id_number .. "\", \"to\": \"+" .. to .."\", \"text\": \"" .. body .."\"}'"		
-		
+	--		os.execute(cmd)
 		end
-		if (debug["info"]) then
-			freeswitch.consoleLog("notice", "[sms] CMD: " .. cmd .. "\n");
-		end
-		local handle = io.popen(cmd)
-		local result = handle:read("*a")
-		handle:close()
-		if (debug["info"]) then
-			freeswitch.consoleLog("notice", "[sms] CURL Returns: " .. result .. "\n");
-		end
---		os.execute(cmd)
 
 	end
 	
@@ -289,12 +291,12 @@ end
 				end);
 			end
 	end
-	if (extension_uuid == nil) then
+	if (extension_uuid == nil and extension ~= nil) then
 		--get the extension_uuid using the domain_uuid and the extension number
 			if (domain_uuid ~= nil) then
 				sql = "SELECT extension_uuid FROM v_extensions ";
 				sql = sql .. "WHERE domain_uuid = :domain_uuid and extension = :extension";
-				local params = {domain_uuid = domain_uuid, extension_uuid = extension_uuid}
+				local params = {domain_uuid = domain_uuid, extension = extension}
 
 				if (debug["sql"]) then
 					freeswitch.consoleLog("notice", "[sms] SQL EXTENSION: "..sql.."; params:" .. json.encode(params) .. "\n");
