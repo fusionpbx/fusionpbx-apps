@@ -1,6 +1,6 @@
 --	sms.lua
 --	Part of FusionPBX
---	Copyright (C) 2010 Mark J Crane <markjcrane@fusionpbx.com>
+--	Copyright (C) 2010-2017 Mark J Crane <markjcrane@fusionpbx.com>
 --	All rights reserved.
 --
 --	Redistribution and use in source and binary forms, with or without
@@ -41,12 +41,13 @@
 		json = require "resources.functions.lunajson"
 	end
 
-local function urlencode(s)
-	s = string.gsub(s, "([^%w])",function(c)
-		return string.format("%%%02X", string.byte(c))
-	end)
-	return s
-end
+--define the urlencode function
+	local function urlencode(s)
+		s = string.gsub(s, "([^%w])",function(c)
+			return string.format("%%%02X", string.byte(c))
+		end)
+		return s
+	end
 
 --define uuid function
 	local random = math.random;
@@ -269,11 +270,9 @@ end
 			freeswitch.consoleLog("notice", "[sms] CURL Returns: " .. result .. "\n");
 		end
 --		os.execute(cmd)
-
 	end
 	
---write message to DB
-
+--write message to the database
 	if (domain_uuid == nil) then
 		--get the domain_uuid using the domain name required for multi-tenant
 			if (domain_name ~= nil) then
@@ -291,10 +290,10 @@ end
 	end
 	if (extension_uuid == nil) then
 		--get the extension_uuid using the domain_uuid and the extension number
-			if (domain_uuid ~= nil) then
+			if (domain_uuid ~= nil and extension ~= nil) then
 				sql = "SELECT extension_uuid FROM v_extensions ";
 				sql = sql .. "WHERE domain_uuid = :domain_uuid and extension = :extension";
-				local params = {domain_uuid = domain_uuid, extension_uuid = extension_uuid}
+				local params = {domain_uuid = domain_uuid, extension = extension}
 
 				if (debug["sql"]) then
 					freeswitch.consoleLog("notice", "[sms] SQL EXTENSION: "..sql.."; params:" .. json.encode(params) .. "\n");
@@ -307,7 +306,6 @@ end
 	if (carrier == nil) then
 		carrier = '';
 	end
-
 
 	if (extension_uuid ~= nil) then
 		sql = "insert into v_sms_messages";
