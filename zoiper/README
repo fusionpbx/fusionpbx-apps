@@ -43,6 +43,13 @@ Value: MYMOBILEPAGEID
 Enabled: True
 Save
 
+Category: zoiper
+Subcategory: out_proxy
+Type: text
+Value: OUTBOUND PROXY SETTING
+Enabled: True
+Save
+
 Then go to Apps -> Zoiper
 Superadmin will see a list of ALL USER EXTENSIONS
 Users will only see the extensions assigned to them.
