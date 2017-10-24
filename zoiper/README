@@ -44,7 +44,7 @@ Enabled: True
 Save
 
 Category: zoiper
-Subcategory: out_proxy
+Subcategory: outbound_proxy
 Type: text
 Value: OUTBOUND PROXY SETTING
 Enabled: True
