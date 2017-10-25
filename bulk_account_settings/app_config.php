@@ -11,7 +11,6 @@
 		$apps[$x]['description']['en-us'] = "Bulk Account Settings";
 
 	//permission details
-
 		$y=0;
 		$apps[$x]['permissions'][$y]['name'] = "bulk_account_settings";
 		$apps[$x]['permissions'][$y]['menu']['uuid'] = "74341982-313c-4c42-bf4a-533be4f50a4a";
@@ -31,4 +30,5 @@
 		$y++;		
 		$apps[$x]['permissions'][$y]['name'] = "bulk_account_settings_view";
 		$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
+
 ?>
