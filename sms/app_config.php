@@ -97,9 +97,10 @@
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
 		$z++;
 
-		$y = 1; //table array index
-		$z = 0; //field array index
-		$apps[$x]['db'][$y]['table'] = "v_sms_destinations";
+		$y=1;
+		$apps[$x]['db'][$y]['table']['name'] = "v_sms_destinations";
+		$apps[$x]['db'][$y]['table']['parent'] = "";
+		$z=0;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = "sms_destination_uuid";
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = "uuid";
 		$apps[$x]['db'][$y]['fields'][$z]['type']['sqlite'] = "text";
