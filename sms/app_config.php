@@ -98,7 +98,6 @@
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
 		$z++;
 
-
 		$y = 1; //table array index
 		$z = 0; //field array index
 		$apps[$x]['db'][$y]['table'] = "v_sms_destinations";
