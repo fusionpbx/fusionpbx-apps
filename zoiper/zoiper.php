@@ -178,8 +178,8 @@
 
 	if ($result_count > 0) {
 		foreach($result as $row) {
-			$tr_url = "https://www.zoiper.com/en/page/" . $_SESSION['zoiper']['page_id']['text'] . "?u=" . $row['extension'] . "&h=" . $row['user_context'] . rawurlencode($zoiper_sip_port) . "&p=" . $row['password'] . "&o=&t=&x=&a=" . $row['extension'] . "&tr=";
-			$qr_img = "https://oem.zoiper.com/qr.php?provider_id=" . $_SESSION['zoiper']['provider_id']['text'] . "&u=" . $row['extension'] . "&h=" . $row['user_context'] . rawurlencode($zoiper_sip_port) . "&p=" . $row['password'] . "&o=&t=&x=&a=" . $row['extension'] . "&tr=";
+			$tr_url = "https://www.zoiper.com/en/page/" . $_SESSION['zoiper']['page_id']['text'] . "?u=" . $row['extension'] . "&h=" . $row['user_context'] . rawurlencode($zoiper_sip_port) . "&p=" . $row['password'] . "&o=" . $_SESSION['zoiper']['outbound_proxy']['text'] . "&t=&x=&a=" . $row['extension'] . "&tr=";
+			$qr_img = "https://oem.zoiper.com/qr.php?provider_id=" . $_SESSION['zoiper']['provider_id']['text'] . "&u=" . $row['extension'] . "&h=" . $row['user_context'] . rawurlencode($zoiper_sip_port) . "&p=" . $row['password'] . "&o=" . $_SESSION['zoiper']['outbound_proxy']['text'] . "&t=&x=&a=" . $row['extension'] . "&tr=";
 			$tr_link = (permission_exists('zoiper')) ? "href='".$tr_url."'" : null;
 			echo "<tr>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['extension']."</td>\n";
