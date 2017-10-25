@@ -7,5 +7,4 @@ $apps[$x]['menu'][0]['category'] = "internal";
 $apps[$x]['menu'][0]['path'] = "/app/bulk_account_settings/bulk_account_settings.php";
 $apps[$x]['menu'][0]['groups'][] = "superadmin";
 
-
 ?>
