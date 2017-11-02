@@ -129,9 +129,9 @@
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'text';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'purchase order number';
 		$z++;
-		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'invoice_currency_type';
+		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'invoice_currency';
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'text';
-		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'Enter invoice currency type.';
+		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'Enter invoice currency.';
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'invoice_notes';
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'text';
