@@ -17,7 +17,7 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2016
+	Portions created by the Initial Developer are Copyright (C) 2008-2017
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
@@ -59,6 +59,7 @@
 		$contact_uuid_from = check_str($_POST["contact_uuid_from"]);
 		$contact_uuid_to = check_str($_POST["contact_uuid_to"]);
 		$invoice_purchase_order_number = check_str($_POST["invoice_purchase_order_number"]);
+		$invoice_currency = check_str($_POST["invoice_currency"]);
 		$invoice_notes = check_str($_POST["invoice_notes"]);
 	}
 
@@ -103,6 +104,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				$sql .= "contact_uuid_from, ";
 				$sql .= "contact_uuid_to, ";
 				$sql .= "invoice_purchase_order_number, ";
+				$sql .= "invoice_currency, ";
 				$sql .= "invoice_notes, ";
 				$sql .= "invoice_date ";
 				$sql .= ")";
@@ -115,6 +117,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				$sql .= "'$contact_uuid_from', ";
 				$sql .= "'$contact_uuid_to', ";
 				$sql .= "'$invoice_purchase_order_number', ";
+				$sql .= "'$invoice_currency', ";
 				$sql .= "'$invoice_notes', ";
 				$sql .= "now() ";
 				$sql .= ")";
@@ -148,6 +151,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 				$sql .= "contact_uuid_from = '$contact_uuid_from', ";
 				$sql .= "contact_uuid_to = '$contact_uuid_to', ";
 				$sql .= "invoice_purchase_order_number = '$invoice_purchase_order_number', ";
+				$sql .= "invoice_currency = '$invoice_currency', ";
 				$sql .= "invoice_paid = $invoice_paid, ";
 				$sql .= "invoice_paid_date = $invoice_paid_date, ";
 				$sql .= "invoice_paid_method = $invoice_paid_method, ";
@@ -187,6 +191,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			$contact_uuid_from = $row["contact_uuid_from"];
 			$contact_uuid_to = $row["contact_uuid_to"];
 			$invoice_purchase_order_number = $row["invoice_purchase_order_number"];
+			$invoice_currency = $row["invoice_currency"];
 			$invoice_notes = $row["invoice_notes"];
 			break; //limit to 1 row
 		}
@@ -197,6 +202,11 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			$tmp = explode(' ',$invoice_paid_date);
 			$invoice_paid_date = $tmp[0];
 		}
+	}
+
+//set the default currency
+	if (strlen($invoice_currency) == 0) {
+		$invoice_currency = 'USD';
 	}
 
 //get the list of contacts
@@ -348,6 +358,17 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "  <input class='formfld' type='text' name='invoice_purchase_order_number' maxlength='255' value='$invoice_purchase_order_number'>\n";
 	echo "<br />\n";
 	echo $text['description-invoice_purchase_order_number']."\n";
+	echo "</td>\n";
+	echo "</tr>\n";
+
+	echo "<tr>\n";
+	echo "<td class='vncell' valign='top' align='left' nowrap='nowrap'>\n";
+	echo "	".$text['label-invoice_currency']."\n";
+	echo "</td>\n";
+	echo "<td class='vtable' align='left'>\n";
+	echo "  <input class='formfld' type='text' name='invoice_currency' maxlength='255' value='$invoice_currency'>\n";
+	echo "<br />\n";
+	echo $text['description-invoice_currency']."\n";
 	echo "</td>\n";
 	echo "</tr>\n";
 
