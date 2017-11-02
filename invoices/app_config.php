@@ -129,6 +129,10 @@
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'text';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'purchase order number';
 		$z++;
+		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'invoice_currency_type';
+		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'text';
+		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'Enter invoice currency type.';
+		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = 'invoice_notes';
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = 'text';
 		$apps[$x]['db'][$y]['fields'][$z]['description'] = 'Enter invoice notes.';
@@ -150,7 +154,8 @@
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = 'Enter a payment method reference number.';
 		$z++;
 
-		$y=1;
+
+		$y++;
 		$apps[$x]['db'][$y]['table']['name'] = "v_invoice_items";
 		$apps[$x]['db'][$y]['table']['parent'] = "v_invoices";
 		$z=0;
