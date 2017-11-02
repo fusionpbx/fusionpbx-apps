@@ -17,22 +17,26 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2016
+	Portions created by the Initial Developer are Copyright (C) 2008-2017
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
 	Mark J Crane <markjcrane@fusionpbx.com>
 */
-require_once "root.php";
-require_once "resources/require.php";
-require_once "resources/check_auth.php";
-if (if_group("admin") || if_group("superadmin")) {
-	//access granted
-}
-else {
-	echo "access denied";
-	exit;
-}
+
+//includes
+	require_once "root.php";
+	require_once "resources/require.php";
+	require_once "resources/check_auth.php";
+
+//check permissions
+	if (if_group("admin") || if_group("superadmin")) {
+		//access granted
+	}
+	else {
+		echo "access denied";
+		exit;
+	}
 
 //add multi-lingual support
 	$language = new text;
@@ -58,8 +62,15 @@ else {
 		$contact_uuid_from = $row['contact_uuid_from'];
 		$contact_uuid_to = $row['contact_uuid_to'];
 		$invoice_date = $row['invoice_date'];
+		$invoice_purchase_order_number = $row['invoice_purchase_order_number'];
+		$invoice_currency = $row['invoice_currency'];
 		$invoice_note = $row['invoice_note'];
 		unset ($prep_statement);
+	}
+
+//set the default currency
+	if (strlen($invoice_currency) == 0) {
+		$invoice_currency = 'USD';
 	}
 
 //prepare the invoice date
@@ -205,6 +216,12 @@ else {
 	$pdf->Cell(150,5,'');
 	$pdf->Cell(40,5,$text['label-invoice_number'].' '.$invoice_number);
 	$pdf->Ln();
+	if (strlen($invoice_purchase_order_number) > 0) {
+		$pdf->Cell(150,5,'');
+		$pdf->Cell(40,5,$text['label-invoice_purchase_order_number'].' '.$invoice_purchase_order_number);
+		$pdf->Ln();
+	}
+
 	$pdf->Ln();
 	$pdf->Ln();
 
@@ -311,7 +328,7 @@ else {
 	$pdf->Cell($w[0],6,'','',0,'L','');
 	$pdf->Cell($w[1],6,'','',0,'L','');
 	$pdf->Cell($w[2],6,'','',0,'R','');
-	$pdf->Cell($w[3],6,$text['label-invoice_total'].' $'.number_format($total,2).' USD','',0,'R','');
+	$pdf->Cell($w[3],6,$text['label-invoice_total'].' $'.number_format($total,2).' '.$invoice_currency,'',0,'R','');
 	$pdf->Ln();
 
 	if (strlen($invoice_note) > 0) {
