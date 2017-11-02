@@ -37,6 +37,15 @@
 		$text['description-invoice_number']['en-us'] = 'Enter the invoice number.';
 		$text['description-invoice_number']['pt-pt'] = '';
 
+		$text['label-invoice_purchase_order_number']['en-us'] = 'Purchase Order';
+		$text['label-invoice_purchase_order_number']['pt-pt'] = '';
+
+		$text['description-invoice_purchase_order_number']['en-us'] = 'Enter the purchase order number.';
+		$text['description-invoice_purchase_order_number']['pt-pt'] = '';
+
+		$text['label-invoice_currency']['en-us'] = 'Currency';
+		$text['label-invoice_currency']['pt-pt'] = '';
+
 		$text['label-invoice_type']['en-us'] = 'Type';
 		$text['label-invoice_type']['pt-pt'] = '';
 
