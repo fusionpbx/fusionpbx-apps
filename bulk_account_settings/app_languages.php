@@ -661,6 +661,17 @@ $text['label-toll_allow']['uk'] = "Toll Allow";
 $text['label-toll_allow']['de-at'] = "Toll Allow";
 $text['label-toll_allow']['it-it'] = "Toll Allow";
 
+$text['label-sip_force_expires']['en-us'] = "SIP Force Expires";
+$text['label-sip_force_expires']['es-cl'] = "SIP Force Expires";
+$text['label-sip_force_expires']['pt-pt'] = "SIP Force Expires";
+$text['label-sip_force_expires']['fr-fr'] = "SIP Force Expires";
+$text['label-sip_force_expires']['pt-br'] = "SIP Force Expires";
+$text['label-sip_force_expires']['pl'] = "SIP Force Expires";
+$text['label-sip_force_expires']['sv-se'] = "SIP Force Expires";
+$text['label-sip_force_expires']['uk'] = "SIP Force Expires";
+$text['label-sip_force_expires']['de-at'] = "SIP Force Expires";
+$text['label-sip_force_expires']['it-it'] = "SIP Force Expires";
+
 $text['label-username']['en-us'] = "Username";
 $text['label-username']['es-cl'] = "Username";
 $text['label-username']['pt-pt'] = "Username";
