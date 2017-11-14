@@ -201,7 +201,12 @@
 		else {
 			echo "    <option value='toll_allow'>".$text['label-toll_allow']."</option>\n";
 		}
-
+		if ($option_selected == "sip_force_expires") {
+			echo "    <option value='sip_force_expires' selected='selected'>".$text['label-sip_force_expires']."</option>\n";
+		}
+		else {
+			echo "    <option value='sip_force_expires'>".$text['label-sip_force_expires']."</option>\n";
+		}
 		echo "    </select>\n";
 		echo "    </form>\n";
 		echo "<br />\n";
@@ -239,7 +244,7 @@
 		echo "<table width='auto' border='0' cellpadding='0' cellspacing='0'>\n";
 		echo "<tr>\n";
 		//options with a free form input
-		if($option_selected == 'accountcode' || $option_selected == 'call_group' || $option_selected == 'call_timeout' || $option_selected == 'emergency_caller_id_name' || $option_selected == 'emergency_caller_id_number' || $option_selected == 'limit_max' || $option_selected == 'outbound_caller_id_name' || $option_selected == 'outbound_caller_id_number' || $option_selected == 'toll_allow') {
+		if($option_selected == 'accountcode' || $option_selected == 'call_group' || $option_selected == 'call_timeout' || $option_selected == 'emergency_caller_id_name' || $option_selected == 'emergency_caller_id_number' || $option_selected == 'limit_max' || $option_selected == 'outbound_caller_id_name' || $option_selected == 'outbound_caller_id_number' || $option_selected == 'toll_allow' || $option_selected == 'sip_force_expires') {
 			echo "<td class='vtable' align='left'>\n";
 			echo "    <input class='formfld' type='text' name='new_setting' maxlength='255' value=\"$new_setting\">\n";
 			echo "<br />\n";
