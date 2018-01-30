@@ -9,6 +9,7 @@ $text['button-devices']['sv-se'] = "Devices";
 $text['button-devices']['uk'] = "Devices";
 $text['button-devices']['de-at'] = "Devices";
 $text['button-devices']['it-it'] = "Devices";
+$text['button-devices']['ru-ru'] = "Устройства";
 
 $text['button-extensions']['en-us'] = "Extensions";
 $text['button-extensions']['es-cl'] = "Extensions";
@@ -20,6 +21,7 @@ $text['button-extensions']['sv-se'] = "Extensions";
 $text['button-extensions']['uk'] = "Extensions";
 $text['button-extensions']['de-at'] = "Extensions";
 $text['button-extensions']['it-it'] = "Extensions";
+$text['button-extensions']['ru-ru'] = "Extensions";
 
 $text['button-users']['en-us'] = "Users";
 $text['button-users']['es-cl'] = "Users";
@@ -31,6 +33,7 @@ $text['button-users']['sv-se'] = "Users";
 $text['button-users']['uk'] = "Users";
 $text['button-users']['de-at'] = "Users";
 $text['button-users']['it-it'] = "Users";
+$text['button-users']['ru-ru'] = "Пользователи";
 
 $text['button-voicemails']['en-us'] = "Voicemails";
 $text['button-voicemails']['es-cl'] = "Voicemails";
@@ -42,6 +45,7 @@ $text['button-voicemails']['sv-se'] = "Voicemails";
 $text['button-voicemails']['uk'] = "Voicemails";
 $text['button-voicemails']['de-at'] = "Voicemails";
 $text['button-voicemails']['it-it'] = "Voicemails";
+$text['button-voicemails']['ru-ru'] = "Голосовые сообщения";
 
 $text['button-call_routing']['en-us'] = "Call Routing";
 $text['button-call_routing']['es-cl'] = "Call Routing";
@@ -53,6 +57,7 @@ $text['button-call_routing']['sv-se'] = "Call Routing";
 $text['button-call_routing']['uk'] = "Call Routing";
 $text['button-call_routing']['de-at'] = "Call Routing";
 $text['button-call_routing']['it-it'] = "Call Routing";
+$text['button-call_routing']['ru-ru'] = "Маршрутизация звонков";
 
 $text['button-submit']['en-us'] = "Submit";
 $text['button-submit']['es-cl'] = "Submit";
@@ -64,6 +69,7 @@ $text['button-submit']['sv-se'] = "Submit";
 $text['button-submit']['uk'] = "Submit";
 $text['button-submit']['de-at'] = "Submit";
 $text['button-submit']['it-it'] = "Submit";
+$text['button-submit']['ru-ru'] = "Отправить";
 
 $text['confirm-update']['en-us'] = "Please confirm the following updates";
 $text['confirm-update']['es-cl'] = "Please confirm the following updates";
@@ -75,6 +81,7 @@ $text['confirm-update']['sv-se'] = "Please confirm the following updates";
 $text['confirm-update']['uk'] = "Please confirm the following updates";
 $text['confirm-update']['de-at'] = "Please confirm the following updates";
 $text['confirm-update']['it-it'] = "Please confirm the following updates";
+$text['confirm-update']['ru-ru'] = "Пожалуйста, подтвердите следующие обновления";
 
 
 $text['description-extension_settings_description']['en-us'] = "Choose the setting to modify.";
@@ -87,6 +94,7 @@ $text['description-extension_settings_description']['sv-se'] = "Choose the setti
 $text['description-extension_settings_description']['uk'] = "Choose the setting to modify.";
 $text['description-extension_settings_description']['de-at'] = "Choose the setting to modify.";
 $text['description-extension_settings_description']['it-it'] = "Choose the setting to modify.";
+$text['description-extension_settings_description']['ru-ru'] = "Выберите настройку для изменения.";
 
 $text['description-accountcode']['en-us'] = "Enter the new accountcode for the selected extensions.";
 $text['description-accountcode']['es-cl'] = "Enter the new accountcode for the selected extensions.";
@@ -98,6 +106,7 @@ $text['description-accountcode']['sv-se'] = "Enter the new accountcode for the s
 $text['description-accountcode']['uk'] = "Enter the new accountcode for the selected extensions.";
 $text['description-accountcode']['de-at'] = "Enter the new accountcode for the selected extensions.";
 $text['description-accountcode']['it-it'] = "Enter the new accountcode for the selected extensions.";
+$text['description-accountcode']['ru-ru'] = "Введите новый accountcode для выбранных extensions.";
 
 $text['description-call_group']['en-us'] = "Enter the new call group for the selected extensions.";
 $text['description-call_group']['es-cl'] = "Enter the new call group for the selected extensions.";
@@ -109,6 +118,7 @@ $text['description-call_group']['sv-se'] = "Enter the new call group for the sel
 $text['description-call_group']['uk'] = "Enter the new call group for the selected extensions.";
 $text['description-call_group']['de-at'] = "Enter the new call group for the selected extensions.";
 $text['description-call_group']['it-it'] = "Enter the new call group for the selected extensions.";
+$text['description-call_group']['ru-ru'] = "Введите новую группу вызова для выбранных extensions.";
 
 $text['description-call_timeout']['en-us'] = "Enter the new call timeout for the selected extensions.";
 $text['description-call_timeout']['es-cl'] = "Enter the new call timeout for the selected extensions.";
@@ -120,6 +130,7 @@ $text['description-call_timeout']['sv-se'] = "Enter the new call timeout for the
 $text['description-call_timeout']['uk'] = "Enter the new call timeout for the selected extensions.";
 $text['description-call_timeout']['de-at'] = "Enter the new call timeout for the selected extensions.";
 $text['description-call_timeout']['it-it'] = "Enter the new call timeout for the selected extensions.";
+$text['description-call_timeout']['ru-ru'] = "Задайте новый таймаут вызова для выбранных extensions.";
 
 $text['description-devices_settings']['en-us'] = "Choose the setting to modify.";
 $text['description-devices_settings']['es-cl'] = "Choose the setting to modify.";
@@ -131,6 +142,7 @@ $text['description-devices_settings']['sv-se'] = "Choose the setting to modify."
 $text['description-devices_settings']['uk'] = "Choose the setting to modify.";
 $text['description-devices_settings']['de-at'] = "Choose the setting to modify.";
 $text['description-devices_settings']['it-it'] = "Choose the setting to modify.";
+$text['description-devices_settings']['ru-ru'] = "Выберите настройку для изменения.";
 
 $text['description-device_profile']['en-us'] = "Select the new device profile for the selected devices.";
 $text['description-device_profile']['es-cl'] = "Select the new device profile for the selected devices.";
@@ -142,6 +154,7 @@ $text['description-device_profile']['sv-se'] = "Select the new device profile fo
 $text['description-device_profile']['uk'] = "Select the new device profile for the selected devices.";
 $text['description-device_profile']['de-at'] = "Select the new device profile for the selected devices.";
 $text['description-device_profile']['it-it'] = "Select the new device profile for the selected devices.";
+$text['description-device_profile']['ru-ru'] = "Выберите новый профиль для выбранных устройств.";
 
 $text['description-device_template']['en-us'] = "Select the new device template for the selected devices.";
 $text['description-device_template']['es-cl'] = "Select the new device template for the selected devices.";
@@ -153,7 +166,7 @@ $text['description-device_template']['sv-se'] = "Select the new device template 
 $text['description-device_template']['uk'] = "Select the new device template for the selected devices.";
 $text['description-device_template']['de-at'] = "Select the new device template for the selected devices.";
 $text['description-device_template']['it-it'] = "Select the new device template for the selected devices.";
-
+$text['description-device_template']['ru-ru'] = "Выберите новый шаблон для выбрарнных устройств.";
 
 $text['description-password']['en-us'] = "Enter the new password for the selected users.";
 $text['description-password']['es-cl'] = "Enter the new password for the selected users.";
@@ -165,6 +178,7 @@ $text['description-password']['sv-se'] = "Enter the new password for the selecte
 $text['description-password']['uk'] = "Enter the new password for the selected users.";
 $text['description-password']['de-at'] = "Enter the new password for the selected users.";
 $text['description-password']['it-it'] = "Enter the new password for the selected users.";
+$text['description-password']['ru-ru'] = "Введите новый пароль для выбранных пользователей.";
 
 $text['description-enabled']['en-us'] = "Select the new enabled status for the selected extensions.";
 $text['description-enabled']['es-cl'] = "Select the new enabled status for the selected extensions.";
@@ -176,6 +190,7 @@ $text['description-enabled']['sv-se'] = "Select the new enabled status for the s
 $text['description-enabled']['uk'] = "Select the new enabled status for the selected extensions.";
 $text['description-enabled']['de-at'] = "Select the new enabled status for the selected extensions.";
 $text['description-enabled']['it-it'] = "Select the new enabled status for the selected extensions.";
+$text['description-enabled']['ru-ru'] = "Выберите новый статус для выбранных extensions.";
 
 $text['description-emergency_caller_id_name']['en-us'] = "Enter the new emergency caller id name for the selected extensions.";
 $text['description-emergency_caller_id_name']['es-cl'] = "Enter the new emergency caller id name for the selected extensions.";
@@ -187,6 +202,7 @@ $text['description-emergency_caller_id_name']['sv-se'] = "Enter the new emergenc
 $text['description-emergency_caller_id_name']['uk'] = "Enter the new emergency caller id name for the selected extensions.";
 $text['description-emergency_caller_id_name']['de-at'] = "Enter the new emergency caller id name for the selected extensions.";
 $text['description-emergency_caller_id_name']['it-it'] = "Enter the new emergency caller id name for the selected extensions.";
+$text['description-emergency_caller_id_name']['ru-ru'] = "Enter the new emergency caller id name for the selected extensions.";
 
 $text['description-emergency_caller_id_number']['en-us'] = "Enter the new emergency caller id number for the selected extensions.";
 $text['description-emergency_caller_id_number']['es-cl'] = "Enter the new emergency caller id number for the selected extensions.";
@@ -198,6 +214,7 @@ $text['description-emergency_caller_id_number']['sv-se'] = "Enter the new emerge
 $text['description-emergency_caller_id_number']['uk'] = "Enter the new emergency caller id number for the selected extensions.";
 $text['description-emergency_caller_id_number']['de-at'] = "Enter the new emergency caller id number for the selected extensions.";
 $text['description-emergency_caller_id_number']['it-it'] = "Enter the new emergency caller id number for the selected extensions.";
+$text['description-emergency_caller_id_number']['ru-ru'] = "Enter the new emergency caller id number for the selected extensions.";
 
 $text['description-hold_music']['en-us'] = "Select the new hold music for the selected extensions.";
 $text['description-hold_music']['es-cl'] = "Select the new hold music for the selected extensions.";
@@ -209,6 +226,7 @@ $text['description-hold_music']['sv-se'] = "Select the new hold music for the se
 $text['description-hold_music']['uk'] = "Select the new hold music for the selected extensions.";
 $text['description-hold_music']['de-at'] = "Select the new hold music for the selected extensions.";
 $text['description-hold_music']['it-it'] = "Select the new hold music for the selected extensions.";
+$text['description-hold_music']['ru-ru'] = "Выберите новую музыку для ожидания для выбраннных extensions.";
 
 $text['description-outbound_caller_id_name']['en-us'] = "Enter the new outbound caller id name for the selected extensions.";
 $text['description-outbound_caller_id_name']['es-cl'] = "Enter the new outbound caller id name for the selected extensions.";
@@ -220,6 +238,7 @@ $text['description-outbound_caller_id_name']['sv-se'] = "Enter the new outbound 
 $text['description-outbound_caller_id_name']['uk'] = "Enter the new outbound caller id name for the selected extensions.";
 $text['description-outbound_caller_id_name']['de-at'] = "Enter the new outbound caller id name for the selected extensions.";
 $text['description-outbound_caller_id_name']['it-it'] = "Enter the new outbound caller id name for the selected extensions.";
+$text['description-outbound_caller_id_name']['ru-ru'] = "Enter the new outbound caller id name for the selected extensions.";
 
 $text['description-outbound_caller_id_number']['en-us'] = "Enter the new outbound caller id number for the selected extensions.";
 $text['description-outbound_caller_id_number']['es-cl'] = "Enter the new outbound caller id number for the selected extensions.";
@@ -231,6 +250,7 @@ $text['description-outbound_caller_id_number']['sv-se'] = "Enter the new outboun
 $text['description-outbound_caller_id_number']['uk'] = "Enter the new outbound caller id number for the selected extensions.";
 $text['description-outbound_caller_id_number']['de-at'] = "Enter the new outbound caller id number for the selected extensions.";
 $text['description-outbound_caller_id_number']['it-it'] = "Enter the new outbound caller id number for the selected extensions.";
+$text['description-outbound_caller_id_number']['ru-ru'] = "Enter the new outbound caller id number for the selected extensions.";
 
 $text['description-limit_max']['en-us'] = "Select the new limit max calls for the selected extensions.";
 $text['description-limit_max']['es-cl'] = "Select the new limit max calls for the selected extensions.";
@@ -242,6 +262,7 @@ $text['description-limit_max']['sv-se'] = "Select the new limit max calls for th
 $text['description-limit_max']['uk'] = "Select the new limit max calls for the selected extensions.";
 $text['description-limit_max']['de-at'] = "Select the new limit max calls for the selected extensions.";
 $text['description-limit_max']['it-it'] = "Select the new limit max calls for the selected extensions.";
+$text['description-limit_max']['ru-ru'] = "Задайте новое максимальное количество вызовов для выбранных extensions.";
 
 $text['description-toll_allow']['en-us'] = "Select the new toll allow for the selected extensions.";
 $text['description-toll_allow']['es-cl'] = "Select the new toll allow for the selected extensions.";
@@ -253,6 +274,7 @@ $text['description-toll_allow']['sv-se'] = "Select the new toll allow for the se
 $text['description-toll_allow']['uk'] = "Select the new toll allow for the selected extensions.";
 $text['description-toll_allow']['de-at'] = "Select the new toll allow for the selected extensions.";
 $text['description-toll_allow']['it-it'] = "Select the new toll allow for the selected extensions.";
+$text['description-toll_allow']['ru-ru'] = "Select the new toll allow for the selected extensions.";
 
 $text['description-time_zone']['en-us'] = "Select the new timezone for the selected users.";
 $text['description-time_zone']['es-cl'] = "Select the new timezone for the selected users.";
@@ -264,6 +286,7 @@ $text['description-time_zone']['sv-se'] = "Select the new timezone for the selec
 $text['description-time_zone']['uk'] = "Select the new timezone for the selected users.";
 $text['description-time_zone']['de-at'] = "Select the new timezone for the selected users.";
 $text['description-time_zone']['it-it'] = "Select the new timezone for the selected users.";
+$text['description-time_zone']['ru-ru'] = "Выберите часовой пояс для выбранных пользователей.";
 
 $text['description-user_enabled']['en-us'] = "Select the new enabled status for the selected users.";
 $text['description-user_enabled']['es-cl'] = "Select the new enabled status for the selected users.";
@@ -275,6 +298,7 @@ $text['description-user_enabled']['sv-se'] = "Select the new enabled status for 
 $text['description-user_enabled']['uk'] = "Select the new enabled status for the selected users.";
 $text['description-user_enabled']['de-at'] = "Select the new enabled status for the selected users.";
 $text['description-user_enabled']['it-it'] = "Select the new enabled status for the selected users.";
+$text['description-user_enabled']['ru-ru'] = "Select the new enabled status for the selected users.";
 
 $text['description-user_status']['en-us'] = "Select the new status for the selected users.";
 $text['description-user_status']['es-cl'] = "Select the new status for the selected users.";
@@ -286,6 +310,7 @@ $text['description-user_status']['sv-se'] = "Select the new status for the selec
 $text['description-user_status']['uk'] = "Select the new status for the selected users.";
 $text['description-user_status']['de-at'] = "Select the new status for the selected users.";
 $text['description-user_status']['it-it'] = "Select the new status for the selected users.";
+$text['description-user_status']['ru-ru'] = "Выберите новый статус для выбранных пользователей.";
 
 $text['description-user_settings_description']['en-us'] = "Choose the setting to modify.";
 $text['description-user_settings_description']['es-cl'] = "Choose the setting to modify.";
@@ -297,6 +322,7 @@ $text['description-user_settings_description']['sv-se'] = "Choose the setting to
 $text['description-user_settings_description']['uk'] = "Choose the setting to modify.";
 $text['description-user_settings_description']['de-at'] = "Choose the setting to modify.";
 $text['description-user_settings_description']['it-it'] = "Choose the setting to modify.";
+$text['description-user_settings_description']['ru-ru'] = "Выберите настройку для изменения.";
 
 $text['description-voicemail_settings_description']['en-us'] = "Choose the setting to modify.";
 $text['description-voicemail_settings_description']['es-cl'] = "Choose the setting to modify.";
@@ -308,6 +334,7 @@ $text['description-voicemail_settings_description']['sv-se'] = "Choose the setti
 $text['description-voicemail_settings_description']['uk'] = "Choose the setting to modify.";
 $text['description-voicemail_settings_description']['de-at'] = "Choose the setting to modify.";
 $text['description-voicemail_settings_description']['it-it'] = "Choose the setting to modify.";
+$text['description-voicemail_settings_description']['ru-ru'] = "Выберите настройку для изменения.";
 
 $text['header-bulk_account_settings']['en-us'] = "Bulk Account Settings";
 $text['header-bulk_account_settings']['es-cl'] = "Bulk Account Settings";
@@ -319,6 +346,7 @@ $text['header-bulk_account_settings']['sv-se'] = "Bulk Account Settings";
 $text['header-bulk_account_settings']['uk'] = "Bulk Account Settings";
 $text['header-bulk_account_settings']['de-at'] = "Bulk Account Settings";
 $text['header-bulk_account_settings']['it-it'] = "Bulk Account Settings";
+$text['header-bulk_account_settings']['ru-ru'] = "Bulk Account Settings";
 
 $text['header-extensions']['en-us'] = "Extensions";
 $text['header-extensions']['es-cl'] = "Extensions";
@@ -330,6 +358,7 @@ $text['header-extensions']['sv-se'] = "Extensions";
 $text['header-extensions']['uk'] = "Extensions";
 $text['header-extensions']['de-at'] = "Extensions";
 $text['header-extensions']['it-it'] = "Extensions";
+$text['header-extensions']['ru-ru'] = "Extensions";
 
 $text['header-users']['en-us'] = "Users";
 $text['header-users']['es-cl'] = "Users";
@@ -341,6 +370,7 @@ $text['header-users']['sv-se'] = "Users";
 $text['header-users']['uk'] = "Users";
 $text['header-users']['de-at'] = "Users";
 $text['header-users']['it-it'] = "Users";
+$text['header-users']['ru-ru'] = "Пользователи";
 
 $text['header-devices']['en-us'] = "Devices";
 $text['header-devices']['es-cl'] = "Devices";
@@ -352,6 +382,7 @@ $text['header-devices']['sv-se'] = "Devices";
 $text['header-devices']['uk'] = "Devices";
 $text['header-devices']['de-at'] = "Devices";
 $text['header-devices']['it-it'] = "Devices";
+$text['header-devices']['ru-ru'] = "Устройства";
 
 $text['header-voicemails']['en-us'] = "Voicemails";
 $text['header-voicemails']['es-cl'] = "Voicemails";
@@ -363,6 +394,7 @@ $text['header-voicemails']['sv-se'] = "Voicemails";
 $text['header-voicemails']['uk'] = "Voicemails";
 $text['header-voicemails']['de-at'] = "Voicemails";
 $text['header-voicemails']['it-it'] = "Voicemails";
+$text['header-voicemails']['ru-ru'] = "Голосовые сообщения";
 
 $text['label-add']['en-us'] = "Add";
 $text['label-add']['es-cl'] = "Add";
@@ -374,6 +406,7 @@ $text['label-add']['sv-se'] = "Add";
 $text['label-add']['uk'] = "Add";
 $text['label-add']['de-at'] = "Add";
 $text['label-add']['it-it'] = "Add";
+$text['label-add']['ru-ru'] = "Добавить";
 
 $text['label-remove']['en-us'] = "Remove";
 $text['label-remove']['es-cl'] = "Remove";
@@ -385,6 +418,7 @@ $text['label-remove']['sv-se'] = "Remove";
 $text['label-remove']['uk'] = "Remove";
 $text['label-remove']['de-at'] = "Remove";
 $text['label-remove']['it-it'] = "Remove";
+$text['label-remove']['ru-ru'] = "Удалить";
 
 $text['label-accountcode']['en-us'] = "Accountcode";
 $text['label-accountcode']['es-cl'] = "Accountcode";
@@ -396,6 +430,7 @@ $text['label-accountcode']['sv-se'] = "Accountcode";
 $text['label-accountcode']['uk'] = "Accountcode";
 $text['label-accountcode']['de-at'] = "Accountcode";
 $text['label-accountcode']['it-it'] = "Accountcode";
+$text['label-accountcode']['ru-ru'] = "Accountcode";
 
 $text['label-call_group']['en-us'] = "Call Group";
 $text['label-call_group']['es-cl'] = "Call Group";
@@ -407,6 +442,7 @@ $text['label-call_group']['sv-se'] = "Call Group";
 $text['label-call_group']['uk'] = "Call Group";
 $text['label-call_group']['de-at'] = "Call Group";
 $text['label-call_group']['it-it'] = "Call Group";
+$text['label-call_group']['ru-ru'] = "Call Group";
 
 $text['label-confirm_password']['en-us'] = "Confirm Password";
 $text['label-confirm_password']['es-cl'] = "Confirm Password";
@@ -418,6 +454,7 @@ $text['label-confirm_password']['sv-se'] = "Confirm Password";
 $text['label-confirm_password']['uk'] = "Confirm Password";
 $text['label-confirm_password']['de-at'] = "Confirm Password";
 $text['label-confirm_password']['it-it'] = "Confirm Password";
+$text['label-confirm_password']['ru-ru'] = "Подтвердить пароль";
 
 $text['label-destination']['en-us'] = "Destination";
 $text['label-destination']['es-cl'] = "Destination";
@@ -429,6 +466,7 @@ $text['label-destination']['sv-se'] = "Destination";
 $text['label-destination']['uk'] = "Destination";
 $text['label-destination']['de-at'] = "Destination";
 $text['label-destination']['it-it'] = "Destination";
+$text['label-destination']['ru-ru'] = "Назначение";
 
 $text['label-order']['en-us'] = "Order";
 $text['label-order']['es-cl'] = "Order";
@@ -440,6 +478,7 @@ $text['label-order']['sv-se'] = "Order";
 $text['label-order']['uk'] = "Order";
 $text['label-order']['de-at'] = "Order";
 $text['label-order']['it-it'] = "Order";
+$text['label-order']['ru-ru'] = "Порядок";
 
 $text['label-description']['en-us'] = "Description";
 $text['label-description']['es-cl'] = "Description";
@@ -451,6 +490,7 @@ $text['label-description']['sv-se'] = "Description";
 $text['label-description']['uk'] = "Description";
 $text['label-description']['de-at'] = "Description";
 $text['label-description']['it-it'] = "Description";
+$text['label-description']['ru-ru'] = "Описание";
 
 $text['label-extension']['en-us'] = "Extension";
 $text['label-extension']['es-cl'] = "Extension";
@@ -462,6 +502,7 @@ $text['label-extension']['sv-se'] = "Extension";
 $text['label-extension']['uk'] = "Extension";
 $text['label-extension']['de-at'] = "Extension";
 $text['label-extension']['it-it'] = "Extension";
+$text['label-extension']['ru-ru'] = "Extension";
 
 $text['label-call_timeout']['en-us'] = "Call Timeout";
 $text['label-call_timeout']['es-cl'] = "Call Timeout";
@@ -473,6 +514,7 @@ $text['label-call_timeout']['sv-se'] = "Call Timeout";
 $text['label-call_timeout']['uk'] = "Call Timeout";
 $text['label-call_timeout']['de-at'] = "Call Timeout";
 $text['label-call_timeout']['it-it'] = "Call Timeout";
+$text['label-call_timeout']['ru-ru'] = "Call Timeout";
 
 $text['label-group']['en-us'] = "Group";
 $text['label-group']['es-cl'] = "Group";
@@ -484,6 +526,7 @@ $text['label-group']['sv-se'] = "Group";
 $text['label-group']['uk'] = "Group";
 $text['label-group']['de-at'] = "Group";
 $text['label-group']['it-it'] = "Group";
+$text['label-group']['ru-ru'] = "Группа";
 
 $text['label-line_1_server_address']['en-us'] = "Line 1 - Server Address";
 $text['label-line_1_server_address']['es-cl'] = "Line 1 - Server Address";
@@ -495,6 +538,7 @@ $text['label-line_1_server_address']['sv-se'] = "Line 1 - Server Address";
 $text['label-line_1_server_address']['uk'] = "Line 1 - Server Address";
 $text['label-line_1_server_address']['de-at'] = "Line 1 - Server Address";
 $text['label-line_1_server_address']['it-it'] = "Line 1 - Server Address";
+$text['label-line_1_server_address']['ru-ru'] = "Линия 1 - Адрес сервера";
 
 $text['label-line_1_outbound_proxy_primary']['en-us'] = "Line 1 - Outbound Proxy Primary";
 $text['label-line_1_outbound_proxy_primary']['es-cl'] = "Line 1 - Outbound Proxy Primary";
@@ -506,6 +550,7 @@ $text['label-line_1_outbound_proxy_primary']['sv-se'] = "Line 1 - Outbound Proxy
 $text['label-line_1_outbound_proxy_primary']['uk'] = "Line 1 - Outbound Proxy Primary";
 $text['label-line_1_outbound_proxy_primary']['de-at'] = "Line 1 - Outbound Proxy Primary";
 $text['label-line_1_outbound_proxy_primary']['it-it'] = "Line 1 - Outbound Proxy Primary";
+$text['label-line_1_outbound_proxy_primary']['ru-ru'] = "Линия 1 - Исходящий прокси основной";
 
 $text['label-line_1_sip_port']['en-us'] = "Line 1 - SIP Port";
 $text['label-line_1_sip_port']['es-cl'] = "Line 1 - SIP Port";
@@ -517,6 +562,7 @@ $text['label-line_1_sip_port']['sv-se'] = "Line 1 - SIP Port";
 $text['label-line_1_sip_port']['uk'] = "Line 1 - SIP Port";
 $text['label-line_1_sip_port']['de-at'] = "Line 1 - SIP Port";
 $text['label-line_1_sip_port']['it-it'] = "Line 1 - SIP Port";
+$text['label-line_1_sip_port']['ru-ru'] = "Линия 1 - SIP порт";
 
 $text['label-line_1_sip_transport']['en-us'] = "Line 1 - SIP Transport";
 $text['label-line_1_sip_transport']['es-cl'] = "Line 1 - SIP Transport";
@@ -528,6 +574,7 @@ $text['label-line_1_sip_transport']['sv-se'] = "Line 1 - SIP Transport";
 $text['label-line_1_sip_transport']['uk'] = "Line 1 - SIP Transport";
 $text['label-line_1_sip_transport']['de-at'] = "Line 1 - SIP Transport";
 $text['label-line_1_sip_transport']['it-it'] = "Line 1 - SIP Transport";
+$text['label-line_1_sip_transport']['ru-ru'] = "Линия 1 - SIP транспорт";
 
 $text['label-line_1_register_expires']['en-us'] = "Line 1 - Register Expires";
 $text['label-line_1_register_expires']['es-cl'] = "Line 1 - Register Expires";
@@ -539,6 +586,7 @@ $text['label-line_1_register_expires']['sv-se'] = "Line 1 - Register Expires";
 $text['label-line_1_register_expires']['uk'] = "Line 1 - Register Expires";
 $text['label-line_1_register_expires']['de-at'] = "Line 1 - Register Expires";
 $text['label-line_1_register_expires']['it-it'] = "Line 1 - Register Expires";
+$text['label-line_1_register_expires']['ru-ru'] = "Линия 1 - Регистрация истекает";
 
 $text['label-line_1_outbound_proxy_secondary']['en-us'] = "Line 1 - Outbound Proxy Secondary";
 $text['label-line_1_outbound_proxy_secondary']['es-cl'] = "Line 1 - Outbound Proxy Secondary";
@@ -550,6 +598,7 @@ $text['label-line_1_outbound_proxy_secondary']['sv-se'] = "Line 1 - Outbound Pro
 $text['label-line_1_outbound_proxy_secondary']['uk'] = "Line 1 - Outbound Proxy Secondary";
 $text['label-line_1_outbound_proxy_secondary']['de-at'] = "Line 1 - Outbound Proxy Secondary";
 $text['label-line_1_outbound_proxy_secondary']['it-it'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['ru-ru'] = "Линия 1 - Исходящий прокси резервный";
 
 $text['label-hold_music']['en-us'] = "Hold Music";
 $text['label-hold_music']['es-cl'] = "Hold Music";
@@ -561,6 +610,7 @@ $text['label-hold_music']['sv-se'] = "Hold Music";
 $text['label-hold_music']['uk'] = "Hold Music";
 $text['label-hold_music']['de-at'] = "Hold Music";
 $text['label-hold_music']['it-it'] = "Hold Music";
+$text['label-hold_music']['ru-ru'] = "Hold Music";
 
 $text['label-outbound_caller_id_name']['en-us'] = "Outbound Caller ID Name";
 $text['label-outbound_caller_id_name']['es-cl'] = "Outbound Caller ID Name";
@@ -572,6 +622,7 @@ $text['label-outbound_caller_id_name']['sv-se'] = "Outbound Caller ID Name";
 $text['label-outbound_caller_id_name']['uk'] = "Outbound Caller ID Name";
 $text['label-outbound_caller_id_name']['de-at'] = "Outbound Caller ID Name";
 $text['label-outbound_caller_id_name']['it-it'] = "Outbound Caller ID Name";
+$text['label-outbound_caller_id_name']['ru-ru'] = "Outbound Caller ID Name";
 
 $text['label-outbound_caller_id_number']['en-us'] = "Outbound Caller ID Number";
 $text['label-outbound_caller_id_number']['es-cl'] = "Outbound Caller ID Number";
@@ -583,6 +634,7 @@ $text['label-outbound_caller_id_number']['sv-se'] = "Outbound Caller ID Number";
 $text['label-outbound_caller_id_number']['uk'] = "Outbound Caller ID Number";
 $text['label-outbound_caller_id_number']['de-at'] = "Outbound Caller ID Number";
 $text['label-outbound_caller_id_number']['it-it'] = "Outbound Caller ID Number";
+$text['label-outbound_caller_id_number']['ru-ru'] = "Outbound Caller ID Number";
 
 $text['label-password']['en-us'] = "Password";
 $text['label-password']['es-cl'] = "Password";
@@ -594,6 +646,7 @@ $text['label-password']['sv-se'] = "Password";
 $text['label-password']['uk'] = "Password";
 $text['label-password']['de-at'] = "Password";
 $text['label-password']['it-it'] = "Password";
+$text['label-password']['ru-ru'] = "Пароль";
 
 $text['label-user_status']['en-us'] = "Status";
 $text['label-user_status']['es-cl'] = "Status";
@@ -605,6 +658,7 @@ $text['label-user_status']['sv-se'] = "Status";
 $text['label-user_status']['uk'] = "Status";
 $text['label-user_status']['de-at'] = "Status";
 $text['label-user_status']['it-it'] = "Status";
+$text['label-user_status']['ru-ru'] = "Статус";
 
 $text['label-time_zone']['en-us'] = "Timezone";
 $text['label-time_zone']['es-cl'] = "Timezone";
@@ -616,6 +670,7 @@ $text['label-time_zone']['sv-se'] = "Timezone";
 $text['label-time_zone']['uk'] = "Timezone";
 $text['label-time_zone']['de-at'] = "Timezone";
 $text['label-time_zone']['it-it'] = "Timezone";
+$text['label-time_zone']['ru-ru'] = "Часовой пояс";
 
 $text['label-emergency_caller_id_name']['en-us'] = "Emergency Caller ID Name";
 $text['label-emergency_caller_id_name']['es-cl'] = "Emergency Caller ID Name";
@@ -627,6 +682,7 @@ $text['label-emergency_caller_id_name']['sv-se'] = "Emergency Caller ID Name";
 $text['label-emergency_caller_id_name']['uk'] = "Emergency Caller ID Name";
 $text['label-emergency_caller_id_name']['de-at'] = "Emergency Caller ID Name";
 $text['label-emergency_caller_id_name']['it-it'] = "Emergency Caller ID Name";
+$text['label-emergency_caller_id_name']['ru-ru'] = "Emergency Caller ID Name";
 
 $text['label-emergency_caller_id_number']['en-us'] = "Emergency Caller ID Number";
 $text['label-emergency_caller_id_number']['es-cl'] = "Emergency Caller ID Number";
@@ -638,6 +694,7 @@ $text['label-emergency_caller_id_number']['sv-se'] = "Emergency Caller ID Number
 $text['label-emergency_caller_id_number']['uk'] = "Emergency Caller ID Number";
 $text['label-emergency_caller_id_number']['de-at'] = "Emergency Caller ID Number";
 $text['label-emergency_caller_id_number']['it-it'] = "Emergency Caller ID Number";
+$text['label-emergency_caller_id_number']['ru-ru'] = "Emergency Caller ID Number";
 
 $text['label-limit_max']['en-us'] = "Limit Max";
 $text['label-limit_max']['es-cl'] = "Limit Max";
@@ -649,6 +706,7 @@ $text['label-limit_max']['sv-se'] = "Limit Max";
 $text['label-limit_max']['uk'] = "Limit Max";
 $text['label-limit_max']['de-at'] = "Limit Max";
 $text['label-limit_max']['it-it'] = "Limit Max";
+$text['label-limit_max']['ru-ru'] = "Limit Max";
 
 $text['label-toll_allow']['en-us'] = "Toll Allow";
 $text['label-toll_allow']['es-cl'] = "Toll Allow";
@@ -660,6 +718,7 @@ $text['label-toll_allow']['sv-se'] = "Toll Allow";
 $text['label-toll_allow']['uk'] = "Toll Allow";
 $text['label-toll_allow']['de-at'] = "Toll Allow";
 $text['label-toll_allow']['it-it'] = "Toll Allow";
+$text['label-toll_allow']['ru-ru'] = "Toll Allow";
 
 $text['label-sip_force_expires']['en-us'] = "SIP Force Expires";
 $text['label-sip_force_expires']['es-cl'] = "SIP Force Expires";
