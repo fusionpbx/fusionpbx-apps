@@ -12,6 +12,7 @@ $text['label-update-complete']['ro'] = "Actualizare completă";
 $text['label-update-complete']['de-at'] = "Aktualisierung abgeschlossen";
 $text['label-update-complete']['ar-eg'] = "اكتمال التحديث";
 $text['label-update-complete']['he'] = "העדכון הושלם";
+$text['label-update-complete']['ru-ru'] = "Обновление завершено";
 
 $text['label-true']['en-us'] = "True";
 $text['label-true']['es-cl'] = "Verdadero";
@@ -26,6 +27,7 @@ $text['label-true']['ro'] = "";
 $text['label-true']['de-at'] = "Ein";
 $text['label-true']['ar-eg'] = "صحيح";
 $text['label-true']['he'] = "חיובי";
+$text['label-true']['ru-ru'] = "True";
 
 $text['label-reject']['en-us'] = "Reject";
 $text['label-reject']['es-cl'] = "Rechazar";
@@ -40,6 +42,7 @@ $text['label-reject']['ro'] = "";
 $text['label-reject']['de-at'] = "Zurückweisen";
 $text['label-reject']['ar-eg'] = "رفض";
 $text['label-reject']['he'] = "לדחות";
+$text['label-reject']['ru-ru'] = "Отменить";
 
 $text['label-false']['en-us'] = "False";
 $text['label-false']['es-cl'] = "falso";
@@ -54,6 +57,7 @@ $text['label-false']['ro'] = "";
 $text['label-false']['de-at'] = "Aus";
 $text['label-false']['ar-eg'] = "";
 $text['label-false']['he'] = "";
+$text['label-false']['ru-ru'] = "False";
 
 $text['label-enabled']['en-us'] = "Enabled";
 $text['label-enabled']['es-cl'] = "Activo";
@@ -68,6 +72,7 @@ $text['label-enabled']['ro'] = "";
 $text['label-enabled']['de-at'] = "Aktiv";
 $text['label-enabled']['ar-eg'] = "مفعل";
 $text['label-enabled']['he'] = "";
+$text['label-enabled']['ru-ru'] = "Включено";
 
 $text['label-delete-complete']['en-us'] = "Delete Complete";
 $text['label-delete-complete']['es-cl'] = "Eliminar Completo";
@@ -82,6 +87,7 @@ $text['label-delete-complete']['ro'] = "Ștergere completă";
 $text['label-delete-complete']['de-at'] = "Erfolgreich gelöscht";
 $text['label-delete-complete']['ar-eg'] = "اكتمال المسح";
 $text['label-delete-complete']['he'] = "המחיקה הושלמה";
+$text['label-delete-complete']['ru-ru'] = "Удаление завершено";
 
 $text['label-action']['en-us'] = "Action";
 $text['label-action']['es-cl'] = "Acción";
@@ -96,6 +102,7 @@ $text['label-action']['ro'] = "Acțiune";
 $text['label-action']['de-at'] = "Aktion";
 $text['label-action']['ar-eg'] = "";
 $text['label-action']['he'] = "פעולה";
+$text['label-action']['ru-ru'] = "Действие";
 
 $text['confirm-delete']['en-us'] = "Do you really want to delete this?";
 $text['confirm-delete']['es-cl'] = "¿Realmente desea eliminar el número?";
@@ -110,6 +117,7 @@ $text['confirm-delete']['ro'] = "";
 $text['confirm-delete']['de-at'] = "Wollen Sie das wirklich löschen?";
 $text['confirm-delete']['ar-eg'] = "";
 $text['confirm-delete']['he'] = "?בטוח שאתה רוצה למחוק";
+$text['confirm-delete']['ru-ru'] = "Вы действительно хотите удалить?";
 
 $text['button-view']['en-us'] = "View";
 $text['button-view']['es-cl'] = "Ver";
@@ -124,6 +132,7 @@ $text['button-view']['ro'] = "Vizualizare";
 $text['button-view']['de-at'] = "Ansicht";
 $text['button-view']['ar-eg'] = "عرض";
 $text['button-view']['he'] = "הצג";
+$text['button-view']['ru-ru'] = "Смотреть";
 
 $text['button-save']['en-us'] = "Save";
 $text['button-save']['es-cl'] = "Guardar";
@@ -138,6 +147,7 @@ $text['button-save']['ro'] = "Salvează";
 $text['button-save']['de-at'] = "Speichern";
 $text['button-save']['ar-eg'] = "حفظ";
 $text['button-save']['he'] = "שמור";
+$text['button-save']['ru-ru'] = "Сохранить";
 
 $text['button-edit']['en-us'] = "Edit";
 $text['button-edit']['es-cl'] = "Editar";
@@ -152,6 +162,7 @@ $text['button-edit']['ro'] = "Editează";
 $text['button-edit']['de-at'] = "Bearbeiten";
 $text['button-edit']['ar-eg'] = "تعديل";
 $text['button-edit']['he'] = "ערוך";
+$text['button-edit']['ru-ru'] = "Изменить";
 
 $text['button-delete']['en-us'] = "Delete";
 $text['button-delete']['es-cl'] = "Eliminar";
@@ -166,6 +177,7 @@ $text['button-delete']['ro'] = "";
 $text['button-delete']['de-at'] = "Löschen";
 $text['button-delete']['ar-eg'] = "مسح";
 $text['button-delete']['he'] = "מחק";
+$text['button-delete']['ru-ru'] = "Удалить";
 
 $text['button-back']['en-us'] = "Back";
 $text['button-back']['es-cl'] = "Volver";
@@ -180,6 +192,7 @@ $text['button-back']['ro'] = "Înapoi";
 $text['button-back']['de-at'] = "Zurück";
 $text['button-back']['ar-eg'] = "رجوع";
 $text['button-back']['he'] = "חזרה";
+$text['button-back']['ru-ru'] = "Назад";
 
 $text['button-add']['en-us'] = "Add";
 $text['button-add']['pt-pt'] = "Adicionar";
@@ -193,5 +206,6 @@ $text['button-add']['ro'] = "Adaugă";
 $text['button-add']['de-at'] = "Hinzufügen";
 $text['button-add']['ar-eg'] = "اضافة";
 $text['button-add']['he'] = "";
+$text['button-add']['ru-ru'] = "Добавить";
 
 ?>
