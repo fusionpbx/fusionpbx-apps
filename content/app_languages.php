@@ -9,6 +9,7 @@ $text['title-rss']['he'] = "עידכוני מידע";
 $text['title-rss']['pl'] = "RSS Feed";
 $text['title-rss']['uk'] = "RSS Подання";
 $text['title-rss']['sv-se'] = "RSS Flöde";
+$text['title-rss']['ru-ru'] = "RSS-канал";
 
 $text['message-update']['en-us'] = "Update Complete";
 $text['message-update']['es-cl'] = "Actualización Completada";
@@ -19,6 +20,7 @@ $text['message-update']['he'] = "עידכון הושלם";
 $text['message-update']['pl'] = "Zaktualizowano poprawnie";
 $text['message-update']['uk'] = "Оновлення завершено";
 $text['message-update']['sv-se'] = "Uppdatering Klar";
+$text['message-update']['ru-ru'] = "Обновление завершено";
 
 $text['message-item-up']['en-us'] = "Item Moved Up";
 $text['message-item-up']['es-cl'] = "Ítem Ascendido";
@@ -29,6 +31,7 @@ $text['message-item-up']['he'] = "העלה פריט מעלה";
 $text['message-item-up']['pl'] = "Pozycja przeniesiona do góry";
 $text['message-item-up']['uk'] = "Елемент переміщено вгору";
 $text['message-item-up']['sv-se'] = "Raden Flyttades Upp";
+$text['message-item-up']['ru-ru'] = "Элемент перемещен вверх";
 
 $text['message-item-down']['en-us'] = "Item Moved Down";
 $text['message-item-down']['es-cl'] = "Ítem Descendido";
@@ -39,6 +42,7 @@ $text['message-item-down']['he'] = "הורד פריט מטה";
 $text['message-item-down']['pl'] = "Pozycja przeniesiona w dół";
 $text['message-item-down']['uk'] = "Елемент переміщено вниз";
 $text['message-item-down']['sv-se'] = "Raden Flyttades Ned";
+$text['message-item-down']['ru-ru'] = "Элемент перемещен вниз";
 
 $text['message-error-missing']['en-us'] = "Error missing";
 $text['message-error-missing']['es-cl'] = "Error perdido";
@@ -49,6 +53,7 @@ $text['message-error-missing']['he'] = "שגיאה חסרה";
 $text['message-error-missing']['pl'] = "Błąd braku ";
 $text['message-error-missing']['uk'] = "Помилка відсутня";
 $text['message-error-missing']['sv-se'] = "Fel Saknas";
+$text['message-error-missing']['ru-ru'] = "Error missing";
 
 $text['message-description']['en-us'] = "Please provide a description.";
 $text['message-description']['es-cl'] = "Por favor ingrese una descripción.";
@@ -59,6 +64,7 @@ $text['message-description']['he'] = "אנא הוסף תיאור";
 $text['message-description']['pl'] = "Wprowadź opis";
 $text['message-description']['uk'] = "Будь ласка, надайте опис.";
 $text['message-description']['sv-se'] = "Ange en beskrivning.";
+$text['message-description']['ru-ru'] = "Пожалуйста, задайте описание.";
 
 $text['message-delete-done']['en-us'] = "Delete Completed";
 $text['message-delete-done']['es-cl'] = "Eliminar Completado";
@@ -69,6 +75,7 @@ $text['message-delete-done']['he'] = "מחיקה הושלמה";
 $text['message-delete-done']['pl'] = "Usunięto poprawnie";
 $text['message-delete-done']['uk'] = "Видалено";
 $text['message-delete-done']['sv-se'] = "Radera Utförd";
+$text['message-delete-done']['ru-ru'] = "Удаление выполнено";
 
 $text['message-confirm-delete']['en-us'] = "Do you really want to delete this?";
 $text['message-confirm-delete']['es-cl'] = "¿Realmente desea eliminar esto?";
@@ -79,6 +86,7 @@ $text['message-confirm-delete']['he'] = "?האם אתה בטוח שברצונך 
 $text['message-confirm-delete']['pl'] = "Czy na pewno chcesz to usunąć?";
 $text['message-confirm-delete']['uk'] = "Ви дійсно бажаєте це видалити?";
 $text['message-confirm-delete']['sv-se'] = "Vill du verkligen radera detta?";
+$text['message-confirm-delete']['ru-ru'] = "Вы действительно хотите удалить?";
 
 $text['message-add']['en-us'] = "Add Complete";
 $text['message-add']['es-cl'] = "Agregar Completado";
@@ -89,6 +97,7 @@ $text['message-add']['he'] = "הוספה הושלמה";
 $text['message-add']['pl'] = "Dodano poprawnie";
 $text['message-add']['uk'] = "Додано";
 $text['message-add']['sv-se'] = "Tillagd";
+$text['message-add']['ru-ru'] = "Добавление выполнено";
 
 $text['label-type']['en-us'] = "Type";
 $text['label-type']['es-cl'] = "Tipo";
@@ -99,6 +108,7 @@ $text['label-type']['he'] = "סוג";
 $text['label-type']['pl'] = "Typ";
 $text['label-type']['uk'] = "Тип";
 $text['label-type']['sv-se'] = "Typ";
+$text['label-type']['ru-ru'] = "Тип";
 
 $text['label-title']['en-us'] = "Title";
 $text['label-title']['es-cl'] = "Título";
@@ -109,6 +119,7 @@ $text['label-title']['he'] = "תאר";
 $text['label-title']['pl'] = "Tytuł";
 $text['label-title']['uk'] = "Назва";
 $text['label-title']['sv-se'] = "Titel";
+$text['label-title']['ru-ru'] = "Название";
 
 $text['label-template']['en-us'] = "Template";
 $text['label-template']['es-cl'] = "Plantilla";
@@ -119,6 +130,7 @@ $text['label-template']['he'] = "תבנית";
 $text['label-template']['pl'] = "Szablon";
 $text['label-template']['uk'] = "Шаблон";
 $text['label-template']['sv-se'] = "Mall";
+$text['label-template']['ru-ru'] = "Шаблон";
 
 $text['label-sub-title']['en-us'] = "Sub Title";
 $text['label-sub-title']['es-cl'] = "Subtítulo";
@@ -129,6 +141,7 @@ $text['label-sub-title']['he'] = "תת תבנית";
 $text['label-sub-title']['pl'] = "Podtytuł";
 $text['label-sub-title']['uk'] = "Заголовок";
 $text['label-sub-title']['sv-se'] = "Under Titel";
+$text['label-sub-title']['ru-ru'] = "Заголовок";
 
 $text['label-sub-link']['en-us'] = "Sub Link";
 $text['label-sub-link']['es-cl'] = "Sub Enlace";
@@ -139,6 +152,7 @@ $text['label-sub-link']['he'] = "תת קישור";
 $text['label-sub-link']['pl'] = "Sub Link ";
 $text['label-sub-link']['uk'] = "Посилання";
 $text['label-sub-link']['sv-se'] = "Under Länk";
+$text['label-sub-link']['ru-ru'] = "Ссылка";
 
 $text['label-sub-id']['en-us'] = "Sub ID";
 $text['label-sub-id']['es-cl'] = "Sub ID";
@@ -149,6 +163,7 @@ $text['label-sub-id']['he'] = "תת זיהוי";
 $text['label-sub-id']['pl'] = "Sub ID";
 $text['label-sub-id']['uk'] = "ID";
 $text['label-sub-id']['sv-se'] = "Under ID";
+$text['label-sub-id']['ru-ru'] = "ID";
 
 $text['label-sub-desc']['en-us'] = "Sub Description";
 $text['label-sub-desc']['es-cl'] = "Sub Descripción";
@@ -159,6 +174,7 @@ $text['label-sub-desc']['he'] = "תת תיאור";
 $text['label-sub-desc']['pl'] = "Podopis";
 $text['label-sub-desc']['uk'] = "Опис";
 $text['label-sub-desc']['sv-se'] = "Under Beskrivning";
+$text['label-sub-desc']['ru-ru'] = "Описание";
 
 $text['label-sub-category']['en-us'] = "Sub Category";
 $text['label-sub-category']['es-cl'] = "Sub Categoría";
@@ -169,6 +185,7 @@ $text['label-sub-category']['he'] = "תת קטגוריה";
 $text['label-sub-category']['pl'] = "Podkategoria";
 $text['label-sub-category']['uk'] = "Категорія";
 $text['label-sub-category']['sv-se'] = "Under Kategori";
+$text['label-sub-category']['ru-ru'] = "Категория";
 
 $text['label-search']['en-us'] = "Search Results";
 $text['label-search']['es-cl'] = "Resultado de la búsqueda";
@@ -179,6 +196,7 @@ $text['label-search']['he'] = "תוצאות חיפוש";
 $text['label-search']['pl'] = "Wyniki wyszukiwania";
 $text['label-search']['uk'] = "Результати пошуку";
 $text['label-search']['sv-se'] = "Sökresultat";
+$text['label-search']['ru-ru'] = "Результаты поиска";
 
 $text['label-rss-category']['en-us'] = "RSS Category";
 $text['label-rss-category']['es-cl'] = "Categoría RSS";
@@ -189,6 +207,7 @@ $text['label-rss-category']['he'] = "RSS קטגוריית";
 $text['label-rss-category']['pl'] = "Kategoria RSS";
 $text['label-rss-category']['uk'] = "Категорія RSS";
 $text['label-rss-category']['sv-se'] = "RSS Kategori";
+$text['label-rss-category']['ru-ru'] = "Категория RSS";
 
 $text['label-order']['en-us'] = "Order";
 $text['label-order']['es-cl'] = "Orden";
@@ -199,6 +218,7 @@ $text['label-order']['he'] = "סדר";
 $text['label-order']['pl'] = "Kolejność";
 $text['label-order']['uk'] = "Інше";
 $text['label-order']['sv-se'] = "Ordning";
+$text['label-order']['ru-ru'] = "Порядок";
 
 $text['label-on-off']['en-us'] = "on/off";
 $text['label-on-off']['es-cl'] = "on/off";
@@ -209,6 +229,7 @@ $text['label-on-off']['he'] = "הדלקֿֿ/כבה";
 $text['label-on-off']['pl'] = "Włączony/wyłączony";
 $text['label-on-off']['uk'] = "увімк./вимкн.";
 $text['label-on-off']['sv-se'] = "på/av";
+$text['label-on-off']['ru-ru'] = "вкл/выкл";
 
 $text['label-list']['en-us'] = "List";
 $text['label-list']['es-cl'] = "Lista";
@@ -219,6 +240,7 @@ $text['label-list']['he'] = "רשימה";
 $text['label-list']['pl'] = "Lista";
 $text['label-list']['uk'] = "Список";
 $text['label-list']['sv-se'] = "Lista";
+$text['label-list']['ru-ru'] = "Список";
 
 $text['label-link']['en-us'] = "Link";
 $text['label-link']['es-cl'] = "Enlace";
@@ -229,6 +251,7 @@ $text['label-link']['he'] = "קישור";
 $text['label-link']['pl'] = "Link";
 $text['label-link']['uk'] = "Посилання";
 $text['label-link']['sv-se'] = "Länk";
+$text['label-link']['ru-ru'] = "Ссылка";
 
 $text['label-id']['en-us'] = "ID";
 $text['label-id']['es-cl'] = "ID";
@@ -239,6 +262,7 @@ $text['label-id']['he'] = "זיהוי";
 $text['label-id']['pl'] = "ID";
 $text['label-id']['uk'] = "ID";
 $text['label-id']['sv-se'] = "ID";
+$text['label-id']['ru-ru'] = "ID";
 
 $text['label-group']['en-us'] = "Group";
 $text['label-group']['es-cl'] = "Grupo";
@@ -249,6 +273,7 @@ $text['label-group']['he'] = "קבוצה";
 $text['label-group']['pl'] = "Grupa";
 $text['label-group']['uk'] = "Група";
 $text['label-group']['sv-se'] = "Grupp";
+$text['label-group']['ru-ru'] = "Группа";
 
 $text['label-edit']['en-us'] = "Edit";
 $text['label-edit']['es-cl'] = "Editar";
@@ -259,6 +284,7 @@ $text['label-edit']['he'] = "עריכה";
 $text['label-edit']['pl'] = "Edytuj";
 $text['label-edit']['uk'] = "Редагувати";
 $text['label-edit']['sv-se'] = "Redigera";
+$text['label-edit']['ru-ru'] = "Изменить";
 
 $text['label-details']['en-us'] = "Details";
 $text['label-details']['es-cl'] = "Detalles";
@@ -269,6 +295,7 @@ $text['label-details']['he'] = "פרטים";
 $text['label-details']['pl'] = "Szczegóły";
 $text['label-details']['uk'] = "Деталі";
 $text['label-details']['sv-se'] = "Detaljer";
+$text['label-details']['ru-ru'] = "Подробно";
 
 $text['label-description']['en-us'] = "Description";
 $text['label-description']['es-cl'] = "Descripción";
@@ -279,6 +306,7 @@ $text['label-description']['he'] = "תיאור";
 $text['label-description']['pl'] = "Opis";
 $text['label-description']['uk'] = "Опис";
 $text['label-description']['sv-se'] = "Beskrivning";
+$text['label-description']['ru-ru'] = "Описание";
 
 $text['label-content-edit']['en-us'] = "Content";
 $text['label-content-edit']['es-cl'] = "Contenido";
@@ -289,6 +317,7 @@ $text['label-content-edit']['he'] = "תוכן";
 $text['label-content-edit']['pl'] = "Zawartość";
 $text['label-content-edit']['uk'] = "Вміст";
 $text['label-content-edit']['sv-se'] = "Innehåll";
+$text['label-content-edit']['ru-ru'] = "Содержание";
 
 $text['label-content']['en-us'] = "Content";
 $text['label-content']['es-cl'] = "Contenido";
@@ -299,6 +328,7 @@ $text['label-content']['he'] = "תוכן";
 $text['label-content']['pl'] = "Zawartość";
 $text['label-content']['uk'] = "Вміст";
 $text['label-content']['sv-se'] = "Innehåll";
+$text['label-content']['ru-ru'] = "Содержание";
 
 $text['label-category']['en-us'] = "Category";
 $text['label-category']['es-cl'] = "Categoría";
@@ -309,6 +339,7 @@ $text['label-category']['he'] = "קטגוריה";
 $text['label-category']['pl'] = "Kategoria";
 $text['label-category']['uk'] = "Категорія";
 $text['label-category']['sv-se'] = "Kategori";
+$text['label-category']['ru-ru'] = "Категория";
 
 $text['description-rss']['en-us'] = "Task List for RSS...";
 $text['description-rss']['es-cl'] = "Listado de tareas para RSS...";
@@ -319,6 +350,7 @@ $text['description-rss']['he'] = "";
 $text['description-rss']['pl'] = "Lista zadań RSS";
 $text['description-rss']['uk'] = "Список завдань для RSS";
 $text['description-rss']['sv-se'] = "Uppgiftslista för RSS...";
+$text['description-rss']['ru-ru'] = "Список заданий для RSS...";
 
 $text['button-update']['en-us'] = "Update";
 $text['button-update']['es-cl'] = "Actualizar";
@@ -329,6 +361,7 @@ $text['button-update']['he'] = "";
 $text['button-update']['pl'] = "Uaktualnij";
 $text['button-update']['uk'] = "Оновити";
 $text['button-update']['sv-se'] = "Uppdatera";
+$text['button-update']['ru-ru'] = "Обновить";
 
 $text['button-search']['en-us'] = "Search";
 $text['button-search']['es-cl'] = "Buscar";
@@ -339,6 +372,7 @@ $text['button-search']['he'] = "";
 $text['button-search']['pl'] = "Wyszukaj";
 $text['button-search']['uk'] = "Пошук";
 $text['button-search']['sv-se'] = "Sök";
+$text['button-search']['ru-ru'] = "Поиск";
 
 $text['button-save']['en-us'] = "Save";
 $text['button-save']['es-cl'] = "Guardar";
@@ -349,6 +383,7 @@ $text['button-save']['he'] = "שמור";
 $text['button-save']['pl'] = "Zachowaj";
 $text['button-save']['uk'] = "Зберегти";
 $text['button-save']['sv-se'] = "Spara";
+$text['button-save']['ru-ru'] = "Сохранить";
 
 $text['button-public']['en-us'] = "public";
 $text['button-public']['es-cl'] = "público";
@@ -359,6 +394,7 @@ $text['button-public']['he'] = "";
 $text['button-public']['pl'] = "publiczny";
 $text['button-public']['uk'] = "для всіх";
 $text['button-public']['sv-se'] = "allmän";
+$text['button-public']['ru-ru'] = "public";
 
 $text['button-delete']['en-us'] = "Delete";
 $text['button-delete']['es-cl'] = "Eliminar";
@@ -369,6 +405,7 @@ $text['button-delete']['he'] = "";
 $text['button-delete']['pl'] = "Usuń";
 $text['button-delete']['uk'] = "Видалити";
 $text['button-delete']['sv-se'] = "Ta Bort";
+$text['button-delete']['ru-ru'] = "Удалить";
 
 $text['button-back']['en-us'] = "Back";
 $text['button-back']['es-cl'] = "Volver";
@@ -379,6 +416,7 @@ $text['button-back']['he'] = "חזרה";
 $text['button-back']['pl'] = "Wróć";
 $text['button-back']['uk'] = "Назад";
 $text['button-back']['sv-se'] = "Tillbaka";
+$text['button-back']['ru-ru'] = "Назад";
 
 $text['button-add-title']['en-us'] = "Add";
 $text['button-add-title']['es-cl'] = "Agregar";
@@ -389,5 +427,6 @@ $text['button-add-title']['he'] = "";
 $text['button-add-title']['pl'] = "Dodaj";
 $text['button-add-title']['uk'] = "Додати";
 $text['button-add-title']['sv-se'] = "Lägg Till";
+$text['button-add-title']['ru-ru'] = "Добавить";
 
 ?>
