@@ -226,7 +226,7 @@ $text['description-hold_music']['sv-se'] = "Select the new hold music for the se
 $text['description-hold_music']['uk'] = "Select the new hold music for the selected extensions.";
 $text['description-hold_music']['de-at'] = "Select the new hold music for the selected extensions.";
 $text['description-hold_music']['it-it'] = "Select the new hold music for the selected extensions.";
-$text['description-hold_music']['ru-ru'] = "Выберите новую музыку для ожидания для выбраннных extensions.";
+$text['description-hold_music']['ru-ru'] = "Выберите новую музыку при ожидании для выбраннных extensions.";
 
 $text['description-outbound_caller_id_name']['en-us'] = "Enter the new outbound caller id name for the selected extensions.";
 $text['description-outbound_caller_id_name']['es-cl'] = "Enter the new outbound caller id name for the selected extensions.";
@@ -610,7 +610,7 @@ $text['label-hold_music']['sv-se'] = "Hold Music";
 $text['label-hold_music']['uk'] = "Hold Music";
 $text['label-hold_music']['de-at'] = "Hold Music";
 $text['label-hold_music']['it-it'] = "Hold Music";
-$text['label-hold_music']['ru-ru'] = "Hold Music";
+$text['label-hold_music']['ru-ru'] = "Музыка при ожидании";
 
 $text['label-outbound_caller_id_name']['en-us'] = "Outbound Caller ID Name";
 $text['label-outbound_caller_id_name']['es-cl'] = "Outbound Caller ID Name";
@@ -730,6 +730,7 @@ $text['label-sip_force_expires']['sv-se'] = "SIP Force Expires";
 $text['label-sip_force_expires']['uk'] = "SIP Force Expires";
 $text['label-sip_force_expires']['de-at'] = "SIP Force Expires";
 $text['label-sip_force_expires']['it-it'] = "SIP Force Expires";
+$text['label-sip_force_expires']['ru-ru'] = "SIP Force Expires";
 
 $text['label-username']['en-us'] = "Username";
 $text['label-username']['es-cl'] = "Username";
@@ -741,6 +742,7 @@ $text['label-username']['sv-se'] = "Username";
 $text['label-username']['uk'] = "Username";
 $text['label-username']['de-at'] = "Username";
 $text['label-username']['it-it'] = "Username";
+$text['label-username']['ru-ru'] = "Имя пользователя";
 
 $text['label-user_enabled']['en-us'] = "Enabled";
 $text['label-user_enabled']['es-cl'] = "Enabled";
@@ -752,6 +754,7 @@ $text['label-user_enabled']['sv-se'] = "Enabled";
 $text['label-user_enabled']['uk'] = "Enabled";
 $text['label-user_enabled']['de-at'] = "Enabled";
 $text['label-user_enabled']['it-it'] = "Enabled";
+$text['label-user_enabled']['ru-ru'] = "Включено";
 
 $text['label-device_label']['en-us'] = "Label";
 $text['label-device_label']['es-cl'] = "Label";
@@ -763,6 +766,7 @@ $text['label-device_label']['sv-se'] = "Label";
 $text['label-device_label']['uk'] = "Label";
 $text['label-device_label']['de-at'] = "Label";
 $text['label-device_label']['it-it'] = "Label";
+$text['label-device_label']['ru-ru'] = "Метка";
 
 $text['label-device_vendor']['en-us'] = "Vendor";
 $text['label-device_vendor']['es-cl'] = "Vendor";
@@ -774,6 +778,7 @@ $text['label-device_vendor']['sv-se'] = "Vendor";
 $text['label-device_vendor']['uk'] = "Vendor";
 $text['label-device_vendor']['de-at'] = "Vendor";
 $text['label-device_vendor']['it-it'] = "Vendor";
+$text['label-device_vendor']['ru-ru'] = "Vendor";
 
 $text['label-device_template']['en-us'] = "Template";
 $text['label-device_template']['es-cl'] = "Template";
@@ -785,6 +790,7 @@ $text['label-device_template']['sv-se'] = "Template";
 $text['label-device_template']['uk'] = "Template";
 $text['label-device_template']['de-at'] = "Template";
 $text['label-device_template']['it-it'] = "Template";
+$text['label-device_template']['ru-ru'] = "Шаблон";
 
 $text['label-device_profile']['en-us'] = "Profile";
 $text['label-device_profile']['es-cl'] = "Profile";
@@ -796,6 +802,7 @@ $text['label-device_profile']['sv-se'] = "Profile";
 $text['label-device_profile']['uk'] = "Profile";
 $text['label-device_profile']['de-at'] = "Profile";
 $text['label-device_profile']['it-it'] = "Profile";
+$text['label-device_profile']['ru-ru'] = "Профиль";
 
 $text['label-device_enabled']['en-us'] = "Enabled";
 $text['label-device_enabled']['es-cl'] = "Enabled";
@@ -807,6 +814,7 @@ $text['label-device_enabled']['sv-se'] = "Enabled";
 $text['label-device_enabled']['uk'] = "Enabled";
 $text['label-device_enabled']['de-at'] = "Enabled";
 $text['label-device_enabled']['it-it'] = "Enabled";
+$text['label-device_enabled']['ru-ru'] = "Включено";
 
 $text['label-device_description']['en-us'] = "Description";
 $text['label-device_description']['es-cl'] = "Description";
@@ -818,6 +826,7 @@ $text['label-device_description']['sv-se'] = "Description";
 $text['label-device_description']['uk'] = "Description";
 $text['label-device_description']['de-at'] = "Description";
 $text['label-device_description']['it-it'] = "Description";
+$text['label-device_description']['ru-ru'] = "Описание";
 
 $text['label-device_mac_address']['en-us'] = "MAC Address";
 $text['label-device_mac_address']['es-cl'] = "MAC Address";
@@ -829,6 +838,7 @@ $text['label-device_mac_address']['sv-se'] = "MAC Address";
 $text['label-device_mac_address']['uk'] = "MAC Address";
 $text['label-device_mac_address']['de-at'] = "MAC Address";
 $text['label-device_mac_address']['it-it'] = "MAC Address";
+$text['label-device_mac_address']['ru-ru'] = "MAC адрес";
 
 $text['label-voicemail_file']['en-us'] = "Voicemail File";
 $text['label-voicemail_file']['es-cl'] = "Voicemail File";
@@ -840,6 +850,7 @@ $text['label-voicemail_file']['sv-se'] = "Voicemail File";
 $text['label-voicemail_file']['uk'] = "Voicemail File";
 $text['label-voicemail_file']['de-at'] = "Voicemail File";
 $text['label-voicemail_file']['it-it'] = "Voicemail File";
+$text['label-voicemail_file']['ru-ru'] = "Файл голосовой почты";
 
 $text['label-voicemail_description']['en-us'] = "Description";
 $text['label-voicemail_description']['es-cl'] = "Description";
@@ -851,6 +862,7 @@ $text['label-voicemail_description']['sv-se'] = "Description";
 $text['label-voicemail_description']['uk'] = "Description";
 $text['label-voicemail_description']['de-at'] = "Description";
 $text['label-voicemail_description']['it-it'] = "Description";
+$text['label-voicemail_description']['ru-ru'] = "Описание";
 
 $text['label-voicemail_null']['en-us'] = " ";
 $text['label-voicemail_null']['es-cl'] = " ";
@@ -862,6 +874,7 @@ $text['label-voicemail_null']['sv-se'] = " ";
 $text['label-voicemail_null']['uk'] = " ";
 $text['label-voicemail_null']['de-at'] = " ";
 $text['label-voicemail_null']['it-it'] = " ";
+$text['label-voicemail_null']['ru-ru'] = " ";
 
 $text['label-voicemail_option_0']['en-us'] = "Option 0";
 $text['label-voicemail_option_0']['es-cl'] = "Option 0";
@@ -873,6 +886,7 @@ $text['label-voicemail_option_0']['sv-se'] = "Option 0";
 $text['label-voicemail_option_0']['uk'] = "Option 0";
 $text['label-voicemail_option_0']['de-at'] = "Option 0";
 $text['label-voicemail_option_0']['it-it'] = "Option 0";
+$text['label-voicemail_option_0']['ru-ru'] = "Option 0";
 
 $text['label-voicemail_option_1']['en-us'] = "Option 1";
 $text['label-voicemail_option_1']['es-cl'] = "Option 1";
@@ -884,6 +898,7 @@ $text['label-voicemail_option_1']['sv-se'] = "Option 1";
 $text['label-voicemail_option_1']['uk'] = "Option 1";
 $text['label-voicemail_option_1']['de-at'] = "Option 1";
 $text['label-voicemail_option_1']['it-it'] = "Option 1";
+$text['label-voicemail_option_1']['ru-ru'] = "Option 1";
 
 $text['label-voicemail_option_2']['en-us'] = "Option 2";
 $text['label-voicemail_option_2']['es-cl'] = "Option 2";
@@ -895,6 +910,7 @@ $text['label-voicemail_option_2']['sv-se'] = "Option 2";
 $text['label-voicemail_option_2']['uk'] = "Option 2";
 $text['label-voicemail_option_2']['de-at'] = "Option 2";
 $text['label-voicemail_option_2']['it-it'] = "Option 2";
+$text['label-voicemail_option_2']['ru-ru'] = "Option 2";
 
 $text['label-voicemail_option_3']['en-us'] = "Option 3";
 $text['label-voicemail_option_3']['es-cl'] = "Option 3";
@@ -906,6 +922,7 @@ $text['label-voicemail_option_3']['sv-se'] = "Option 3";
 $text['label-voicemail_option_3']['uk'] = "Option 3";
 $text['label-voicemail_option_3']['de-at'] = "Option 3";
 $text['label-voicemail_option_3']['it-it'] = "Option 3";
+$text['label-voicemail_option_3']['ru-ru'] = "Option 3";
 
 $text['label-voicemail_option_4']['en-us'] = "Option 4";
 $text['label-voicemail_option_4']['es-cl'] = "Option 4";
@@ -917,6 +934,7 @@ $text['label-voicemail_option_4']['sv-se'] = "Option 4";
 $text['label-voicemail_option_4']['uk'] = "Option 4";
 $text['label-voicemail_option_4']['de-at'] = "Option 4";
 $text['label-voicemail_option_4']['it-it'] = "Option 4";
+$text['label-voicemail_option_4']['ru-ru'] = "Option 4";
 
 $text['label-voicemail_option_5']['en-us'] = "Option 5";
 $text['label-voicemail_option_5']['es-cl'] = "Option 5";
@@ -928,6 +946,7 @@ $text['label-voicemail_option_5']['sv-se'] = "Option 5";
 $text['label-voicemail_option_5']['uk'] = "Option 5";
 $text['label-voicemail_option_5']['de-at'] = "Option 5";
 $text['label-voicemail_option_5']['it-it'] = "Option 5";
+$text['label-voicemail_option_5']['ru-ru'] = "Option 5";
 
 $text['label-voicemail_option_6']['en-us'] = "Option 6";
 $text['label-voicemail_option_6']['es-cl'] = "Option 6";
@@ -939,6 +958,7 @@ $text['label-voicemail_option_6']['sv-se'] = "Option 6";
 $text['label-voicemail_option_6']['uk'] = "Option 6";
 $text['label-voicemail_option_6']['de-at'] = "Option 6";
 $text['label-voicemail_option_6']['it-it'] = "Option 6";
+$text['label-voicemail_option_6']['ru-ru'] = "Option 6";
 
 $text['label-voicemail_option_7']['en-us'] = "Option 7";
 $text['label-voicemail_option_7']['es-cl'] = "Option 7";
@@ -950,6 +970,7 @@ $text['label-voicemail_option_7']['sv-se'] = "Option 7";
 $text['label-voicemail_option_7']['uk'] = "Option 7";
 $text['label-voicemail_option_7']['de-at'] = "Option 7";
 $text['label-voicemail_option_7']['it-it'] = "Option 7";
+$text['label-voicemail_option_7']['ru-ru'] = "Option 7";
 
 $text['label-voicemail_option_8']['en-us'] = "Option 8";
 $text['label-voicemail_option_8']['es-cl'] = "Option 8";
@@ -961,6 +982,7 @@ $text['label-voicemail_option_8']['sv-se'] = "Option 8";
 $text['label-voicemail_option_8']['uk'] = "Option 8";
 $text['label-voicemail_option_8']['de-at'] = "Option 8";
 $text['label-voicemail_option_8']['it-it'] = "Option 8";
+$text['label-voicemail_option_8']['ru-ru'] = "Option 8";
 
 $text['label-voicemail_option_9']['en-us'] = "Option 9";
 $text['label-voicemail_option_9']['es-cl'] = "Option 9";
@@ -972,6 +994,7 @@ $text['label-voicemail_option_9']['sv-se'] = "Option 9";
 $text['label-voicemail_option_9']['uk'] = "Option 9";
 $text['label-voicemail_option_9']['de-at'] = "Option 9";
 $text['label-voicemail_option_9']['it-it'] = "Option 9";
+$text['label-voicemail_option_9']['ru-ru'] = "Option 9";
 
 $text['label-voicemail_enabled']['en-us'] = "Enabled";
 $text['label-voicemail_enabled']['es-cl'] = "Enabled";
@@ -983,6 +1006,7 @@ $text['label-voicemail_enabled']['sv-se'] = "Enabled";
 $text['label-voicemail_enabled']['uk'] = "Enabled";
 $text['label-voicemail_enabled']['de-at'] = "Enabled";
 $text['label-voicemail_enabled']['it-it'] = "Enabled";
+$text['label-voicemail_enabled']['ru-ru'] = "Включено";
 
 $text['label-voicemail_id']['en-us'] = "Voicemail ID";
 $text['label-voicemail_id']['es-cl'] = "Voicemail ID";
@@ -994,6 +1018,7 @@ $text['label-voicemail_id']['sv-se'] = "Voicemail ID";
 $text['label-voicemail_id']['uk'] = "Voicemail ID";
 $text['label-voicemail_id']['de-at'] = "Voicemail ID";
 $text['label-voicemail_id']['it-it'] = "Voicemail ID";
+$text['label-voicemail_id']['ru-ru'] = "Voicemail ID";
 
 $text['label-voicemail_local_after_email']['en-us'] = "Keep Local";
 $text['label-voicemail_local_after_email']['es-cl'] = "Keep Local";
@@ -1005,6 +1030,7 @@ $text['label-voicemail_local_after_email']['sv-se'] = "Keep Local";
 $text['label-voicemail_local_after_email']['uk'] = "Keep Local";
 $text['label-voicemail_local_after_email']['de-at'] = "Keep Local";
 $text['label-voicemail_local_after_email']['it-it'] = "Keep Local";
+$text['label-voicemail_local_after_email']['ru-ru'] = "Keep Local";
 
 $text['label-voicemail_password']['en-us'] = "Voicemail Password";
 $text['label-voicemail_password']['es-cl'] = "Voicemail Password";
@@ -1016,6 +1042,7 @@ $text['label-voicemail_password']['sv-se'] = "Voicemail Password";
 $text['label-voicemail_password']['uk'] = "Voicemail Password";
 $text['label-voicemail_password']['de-at'] = "Voicemail Password";
 $text['label-voicemail_password']['it-it'] = "Voicemail Password";
+$text['label-voicemail_password']['ru-ru'] = "Пароль голосовой почты";
 
 $text['label-voicemail_transcription_enabled']['en-us'] = "Transcription Enabled";
 $text['label-voicemail_transcription_enabled']['es-cl'] = "Transcription Enabled";
@@ -1027,6 +1054,7 @@ $text['label-voicemail_transcription_enabled']['sv-se'] = "Transcription Enabled
 $text['label-voicemail_transcription_enabled']['uk'] = "Transcription Enabled";
 $text['label-voicemail_transcription_enabled']['de-at'] = "Transcription Enabled";
 $text['label-voicemail_transcription_enabled']['it-it'] = "Transcription Enabled";
+$text['label-voicemail_transcription_enabled']['ru-ru'] = "Transcription Enabled";
 
 $text['option-available']['en-us'] = "Available";
 $text['option-available']['es-cl'] = "Available";
@@ -1038,6 +1066,7 @@ $text['option-available']['sv-se'] = "Available";
 $text['option-available']['uk'] = "Available";
 $text['option-available']['de-at'] = "Available";
 $text['option-available']['it-it'] = "Available";
+$text['option-available']['ru-ru'] = "Доступно";
 
 $text['option-available_on_demand']['en-us'] = "Available (On Demand)";
 $text['option-available_on_demand']['es-cl'] = "Available (On Demand)";
@@ -1049,6 +1078,7 @@ $text['option-available_on_demand']['sv-se'] = "Available (On Demand)";
 $text['option-available_on_demand']['uk'] = "Available (On Demand)";
 $text['option-available_on_demand']['de-at'] = "Available (On Demand)";
 $text['option-available_on_demand']['it-it'] = "Available (On Demand)";
+$text['option-available_on_demand']['ru-ru'] = "Доступно (по запросу)";
 
 $text['option-logged_out']['en-us'] = "Logged Out";
 $text['option-logged_out']['es-cl'] = "Logged Out";
@@ -1060,6 +1090,7 @@ $text['option-logged_out']['sv-se'] = "Logged Out";
 $text['option-logged_out']['uk'] = "Logged Out";
 $text['option-logged_out']['de-at'] = "Logged Out";
 $text['option-logged_out']['it-it'] = "Logged Out";
+$text['option-logged_out']['ru-ru'] = "Logged Out";
 
 $text['option-on_break']['en-us'] = "On Break";
 $text['option-on_break']['es-cl'] = "On Break";
@@ -1071,6 +1102,7 @@ $text['option-on_break']['sv-se'] = "On Break";
 $text['option-on_break']['uk'] = "On Break";
 $text['option-on_break']['de-at'] = "On Break";
 $text['option-on_break']['it-it'] = "On Break";
+$text['option-on_break']['ru-ru'] = "On Break";
 
 $text['option-do_not_disturb']['en-us'] = "Do Not Disturb";
 $text['option-do_not_disturb']['es-cl'] = "Do Not Disturb";
@@ -1082,6 +1114,7 @@ $text['option-do_not_disturb']['sv-se'] = "Do Not Disturb";
 $text['option-do_not_disturb']['uk'] = "Do Not Disturb";
 $text['option-do_not_disturb']['de-at'] = "Do Not Disturb";
 $text['option-do_not_disturb']['it-it'] = "Do Not Disturb";
+$text['option-do_not_disturb']['ru-ru'] = "Do Not Disturb";
 
 $text['option-voicemail_file_listen']['en-us'] = "Listen Link (Login Required)";
 $text['option-voicemail_file_listen']['es-cl'] = "Listen Link (Login Required)";
@@ -1093,6 +1126,7 @@ $text['option-voicemail_file_listen']['sv-se'] = "Listen Link (Login Required)";
 $text['option-voicemail_file_listen']['uk'] = "Listen Link (Login Required)";
 $text['option-voicemail_file_listen']['de-at'] = "Listen Link (Login Required)";
 $text['option-voicemail_file_listen']['it-it'] = "Listen Link (Login Required)";
+$text['option-voicemail_file_listen']['ru-ru'] = "Ссылка для прослушивания (требуется авторизация)";
 
 $text['option-voicemail_file_link']['en-us'] = "Download Link (No Login Required)";
 $text['option-voicemail_file_link']['es-cl'] = "Download Link (No Login Required)";
@@ -1104,6 +1138,7 @@ $text['option-voicemail_file_link']['sv-se'] = "Download Link (No Login Required
 $text['option-voicemail_file_link']['uk'] = "Download Link (No Login Required)";
 $text['option-voicemail_file_link']['de-at'] = "Download Link (No Login Required)";
 $text['option-voicemail_file_link']['it-it'] = "Download Link (No Login Required)";
+$text['option-voicemail_file_link']['ru-ru'] = "Ссылка для скачивания (без авторизации)";
 
 $text['option-voicemail_file_attach']['en-us'] = "Audio File Attachment";
 $text['option-voicemail_file_attach']['es-cl'] = "Audio File Attachment";
@@ -1115,6 +1150,7 @@ $text['option-voicemail_file_attach']['sv-se'] = "Audio File Attachment";
 $text['option-voicemail_file_attach']['uk'] = "Audio File Attachment";
 $text['option-voicemail_file_attach']['de-at'] = "Audio File Attachment";
 $text['option-voicemail_file_attach']['it-it'] = "Audio File Attachment";
+$text['option-voicemail_file_attach']['ru-ru'] = "Audio File Attachment";
 
 $text['title-users_settings']['en-us'] = "User Settings";
 $text['title-users_settings']['es-cl'] = "User Settings";
@@ -1126,6 +1162,7 @@ $text['title-users_settings']['sv-se'] = "User Settings";
 $text['title-users_settings']['uk'] = "User Settings";
 $text['title-users_settings']['de-at'] = "User Settings";
 $text['title-users_settings']['it-it'] = "User Settings";
+$text['title-users_settings']['ru-ru'] = "Настройки пользователя";
 
 $text['title-devices_settings']['en-us'] = "Device Settings";
 $text['title-devices_settings']['es-cl'] = "Device Settings";
@@ -1137,4 +1174,5 @@ $text['title-devices_settings']['sv-se'] = "Device Settings";
 $text['title-devices_settings']['uk'] = "Device Settings";
 $text['title-devices_settings']['de-at'] = "Device Settings";
 $text['title-devices_settings']['it-it'] = "Device Settings";
+$text['title-devices_settings']['ru-ru'] = "Настройки устройства";
 ?>
