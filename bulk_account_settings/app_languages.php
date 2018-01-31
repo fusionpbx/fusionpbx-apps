@@ -742,7 +742,7 @@ $text['label-username']['sv-se'] = "Username";
 $text['label-username']['uk'] = "Username";
 $text['label-username']['de-at'] = "Username";
 $text['label-username']['it-it'] = "Username";
-$text['label-username']['ru-ru'] = "Имя пользователя";
+$text['label-username']['ru-ru'] = "Пользователь";
 
 $text['label-user_enabled']['en-us'] = "Enabled";
 $text['label-user_enabled']['es-cl'] = "Enabled";
