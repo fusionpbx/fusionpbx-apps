@@ -82,7 +82,7 @@
 
 //prepare to page the results
 	$rows_per_page = ($_SESSION['domain']['paging']['numeric'] != '') ? $_SESSION['domain']['paging']['numeric'] : 50;
-	$param = "&search=".$search;
+	$param = "&search=".$search."&option_selected=".$option_selected;
 	if (!isset($_GET['page'])) { $_GET['page'] = 0; }
 	$_GET['page'] = check_str($_GET['page']);
 	list($paging_controls_mini, $rows_per_page, $var_3) = paging($total_voicemails, $param, $rows_per_page, true); //top
