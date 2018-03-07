@@ -7,7 +7,7 @@ Install HOW TO
 4) cd /var/www/fusionpbx/resources/install/scripts/app/
 5) ln -s /var/www/fusionpbx/app/sms/resources/install/scripts/app/sms
 6) Go to GUI
-7) Upgrades -> APP DEFAULTS; MENU DEFAULTS; PERMISSION DEFAULTS
+7) Upgrades -> SCHEMA; APP DEFAULTS; MENU DEFAULTS; PERMISSION DEFAULTS
 8) Log out and back in
 9) ADV -> Default Settings
 10) add CARRIER_access_key and CARRIER_secret_key for whatever carrier you want to use
