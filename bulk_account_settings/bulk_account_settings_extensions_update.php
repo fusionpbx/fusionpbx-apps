@@ -61,7 +61,8 @@
 					if (is_array($extensions)) { 
 						foreach ($extensions as &$row) {
 							$extension = $row["extension"];
-							//$user_context = $row["user_context"];
+							$user_context = $row["user_context"];
+							$number_alias = $row["number_alias"];
 						}
 						unset ($prep_statement);
 					}
@@ -80,6 +81,13 @@
 					//exit;
 					
 					unset($database,$array,$i);
+				
+				//clear the cache
+					$cache = new cache;
+					$cache->delete("directory:".$extension."@".$user_context);
+					if (permission_exists('number_alias') && strlen($number_alias) > 0) {
+						$cache->delete("directory:".$number_alias."@".$user_context);
+					}
 			}
 		}
 	}
