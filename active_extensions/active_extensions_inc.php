@@ -180,79 +180,78 @@
 			}
 
 		//active channels array
-				$channels_array = '';
-				$x = 1;
-				foreach ($xml as $row) {
-					//set the original array id
-						$channels_array[$x]['x'] = $x;
+			$x = 1;
+			foreach ($xml as $row) {
+				//set the original array id
+					$channels_array[$x]['x'] = $x;
 
-					//get the values from xml and set them to the channel array
-						$channels_array[$x]['uuid'] = $row->uuid;
-						$channels_array[$x]['direction'] = $row->direction;
-						$channels_array[$x]['created'] = $row->created;
-						$channels_array[$x]['created_epoch'] = $row->created_epoch;
-						$channels_array[$x]['name'] = $row->name;
-						$channels_array[$x]['state'] = $row->state;
-						$channels_array[$x]['cid_name'] = $row->cid_name;
-						$channels_array[$x]['cid_num'] = $row->cid_num;
-						$channels_array[$x]['ip_addr'] = $row->ip_addr;
-						$channels_array[$x]['dest'] = $row->dest;
-						$channels_array[$x]['application'] = $row->application;
-						$channels_array[$x]['application_data'] = $row->application_data;
-						$channels_array[$x]['dialplan'] = $row->dialplan;
-						$channels_array[$x]['context'] = $row->context;
-						$channels_array[$x]['read_codec'] = $row->read_codec;
-						$channels_array[$x]['read_rate'] = $row->read_rate;
-						$channels_array[$x]['read_bit_rate'] = $row->read_bit_rate;
-						$channels_array[$x]['write_codec'] = $row->write_codec;
-						$channels_array[$x]['write_rate'] = $row->write_rate;
-						$channels_array[$x]['write_bit_rate'] = $row->write_bit_rate;
-						$channels_array[$x]['secure'] = $row->secure;
-						$channels_array[$x]['hostname'] = $row->hostname;
-						$channels_array[$x]['presence_id'] = $row->presence_id;
-						$channels_array[$x]['presence_data'] = $row->presence_data;
-						$channels_array[$x]['callstate'] = $row->callstate;
-						$channels_array[$x]['callee_name'] = $row->callee_name;
-						$channels_array[$x]['callee_num'] = $row->callee_num;
-						$channels_array[$x]['callee_direction'] = $row->callee_direction;
-						$channels_array[$x]['call_uuid'] = $row->call_uuid;
+				//get the values from xml and set them to the channel array
+					$channels_array[$x]['uuid'] = $row->uuid;
+					$channels_array[$x]['direction'] = $row->direction;
+					$channels_array[$x]['created'] = $row->created;
+					$channels_array[$x]['created_epoch'] = $row->created_epoch;
+					$channels_array[$x]['name'] = $row->name;
+					$channels_array[$x]['state'] = $row->state;
+					$channels_array[$x]['cid_name'] = $row->cid_name;
+					$channels_array[$x]['cid_num'] = $row->cid_num;
+					$channels_array[$x]['ip_addr'] = $row->ip_addr;
+					$channels_array[$x]['dest'] = $row->dest;
+					$channels_array[$x]['application'] = $row->application;
+					$channels_array[$x]['application_data'] = $row->application_data;
+					$channels_array[$x]['dialplan'] = $row->dialplan;
+					$channels_array[$x]['context'] = $row->context;
+					$channels_array[$x]['read_codec'] = $row->read_codec;
+					$channels_array[$x]['read_rate'] = $row->read_rate;
+					$channels_array[$x]['read_bit_rate'] = $row->read_bit_rate;
+					$channels_array[$x]['write_codec'] = $row->write_codec;
+					$channels_array[$x]['write_rate'] = $row->write_rate;
+					$channels_array[$x]['write_bit_rate'] = $row->write_bit_rate;
+					$channels_array[$x]['secure'] = $row->secure;
+					$channels_array[$x]['hostname'] = $row->hostname;
+					$channels_array[$x]['presence_id'] = $row->presence_id;
+					$channels_array[$x]['presence_data'] = $row->presence_data;
+					$channels_array[$x]['callstate'] = $row->callstate;
+					$channels_array[$x]['callee_name'] = $row->callee_name;
+					$channels_array[$x]['callee_num'] = $row->callee_num;
+					$channels_array[$x]['callee_direction'] = $row->callee_direction;
+					$channels_array[$x]['call_uuid'] = $row->call_uuid;
 
-					//remove other domains
-						if (count($_SESSION["domains"]) > 1) {
-							//unset domains that are not related to this tenant
-							$temp_array = explode("@", $channels_array[$x]['presence_id']);
-							if ($temp_array[1] != $_SESSION['domain_name']) {
-								unset($channels_array[$x]);
-							}
-						}
-
-					//parse some of the php variables\
+				//remove other domains
+					if (count($_SESSION["domains"]) > 1) {
+						//unset domains that are not related to this tenant
 						$temp_array = explode("@", $channels_array[$x]['presence_id']);
-						$channels_array[$x]['number'] = $temp_array[0];
+						if ($temp_array[1] != $_SESSION['domain_name']) {
+							unset($channels_array[$x]);
+						}
+					}
 
-					//remove the '+' because it breaks the call recording
-						$channels_array[$x]['cid_num'] = $temp_array[0] = str_replace("+", "", $channels_array[$x]['cid_num']);
+				//parse some of the php variables\
+					$temp_array = explode("@", $channels_array[$x]['presence_id']);
+					$channels_array[$x]['number'] = $temp_array[0];
 
-					//calculate and set the call length
-						$call_length_seconds = time() - $channels_array[$x]['created_epoch'];
-						$call_length_hour = floor($call_length_seconds/3600);
-						$call_length_min = floor($call_length_seconds/60 - ($call_length_hour * 60));
-						$call_length_sec = $call_length_seconds - (($call_length_hour * 3600) + ($call_length_min * 60));
-						$call_length_min = sprintf("%02d", $call_length_min);
-						$call_length_sec = sprintf("%02d", $call_length_sec);
-						$call_length = $call_length_hour.':'.$call_length_min.':'.$call_length_sec;
-						$channels_array[$x]['call_length'] = $call_length;
+				//remove the '+' because it breaks the call recording
+					$channels_array[$x]['cid_num'] = $temp_array[0] = str_replace("+", "", $channels_array[$x]['cid_num']);
 
-					//valet park
-						//if (is_array($valet_array[$uuid])) {
-						//	$valet_array[$uuid]['context'] = $channels_array[$x]['context'];
-						//	$valet_array[$uuid]['cid_name'] = $channels_array[$x]['cid_name'];
-						//	$valet_array[$uuid]['cid_num'] = $channels_array[$x]['cid_num'];
-						//	$valet_array[$uuid]['call_length'] = $call_length;
-						//}
-					//increment the array index
-						$x++;
-				}
+				//calculate and set the call length
+					$call_length_seconds = time() - $channels_array[$x]['created_epoch'];
+					$call_length_hour = floor($call_length_seconds/3600);
+					$call_length_min = floor($call_length_seconds/60 - ($call_length_hour * 60));
+					$call_length_sec = $call_length_seconds - (($call_length_hour * 3600) + ($call_length_min * 60));
+					$call_length_min = sprintf("%02d", $call_length_min);
+					$call_length_sec = sprintf("%02d", $call_length_sec);
+					$call_length = $call_length_hour.':'.$call_length_min.':'.$call_length_sec;
+					$channels_array[$x]['call_length'] = $call_length;
+
+				//valet park
+					//if (is_array($valet_array[$uuid])) {
+					//	$valet_array[$uuid]['context'] = $channels_array[$x]['context'];
+					//	$valet_array[$uuid]['cid_name'] = $channels_array[$x]['cid_name'];
+					//	$valet_array[$uuid]['cid_num'] = $channels_array[$x]['cid_num'];
+					//	$valet_array[$uuid]['call_length'] = $call_length;
+					//}
+				//increment the array index
+					$x++;
+			}
 
 		//active extensions
 			//get the extension information
