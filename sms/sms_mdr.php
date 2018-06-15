@@ -125,7 +125,7 @@ else {
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['start_stamp']."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['from_number']."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['to_number']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['message']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".urldecode($row['message'])."&nbsp;</td>\n";
 			echo "</tr>\n";
 			$c = ($c) ? 0 : 1;
 		} // end foreach

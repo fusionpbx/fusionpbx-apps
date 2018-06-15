@@ -8,7 +8,7 @@
                         </condition>
                 </extension>
         </context>
-        <context name="public">
+        <context name="internal">
                 <extension name="demo">
                         <condition field="to" expression="^(.*)$">
                                     <action application="lua" data="app.lua sms outbound"/>

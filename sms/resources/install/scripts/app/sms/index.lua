@@ -71,7 +71,7 @@
 	if direction == "inbound" then
 		to = argv[3];
 		from = argv[4];
-		body = urlencode(argv[5]);
+		body = argv[5];
 		domain_name = string.match(to,'%@+(.+)');
 		extension = string.match(to,'%d+');
 
@@ -131,9 +131,9 @@
 			from = message:getHeader("from_user");
 		end
 		if (argv[5] ~= nil) then
-			body = urlencode(argv[5]);
+			body = argv[5];
 		else
-			body = urlencode(message:getBody());
+			body = message:getBody();
 		end
 
 		if (debug["info"]) then
@@ -311,7 +311,7 @@
 		sql = "insert into v_sms_messages";
 		sql = sql .. "(sms_message_uuid,extension_uuid,domain_uuid,start_stamp,from_number,to_number,message,direction,response,carrier)";
 		sql = sql .. " values (:uuid,:extension_uuid,:domain_uuid,now(),:from,:to,:body,:direction,'',:carrier)";
-		local params = {uuid = uuid(), extension_uuid = extension_uuid, domain_uuid = domain_uuid, from = from, to = to, body = body, direction = direction, carrier = carrier }
+		local params = {uuid = uuid(), extension_uuid = extension_uuid, domain_uuid = domain_uuid, from = from, to = to, body = urlencode(body), direction = direction, carrier = carrier }
 
 		if (debug["sql"]) then
 			freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
