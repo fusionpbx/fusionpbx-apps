@@ -90,7 +90,7 @@
 		event:addHeader("from", "sip:" .. from);
 		event:addHeader("from_user", from);
 		event:addHeader("from_host", domain_name);
-		event:addHeader("from_full", "sip:" .. from);
+		event:addHeader("from_full", "sip:" .. from .."@".. domain_name);
 		event:addHeader("sip_profile","internal");
 		event:addHeader("to", to);
 		event:addHeader("to_user", extension);
