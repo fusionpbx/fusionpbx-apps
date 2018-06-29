@@ -258,7 +258,23 @@
 				outbound_caller_id_number = "1" .. outbound_caller_id_number;
 			end
 			cmd="curl -v -X POST " .. api_url .." -u " .. access_key .. ":" .. secret_key .. " -H \"Content-type: application/json\" -d '{\"from\": \"+" .. outbound_caller_id_number .. "\", \"to\": \"+" .. to .."\", \"text\": \"" .. body .."\"}'"		
-		
+		elseif (carrier == "thinq") then
+			if to:len() < 11 then
+				to = "1" .. to;
+			end
+			if outbound_caller_id_number:len() < 11 then
+				outbound_caller_id_number = "1" .. outbound_caller_id_number;
+			end
+			//Get User_name
+			sql = "SELECT default_setting_value FROM v_default_settings ";
+			sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_username' and default_setting_enabled = 'true'";
+			if (debug["sql"]) then
+				freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
+			end
+			status = dbh:query(sql, function(rows)
+				username = rows["default_setting_value"];
+			end);
+			cmd = "curl -X POST '" .. api_url .."' -H \"Content-Type:multipart/form-data\"  -F 'message=" .. body .. "' -F 'to_did=" .. to .."' -F 'from_did=" .. outbound_caller_id_number .. "' -u '".. username ..":".. access_key .."'"
 		end
 		if (debug["info"]) then
 			freeswitch.consoleLog("notice", "[sms] CMD: " .. cmd .. "\n");
