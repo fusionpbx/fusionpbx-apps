@@ -69,7 +69,7 @@ $row_style["1"] = "row_style1";
 // File operations
 
 if (isset($_FILES['file'])) {
-	if ($_FILES["file"]["error"] == UPLOAD_ERR_OK && $_FILES["file"]["type"] == 'text/csv') {
+	if ($_FILES["file"]["error"] == UPLOAD_ERR_OK && ($_FILES["file"]["type"] == 'text/csv' || $_FILES["file"]["type"] == 'application/octet-stream')) {
 		move_uploaded_file($_FILES["file"]["tmp_name"], $csv_file_name);
 	}
 }
