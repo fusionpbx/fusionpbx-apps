@@ -112,7 +112,7 @@ echo "	};\n";
 		}
 	};
 	//makes the call
-	//session = user_agent.invite('sip:1020@voip.fusionpbx.com', options);
+	//session = user_agent.invite('sip:1020@pbx.fusionpbx.com', options);
 
 	//answer
 	user_agent.on('invite', function (session) {
