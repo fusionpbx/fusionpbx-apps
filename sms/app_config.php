@@ -155,7 +155,7 @@
 		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
 		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';   
 		$y++;   
-	
+
 		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = '14101c26-c3f9-46aa-a67a-3642752e56f4';
 		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
 		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'flowroute_access_key';
