@@ -90,14 +90,14 @@
 		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'true';
 		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
 		$y++;
-        $apps[$x]['default_settings'][$y]['default_setting_uuid'] = '9b36edac-eeac-4a3e-b8d4-664962e3f78c';
-        $apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
-        $apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'carriers';
-        $apps[$x]['default_settings'][$y]['default_setting_name'] = 'array';
-        $apps[$x]['default_settings'][$y]['default_setting_value'] = 'telnyx';
-        $apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'true';
-        $apps[$x]['default_settings'][$y]['default_setting_description'] = '';
-        $y++;
+		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = '9b36edac-eeac-4a3e-b8d4-664962e3f78c';
+		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
+		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'carriers';
+		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'array';
+		$apps[$x]['default_settings'][$y]['default_setting_value'] = 'telnyx';
+		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'true';
+		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
+		$y++;
 		
 		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = 'e997203c-ca48-45b4-828d-e347ff66fa7c';
 		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
