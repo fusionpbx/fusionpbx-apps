@@ -183,7 +183,7 @@
 	echo "	".$text['label-item_qty']."\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "  <input class='formfld' type='text' name='item_qty' maxlength='255' value='$item_qty'>\n";
+	echo "  <input class='formfld' type='text' name='item_qty' maxlength='255' value='".escape($item_qty)."'>\n";
 	echo "<br />\n";
 	echo $text['description-item_qty']."\n";
 	echo "</td>\n";
@@ -194,7 +194,7 @@
 	echo "	".$text['label-item_unit_price']."\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "  <input class='formfld' type='text' name='item_unit_price' maxlength='255' value='$item_unit_price'>\n";
+	echo "  <input class='formfld' type='text' name='item_unit_price' maxlength='255' value='".escape($item_unit_price)."'>\n";
 	echo "<br />\n";
 	echo $text['description-item_unit_price']."\n";
 	echo "</td>\n";
@@ -205,7 +205,7 @@
 	echo "	".$text['label-item_desc']."\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "  <textarea class='formfld' type='text' rows='15' name='item_desc'>$item_desc</textarea>\n";
+	echo "  <textarea class='formfld' type='text' rows='15' name='item_desc'>".escape($item_desc)."</textarea>\n";
 	echo "<br />\n";
 	//echo $text['description-item_desc']."\n";
 	echo "</td>\n";
@@ -213,13 +213,13 @@
 
 	echo "	<tr>\n";
 	echo "		<td colspan='2' align='right'>\n";
-	echo "			<input type='hidden' name='invoice_uuid' value='$invoice_uuid'>\n";
-	echo "			<input type='hidden' name='contact_uuid' value='$contact_uuid'>\n";
+	echo "			<input type='hidden' name='invoice_uuid' value='".escape($invoice_uuid)."'>\n";
+	echo "			<input type='hidden' name='contact_uuid' value='".escape($contact_uuid)."'>\n";
 	if ($action == "update") {
 		if ($back != '') {
-			echo "		<input type='hidden' name='back' value='".$back."'>";
+			echo "		<input type='hidden' name='back' value='".escape($back)."'>";
 		}
-		echo "		<input type='hidden' name='invoice_item_uuid' value='$invoice_item_uuid'>\n";
+		echo "		<input type='hidden' name='invoice_item_uuid' value='".escape($invoice_item_uuid)."'>\n";
 	}
 	echo "			<br><input type='submit' name='submit' class='btn' value='".$text['button-save']."'>\n";
 	echo "		</td>\n";
