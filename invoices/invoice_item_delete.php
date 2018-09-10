@@ -25,37 +25,42 @@
 	ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 	POSSIBILITY OF SUCH DAMAGE.
 */
-require_once "root.php";
-require_once "resources/require.php";
-require_once "resources/check_auth.php";
-if (permission_exists('invoice_item_delete')) {
-	//access granted
-}
-else {
-	echo "access denied";
-	exit;
-}
 
-if (count($_GET) > 0) {
-	$id = check_str($_GET["id"]);
-	$invoice_uuid = check_str($_GET["invoice_uuid"]);
-	$contact_uuid = check_str($_GET["contact_uuid"]);
-	$back = check_str($_GET["back"]);
-}
+//includes
+	require_once "root.php";
+	require_once "resources/require.php";
+	require_once "resources/check_auth.php";
+
+//get permissions
+	if (permission_exists('invoice_item_delete')) {
+		//access granted
+	}
+	else {
+		echo "access denied";
+		exit;
+	}
+
+//get the http variables
+	if (count($_GET) > 0) {
+		$id = check_str($_GET["id"]);
+		$invoice_uuid = check_str($_GET["invoice_uuid"]);
+		$contact_uuid = check_str($_GET["contact_uuid"]);
+		$back = check_str($_GET["back"]);
+	}
 
 //add multi-lingual support
 	$language = new text;
 	$text = $language->get();
 
-if (strlen($id) > 0) {
-	//delete invoice_item
-		$sql = "delete from v_invoice_items ";
-		$sql .= "where domain_uuid = '$domain_uuid' ";
-		$sql .= "and invoice_item_uuid = '$id' ";
-		$prep_statement = $db->prepare(check_sql($sql));
-		$prep_statement->execute();
-		unset($sql);
-}
+//delete invoice_item
+	if (strlen($id) > 0) {
+			$sql = "delete from v_invoice_items ";
+			$sql .= "where domain_uuid = '$domain_uuid' ";
+			$sql .= "and invoice_item_uuid = '$id' ";
+			$prep_statement = $db->prepare(check_sql($sql));
+			$prep_statement->execute();
+			unset($sql);
+	}
 
 //redirect the user
 	$_SESSION['message'] = $text['message-delete'];
