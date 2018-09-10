@@ -103,7 +103,7 @@ require_once "resources/header.php";
 			  echo "</tr>";
 
 			  echo "<tr>";
-			  echo "    <td valign='top'>".$text['label-group'].": &nbwsp;</td>";
+			  echo "    <td valign='top'>".$text['label-group'].": &nbsp;</td>";
 			  echo "     <td valign='top'>".escape($row[rss_group])."</td>";
 			  echo "</tr>";
 			  
