@@ -296,7 +296,7 @@ echo "<br />\n";
 echo "<table width='100%' border='0' cellpadding='0' cellspacing='2'>\n";
 echo "	<tr class='border'>\n";
 if ($event_type=="iframe") {
-	echo "	<td align=\"left\" width='".$iframe_width."'>\n";
+	echo "	<td align=\"left\" width='".escape($iframe_width)."'>\n";
 }
 else {
 	echo "	<td align=\"left\" width='100%'>\n";
@@ -307,7 +307,7 @@ echo "	</td>\n";
 
 if ($event_type=="iframe") {
 	echo "</td>\n";
-	echo "<td width='".$iframe_width."' height='".$iframe_height."'>\n";
+	echo "<td width='".escape($iframe_width)."' height='".escape($iframe_height)."'>\n";
 	echo "	<iframe src ='$url' width='100%' id='iframe1' height='100%' frameborder=0>\n";
 	echo "		<p>Your browser does not support iframes.</p>\n";
 	echo "	</iframe>\n";
