@@ -70,7 +70,7 @@ if ($content_type == "html") {
 if ($content_type == "rss") {
 	header('Content-Type: text/xml');
 	echo '<?xml version="1.0"  ?'.'>';
-	echo '<?xml-stylesheet type="text/css" href="'.$rss_css_url.'" ?'.'>';
+	echo '<?xml-stylesheet type="text/css" href="'.escape($rss_css_url).'" ?'.'>';
 	//echo '<?xml-stylesheet type="text/css" href="http://'.$_SERVER["HTTP_HOST"].$_SERVER["PHP_SELF"].'" ?'.'>';
 	//echo "\n";
 	echo "<rss version=\"2.0\">\n";
@@ -116,9 +116,9 @@ foreach ($result as &$row) {
 		$rss_description  = htmlentities($rss_description);
 
 		echo "<item>\n";
-		echo "<title>".$rss_title."</title>\n";
+		echo "<title>".escape($rss_title)."</title>\n";
 		echo "<description>".$rss_description."</description>\n";
-		echo "<link>".$rss_link."</link>\n";
+		echo "<link>".escape($rss_link)."</link>\n";
 		//echo "<pubDate>12 Mar 2007 19:38:06 GMT</pubDate>\n";
 		//echo "<guid isPermaLink='true'>http://www.google.com/log/123</guid>\n";
 		//echo "<comments>http://www.google.com/log/121#comments</comments>\n";
@@ -129,10 +129,10 @@ foreach ($result as &$row) {
 	}
 	else {
 		if (strlen($rss_link) > 0) {
-			echo "<b><a href='$rss_link'>".$rss_title."</a></b><br>\n";
+			echo "<b><a href='$rss_link'>".escape($rss_title)."</a></b><br>\n";
 		}
 		else {
-			echo "<b>".$rss_title."</b><br>\n";
+			echo "<b>".escape($rss_title)."</b><br>\n";
 		}
 		echo "".$rss_description."\n";
 		echo "<br><br>";
@@ -177,22 +177,22 @@ foreach ($result as &$row) {
 						//echo "<td valign='top'>&nbsp;<b>".$row2[rss_sub_title]."</b>&nbsp;</td>";
 						//echo "<td valign='top'>&nbsp;".$row2[rss_sub_link]."&nbsp;</td>";
 						echo "<td valign='top' width='200'>";
-						echo "  <b>".$row2[rss_sub_title]."</b>";
+						echo "  <b>".escape($row2[rss_sub_title])."</b>";
 						echo "</td>";
 
-						echo "<td valign='top'>".$row2[rss_sub_add_date]."</td>";
+						echo "<td valign='top'>".escape($row2[rss_sub_add_date])."</td>";
 
-						//echo "<td valign='top'>".$row2[rss_sub_optional_1]."</td>";
-						//echo "<td valign='top'>".$row2[rss_sub_optional_2]."</td>";
-						//echo "<td valign='top'>".$row2[rss_sub_optional_3]."</td>";
-						//echo "<td valign='top'>".$row2[rss_sub_optional_4]."</td>";
-						//echo "<td valign='top'>".$row2[rss_sub_optional_5]."</td>";
-						//echo "<td valign='top'>".$row2[rss_sub_add_user]."</td>";
+						//echo "<td valign='top'>".escape($row2[rss_sub_optional_1])."</td>";
+						//echo "<td valign='top'>".escape($row2[rss_sub_optional_2])."</td>";
+						//echo "<td valign='top'>".escape($row2[rss_sub_optional_3])."</td>";
+						//echo "<td valign='top'>".escape($row2[rss_sub_optional_4])."</td>";
+						//echo "<td valign='top'>".escape($row2[rss_sub_optional_5])."</td>";
+						//echo "<td valign='top'>".escape($row2[rss_sub_add_user])."</td>";
 						echo "<td valign='top' align='right'>";
 						echo "  &nbsp;";
-						//echo "  <input type='button' class='btn' name='' onclick=\"window.location='rsssubupdate.php?rss_uuid=".$rss_uuid."&rss_sub_uuid=".$row2[rss_sub_uuid]."'\" value='Update'>";
+						//echo "  <input type='button' class='btn' name='' onclick=\"window.location='rsssubupdate.php?rss_uuid=".escape($rss_uuid)."&rss_sub_uuid=".escape($row2[rss_sub_uuid])."'\" value='Update'>";
 						echo "  &nbsp; \n";
-						//echo "  <a href='rsssubupdate.php?rss_uuid=".$rss_uuid."&rss_sub_uuid=".$row2[rss_sub_uuid]."'>Update</a>&nbsp;";
+						//echo "  <a href='rsssubupdate.php?rss_uuid=".escape($rss_uuid)."&rss_sub_uuid=".escape($row2[rss_sub_uuid])."'>Update</a>&nbsp;";
 						echo "</td>";
 
 						$rss_sub_description = $row2[rss_sub_description];
@@ -230,9 +230,9 @@ foreach ($result as &$row) {
 
 
 	//echo "<item>\n";
-	//echo "<title>    ".$row["favname"]."</title>\n";
-	//echo "<description>".$row["favdesc"]."</description>\n";
-	//echo "<link>".$row["favurl"]."</link>\n";
+	//echo "<title>    ".escape($row["favname"])."</title>\n";
+	//echo "<description>".escape($row["favdesc"])."</description>\n";
+	//echo "<link>".escape($row["favurl"])."</link>\n";
 	//echo "</item>\n";
 
 	//$last_cat = $row["favcat"];
