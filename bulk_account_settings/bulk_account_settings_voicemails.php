@@ -381,15 +381,15 @@ $sql_view = $sql;
 if (is_array($directory)) {
 
 		foreach($directory as $key => $row) {
-			$tr_link = (permission_exists('voicemail_edit')) ? " href='/app/voicemails/voicemail_edit.php?id=".$row['voicemail_uuid']."'" : null;
+			$tr_link = (permission_exists('voicemail_edit')) ? " href='/app/voicemails/voicemail_edit.php?id=".escape($row['voicemail_uuid'])."'" : null;
 			echo "<tr ".$tr_link.">\n";
 
 			echo "	<td valign='top' class='".$row_style[$c]." tr_link_void' style='text-align: center; vertical-align: middle; padding: 0px;'>";
-			echo "		<input type='checkbox' name='id[]' id='checkbox_".$row['voicemail_uuid']."' value='".$row['voicemail_uuid']."' onclick=\"if (!this.checked) { document.getElementById('chk_all').checked = false; }\">";
+			echo "		<input type='checkbox' name='id[]' id='checkbox_".escape($row['voicemail_uuid'])."' value='".escape($row['voicemail_uuid'])."' onclick=\"if (!this.checked) { document.getElementById('chk_all').checked = false; }\">";
 			echo "	</td>";
 			$ext_ids[] = 'checkbox_'.$row['voicemail_uuid'];
 
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['voicemail_id']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['voicemail_id'])."&nbsp;</td>\n";
 			if (preg_match ('/option_/',$option_selected)) {
 				echo "	<td valign='top' class='".$row_style[$c]."'>\n";
 					$x = 0;
@@ -404,14 +404,14 @@ if (is_array($directory)) {
 			}				
 
 			else {
-				echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['voicemail_file']."&nbsp;</td>\n";
-				echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['voicemail_local_after_email']."&nbsp;</td>\n";
+				echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['voicemail_file'])."&nbsp;</td>\n";
+				echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['voicemail_local_after_email'])."&nbsp;</td>\n";
 				if($_SESSION['voicemail']['transcribe_enabled']['boolean'] == "true") {
-					echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['voicemail_transcription_enabled']."&nbsp;</td>\n";			
+					echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['voicemail_transcription_enabled'])."&nbsp;</td>\n";			
 				}
 			}
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['voicemail_enabled']."&nbsp;</td>\n";			
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['voicemail_description']."</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['voicemail_enabled'])."&nbsp;</td>\n";			
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['voicemail_description'])."</td>\n";
 			echo "</tr>\n";
 			$c = ($c) ? 0 : 1;
 		}
