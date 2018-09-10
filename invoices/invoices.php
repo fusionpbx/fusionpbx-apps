@@ -141,7 +141,7 @@
 	if (is_array($invoices)) {
 		foreach($invoices as $row) {
 			$back = ($contact_uuid != '') ? "&back=".urlencode("invoices.php?id=".$contact_uuid) : null;
-			$tr_link = (permission_exists('invoice_edit')) ? "href='invoice_edit.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid'].$back."'" : null;
+			$tr_link = (permission_exists('invoice_edit')) ? "href='invoice_edit.php?contact_uuid=".escape($row['contact_uuid'])."&id=".escape($row['invoice_uuid']).escape($back)."'" : null;
 			echo "<tr ".$tr_link.">\n";
 			echo "	<td align='center' valign='middle' class='".$row_style[$c]."' style='padding: 0px 0px 0px 5px;'>";
 			if ($row['invoice_paid'] == 1) {
@@ -151,18 +151,18 @@
 				echo "<img src='unpaid.png' style='width: 16px; height: 16px; border; none;'>";
 			}
 			echo "	</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'><a href='invoice_edit.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid'].$back."' alt='".$text['button-edit']."'>".$row['invoice_number']."</a>&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$text['label-invoice_type_'.$row['invoice_type']]."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['contact_organization']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['contact_name_given']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['contact_name_family']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['invoice_date']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'><a href='invoice_edit.php?contact_uuid=".escape($row['contact_uuid'])."&id=".escape($row['invoice_uuid']).escape($back)."' alt='".$text['button-edit']."'>".escape($row['invoice_number'])."</a>&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$text['label-invoice_type_'.escape($row['invoice_type']])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['contact_organization'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['contact_name_given'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['contact_name_family'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['invoice_date'])."&nbsp;</td>\n";
 			echo "	<td class='list_control_icons'>\n";
 			if (permission_exists('invoice_edit')) {
-				echo 	"<a href='invoice_edit.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid'].$back."' alt='".$text['button-edit']."'>$v_link_label_edit</a>";
+				echo 	"<a href='invoice_edit.php?contact_uuid=".escape($row['contact_uuid'])."&id=".escape($row['invoice_uuid']).escape($back)."' alt='".$text['button-edit']."'>$v_link_label_edit</a>";
 			}
 			if (permission_exists('invoice_delete')) {
-				echo 	"<a href='invoices_delete.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid'].$back."' alt='".$text['button-delete']."' onclick=\"return confirm('".$text['confirm-delete']."')\">$v_link_label_delete</a>";
+				echo 	"<a href='invoices_delete.php?contact_uuid=".escape($row['contact_uuid'])."&id=".escape($row['invoice_uuid']).escape($back)."' alt='".$text['button-delete']."' onclick=\"return confirm('".$text['confirm-delete']."')\">$v_link_label_delete</a>";
 			}
 			echo 	"</td>\n";
 			echo "</tr>\n";
