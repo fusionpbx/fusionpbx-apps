@@ -164,8 +164,8 @@
 	echo "		<form method='get' action=''>\n";
 	echo "			<td style='vertical-align: top; text-align: right; white-space: nowrap;'>\n";
 	echo "				<input type='button' class='btn' alt='".$text['button-back']."' onclick=\"window.location='domain_counts.php'\" value='".$text['button-back']."'>\n";	
-	echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".$search."'>";
-	echo "				<input type='hidden' name='id' value='".$domain_uuid."' />";	
+	echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".escape($search)."'>";
+	echo "				<input type='hidden' name='id' value='".escape($domain_uuid)."' />";	
 	echo "				<input type='submit' class='btn' name='submit' value='".$text['button-search']."'>";
 	echo "				<input type='button' class='btn' value='".$text['button-export']."' ";
 	echo "onclick=\"window.location='domain_counts_accountcodes.php?";
@@ -200,8 +200,8 @@
 	echo "</tr>\n";
 
 	if (isset($directory)) foreach ($directory as $key => $row) {
-		echo "	<td valign='top' class='".$row_style[$c]."'>".$row['accountcode']."</td>\n";
-		echo "	<td valign='top' class='row_stylebg' width='75%'>".$row['count']."&nbsp;</td>\n";
+		echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['accountcode'])."</td>\n";
+		echo "	<td valign='top' class='row_stylebg' width='75%'>".escape($row['count'])."&nbsp;</td>\n";
 		echo "	</tr>\n";
 		$c = ($c==0) ? 1 : 0;
 	}
