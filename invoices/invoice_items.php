@@ -25,16 +25,20 @@
 	ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 	POSSIBILITY OF SUCH DAMAGE.
 */
-require_once "root.php";
-require_once "resources/require.php";
-require_once "resources/check_auth.php";
-if (permission_exists('invoice_item_view')) {
-	//access granted
-}
-else {
-	echo "access denied";
-	exit;
-}
+
+//includes
+	require_once "root.php";
+	require_once "resources/require.php";
+	require_once "resources/check_auth.php";
+
+//check permissions
+	if (permission_exists('invoice_item_view')) {
+		//access granted
+	}
+	else {
+		echo "access denied";
+		exit;
+	}
 
 //get variables used to control the order
 	$order_by = $_GET["order_by"];
@@ -48,47 +52,49 @@ else {
 	echo "	</tr>\n";
 	echo "</table>\n";
 
-	//prepare to page the results
-		$sql = "select count(*) as num_rows from v_invoice_items ";
-		$sql .= "where domain_uuid = '$domain_uuid' ";
-		$sql .= " and invoice_uuid = '$invoice_uuid' ";
-		if (strlen($order_by)> 0) { $sql .= "order by $order_by $order "; }
-		$prep_statement = $db->prepare($sql);
-		if ($prep_statement) {
-			$prep_statement->execute();
-			$row = $prep_statement->fetch(PDO::FETCH_ASSOC);
-			if ($row['num_rows'] > 0) {
-				$num_rows = $row['num_rows'];
-			}
-			else {
-				$num_rows = '0';
-			}
-		}
-
-	//prepare to page the results
-		$rows_per_page = 10000;
-		$param = "";
-		$page = $_GET['page'];
-		if (strlen($page) == 0) { $page = 0; $_GET['page'] = 0; }
-		//list($paging_controls, $rows_per_page, $var_3) = paging($num_rows, $param, $rows_per_page);
-		$offset = $rows_per_page * $page;
-
-	//get the list
-		$sql = "select * from v_invoice_items ";
-		$sql .= "where domain_uuid = '$domain_uuid' ";
-		$sql .= " and invoice_uuid = '$invoice_uuid' ";
-		if (strlen($order_by)> 0) { $sql .= "order by $order_by $order "; }
-		$sql .= "limit $rows_per_page offset $offset ";
-		$prep_statement = $db->prepare(check_sql($sql));
+//prepare to page the results
+	$sql = "select count(*) as num_rows from v_invoice_items ";
+	$sql .= "where domain_uuid = '$domain_uuid' ";
+	$sql .= " and invoice_uuid = '$invoice_uuid' ";
+	if (strlen($order_by)> 0) { $sql .= "order by $order_by $order "; }
+	$prep_statement = $db->prepare($sql);
+	if ($prep_statement) {
 		$prep_statement->execute();
-		$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
-		$result_count = count($result);
-		unset ($prep_statement, $sql);
+		$row = $prep_statement->fetch(PDO::FETCH_ASSOC);
+		if ($row['num_rows'] > 0) {
+			$num_rows = $row['num_rows'];
+		}
+		else {
+			$num_rows = '0';
+		}
+	}
 
+//prepare to page the results
+	$rows_per_page = 10000;
+	$param = "";
+	$page = $_GET['page'];
+	if (strlen($page) == 0) { $page = 0; $_GET['page'] = 0; }
+	//list($paging_controls, $rows_per_page, $var_3) = paging($num_rows, $param, $rows_per_page);
+	$offset = $rows_per_page * $page;
+
+//get the list
+	$sql = "select * from v_invoice_items ";
+	$sql .= "where domain_uuid = '$domain_uuid' ";
+	$sql .= " and invoice_uuid = '$invoice_uuid' ";
+	if (strlen($order_by)> 0) { $sql .= "order by $order_by $order "; }
+	$sql .= "limit $rows_per_page offset $offset ";
+	$prep_statement = $db->prepare(check_sql($sql));
+	$prep_statement->execute();
+	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
+	$result_count = count($result);
+	unset ($prep_statement, $sql);
+
+//set the row style
 	$c = 0;
 	$row_style["0"] = "row_style0";
 	$row_style["1"] = "row_style1";
 
+//show the items
 	echo "<table class='tr_hover' width='100%' border='0' cellpadding='0' cellspacing='0'>\n";
 	echo "<tr>\n";
 	echo th_order_by('item_qty', $text['label-item_qty'], $order_by, $order);
@@ -154,4 +160,5 @@ else {
 
 //include the footer
 	require_once "resources/footer.php";
+
 ?>
