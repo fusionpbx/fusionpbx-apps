@@ -142,25 +142,25 @@ if (count($_POST)>0) {
 	echo "</tr>\n";
 	//echo "	<tr>";
 	//echo "		<td class='vncellreq'>Category</td>";
-	//echo "		<td class='vtable'><input type='text' class='formfld' name='rss_category' value='$rss_category'></td>";
+	//echo "		<td class='vtable'><input type='text' class='formfld' name='rss_category' value='".escape($rss_category)."'></td>";
 	//echo "	</tr>";
 	//echo "	<tr>";
 	//echo "		<td class='vncellreq' nowrap>Sub Category</td>";
-	//echo "		<td class='vtable'><input type='text' class='formfld' name='rss_sub_category' value='$rss_sub_category'></td>";
+	//echo "		<td class='vtable'><input type='text' class='formfld' name='rss_sub_category' value='".escape($rss_sub_category)."'></td>";
 	//echo "	</tr>";
 	echo "	<tr>";
 	echo "		<td width='30%' class='vncellreq' nowrap>Title</td>";
-	echo "		<td width='70%' class='vtable' width='100%'><input type='text' class='formfld' name='rss_title' value='$rss_title'></td>";
+	echo "		<td width='70%' class='vtable' width='100%'><input type='text' class='formfld' name='rss_title' value='".escape($rss_title)."'></td>";
 	echo "	</tr>";
 	echo "	<tr>";
 	echo "		<td class='vncellreq'>Link</td>";
-	echo "		<td class='vtable'><input type='text' class='formfld' name='rss_link' value='$rss_link'></td>";
+	echo "		<td class='vtable'><input type='text' class='formfld' name='rss_link' value='".escape($rss_link)."'></td>";
 	echo "	</tr>";
 
 	echo "	<tr>";
 	echo "		<td class='vncellreq'>Group</td>";
 	echo "		<td class='vtable'>";
-	//echo "            <input type='text' class='formfld' name='menuparentid' value='$menuparentid'>";
+	//echo "            <input type='text' class='formfld' name='menuparentid' value='".escape($menuparentid)."'>";
 
 	//---- Begin Select List --------------------
 	$sql = "SELECT * FROM v_groups ";
@@ -175,10 +175,10 @@ if (count($_POST)>0) {
 	//$count = count($result);
 	foreach($result as $field) {
 			if ($rss_group == $field[group_name]) {
-				echo "<option value='".$field[group_name]."' selected>".$field[group_name]."</option>\n";
+				echo "<option value='".escape($field[group_name])."' selected>".escape($field[group_name])."</option>\n";
 			}
 			else {
-				echo "<option value='".$field[group_name]."'>".$field[group_name]."</option>\n";
+				echo "<option value='".escape($field[group_name])."'>".escape($field[group_name])."</option>\n";
 			}
 	}
 
@@ -202,10 +202,10 @@ if (count($_POST)>0) {
 		while (false !== ($file = readdir($handle))) {
 			if ($file != "." && $file != ".." && $file != ".svn" && is_dir($theme_dir.'/'.$file)) {
 				if ($file == $rss_sub_category) {
-					echo "<option value='$file' selected='selected'>$file</option>\n";
+					echo "<option value='".escape($file)."' selected='selected'>".escape($file)."</option>\n";
 				}
 				else {
-					echo "<option value='$file'>$file</option>\n";
+					echo "<option value='".escape($file)."'>".escape($file)."</option>\n";
 				}
 			}
 		}
@@ -272,14 +272,14 @@ if (count($_POST)>0) {
 	echo "	</tr>";
 	//echo "	<tr>";
 	//echo "		<td class='vncellreq'>Image</td>";
-	//echo "		<td class='vtable'><input type='text' name='rss_img' value='$rss_img'></td>";
+	//echo "		<td class='vtable'><input type='text' name='rss_img' value='".escape($rss_img)."'></td>";
 	//echo "	</tr>";
 	//echo "	<tr>";
 	//echo "		<td class='vncellreq'>Priority</td>";
 	//echo "		<td class='vtable'>";
-	//echo "            <input type='text' name='rss_optional_1' value='$rss_optional_1'>";
+	//echo "            <input type='text' name='rss_optional_1' value='".escape($rss_optional_1)."'>";
 	//echo "            <select name=\"rss_optional_1\" class='formfld'>\n";
-	//echo "            <option value=\"$rss_optional_1\">$rss_optional_1</option>\n";
+	//echo "            <option value=\"".escape($rss_optional_1)."\">$rss_optional_1</option>\n";
 	//echo "            <option value=\"\"></option>\n";
 	//echo "            <option value=\"low\">low</option>\n";
 	//echo "            <option value=\"med\">med</option>\n";
@@ -290,9 +290,9 @@ if (count($_POST)>0) {
 	//echo "	<tr>";
 	//echo "		<td class='vncellreq'>Status</td>";
 	//echo "		<td class='vtable'>";
-	//echo "            <input type='text' name='rss_optional_2' value='$rss_optional_2'>";
+	//echo "            <input type='text' name='rss_optional_2' value='".escape($rss_optional_2)."'>";
 	//echo "            <select name=\"rss_optional_2\" class=\"formfld\">\n";
-	//echo "            <option value=\"$rss_optional_2\">$rss_optional_2</option>\n";
+	//echo "            <option value=\"$rss_optional_2\">".escape($rss_optional_2)."</option>\n";
 	//echo "            <option value=\"\"></option>\n";
 	//echo "            <option value=\"0\">0</option>\n";
 	//echo "            <option value=\"10\">10</option>\n";
@@ -310,25 +310,25 @@ if (count($_POST)>0) {
 	//echo "	</tr>";
 	//echo "	<tr>";
 	//echo "		<td class='vncellreq'>Optional 3</td>";
-	//echo "		<td class='vtable'><input type='text' class='formfld' name='rss_optional_3' value='$rss_optional_3'></td>";
+	//echo "		<td class='vtable'><input type='text' class='formfld' name='rss_optional_3' value='".escape($rss_optional_3)."'></td>";
 	//echo "	</tr>";
 	//echo "	<tr>";
 	//echo "		<td class='vncellreq'>Optional 4</td>";
-	//echo "		<td class='vtable'><input type='text' class='formfld' name='rss_optional_4' value='$rss_optional_4'></td>";
+	//echo "		<td class='vtable'><input type='text' class='formfld' name='rss_optional_4' value='".escape($rss_optional_4)."'></td>";
 	//echo "	</tr>";
 	//echo "	<tr>";
 	//echo "		<td class='vncellreq'>rss_optional_5</td>";
-	//echo "		<td class='vtable'><input type='text' class='formfld' name='rss_optional_5' value='$rss_optional_5'></td>";
+	//echo "		<td class='vtable'><input type='text' class='formfld' name='rss_optional_5' value='".escape($rss_optional_5)."'></td>";
 	//echo "	</tr>";
 	//echo "	<tr>";
 	//echo "		<td class='vncellreq'>rss_add_date</td>";
-	//echo "		<td class='vtable'><input type='text' class='formfld' name='rss_add_date' value='$rss_add_date'></td>";
+	//echo "		<td class='vtable'><input type='text' class='formfld' name='rss_add_date' value='".escape($rss_add_date)."'></td>";
 	//echo "	</tr>";
 
 	echo "	<tr>";
 	echo "		<td class='' colspan='2' align='right'>";
 	echo "			<br><br>";
-	echo "          <input type='submit' class='btn' name='submit' value='".$text['button-add-title']." $module_title'>\n";
+	echo "          <input type='submit' class='btn' name='submit' value='".$text['button-add-title']." ".escape($module_title)."'>\n";
 	echo "      </td>";
 	echo "	</tr>";
 	echo "</table>";
