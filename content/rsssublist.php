@@ -81,15 +81,15 @@ require_once "resources/header.php";
 			  //echo "<tr style='".$row_style[$c]."'>\n";
 			  //echo "<tr>";
 			  //echo "    <td valign='top'>Title</td>";
-			  //echo "    <td valign='top'><a href='rssupdate.php?rss_uuid=".$row[rss_uuid]."'>".$row[rss_uuid]."</a></td>";
+			  //echo "    <td valign='top'><a href='rssupdate.php?rss_uuid=".escape($row[rss_uuid])."'>".escape($row[rss_uuid])."</a></td>";
 			  //echo "</tr>";
 			  //echo "<td valign='top'>".$row[rss_category]."</td>";
 			  
 			  echo "<tr>";
 			  echo "    <td valign='top'>".$text['label-title'].": &nbsp;</td>";
-			  echo "    <td valign='top'><b>".$row[rss_title]."</b></td>";
+			  echo "    <td valign='top'><b>".escape($row[rss_title])."</b></td>";
 			  echo "    <td valign='top' align='right'>";
-			  echo "        <input type='button' class='btn' name='' onclick=\"window.location='rssupdate.php?rss_uuid=".$row[rss_uuid]."'\" value='".$text['button-update']."'>";
+			  echo "        <input type='button' class='btn' name='' onclick=\"window.location='rssupdate.php?rss_uuid=".escape($row[rss_uuid])."'\" value='".$text['button-update']."'>";
 			  echo "    </td>";
 			  $rss_description = $row[rss_description];
 			  //$rss_description = str_replace ("\r\n", "<br>", $rss_description);
@@ -99,29 +99,29 @@ require_once "resources/header.php";
 			  
 			  echo "<tr>";
 			  echo "    <td valign='top'>".$text['label-template'].": &nbsp;</td>";
-			  echo "     <td valign='top'>".$row[rss_sub_category]."</td>";
+			  echo "     <td valign='top'>".escape($row[rss_sub_category])."</td>";
 			  echo "</tr>";
 
 			  echo "<tr>";
-			  echo "    <td valign='top'>".$text['label-group'].": &nbsp;</td>";
-			  echo "     <td valign='top'>".$row[rss_group]."</td>";
+			  echo "    <td valign='top'>".$text['label-group'].": &nbwsp;</td>";
+			  echo "     <td valign='top'>".escape($row[rss_group])."</td>";
 			  echo "</tr>";
 			  
 			  if (strlen($row[rss_order]) > 0) {
 				  echo "<tr>";
 				  echo "    <td valign='top'>".$text['label-order'].": &nbsp;</td>";
-				  echo "     <td valign='top'>".$row[rss_order]."</td>";
+				  echo "     <td valign='top'>".escape($row[rss_order])."</td>";
 				  echo "</tr>";
 			  }
 
 			  //echo "<td valign='top'>".$row[rss_link]."</td>";
 			  echo "    <td valign='top'>".$text['label-description'].": &nbsp;</td>";
-			  echo "    <td valign='top' colspan='2'>".$rss_description."</td>";
+			  echo "    <td valign='top' colspan='2'>".escape($rss_description)."</td>";
 			  //echo "<td valign='top'>".$row[rss_img]."</td>";
 
 			  //echo "<tr>";
 			  //echo "    <td valign='top'>Priority: &nbsp;</td>";
-			  //echo "    <td valign='top' colspan='2'>".$row[rss_optional_1]."</td>"; //priority
+			  //echo "    <td valign='top' colspan='2'>".escape($row[rss_optional_1])."</td>"; //priority
 			  //echo "</tr>";
 
 			  //echo "<tr>";
@@ -135,15 +135,15 @@ require_once "resources/header.php";
 			  //    echo $row[rss_optional_2]."%";
 			  //}
 			  //echo      "</td>"; //completion status
-			  //echo "<td valign='top'>".$row[rss_optional_3]."</td>";
-			  //echo "<td valign='top'>".$row[rss_optional_4]."</td>";
-			  //echo "<td valign='top'>".$row[rss_optional_5]."</td>";
-			  //echo "<td valign='top'>".$row[rss_add_date]."</td>";
-			  //echo "<td valign='top'>".$row[rss_add_user]."</td>";
+			  //echo "<td valign='top'>".escape($row[rss_optional_3])."</td>";
+			  //echo "<td valign='top'>".escape($row[rss_optional_4])."</td>";
+			  //echo "<td valign='top'>".escape($row[rss_optional_5])."</td>";
+			  //echo "<td valign='top'>".escape($row[rss_add_date])."</td>";
+			  //echo "<td valign='top'>".escape($row[rss_add_user])."</td>";
 			  //echo "<tr>";
 			  //echo "    <td valign='top'>";
 			  //echo "      <a href='rsssublist.php?rss_uuid=".$row[rss_uuid]."'>Details</a>";
-			  //echo "        <input type='button' class='btn' name='' onclick=\"window.location='rsssublist.php?rss_uuid=".$row[rss_uuid]."'\" value='Details'>";
+			  //echo "        <input type='button' class='btn' name='' onclick=\"window.location='rsssublist.php?rss_uuid=".escape($row[rss_uuid])."'\" value='Details'>";
 			  //echo "    </td>";
 			  //echo "</tr>";
 
@@ -372,25 +372,25 @@ require_once "resources/header.php";
 					//echo "<td valign='top'>&nbsp;<b>".$row[rss_sub_title]."</b>&nbsp;</td>";
 					//echo "<td valign='top'>&nbsp;".$row[rss_sub_link]."&nbsp;</td>";
 					echo "<td valign='top' width='200'>";
-					echo "  <b>".$row[rss_sub_title]."</b>";
+					echo "  <b>".escape($row[rss_sub_title])."</b>";
 					echo "</td>";
 
-					echo "<td valign='top'>".$row[rss_sub_add_date]."</td>";
+					echo "<td valign='top'>".escape($row[rss_sub_add_date])."</td>";
 
-					//echo "<td valign='top'>".$row[rss_sub_optional_1]."</td>";
-					//echo "<td valign='top'>".$row[rss_sub_optional_2]."</td>";
-					//echo "<td valign='top'>".$row[rss_sub_optional_3]."</td>";
-					//echo "<td valign='top'>".$row[rss_sub_optional_4]."</td>";
-					//echo "<td valign='top'>".$row[rss_sub_optional_5]."</td>";
-					//echo "<td valign='top'>".$row[rss_sub_add_user]."</td>";
+					//echo "<td valign='top'>".escape($row[rss_sub_optional_1])."</td>";
+					//echo "<td valign='top'>".escape($row[rss_sub_optional_2])."</td>";
+					//echo "<td valign='top'>".escape($row[rss_sub_optional_3])."</td>";
+					//echo "<td valign='top'>".escape($row[rss_sub_optional_4])."</td>";
+					//echo "<td valign='top'>".escape($row[rss_sub_optional_5])."</td>";
+					//echo "<td valign='top'>".escape($row[rss_sub_add_user])."</td>";
 
 					echo "<td valign='top'>";
-					echo "  <input type='button' class='btn' name='' onclick=\"if (confirm('".$text['message-confirm-delete']."')) { window.location='rsssubdelete.php?rss_uuid=".$row[rss_uuid]."&rss_sub_uuid=".$row[rss_sub_uuid]."' }\" value='".$text['button-delete']."'>";
+					echo "  <input type='button' class='btn' name='' onclick=\"if (confirm('".$text['message-confirm-delete']."')) { window.location='rsssubdelete.php?rss_uuid=".escape($row[rss_uuid])."&rss_sub_uuid=".escape($row[rss_sub_uuid])."' }\" value='".$text['button-delete']."'>";
 					echo "</td>";
 
 					echo "<td valign='top' align='right'>";
 					echo "  &nbsp;";
-					echo "  <input type='button' class='btn' name='' onclick=\"window.location='rsssubupdate.php?rss_uuid=".$rss_uuid."&rss_sub_uuid=".$row[rss_sub_uuid]."'\" value='".$text['button-update']."'>";
+					echo "  <input type='button' class='btn' name='' onclick=\"window.location='rsssubupdate.php?rss_uuid=".escape($rss_uuid)."&rss_sub_uuid=".escape($row[rss_sub_uuid])."'\" value='".$text['button-update']."'>";
 					echo "  &nbsp; \n";
 					//echo "  <a href='rsssubupdate.php?rss_uuid=".$rss_uuid."&rss_sub_uuid=".$row[rss_sub_uuid]."'>Update</a>&nbsp;";
 					echo "</td>";
@@ -403,7 +403,7 @@ require_once "resources/header.php";
 					echo "</tr>";
 					echo "<tr style='".$row_style[$c]."'>\n";
 					echo "<td valign='top' width='300' colspan='4'>";
-					echo "".$rss_sub_description."&nbsp;";
+					echo "".escape($rss_sub_description)."&nbsp;";
 					echo "</td>";
 
 					echo "</tr>";
@@ -433,7 +433,7 @@ require_once "resources/header.php";
 
 	//echo "<input type='button' class='btn' name='' onclick=\"window.location='rsssubsearch.php'\" value='Search'>&nbsp; &nbsp;\n";
 	if ($rss_sub_show == 1) {
-		echo "<input type='button' class='btn' name='' onclick=\"window.location='rsssubadd.php?rss_uuid=".$rss_uuid."'\" value='".$text['button-add-title']." $rss_sub_title'>&nbsp; &nbsp;\n";
+		echo "<input type='button' class='btn' name='' onclick=\"window.location='rsssubadd.php?rss_uuid=".escape($rss_uuid)."'\" value='".$text['button-add-title']." ".escape($rss_sub_title)."'>&nbsp; &nbsp;\n";
 	}
 	echo "</div>";
 
