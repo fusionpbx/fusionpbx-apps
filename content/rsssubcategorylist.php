@@ -167,12 +167,12 @@ else { //received results
 	foreach($result as $row) {
 	//print_r( $row );
 		echo "<tr style='".$row_style[$c]."'>\n";
-			echo "<td valign='top'><a href='rss_sub_categoryupdate.php?rss_sub_category_uuid=".$row[rss_sub_category_uuid]."'>".$row[rss_sub_category_uuid]."</a></td>";
-			echo "<td valign='top'>".$row[rss_category]."</td>";
-			echo "<td valign='top'>".$row[rss_sub_category]."</td>";
-			echo "<td valign='top'>".$row[rss_sub_category_description]."</td>";
-			echo "<td valign='top'>".$row[rss_add_user]."</td>";
-			echo "<td valign='top'>".$row[rss_add_date]."</td>";
+			echo "<td valign='top'><a href='rss_sub_categoryupdate.php?rss_sub_category_uuid=".escape($row[rss_sub_category_uuid])."'>".escape($row[rss_sub_category_uuid])."</a></td>";
+			echo "<td valign='top'>".escape($row[rss_category])."</td>";
+			echo "<td valign='top'>".escape($row[rss_sub_category])."</td>";
+			echo "<td valign='top'>".escape($row[rss_sub_category_description])."</td>";
+			echo "<td valign='top'>".escape($row[rss_add_user])."</td>";
+			echo "<td valign='top'>".escape($row[rss_add_date])."</td>";
 		echo "</tr>";
 
 		echo "<tr><td colspan='100%'><img src='/images/spacer.gif' width='100%' height='1' style='background-color: #BBBBBB;'></td></tr>\n";
