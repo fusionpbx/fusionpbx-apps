@@ -104,7 +104,7 @@
 	echo "<td align='right' width='42'>\n";
 	$back = ($back != '') ? "&back=".$back : null;
 	if (permission_exists('invoice_item_add')) {
-		echo "	<a href='invoice_item_edit.php?invoice_uuid=".$_GET['id']."&contact_uuid=".$contact_uuid_to.$back."' alt='".$text['button-add']."'>$v_link_label_add</a>\n";
+		echo "	<a href='invoice_item_edit.php?invoice_uuid=".$_GET['id']."&contact_uuid=".escape($contact_uuid_to).escape($back)."' alt='".$text['button-add']."'>$v_link_label_add</a>\n";
 	}
 	else {
 		echo "	&nbsp;\n";
@@ -116,7 +116,7 @@
 		foreach($result as $row) {
 			$item_desc = $row['item_desc'];
 			$item_desc = str_replace("\n", "<br />", $item_desc);
-			$tr_link = (permission_exists('invoice_item_edit')) ? "href='invoice_item_edit.php?invoice_uuid=".$row['invoice_uuid']."&id=".$row['invoice_item_uuid']."&contact_uuid=".$contact_uuid_to.$back."'" : null;
+			$tr_link = (permission_exists('invoice_item_edit')) ? "href='invoice_item_edit.php?invoice_uuid=".escape($row['invoice_uuid'])."&id=".escape($row['invoice_item_uuid'])."&contact_uuid=".escape($contact_uuid_to).escape($back)."'" : null;
 			echo "<tr ".$tr_link.">\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['item_qty']."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".number_format($row['item_unit_price'], 2)."&nbsp;</td>\n";
@@ -124,10 +124,10 @@
 			echo "	<td valign='top' class='".$row_style[$c]."'>".number_format(($row['item_qty'] * $row['item_unit_price']), 2)."&nbsp;</td>\n";
 			echo "	<td class='list_control_icons'>\n";
 			if (permission_exists('invoice_item_edit')) {
-				echo 	"<a href='invoice_item_edit.php?invoice_uuid=".$row['invoice_uuid']."&id=".$row['invoice_item_uuid']."&contact_uuid=".$contact_uuid_to.$back."' alt='".$text['button-edit']."'>$v_link_label_edit</a>";
+				echo 	"<a href='invoice_item_edit.php?invoice_uuid=".escape($row['invoice_uuid'])."&id=".escape($row['invoice_item_uuid'])."&contact_uuid=".escape($contact_uuid_to).escape($back)."' alt='".$text['button-edit']."'>$v_link_label_edit</a>";
 			}
 			if (permission_exists('invoice_item_delete')) {
-				echo 	"<a href='invoice_item_delete.php?invoice_uuid=".$row['invoice_uuid']."&id=".$row['invoice_item_uuid']."&contact_uuid=".$contact_uuid_to.$back."' alt='".$text['button-delete']."' onclick=\"return confirm('".$text['confirm-delete']."')\">$v_link_label_delete</a>";
+				echo 	"<a href='invoice_item_delete.php?invoice_uuid=".escape($row['invoice_uuid'])."&id=".escape($row['invoice_item_uuid'])."&contact_uuid=".escape($contact_uuid_to).escape($back)."' alt='".$text['button-delete']."' onclick=\"return confirm('".$text['confirm-delete']."')\">$v_link_label_delete</a>";
 			}
 			echo "	</td>\n";
 			echo "</tr>\n";
@@ -144,7 +144,7 @@
 	echo "		<td width='33.3%' align='center' nowrap='nowrap'>$paging_controls</td>\n";
 	echo "		<td width='33.3%' align='right'>\n";
 	if (permission_exists('invoice_item_add')) {
-		echo "			<a href='invoice_item_edit.php?invoice_uuid=".$_GET['id']."&contact_uuid=".$contact_uuid_to.$back."' alt='".$text['button-add']."'>$v_link_label_add</a>\n";
+		echo "			<a href='invoice_item_edit.php?invoice_uuid=".$_GET['id']."&contact_uuid=".escape($contact_uuid_to).escape($back)."' alt='".$text['button-add']."'>$v_link_label_add</a>\n";
 	}
 	else {
 		echo "			&nbsp;\n";
