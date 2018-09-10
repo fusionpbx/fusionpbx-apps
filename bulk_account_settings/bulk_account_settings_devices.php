@@ -267,7 +267,7 @@
 			echo "    <option value='false'>".$text['label-false']."</option>\n";
 			echo "    </select>\n";
 			echo "    <br />\n";
-			echo $text["description-".escape($option_selected).""]."\n";
+			echo $text["description-".$option_selected"]."\n";
 			echo "</td>\n";
 		}
 
@@ -333,7 +333,7 @@
 				}
 			echo "</select>\n";
 			echo "    <br />\n";
-			echo $text["description-".escape($option_selected).""]."\n";
+			echo $text["description-".$option_selected"]."\n";
 			echo "</td>\n";
 		}
 
@@ -356,7 +356,7 @@
 			echo "    <option value='dns srv'>DNS SRV</option>\n";
 			echo "    </select>\n";
 			echo "    <br />\n";
-			echo $text["description-".$option_selected.""]."\n";
+			echo $text["description-".$option_selected""]."\n";
 			echo "</td>\n";
 		}
 
@@ -399,7 +399,7 @@ if (is_array($directory)) {
 			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_mac_address']."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_label']."&nbsp;</td>\n";
 			if (preg_match ('/line_/',$option_selected)) {
-				echo "	<td valign='top' class='".$row_style[$c]."'> ".$row[$option_selected]."&nbsp;</td>\n";	
+				echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row[$option_selected])."&nbsp;</td>\n";	
 			}
 			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['device_vendor'])."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['device_template'])."&nbsp;</td>\n";
