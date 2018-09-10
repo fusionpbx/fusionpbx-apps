@@ -151,20 +151,20 @@ if (count($_POST)>0) {
 		foreach($result as $row) {
 		//print_r( $row );
 			echo "<tr style='".$row_style[$c]."'>\n";
-				echo "<td valign='top'><a href='rssupdate.php?rss_uuid=".$row[rss_uuid]."'>".$row[rss_uuid]."</a></td>";
-				echo "<td valign='top'>".$row[rss_category]."</td>";
-				echo "<td valign='top'>".$row[rss_sub_category]."</td>";
-				echo "<td valign='top'>".$row[rss_title]."</td>";
-				//echo "<td valign='top'>".$row[rss_link]."</td>";
-				//echo "<td valign='top'>".$row[rss_description]."</td>";
-				//echo "<td valign='top'>".$row[rss_img]."</td>";
-				//echo "<td valign='top'>".$row[rss_optional_1]."</td>";
-				//echo "<td valign='top'>".$row[rss_optional_2]."</td>";
-				//echo "<td valign='top'>".$row[rss_optional_3]."</td>";
-				//echo "<td valign='top'>".$row[rss_optional_4]."</td>";
-				//echo "<td valign='top'>".$row[rss_optional_5]."</td>";
-				//echo "<td valign='top'>".$row[rss_add_date]."</td>";
-				//echo "<td valign='top'>".$row[rss_add_user]."</td>";
+				echo "<td valign='top'><a href='rssupdate.php?rss_uuid=".escape($row[rss_uuid])."'>".escape($row[rss_uuid])."</a></td>";
+				echo "<td valign='top'>".escape($row[rss_category]."</td>";
+				echo "<td valign='top'>".escape($row[rss_sub_category]."</td>";
+				echo "<td valign='top'>".escape($row[rss_title]."</td>";
+				//echo "<td valign='top'>".escape($row[rss_link])."</td>";
+				//echo "<td valign='top'>".escape($row[rss_description])."</td>";
+				//echo "<td valign='top'>".escape($row[rss_img])."</td>";
+				//echo "<td valign='top'>".escape($row[rss_optional_1])."</td>";
+				//echo "<td valign='top'>".escape($row[rss_optional_2])."</td>";
+				//echo "<td valign='top'>".escape($row[rss_optional_3])."</td>";
+				//echo "<td valign='top'>".escape($row[rss_optional_4])."</td>";
+				//echo "<td valign='top'>".escape($row[rss_optional_5])."</td>";
+				//echo "<td valign='top'>".escape($row[rss_add_date])."</td>";
+				//echo "<td valign='top'>".escape($row[rss_add_user])."</td>";
 			echo "</tr>";
 
 			echo "<tr><td colspan='100%'><img src='/images/spacer.gif' width='100%' height='1' style='background-color: #BBBBBB;'></td></tr>\n";
