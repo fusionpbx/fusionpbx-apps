@@ -138,7 +138,7 @@
 	if ((if_group("admin") || if_group("superadmin"))) {
 		echo "		<form method='get' action=''>\n";
 		echo "			<td style='vertical-align: top; text-align: right; white-space: nowrap;'>\n";
-		echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".$search."'>";
+		echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".escape($search)."'>";
 		echo "				<input type='submit' class='btn' name='submit' value='".$text['button-search']."'>";
 		if ($paging_controls_mini != '') {
 			echo 			"<span style='margin-left: 15px;'>".$paging_controls_mini."</span>\n";
@@ -178,11 +178,11 @@
 
 	if ($result_count > 0) {
 		foreach($result as $row) {
-			$tr_url = "https://www.zoiper.com/en/page/" . $_SESSION['zoiper']['page_id']['text'] . "?u=" . $row['extension'] . "&h=" . $row['user_context'] . rawurlencode($zoiper_sip_port) . "&p=" . $row['password'] . "&o=" . $_SESSION['zoiper']['outbound_proxy']['text'] . "&t=&x=&a=" . $row['extension'] . "&tr=";
-			$qr_img = "https://oem.zoiper.com/qr.php?provider_id=" . $_SESSION['zoiper']['provider_id']['text'] . "&u=" . $row['extension'] . "&h=" . $row['user_context'] . rawurlencode($zoiper_sip_port) . "&p=" . $row['password'] . "&o=" . $_SESSION['zoiper']['outbound_proxy']['text'] . "&t=&x=&a=" . $row['extension'] . "&tr=";
+			$tr_url = "https://www.zoiper.com/en/page/" . $_SESSION['zoiper']['page_id']['text'] . "?u=" . escape($row['extension']) . "&h=" . escape($row['user_context']) . rawurlencode($zoiper_sip_port) . "&p=" . escape($row['password']) . "&o=" . $_SESSION['zoiper']['outbound_proxy']['text'] . "&t=&x=&a=" . escape($row['extension']) . "&tr=";
+			$qr_img = "https://oem.zoiper.com/qr.php?provider_id=" . $_SESSION['zoiper']['provider_id']['text'] . "&u=" . escape($row['extension']) . "&h=" . escape($row['user_context']) . rawurlencode($zoiper_sip_port) . "&p=" . escape($row['password']) . "&o=" . $_SESSION['zoiper']['outbound_proxy']['text'] . "&t=&x=&a=" . escape($row['extension']) . "&tr=";
 			$tr_link = (permission_exists('zoiper')) ? "href='".$tr_url."'" : null;
 			echo "<tr>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['extension']."</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['extension'])."</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>\n";
 			if (permission_exists('zoiper')) { 	echo "<a href='".$tr_url."' target='_blank'>" . $text['label-zoiper'] . "</a>&nbsp;&nbsp;&nbsp;"; }
 			echo "	</td>\n";
@@ -196,7 +196,7 @@
 //			echo "			</option>\n";			
 //			echo "******";
 //			echo "&nbsp;</td>\n";
-			echo "	<td valign='top' class='row_stylebg' width='40%'>".$row['description']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='row_stylebg' width='40%'>".escape($row['description'])."&nbsp;</td>\n";
 			echo "</tr>\n";
 			if ($c==0) { $c=1; } else { $c=0; }
 		} //end foreach
