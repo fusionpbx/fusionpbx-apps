@@ -51,7 +51,9 @@ $csv_file_name = $csv_file_path . "import.csv";
 
 // Get variables here
 
-$rows_to_show =isset($_SESSION['import_extensions']['rows_to_show']['numeric']) ? (int) $_SESSION['import_extensions']['rows_to_show']['numeric'] : 4;
+$rows_to_show = isset($_SESSION['import_extensions']['rows_to_show']['numeric']) ? (int) $_SESSION['import_extensions']['rows_to_show']['numeric'] : 4;
+$csv_delimiter = isset($_SESSION['import_extensions']['csv_delimiter']['text']) ? (int) $_SESSION['import_extensions']['csv_delimiter']['text'] : False;
+
 $is_import = isset($_REQUEST['is_import']) ? filter_var($_REQUEST['is_import'], FILTER_VALIDATE_BOOLEAN) : False;
 $skip_first_line = isset($_REQUEST['skip_first_line']) ? filter_var($_REQUEST['skip_first_line'], FILTER_VALIDATE_BOOLEAN) : False;
 $csv_fields_order = isset($_REQUEST['csv_field']) ? $_REQUEST['csv_field'] : False;
@@ -69,14 +71,15 @@ $row_style["1"] = "row_style1";
 // File operations
 
 if (isset($_FILES['file'])) {
-	if ($_FILES["file"]["error"] == UPLOAD_ERR_OK && ($_FILES["file"]["type"] == 'text/csv' || $_FILES["file"]["type"] == 'application/octet-stream')) {
+	//if ($_FILES["file"]["error"] == UPLOAD_ERR_OK && ($_FILES["file"]["type"] == 'text/csv' || $_FILES["file"]["type"] == 'application/octet-stream')) {
+	if ($_FILES["file"]["error"] == UPLOAD_ERR_OK) {
 		move_uploaded_file($_FILES["file"]["tmp_name"], $csv_file_name);
 	}
 }
 
 
 // Check if we have CSV file on place
-$import_file = new csv_file_process($csv_file_name);
+$import_file = new csv_file_process($csv_file_name, $csv_delimiter);
 
 $action = '';
 if ($import_file->is_valid() && $is_import && $csv_fields_order) {
@@ -127,10 +130,10 @@ echo "			".$text['description-import_extensions']."<br /><br />\n";
 echo "		</td>\n";
 echo "		<td>";
 echo "			<form name='frmimport' method='POST' enctype='multipart/form-data' style='float: right;' action=''>\n";
-echo "				<input name='file' id='file' type='file' style='display: none;' onchange='check_filetype(this);'>";
+echo "				<input name='file' id='file' type='file' style='display: none;' accept='.csv' onchange='check_filetype(this);'>";
 echo "				<label id='file_label' for='file' class='txt' style='width: 200px; overflow: hidden; white-space: nowrap;'>".$text['label-select_a_file']."</label>\n";
 echo " 				<input id='button_reset' type='reset' class='btn' style='display: none;' value='".$text['button-reset']."' onclick=\"reset_file_input('file'); document.getElementById('file_label').innerHTML = '".$text['label-select_a_file']."'; this.style.display='none'; return true;\">\n";
-echo "				<input name='upload' type='submit' class='btn' id='upload' value=\"".$text['button-import']."\">\n";
+echo "				<input name='upload' type='submit' class='btn' id='upload' value=\"".$text['button-preview']."\">\n";
 echo "			</form>";
 echo "		</td>";
 echo "	</tr>\n";
@@ -170,7 +173,7 @@ if ($action == 'import') {
 
 	// Here we got first 4 lines of file. As usual, CSV holds first line as a fields desccription.
 	// And we will use it to count number of fields in file.
-	$import_lines = $import_file->read_first();
+	$import_lines = $import_file->read_first($rows_to_show);
 	$row_count = count($import_lines[0]);
 
 	// Initialize array if not full for normal show after.

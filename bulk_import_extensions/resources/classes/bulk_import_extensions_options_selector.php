@@ -48,6 +48,9 @@ if (!class_exists('bulk_import_extensions_options_selector')) {
                     'voicemail_attach_file' => $this->text['label-voicemail_attach_file'] . " &#x2709;",
                     'voicemail_description' => $this->text['label-voicemail_description'] . " &#x2709;",
                 ),
+                $this->text['label-ignore'] => array(
+                    'ignore' => $this->text['label-ignore'],
+                ),
             );
         }
 

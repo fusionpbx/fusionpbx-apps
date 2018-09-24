@@ -37,4 +37,12 @@
 		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'true';
 		$apps[$x]['default_settings'][$y]['default_setting_description'] = 'Set the maximum lines from file to show on Import screen';
 		$y++;
+		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = '54fe8455-0c5c-4772-a2b7-f3827f32b520';
+		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'import_extensions';
+		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'csv_delimiter';
+		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'text';
+		$apps[$x]['default_settings'][$y]['default_setting_value'] = ';';
+		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
+		$apps[$x]['default_settings'][$y]['default_setting_description'] = 'Set CSV file delimiter. If not set, app will try to guess it';
+		$y++;
 ?>
