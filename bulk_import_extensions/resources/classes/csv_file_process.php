@@ -21,7 +21,7 @@ if (!class_exists('csv_file_process')) {
         private $line_sip_port;
         private $line_register_expires;
 
-        public function __construct($file_path) {
+        public function __construct($file_path, $csv_delimiter = False) {
             if (!file_exists($file_path)) {
                 $this->csv_file = False;
                 return;
@@ -37,6 +37,12 @@ if (!class_exists('csv_file_process')) {
 
             $this->csv_file = new SplFileObject($file_path);
             
+
+            if ($csv_delimiter) {
+                $this->csv_file->setCsvControl($csv_delimiter);
+                return;
+            }
+
             // Guessing CSV delimiter
 
             if (count($this->csv_file->fgetcsv()) != 1) {
@@ -140,8 +146,6 @@ if (!class_exists('csv_file_process')) {
             $result['voicemail_mail_to'] = isset($result['voicemail_mail_to']) ? $result['voicemail_mail_to'] : '';
             $result['voicemail_enabled'] = isset($result['voicemail_enabled']) ? $result['voicemail_enabled'] : 'true';
             $result['voicemail_description'] = $result['description'];
-            $result['device_label'] = isset($result['device_label']) ? $result['device_label'] : $result['extension'];
-            $result['device_template'] = isset($result['device_template']) ? strtolower($result['device_template']) : '';
             
             // Set various defaults that is not controlled by user
             
@@ -151,8 +155,20 @@ if (!class_exists('csv_file_process')) {
             $result['enabled'] = 'true';
             $result['voicemail_file'] = 'attach';
             $result['voicemail_local_after_email'] = 'true';
-            $result['device_enabled'] = 'true';
-            $result['device_vendor'] = explode('/', $result['device_template'])[0];
+
+            // Device section
+            if ($this->is_add_device) {
+
+                // Normalize mac address
+                $result['device_mac_address'] = strtolower($result['device_mac_address']);
+                $result['device_mac_address'] = preg_replace("/[^a-f0-9]+/", "", $result['device_mac_address']);
+
+                $result['device_label'] = isset($result['device_label']) ? $result['device_label'] : $result['extension'];
+                $result['device_template'] = isset($result['device_template']) ? strtolower($result['device_template']) : '';
+
+                $result['device_enabled'] = 'true';
+                $result['device_vendor'] = explode('/', $result['device_template'])[0];
+            }
 
             return $result;
         }
@@ -337,6 +353,12 @@ if (!class_exists('csv_file_process')) {
             if (!$this->is_add_device) {
                 return;
             }
+
+            // Check if it is MAC address actually
+            if (strlen($csv_line['device_mac_address']) != 12) {
+                return;
+            }
+
             // First - check if device exists
             $sql = "SELECT device_uuid FROM v_devices";
             $sql .= " WHERE domain_uuid = '" . $this->domain_uuid . "'";
@@ -441,7 +463,7 @@ if (!class_exists('csv_file_process')) {
                 return False;
             }
             $result = array();
-            for ($i = 1; $i < $number_to_read; $i++) {
+            for ($i = 1; $i <= $number_to_read; $i++) {
                 if (!$this->csv_file->valid()) {
                     break;
                 }
@@ -507,6 +529,10 @@ if (!class_exists('csv_file_process')) {
                 // Read CSV line and sterialize it
                 $csv_line = array_map('check_str', $this->csv_file->fgetcsv());
                 $csv_line = $this->normalize_line($csv_line);
+
+                if (array_key_exists('ignore', $csv_line)) {
+                    unset($csv_line['ignore']);
+                }
                 
                 if ($csv_line) { // CSV line is correct and extension is present
                     $this->add_extension($csv_line);
