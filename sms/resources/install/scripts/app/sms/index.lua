@@ -135,6 +135,20 @@
 		else
 			body = message:getBody();
 		end
+		--Clean body up for Groundwire send
+		smsraw = body;
+		smstempst, smstempend = string.find(smsraw, 'Content%-lenght:');
+		if (smstempend == nil) then
+			body = smsraw;
+		else
+			smst2st, smst2end = string.find(smsraw, '\r\n\r\n', smstempend);
+			if (smst2end == nil) then
+				body = smsraw;
+			else
+				body = string.sub(smsraw, smst2end + 1);
+			end
+		end
+
 
 		if (debug["info"]) then
 			if (message ~= nil) then
@@ -242,6 +256,7 @@
 				outbound_caller_id_number = "1" .. outbound_caller_id_number;
 			end
 		-- Can be either +1NANNNNXXXX or NANNNNXXXX
+			api_url = string.gsub(api_url, "{ACCOUNTSID}",  access_key);
 			cmd ="curl -X POST '" .. api_url .."' --data-urlencode 'To=+" .. to .."' --data-urlencode 'From=+" .. outbound_caller_id_number .. "' --data-urlencode 'Body=" .. body .. "' -u ".. access_key ..":" .. secret_key .. " --insecure";
 		elseif (carrier == "teli") then
 			cmd ="curl -X POST '" .. api_url .."' --data-urlencode 'destination=" .. to .."' --data-urlencode 'source=" .. outbound_caller_id_number .. "' --data-urlencode 'message=" .. body .. "' --data-urlencode 'token=" .. access_key .. "' --insecure";
@@ -265,7 +280,7 @@
 			if outbound_caller_id_number:len() < 11 then
 				outbound_caller_id_number = "1" .. outbound_caller_id_number;
 			end
-			//Get User_name
+			--Get User_name
 			sql = "SELECT default_setting_value FROM v_default_settings ";
 			sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_username' and default_setting_enabled = 'true'";
 			if (debug["sql"]) then
@@ -275,6 +290,23 @@
 				username = rows["default_setting_value"];
 			end);
 			cmd = "curl -X POST '" .. api_url .."' -H \"Content-Type:multipart/form-data\"  -F 'message=" .. body .. "' -F 'to_did=" .. to .."' -F 'from_did=" .. outbound_caller_id_number .. "' -u '".. username ..":".. access_key .."'"
+		elseif (carrier == "telnyx") then
+			if to:len() < 11 then
+				to = "1" .. to;
+			end
+			if outbound_caller_id_number:len() < 11 then
+				outbound_caller_id_number = "1" .. outbound_caller_id_number;
+			end
+			--Get delivery_status_webhook_url
+			sql = "SELECT default_setting_value FROM v_default_settings ";
+			sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_delivery_status_webhook_url' and default_setting_enabled = 'true'";
+			if (debug["sql"]) then
+				freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
+			end
+			status = dbh:query(sql, function(rows)
+				delivery_status_webhook_url = rows["default_setting_value"];
+			end);
+			cmd ="curl -X POST \"" .. api_url .."\" -H \"Content-Type: application/json\"  -H \"x-profile-secret: " .. secret_key .. "\" -d '{\"from\": \"+" .. outbound_caller_id_number .. "\", \"to\": \"+" .. to .. "\", \"body\": \"" .. body .. "\", \"delivery_status_webhook_url\": \"" .. delivery_status_webhook_url .. "\"}'";
 		end
 		if (debug["info"]) then
 			freeswitch.consoleLog("notice", "[sms] CMD: " .. cmd .. "\n");

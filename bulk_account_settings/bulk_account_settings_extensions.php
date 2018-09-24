@@ -219,8 +219,8 @@
 	echo "		<form method='get' action=''>\n";
 	echo "			<td style='vertical-align: top; text-align: right; white-space: nowrap;'>\n";
 	echo "				<input type='button' class='btn' alt='".$text['button-back']."' onclick=\"window.location='bulk_account_settings.php'\" value='".$text['button-back']."'>\n";	
-	echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".$search."'>";
-	echo "				<input type='hidden' class='txt' style='width: 150px' name='option_selected' id='option_selected' value='".$option_selected."'>";
+	echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".escape($search)."'>";
+	echo "				<input type='hidden' class='txt' style='width: 150px' name='option_selected' id='option_selected' value='".escape($option_selected)."'>";
 	echo "				<input type='submit' class='btn' name='submit' value='".$text['button-search']."'>";
 	if ($paging_controls_mini != '') {
 		echo 			"<span style='margin-left: 15px;'>".$paging_controls_mini."</span>\n";
@@ -240,7 +240,7 @@
 
 	if (strlen($option_selected) > 0) {
 		echo "<form name='extensions' method='post' action='bulk_account_settings_extensions_update.php'>\n";
-		echo "<input class='formfld' type='hidden' name='option_selected' maxlength='255' value=\"$option_selected\">\n";
+		echo "<input class='formfld' type='hidden' name='option_selected' maxlength='255' value=\"".escape($option_selected)."\">\n";
 		echo "<table width='auto' border='0' cellpadding='0' cellspacing='0'>\n";
 		echo "<tr>\n";
 		//options with a free form input
@@ -248,7 +248,7 @@
 			echo "<td class='vtable' align='left'>\n";
 			echo "    <input class='formfld' type='text' name='new_setting' maxlength='255' value=\"$new_setting\">\n";
 			echo "<br />\n";
-			echo $text["description-".$option_selected.""]."\n";
+			echo $text["description-".escape($option_selected).""]."\n";
 			echo "</td>\n";
 		}
 		//option is Enabled
@@ -273,7 +273,7 @@
 			}
 			$new_setting = $hold_music;
 			echo "    <br />\n";
-			echo $text["description-".$option_selected.""]."\n";
+			echo $text["description-".escape($option_selected).""]."\n";
 			echo "</td>\n";
 		}
 		echo "<td align='left'>\n";
@@ -307,18 +307,18 @@ if (is_array($directory)) {
 			echo "<tr ".$tr_link.">\n";
 
 			echo "	<td valign='top' class='".$row_style[$c]." tr_link_void' style='text-align: center; vertical-align: middle; padding: 0px;'>";
-			echo "		<input type='checkbox' name='id[]' id='checkbox_".$row['extension_uuid']."' value='".$row['extension_uuid']."' onclick=\"if (!this.checked) { document.getElementById('chk_all').checked = false; }\">";
+			echo "		<input type='checkbox' name='id[]' id='checkbox_".escape($row['extension_uuid'])."' value='".escape($row['extension_uuid'])."' onclick=\"if (!this.checked) { document.getElementById('chk_all').checked = false; }\">";
 			echo "	</td>";
 			$ext_ids[] = 'checkbox_'.$row['extension_uuid'];
 
 			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['extension']."&nbsp;</td>\n";
 			if (($option_selected == "") or ($option_selected == 'call_group') or ($option_selected == 'accountcode')) {
 			} else {
-				echo "	<td valign='top' class='".$row_style[$c]."'> ".$row[$option_selected]."&nbsp;</td>\n";
+				echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row[$option_selected])."&nbsp;</td>\n";
 			}
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['accountcode']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['call_group']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['description']."</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['accountcode'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['call_group'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['description'])."</td>\n";
 			echo "</tr>\n";
 			$c = ($c) ? 0 : 1;
 		}

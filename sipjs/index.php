@@ -112,7 +112,7 @@ echo "	};\n";
 		}
 	};
 	//makes the call
-	//session = user_agent.invite('sip:1020@www.fusionpbx.com', options);
+	//session = user_agent.invite('sip:1020@voip.fusionpbx.com', options);
 
 	//answer
 	user_agent.on('invite', function (session) {
@@ -182,7 +182,7 @@ echo "	};\n";
 		document.getElementById('remote_video').style.display = "inline";
 		document.getElementById('mute_audio').style.display = "inline";
 		document.getElementById('mute_video').style.display = "inline";
-		session = user_agent.invite('sip:'+destination+'@www.fusionpbx.com', options);
+		session = user_agent.invite('sip:'+destination+'@<?php echo $domain_name; ?>', options);
 		
 		var remote_video = document.getElementById("remote_video");
 		remote_video.setAttribute("controls","controls");

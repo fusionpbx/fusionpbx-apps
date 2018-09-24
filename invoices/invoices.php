@@ -17,24 +17,30 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2012
+	Portions created by the Initial Developer are Copyright (C) 2008-2018
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
 	Mark J Crane <markjcrane@fusionpbx.com>
 */
-require_once "root.php";
-require_once "resources/require.php";
-require_once "resources/check_auth.php";
-if (permission_exists('invoice_view')) {
-	//access granted
-}
-else {
-	echo "access denied";
-	exit;
-}
-require_once "resources/header.php";
-require_once "resources/paging.php";
+
+//includes
+	require_once "root.php";
+	require_once "resources/require.php";
+	require_once "resources/check_auth.php";
+
+//check permissions
+	if (permission_exists('invoice_view')) {
+		//access granted
+	}
+	else {
+		echo "access denied";
+		exit;
+	}
+
+//additional includes
+	require_once "resources/header.php";
+	require_once "resources/paging.php";
 
 //add multi-lingual support
 	$language = new text;
@@ -59,59 +65,60 @@ require_once "resources/paging.php";
 	echo "	</tr>\n";
 	echo "</table>\n";
 
-	//prepare to page the results
-		$sql = "SELECT count(*) as num_rows FROM v_invoices ";
-		$sql .= "LEFT OUTER JOIN v_contacts ";
-		$sql .= "ON v_invoices.contact_uuid_to = v_contacts.contact_uuid ";
-		$sql .= "where v_invoices.domain_uuid = '$domain_uuid' ";
-		if (strlen($contact_uuid) > 0) {
-			$sql .= "and v_invoices.contact_uuid_to = '$contact_uuid' ";
-		}
-		$prep_statement = $db->prepare($sql);
-		if ($prep_statement) {
-		$prep_statement->execute();
-			$row = $prep_statement->fetch(PDO::FETCH_ASSOC);
-			if ($row['num_rows'] > 0) {
-				$num_rows = $row['num_rows'];
-			}
-			else {
-				$num_rows = '0';
-			}
-		}
-
-	//prepare to page the results
-		$rows_per_page = 150;
-		$param = "";
-		$page = $_GET['page'];
-		if (strlen($page) == 0) { $page = 0; $_GET['page'] = 0; }
-		list($paging_controls, $rows_per_page, $var3) = paging($num_rows, $param, $rows_per_page);
-		$offset = $rows_per_page * $page;
-
-	//get the list
-		$sql = "SELECT * FROM v_invoices ";
-		$sql .= "LEFT OUTER JOIN v_contacts ";
-		$sql .= "ON v_invoices.contact_uuid_to = v_contacts.contact_uuid ";
-		$sql .= "where v_invoices.domain_uuid = '$domain_uuid' ";
-		if (strlen($contact_uuid) > 0) {
-			$sql .= "and v_invoices.contact_uuid_to = '$contact_uuid' ";
-		}
-		if (strlen($order_by) == 0) {
-			$sql .= "order by v_invoices.invoice_number asc ";
+//prepare to page the results
+	$sql = "SELECT count(*) as num_rows FROM v_invoices ";
+	$sql .= "LEFT OUTER JOIN v_contacts ";
+	$sql .= "ON v_invoices.contact_uuid_to = v_contacts.contact_uuid ";
+	$sql .= "where v_invoices.domain_uuid = '$domain_uuid' ";
+	if (strlen($contact_uuid) > 0) {
+		$sql .= "and v_invoices.contact_uuid_to = '$contact_uuid' ";
+	}
+	$prep_statement = $db->prepare($sql);
+	if ($prep_statement) {
+	$prep_statement->execute();
+		$row = $prep_statement->fetch(PDO::FETCH_ASSOC);
+		if ($row['num_rows'] > 0) {
+			$num_rows = $row['num_rows'];
 		}
 		else {
-			$sql .= "order by v_invoices.$order_by $order ";
+			$num_rows = '0';
 		}
-		$sql .= "limit $rows_per_page offset $offset ";
-		$prep_statement = $db->prepare(check_sql($sql));
-		$prep_statement->execute();
-		$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
-		$result_count = count($result);
-		unset ($prep_statement, $sql);
+	}
 
+//prepare to page the results
+	$rows_per_page = 150;
+	$param = "";
+	$page = $_GET['page'];
+	if (strlen($page) == 0) { $page = 0; $_GET['page'] = 0; }
+	list($paging_controls, $rows_per_page, $var3) = paging($num_rows, $param, $rows_per_page);
+	$offset = $rows_per_page * $page;
+
+//get the list
+	$sql = "SELECT * FROM v_invoices ";
+	$sql .= "LEFT OUTER JOIN v_contacts ";
+	$sql .= "ON v_invoices.contact_uuid_to = v_contacts.contact_uuid ";
+	$sql .= "where v_invoices.domain_uuid = '$domain_uuid' ";
+	if (strlen($contact_uuid) > 0) {
+		$sql .= "and v_invoices.contact_uuid_to = '$contact_uuid' ";
+	}
+	if (strlen($order_by) == 0) {
+		$sql .= "order by v_invoices.invoice_number desc ";
+	}
+	else {
+		$sql .= "order by v_invoices.$order_by $order ";
+	}
+	$sql .= "limit $rows_per_page offset $offset ";
+	$prep_statement = $db->prepare(check_sql($sql));
+	$prep_statement->execute();
+	$invoices = $prep_statement->fetchAll(PDO::FETCH_NAMED);
+	unset ($prep_statement, $sql);
+
+//set the row style
 	$c = 0;
 	$row_style["0"] = "row_style0";
 	$row_style["1"] = "row_style1";
 
+//show the invoices
 	echo "<table class='tr_hover' width='100%' border='0' cellpadding='0' cellspacing='0'>\n";
 	echo "<tr>\n";
 	echo "<th>&nbsp;</th>\n";
@@ -131,10 +138,10 @@ require_once "resources/paging.php";
 	echo "</td>\n";
 	echo "<tr>\n";
 
-	if ($result_count > 0) {
-		foreach($result as $row) {
+	if (is_array($invoices)) {
+		foreach($invoices as $row) {
 			$back = ($contact_uuid != '') ? "&back=".urlencode("invoices.php?id=".$contact_uuid) : null;
-			$tr_link = (permission_exists('invoice_edit')) ? "href='invoice_edit.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid'].$back."'" : null;
+			$tr_link = (permission_exists('invoice_edit')) ? "href='invoice_edit.php?contact_uuid=".escape($row['contact_uuid'])."&id=".escape($row['invoice_uuid']).escape($back)."'" : null;
 			echo "<tr ".$tr_link.">\n";
 			echo "	<td align='center' valign='middle' class='".$row_style[$c]."' style='padding: 0px 0px 0px 5px;'>";
 			if ($row['invoice_paid'] == 1) {
@@ -144,24 +151,24 @@ require_once "resources/paging.php";
 				echo "<img src='unpaid.png' style='width: 16px; height: 16px; border; none;'>";
 			}
 			echo "	</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'><a href='invoice_edit.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid'].$back."' alt='".$text['button-edit']."'>".$row['invoice_number']."</a>&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$text['label-invoice_type_'.$row['invoice_type']]."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['contact_organization']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['contact_name_given']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['contact_name_family']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['invoice_date']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'><a href='invoice_edit.php?contact_uuid=".escape($row['contact_uuid'])."&id=".escape($row['invoice_uuid']).escape($back)."' alt='".$text['button-edit']."'>".escape($row['invoice_number'])."</a>&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$text['label-invoice_type_'.escape($row['invoice_type']])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['contact_organization'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['contact_name_given'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['contact_name_family'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['invoice_date'])."&nbsp;</td>\n";
 			echo "	<td class='list_control_icons'>\n";
 			if (permission_exists('invoice_edit')) {
-				echo 	"<a href='invoice_edit.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid'].$back."' alt='".$text['button-edit']."'>$v_link_label_edit</a>";
+				echo 	"<a href='invoice_edit.php?contact_uuid=".escape($row['contact_uuid'])."&id=".escape($row['invoice_uuid']).escape($back)."' alt='".$text['button-edit']."'>$v_link_label_edit</a>";
 			}
 			if (permission_exists('invoice_delete')) {
-				echo 	"<a href='invoice_delete.php?contact_uuid=".$row['contact_uuid']."&id=".$row['invoice_uuid'].$back."' alt='".$text['button-delete']."' onclick=\"return confirm('".$text['confirm-delete']."')\">$v_link_label_delete</a>";
+				echo 	"<a href='invoices_delete.php?contact_uuid=".escape($row['contact_uuid'])."&id=".escape($row['invoice_uuid']).escape($back)."' alt='".$text['button-delete']."' onclick=\"return confirm('".$text['confirm-delete']."')\">$v_link_label_delete</a>";
 			}
 			echo 	"</td>\n";
 			echo "</tr>\n";
 			if ($c==0) { $c=1; } else { $c=0; }
 		} //end foreach
-		unset($sql, $result, $row_count);
+		unset($invoices);
 	} //end if results
 
 	echo "<tr>\n";
@@ -188,4 +195,5 @@ require_once "resources/paging.php";
 
 //include the footer
 	require_once "resources/footer.php";
+
 ?>

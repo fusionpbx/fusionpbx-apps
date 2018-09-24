@@ -50,7 +50,7 @@ $order = $_GET["order"];
 	echo "<table width='100%'>";
 	echo "<tr>";
 	echo "<td align='left'>";
-	echo "      <b>$module_title ".$text['label-list']."</b>";
+	echo "      <b>".escape($module_title)." ".$text['label-list']."</b>";
 	echo "</td>";
 	echo "<td align='right'>";
 	//echo "      <input type='button' class='btn' name='' onclick=\"window.location='rssadd.php'\" value='Add $module_title'>&nbsp; &nbsp;\n";
@@ -102,16 +102,16 @@ $order = $_GET["order"];
 	if ($result_count > 0) {
 		foreach($result as $row) {
 		//print_r( $row );
-			$tr_link = "href='rssupdate.php?rss_uuid=".$row[rss_uuid]."'";
+			$tr_link = "href='rssupdate.php?rss_uuid=".escape($row[rss_uuid])."'";
 			echo "<tr ".$tr_link.">\n";
-				//echo "<td valign='top'><a href='rssupdate.php?rss_uuid=".$row[rss_uuid]."'>".$row[rss_uuid]."</a></td>";
+				//echo "<td valign='top'><a href='rssupdate.php?rss_uuid=".escape($row[rss_uuid])."'>".escape($row[rss_uuid])."</a></td>";
 				//echo "<td valign='top'>".$row[rss_category]."</td>";
 
-				echo "<td valign='top' nowrap class='".$row_style[$c]."'><a href='rssupdate.php?rss_uuid=".$row[rss_uuid]."'>".$row[rss_title]."</a></td>";
-				echo "<td valign='top' nowrap class='".$row_style[$c]."'><a href='/index.php?c=".$row[rss_link]."'>".$row[rss_link]."</a></td>";
+				echo "<td valign='top' nowrap class='".$row_style[$c]."'><a href='rssupdate.php?rss_uuid=".escape($row[rss_uuid])."'>".$row[rss_title])."</a></td>";
+				echo "<td valign='top' nowrap class='".$row_style[$c]."'><a href='/index.php?c=".escape($row[rss_link])."'>".escape($row[rss_link])."</a></td>";
 				//echo "<td valign='top' class='".$row_style[$c]."'>".$row[rss_sub_category]."&nbsp;</td>";
 				if (strlen($row[rss_group]) > 0) {
-					echo "<td valign='top' class='".$row_style[$c]."'>".$row[rss_group]."</td>";
+					echo "<td valign='top' class='".$row_style[$c]."'>".escape($row[rss_group])."</td>";
 				}
 				else {
 					echo "<td valign='top' class='".$row_style[$c]."'>public</td>";
@@ -133,20 +133,20 @@ $order = $_GET["order"];
 				//echo "<td valign='top'>".$row[rss_optional_3]."</td>";
 				//echo "<td valign='top'>".$row[rss_optional_4]."</td>";
 				//echo "<td valign='top'>".$row[rss_optional_5]."</td>";
-				echo "<td valign='top' class='".$row_style[$c]."' style='text-align: center;'>".$row[rss_order]."</td>";
+				echo "<td valign='top' class='".$row_style[$c]."' style='text-align: center;'>".escape($row[rss_order])."</td>";
 
 				//echo "<td valign='top' align='center'>";
-				//echo "  <input type='button' class='btn' name='' onclick=\"window.location='rssmoveup.php?menuparentid=".$row[menuparentid]."&rss_uuid=".$row[rss_uuid]."&rss_order=".$row[rss_order]."'\" value='<' title='".$row[rss_order].". Move Up'>";
-				//echo "  <input type='button' class='btn' name='' onclick=\"window.location='rssmovedown.php?menuparentid=".$row[menuparentid]."&rss_uuid=".$row[rss_uuid]."&rss_order=".$row[rss_order]."'\" value='>' title='".$row[rss_order].". Move Down'>";
+				//echo "  <input type='button' class='btn' name='' onclick=\"window.location='rssmoveup.php?menuparentid=".escape($row[menuparentid])."&rss_uuid=".escape($row[rss_uuid])."&rss_order=".escape($row[rss_order])."'\" value='<' title='".escape($row[rss_order]).". Move Up'>";
+				//echo "  <input type='button' class='btn' name='' onclick=\"window.location='rssmovedown.php?menuparentid=".escape($row[menuparentid])."&rss_uuid=".escape($row[rss_uuid])."&rss_order=".escape($row[rss_order])."'\" value='>' title='".escape($row[rss_order]).". Move Down'>";
 				//echo "</td>";
 
 				echo "	<td class='list_control_icons'>";
-				echo "<a href='rssupdate.php?rss_uuid=".$row[rss_uuid]."' alt='".$text['label-edit']."'>$v_link_label_edit</a>";
-				echo "<a href='rssdelete.php?rss_uuid=".$row[rss_uuid]."' alt='delete' onclick=\"return confirm('".$text['message-confirm-delete']."')\">$v_link_label_delete</a>";
+				echo "<a href='rssupdate.php?rss_uuid=".escape($row[rss_uuid])."' alt='".$text['label-edit']."'>$v_link_label_edit</a>";
+				echo "<a href='rssdelete.php?rss_uuid=".escape($row[rss_uuid])."' alt='delete' onclick=\"return confirm('".$text['message-confirm-delete']."')\">$v_link_label_delete</a>";
 				echo "</td>\n";
 
 				//echo "<td valign='top' align='right' class='".$row_style[$c]."'>";
-				//echo "  <input type='button' class='btn' name='' onclick=\"if (confirm('Are you sure you wish to continue?')) { window.location='rssdelete.php?rss_uuid=".$row[rss_uuid]."' }\" value='Delete'>";
+				//echo "  <input type='button' class='btn' name='' onclick=\"if (confirm('Are you sure you wish to continue?')) { window.location='rssdelete.php?rss_uuid=".escape($row[rss_uuid])."' }\" value='Delete'>";
 				//echo "</td>";
 
 			echo "</tr>";
@@ -176,7 +176,7 @@ $order = $_GET["order"];
 	echo "<br><br>";
 
 	//echo "<input type='button' class='btn' name='' onclick=\"window.location='rsssearch.php'\" value='Search'>&nbsp; &nbsp;\n";
-	//echo "<input type='button' class='btn' name='' onclick=\"window.location='rssadd.php'\" value='Add $module_title'>&nbsp; &nbsp;\n";
+	//echo "<input type='button' class='btn' name='' onclick=\"window.location='rssadd.php'\" value='Add ".escape($module_title)."'>&nbsp; &nbsp;\n";
 
 	require_once "resources/footer.php";
 

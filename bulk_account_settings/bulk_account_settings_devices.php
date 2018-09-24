@@ -256,7 +256,7 @@
 
 	if (strlen($option_selected) > 0) {
 		echo "<form name='devices' method='post' action='bulk_account_settings_devices_update.php'>\n";
-		echo "<input class='formfld' type='hidden' name='option_selected' maxlength='255' value=\"$option_selected\">\n";
+		echo "<input class='formfld' type='hidden' name='option_selected' maxlength='255' value=\"".escape($option_selected)."\">\n";
 		echo "<table width='auto' border='0' cellpadding='0' cellspacing='0'>\n";
 		echo "<tr>\n";
 		//option is Enabled
@@ -286,7 +286,7 @@
 			echo "    <select class='formfld' name='new_setting'>\n";
 			echo "				<option value=''></option>\n";
 			foreach($result as $row) {
-				echo "			<option value='".$row['device_profile_uuid']."' ".(($row['device_profile_uuid'] == $device_profile_uuid) ? "selected='selected'" : null).">".$row['device_profile_name']." ".(($row['domain_uuid'] == '') ? "&nbsp;&nbsp;(".$text['select-global'].")" : null)."</option>\n";
+				echo "			<option value='".escape($row['device_profile_uuid'])."' ".(($row['device_profile_uuid'] == $device_profile_uuid) ? "selected='selected'" : null).">".escape($row['device_profile_name'])." ".(($row['domain_uuid'] == '') ? "&nbsp;&nbsp;(".$text['select-global'].")" : null)."</option>\n";
 			}
 			//echo "			</select>\n";
 			echo "    </select>\n";
@@ -340,9 +340,9 @@
 		//options with a free form input
 		if($option_selected == 'line_1_server_address' || $option_selected == 'line_1_outbound_proxy_primary' || $option_selected == 'line_1_sip_port' || $option_selected == 'line_1_register_expires' || $option_selected == 'line_1_outbound_proxy_secondary') {
 			echo "<td class='vtable' align='left'>\n";
-			echo "    <input class='formfld' type='text' name='new_setting' maxlength='255' value=\"$new_setting\">\n";
+			echo "    <input class='formfld' type='text' name='new_setting' maxlength='255' value=\"".escape($new_setting)."\">\n";
 			echo "<br />\n";
-			echo $text["description-".$option_selected.""]."\n";
+			echo $text["description-".escape($option_selected).""]."\n";
 			echo "</td>\n";
 		}
 		
@@ -356,7 +356,7 @@
 			echo "    <option value='dns srv'>DNS SRV</option>\n";
 			echo "    </select>\n";
 			echo "    <br />\n";
-			echo $text["description-".$option_selected.""]."\n";
+			echo $text["description-".escape($option_selected).""]."\n";
 			echo "</td>\n";
 		}
 
@@ -393,19 +393,19 @@ if (is_array($directory)) {
 			echo "<tr ".$tr_link.">\n";
 
 			echo "	<td valign='top' class='".$row_style[$c]." tr_link_void' style='text-align: center; vertical-align: middle; padding: 0px;'>";
-			echo "		<input type='checkbox' name='id[]' id='checkbox_".$row['device_uuid']."' value='".$row['device_uuid']."' onclick=\"if (!this.checked) { document.getElementById('chk_all').checked = false; }\">";
+			echo "		<input type='checkbox' name='id[]' id='checkbox_".escape($row['device_uuid'])."' value='".escape($row['device_uuid'])."' onclick=\"if (!this.checked) { document.getElementById('chk_all').checked = false; }\">";
 			echo "	</td>";
 			$device_ids[] = 'checkbox_'.$row['device_uuid'];
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_mac_address']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_label']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['device_mac_address'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['device_label'])."&nbsp;</td>\n";
 			if (preg_match ('/line_/',$option_selected)) {
 				echo "	<td valign='top' class='".$row_style[$c]."'> ".$row[$option_selected]."&nbsp;</td>\n";	
 			}
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_vendor']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_template']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_profile_name']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_enabled']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_description']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['device_vendor'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['device_template'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['device_profile_name'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['device_enabled'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['device_description'])."&nbsp;</td>\n";
 			echo "</tr>\n";
 			$c = ($c) ? 0 : 1;
 		}
