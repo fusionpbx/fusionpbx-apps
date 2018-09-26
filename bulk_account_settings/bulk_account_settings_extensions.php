@@ -60,7 +60,7 @@
 		$sql_mod .= "or accountcode ILIKE '%".$search."%' ";		
 		$sql_mod .= "or call_group ILIKE '%".$search."%' ";
 		$sql_mod .= "or description ILIKE '%".$search."%' ";
-		if (($option_selected == "") or ($option_selected == 'call_group') or ($option_selected == 'accountcode')) {} else {
+		if (($option_selected == "") or ($option_selected == 'call_group') or ($option_selected == 'accountcode') or ($option_selected == 'sip_force_expires')) {} else {
 			$sql_mod .= "or ".$option_selected." ILIKE '%".$search."%' ";
 		}
 		$sql_mod .= ") ";
