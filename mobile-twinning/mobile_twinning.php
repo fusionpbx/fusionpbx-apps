@@ -53,7 +53,7 @@
 	if (strlen($search) > 0) {
 		$sql_mod = "and ( ";
 		$sql_mod .= "e.extension ILIKE '%".$search."%' ";
-		$sql_mod .= "or m.mobile_twinning_description ILIKE '%".$search."%' ";
+		$sql_mod .= "or e.description ILIKE '%".$search."%' ";
 		$sql_mod .= "or m.mobile_twinning_number ILIKE '%".$search."%' ";
 		$sql_mod .= ") ";
 	}
@@ -153,6 +153,9 @@
 			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['extension']."</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".format_phone(substr($row['mobile_twinning_number'],-10))."</td>\n";
 			echo "	<td valign='top' class='row_stylebg' width='40%'>".$row['description']."&nbsp;</td>\n";
+			echo "	<td class='list_control_icons'>";
+			echo "     <a href='mobile_twinning_edit.php?id=".$row['mobile_twinning_uuid']."&extid=".$row['extension_uuid']."'>$v_link_label_edit</a>";
+			echo "  </td>\n";			
 			echo "</tr>\n";
 			if ($c==0) { $c=1; } else { $c=0; }
 		} //end foreach
