@@ -21,13 +21,13 @@ On your server.
 Copy or move the directory 'mobile-twinning' into your main FusionPBX directory.
 	cp -R fusionpbx-apps/mobile-twinning /var/www/fusionpbx/app
 Move the xml dialplan file.
-	cp /var/www/fusionpbx/app/mobile-twinning/390_mobile-twinning.xml /var/www/fusionpbx/app/dialplans/resources/switch/conf/dialplan/390_mobile-twinning.xml
+	cp /var/www/fusionpbx/app/mobile_twinning/390_mobile_twinning.xml /var/www/fusionpbx/app/dialplans/resources/switch/conf/dialplan/390_mobile_twinning.xml
 Create the LUA script directory
 	mkdir /usr/share/freeswitch/scripts/app/mobile_twinning
 Copy the script
-	cp /var/www/fusionpbx/app/mobile-twinning/index.lua /usr/share/freeswitch/scripts/app/mobile_twinning/index.lua
+	cp /var/www/fusionpbx/app/mobile_twinning/index.lua /usr/share/freeswitch/scripts/app/mobile_twinning/index.lua
 Set the permissions
-	chown -R www-data:www-data /var/www/fusionpbx/app/mobile-twinning
+	chown -R www-data:www-data /var/www/fusionpbx/app/mobile_twinning
 	chown -R www-data:www-data /usr/share/freeswitch/scripts/app/mobile_twinning
 	chown -R www-data:www-data /var/www/fusionpbx/app/dialplans/resources/switch/conf/dialplan
 
