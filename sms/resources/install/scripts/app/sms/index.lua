@@ -248,7 +248,13 @@
 
 		if (carrier == "flowroute") then
 			cmd = "curl -u ".. access_key ..":" .. secret_key .. " -H \"Content-Type: application/json\" -X POST -d '{\"to\":\"" .. to .. "\",\"from\":\"" .. outbound_caller_id_number .."\",\"body\":\"" .. body .. "\"}' " .. api_url;
-		elseif (carrier == "twilio") then
+	
+       elseif (carrier == "peerless") then	
+   	
+   	   cmd = "curl -u 3001830:yKFMu34G -ki  https://mms1.pnwireless.net:443/partners/messageReceiving/3001830/submitMessage -H \"Content-Type: application/json\" -X POST -d '{\"from\":\"" .. outbound_caller_id_number .."\",\"recipients\":[\"+".. to .."\"],\"text\":\"" .. body .. "\"}'";
+	
+	
+	   elseif (carrier == "twilio") then
 			if to:len() < 11 then
 				to = "1" .. to;
 			end
