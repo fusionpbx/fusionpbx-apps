@@ -62,6 +62,7 @@ else {
 			$description = check_str($row["description"]);
 			$enabled = check_str($row["enabled"]);
 			$sms_destination_uuid = $row['sms_destination_uuid'];
+			$chatplan_detail_data = $row['chatplan_detail_data'];
 		}
 	}
 	else {
@@ -76,6 +77,7 @@ else {
 			$description = check_str($_POST["description"]);
 			$enabled = check_str($_POST["enabled"]);
 			$sms_destination_uuid = uuid();
+			$chatplan_detail_data = check_str($_POST["chatplan_detail_data"]);
 		if ($action == "add") {
 			$sql_insert = "insert into v_sms_destinations ";
 			$sql_insert .= "(";
@@ -84,7 +86,8 @@ else {
 			$sql_insert .= "domain_uuid, ";
 			$sql_insert .= "destination, ";
 			$sql_insert .= "enabled, ";
-			$sql_insert .= "description ";
+			$sql_insert .= "description, ";
+			$sql_insert .= "chatplan_detail_data ";
 			$sql_insert .= ")";
 			$sql_insert .= "values ";
 			$sql_insert .= "(";
@@ -93,34 +96,30 @@ else {
 			$sql_insert .= "'".$_SESSION['domain_uuid']."', ";
 			$sql_insert .= "'".$destination."', ";
 			$sql_insert .= "'".$enabled."', ";
-			$sql_insert .= "'".$description."' ";
+			$sql_insert .= "'".$description."', ";
+			$sql_insert .= "'".$chatplan_detail_data."' ";
 			$sql_insert .= ")";
 			$db->exec($sql_insert);
 			header( 'Location: sms.php') ;
-			
+
 		}
 	} elseif (count($_POST) > 0 && $action == "update") {
 			$destination = str_replace(' ','-',check_str($_POST["destination"]));
 			$carrier = check_str($_POST["carrier"]);
 			$description = check_str($_POST["description"]);
 			$enabled = check_str($_POST["enabled"]);
-			
+			$chatplan_detail_data = check_str($_POST["chatplan_detail_data"]);
+
 			$sql_insert = "update v_sms_destinations set";
-			$sql_insert .= "(";
-			$sql_insert .= "carrier, ";
-			$sql_insert .= "destination, ";
-			$sql_insert .= "enabled, ";
-			$sql_insert .= "description ";
-			$sql_insert .= ")";
-			$sql_insert .= "= ";
-			$sql_insert .= "(";
-			$sql_insert .= "'".$carrier."', ";
-			$sql_insert .= "'".$destination."', ";
-			$sql_insert .= "'".$enabled."', ";
-			$sql_insert .= "'".$description."' ";
-			$sql_insert .= ")";
+			$sql_insert .= " ";
+			$sql_insert .= "carrier = '".$carrier."', ";
+			$sql_insert .= "destination = '".$destination."', ";
+			$sql_insert .= "enabled = '".$enabled."', ";
+			$sql_insert .= "description = '".$description."', ";
+			$sql_insert .= "chatplan_detail_data = '".$chatplan_detail_data."' ";
 			$sql_insert .= "where sms_destination_uuid = '" . $sms_destination_uuid . "' and domain_uuid = '" . $_SESSION['domain_uuid'] . "'";
 			$db->exec($sql_insert);
+			error_log($sql_insert);
 			header( 'Location: sms.php') ;
 	}
 
@@ -176,7 +175,19 @@ else {
 	echo $text['description-carrier']."\n";
 	echo "</td>\n";
 	echo "</tr>\n";
-	
+
+
+
+	echo "<tr>\n";
+	echo "<td class='vncell' valign='top' align='left' nowrap='nowrap'>\n";
+	echo "    ".$text['label-chatplan_detail_data']."\n";
+	echo "</td>\n";
+	echo "<td class='vtable' align='left'>\n";
+	echo "    <input class='formfld' type='text' name='chatplan_detail_data' autocomplete='off' maxlength='255' value=\"$chatplan_detail_data\" >\n";
+	echo "<br />\n";
+	echo $text['description-chatplan_detail_data']."\n";
+	echo "</td>\n";
+	echo "</tr>\n";
 
 	if (permission_exists('sms_enabled')) {
 		echo "<tr>\n";
@@ -203,7 +214,7 @@ else {
 		echo "</td>\n";
 		echo "</tr>\n";
 	}
-	
+
 	echo "<tr>\n";
 	echo "<td class='vncell' valign='top' align='left' nowrap='nowrap'>\n";
 	echo "    ".$text['label-description']."\n";
@@ -217,9 +228,9 @@ else {
 
 	if ($action == "update") {
 		echo "		<input type='hidden' name='sms_destination_uuid' value='".$sms_destination_uuid."'>\n";
-		echo "		<input type='hidden' name='id' id='id' value='".$sms_destination_uuid."'>";	
+		echo "		<input type='hidden' name='id' id='id' value='".$sms_destination_uuid."'>";
 	}
-	
+
 	echo "</table>\n";
 	echo "</form>\n";
 

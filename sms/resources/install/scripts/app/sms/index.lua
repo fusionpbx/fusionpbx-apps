@@ -107,7 +107,76 @@
 		end
 		event:fire();
 		to = extension;
-	elseif direction == "outbound" then
+		
+		--Send inbound SMS via email delivery
+		if (domain_uuid == nil) then
+			--get the domain_uuid using the domain name required for multi-tenant
+				if (domain_name ~= nil) then
+					sql = "SELECT domain_uuid FROM v_domains ";
+					sql = sql .. "WHERE domain_name = :domain_name and domain_enabled = 'true' ";
+					local params = {domain_name = domain_name}
+
+					if (debug["sql"]) then
+						freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
+					end
+					status = dbh:query(sql, params, function(rows)
+						domain_uuid = rows["domain_uuid"];
+					end);
+				end
+		end
+		if (domain_uuid == nil) then
+			freeswitch.consoleLog("notice", "[sms] domain_uuid is nill, cannot send sms to email.");
+		else
+			sql = "SELECT v_contact_emails.email_address ";
+			sql = sql .. "from v_extensions, v_extension_users, v_users, v_contact_emails ";
+			sql = sql .. "where v_extensions.extension = :toext and v_extensions.domain_uuid = :domain_uuid and v_extensions.extension_uuid = v_extension_users.extension_uuid ";
+			sql = sql .. "and v_extension_users.user_uuid = v_users.user_uuid and v_users.contact_uuid = v_contact_emails.contact_uuid ";
+			sql = sql .. "and (v_contact_emails.email_label = 'sms' or v_contact_emails.email_label = 'SMS')";
+			local params = {toext = extension, domain_uuid = domain_uuid}
+
+			if (debug["sql"]) then
+				freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
+			end
+			status = dbh:query(sql, params, function(rows)
+				send_to_email_address = rows["email_address"];
+			end);
+
+			--sql = "SELECT domain_setting_value FROM v_domain_settings ";
+			--sql = sql .. "where domain_setting_category = 'sms' and domain_setting_subcategory = 'send_from_email_address' and domain_setting_enabled = 'true' and domain_uuid = :domain_uuid";
+			--local params = {domain_uuid = domain_uuid}
+
+			--if (debug["sql"]) then
+			--	freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
+			--end
+			--status = dbh:query(sql, params, function(rows)
+			--	send_from_email_address = rows["domain_setting_value"];
+			--end);
+			-- Tried setting the "from" address, above, but default email facility is overriding with global/domain-level default settings.
+			send_from_email_address = 'noreply@example.com'  -- this gets overridden if using v_mailto.php
+			
+			if (send_to_email_address ~= nill and send_from_email_address ~= nill) then
+				subject = 'Text Message from: ' .. from;
+				emailbody = 'To: ' .. to .. '<br>Msg:' .. body;
+				if (debug["info"]) then
+					freeswitch.consoleLog("info", emailbody);
+				end
+				--luarun email.lua send_to_email_address send_from_email_address '' subject emailbody;
+				--replace the &#39 with a single quote
+					emailbody = emailbody:gsub("&#39;", "'");
+
+				--replace the &#34 with double quote
+					emailbody = emailbody:gsub("&#34;", [["]]);
+
+				--send the email
+					freeswitch.email(send_to_email_address,
+						send_from_email_address,
+						"To: "..send_to_email_address.."\nFrom: "..send_from_email_address.."\nX-Headers: \nSubject: "..subject,
+						emailbody
+						);
+			end
+		end 
+
+		elseif direction == "outbound" then
 		if (argv[3] ~= nil) then
 			to_user = argv[3];
 			to_user = to_user:gsub("^+?sip%%3A%%40","");
@@ -137,7 +206,7 @@
 		end
 		--Clean body up for Groundwire send
 		smsraw = body;
-		smstempst, smstempend = string.find(smsraw, 'Content%-lenght:');
+		smstempst, smstempend = string.find(smsraw, 'Content%-length:');
 		if (smstempend == nil) then
 			body = smsraw;
 		else
@@ -148,7 +217,8 @@
 				body = string.sub(smsraw, smst2end + 1);
 			end
 		end
-
+		body = body:gsub('%"','');
+		--body = body:gsub('\r\n',' ');
 
 		if (debug["info"]) then
 			if (message ~= nil) then
@@ -246,77 +316,87 @@
 			api_url = rows["default_setting_value"];
 		end);
 
-		if (carrier == "flowroute") then
-			cmd = "curl -u ".. access_key ..":" .. secret_key .. " -H \"Content-Type: application/json\" -X POST -d '{\"to\":\"" .. to .. "\",\"from\":\"" .. outbound_caller_id_number .."\",\"body\":\"" .. body .. "\"}' " .. api_url;
-		elseif (carrier == "twilio") then
-			if to:len() < 11 then
-				to = "1" .. to;
+		--Check for xml content
+		smstempst, smstempend = string.find(body, '<%?xml');
+		if (smstempst ~= nil) then freeswitch.consoleLog("notice", "[sms] smstempst = '" .. smstempst .. "\n") end;
+		if (smstempend ~= nil) then freeswitch.consoleLog("notice", "[sms] smstempend = '" .. smstempend .. "\n") end;
+		if (smstempst == nil) then 
+			-- No XML content, continue processing
+			if (carrier == "flowroute") then
+				cmd = "curl -u ".. access_key ..":" .. secret_key .. " -H \"Content-Type: application/json\" -X POST -d '{\"to\":\"" .. to .. "\",\"from\":\"" .. outbound_caller_id_number .."\",\"body\":\"" .. body .. "\"}' " .. api_url;
+			elseif (carrier == "twilio") then
+				if to:len() < 11 then
+					to = "1" .. to;
+				end
+				if outbound_caller_id_number:len() < 11 then
+					outbound_caller_id_number = "1" .. outbound_caller_id_number;
+				end
+			-- Can be either +1NANNNNXXXX or NANNNNXXXX
+				api_url = string.gsub(api_url, "{ACCOUNTSID}",  access_key);
+				cmd ="curl -X POST '" .. api_url .."' --data-urlencode 'To=+" .. to .."' --data-urlencode 'From=+" .. outbound_caller_id_number .. "' --data-urlencode 'Body=" .. body .. "' -u ".. access_key ..":" .. secret_key .. " --insecure";
+			elseif (carrier == "teli") then
+				cmd ="curl -X POST '" .. api_url .."' --data-urlencode 'destination=" .. to .."' --data-urlencode 'source=" .. outbound_caller_id_number .. "' --data-urlencode 'message=" .. body .. "' --data-urlencode 'token=" .. access_key .. "' --insecure";
+			elseif (carrier == "plivo") then
+				if to:len() <11 then
+					to = "1"..to;
+				end
+				cmd="curl -i --user " .. access_key .. ":" .. secret_key .. " -H \"Content-Type: application/json\" -d '{\"src\": \"" .. outbound_caller_id_number .. "\",\"dst\": \"" .. to .."\", \"text\": \"" .. body .. "\"}' " .. api_url;
+			elseif (carrier == "bandwidth") then
+				if to:len() <11 then
+					to = "1"..to;
+				end
+				if outbound_caller_id_number:len() < 11 then
+					outbound_caller_id_number = "1" .. outbound_caller_id_number;
+				end
+				cmd="curl -v -X POST " .. api_url .." -u " .. access_key .. ":" .. secret_key .. " -H \"Content-type: application/json\" -d '{\"from\": \"+" .. outbound_caller_id_number .. "\", \"to\": \"+" .. to .."\", \"text\": \"" .. body .."\"}'"		
+			elseif (carrier == "thinq") then
+				if to:len() < 11 then
+					to = "1" .. to;
+				end
+				if outbound_caller_id_number:len() < 11 then
+					outbound_caller_id_number = "1" .. outbound_caller_id_number;
+				end
+				--Get User_name
+				sql = "SELECT default_setting_value FROM v_default_settings ";
+				sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_username' and default_setting_enabled = 'true'";
+				if (debug["sql"]) then
+					freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
+				end
+				status = dbh:query(sql, function(rows)
+					username = rows["default_setting_value"];
+				end);
+				cmd = "curl -X POST '" .. api_url .."' -H \"Content-Type:multipart/form-data\"  -F 'message=" .. body .. "' -F 'to_did=" .. to .."' -F 'from_did=" .. outbound_caller_id_number .. "' -u '".. username ..":".. access_key .."'"
+			elseif (carrier == "telnyx") then
+				if to:len() < 11 then
+					to = "1" .. to;
+				end
+				if outbound_caller_id_number:len() < 11 then
+					outbound_caller_id_number = "1" .. outbound_caller_id_number;
+				end
+				--Get delivery_status_webhook_url
+				sql = "SELECT default_setting_value FROM v_default_settings ";
+				sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_delivery_status_webhook_url' and default_setting_enabled = 'true'";
+				if (debug["sql"]) then
+					freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
+				end
+				status = dbh:query(sql, function(rows)
+					delivery_status_webhook_url = rows["default_setting_value"];
+				end);
+				cmd ="curl -X POST \"" .. api_url .."\" -H \"Content-Type: application/json\"  -H \"x-profile-secret: " .. secret_key .. "\" -d '{\"from\": \"+" .. outbound_caller_id_number .. "\", \"to\": \"+" .. to .. "\", \"body\": \"" .. body .. "\", \"delivery_status_webhook_url\": \"" .. delivery_status_webhook_url .. "\"}'";
 			end
-			if outbound_caller_id_number:len() < 11 then
-				outbound_caller_id_number = "1" .. outbound_caller_id_number;
+			if (debug["info"]) then
+				freeswitch.consoleLog("notice", "[sms] CMD: " .. cmd .. "\n");
 			end
-		-- Can be either +1NANNNNXXXX or NANNNNXXXX
-			api_url = string.gsub(api_url, "{ACCOUNTSID}",  access_key);
-			cmd ="curl -X POST '" .. api_url .."' --data-urlencode 'To=+" .. to .."' --data-urlencode 'From=+" .. outbound_caller_id_number .. "' --data-urlencode 'Body=" .. body .. "' -u ".. access_key ..":" .. secret_key .. " --insecure";
-		elseif (carrier == "teli") then
-			cmd ="curl -X POST '" .. api_url .."' --data-urlencode 'destination=" .. to .."' --data-urlencode 'source=" .. outbound_caller_id_number .. "' --data-urlencode 'message=" .. body .. "' --data-urlencode 'token=" .. access_key .. "' --insecure";
-		elseif (carrier == "plivo") then
-			if to:len() <11 then
-				to = "1"..to;
+			local handle = io.popen(cmd)
+			local result = handle:read("*a")
+			handle:close()
+			if (debug["info"]) then
+				freeswitch.consoleLog("notice", "[sms] CURL Returns: " .. result .. "\n");
 			end
-			cmd="curl -i --user " .. access_key .. ":" .. secret_key .. " -H \"Content-Type: application/json\" -d '{\"src\": \"" .. outbound_caller_id_number .. "\",\"dst\": \"" .. to .."\", \"text\": \"" .. body .. "\"}' " .. api_url;
-		elseif (carrier == "bandwidth") then
-			if to:len() <11 then
-				to = "1"..to;
-			end
-			if outbound_caller_id_number:len() < 11 then
-				outbound_caller_id_number = "1" .. outbound_caller_id_number;
-			end
-			cmd="curl -v -X POST " .. api_url .." -u " .. access_key .. ":" .. secret_key .. " -H \"Content-type: application/json\" -d '{\"from\": \"+" .. outbound_caller_id_number .. "\", \"to\": \"+" .. to .."\", \"text\": \"" .. body .."\"}'"		
-		elseif (carrier == "thinq") then
-			if to:len() < 11 then
-				to = "1" .. to;
-			end
-			if outbound_caller_id_number:len() < 11 then
-				outbound_caller_id_number = "1" .. outbound_caller_id_number;
-			end
-			--Get User_name
-			sql = "SELECT default_setting_value FROM v_default_settings ";
-			sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_username' and default_setting_enabled = 'true'";
-			if (debug["sql"]) then
-				freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
-			end
-			status = dbh:query(sql, function(rows)
-				username = rows["default_setting_value"];
-			end);
-			cmd = "curl -X POST '" .. api_url .."' -H \"Content-Type:multipart/form-data\"  -F 'message=" .. body .. "' -F 'to_did=" .. to .."' -F 'from_did=" .. outbound_caller_id_number .. "' -u '".. username ..":".. access_key .."'"
-		elseif (carrier == "telnyx") then
-			if to:len() < 11 then
-				to = "1" .. to;
-			end
-			if outbound_caller_id_number:len() < 11 then
-				outbound_caller_id_number = "1" .. outbound_caller_id_number;
-			end
-			--Get delivery_status_webhook_url
-			sql = "SELECT default_setting_value FROM v_default_settings ";
-			sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_delivery_status_webhook_url' and default_setting_enabled = 'true'";
-			if (debug["sql"]) then
-				freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
-			end
-			status = dbh:query(sql, function(rows)
-				delivery_status_webhook_url = rows["default_setting_value"];
-			end);
-			cmd ="curl -X POST \"" .. api_url .."\" -H \"Content-Type: application/json\"  -H \"x-profile-secret: " .. secret_key .. "\" -d '{\"from\": \"+" .. outbound_caller_id_number .. "\", \"to\": \"+" .. to .. "\", \"body\": \"" .. body .. "\", \"delivery_status_webhook_url\": \"" .. delivery_status_webhook_url .. "\"}'";
-		end
-		if (debug["info"]) then
-			freeswitch.consoleLog("notice", "[sms] CMD: " .. cmd .. "\n");
-		end
-		local handle = io.popen(cmd)
-		local result = handle:read("*a")
-		handle:close()
-		if (debug["info"]) then
-			freeswitch.consoleLog("notice", "[sms] CURL Returns: " .. result .. "\n");
-		end
+		else
+			-- XML content
+			freeswitch.consoleLog("notice", "[sms] Body contains XML content, not sending\n");
+		end	
 --		os.execute(cmd)
 	end
 	
