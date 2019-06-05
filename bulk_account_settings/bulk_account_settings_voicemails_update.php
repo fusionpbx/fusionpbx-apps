@@ -59,8 +59,7 @@
 		$voicemail_option_param = join(':', $option_array);
 		preg_match ('/voicemail_option_(.)/',$option_selected, $matches);
 		$voicemail_option_digits = $matches[1];
-
-					
+		
 		foreach($voicemail_uuids as $voicemail_uuid) {
 			$voicemail_uuid = check_str($voicemail_uuid);
 			if ($voicemail_uuid != '') {
@@ -75,8 +74,7 @@
 						$sql .= "and voicemail_option_digits = '".$voicemail_option_digits."' ";
 						$sql .= "and voicemail_option_order = '".$voicemail_option_order."' ";
 						$database = new database;
-						$database->select($sql);
-						$voicemails = $database->result;
+						$voicemails = $database->select($sql, 'all');
 						unset ($database);
 						if (is_array($voicemails)) { 
 							foreach ($voicemails as &$row) {
@@ -124,15 +122,13 @@
 					$sql .= "where domain_uuid = '".$_SESSION['domain_uuid']."' ";
 					$sql .= "and voicemail_uuid = '".$voicemail_uuid."' ";
 					$database = new database;
-					$database->select($sql);
-					$voicemails = $database->result;
+					$voicemails = $database->select($sql, 'all');
 					if (is_array($voicemails)) { 
 						foreach ($voicemails as &$row) {
 							$voicemail = $row["voicemail"];
 						}
 						unset ($prep_statement);
 					}
-					
 
 						$array["voicemails"][$i]["domain_uuid"] = $domain_uuid;
 						$array["voicemails"][$i]["voicemail_uuid"] = $voicemail_uuid;
