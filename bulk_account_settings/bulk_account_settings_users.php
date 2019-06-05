@@ -30,9 +30,6 @@
 	require_once "resources/check_auth.php";
 	require_once "resources/paging.php";
 
-//include the class
-	require_once "resources/check_auth.php";
-
 //check permissions
 	require_once "resources/check_auth.php";
 	if (permission_exists('bulk_account_settings_users')) {
@@ -102,9 +99,8 @@
 	$sql .= "ORDER BY ".$order_by." ".$order." \n";
 	$sql .= "limit $rows_per_page offset $offset ";
 	$database = new database;
-	$database->select($sql);
-	$directory = $database->result;
-	unset($database,$result);
+	$directory = $database->select($sql, 'all');
+	unset($database);
 
 //get all the users' groups from the database
 	$sql = "select ";
@@ -121,8 +117,7 @@
 	$sql .= "	g.domain_uuid desc, ";
 	$sql .= "	g.group_name asc ";
 	$database = new database;
-	$database->select($sql);
-	$result = $database->result;
+	$result = $database->select($sql, 'all');
 	if (is_array($result)) {
 		foreach($result as $row) {
 			$user_groups[$row['user_uuid']][] = $row['group_name'].(($row['group_domain_uuid'] != '') ? "@".$_SESSION['domains'][$row['group_domain_uuid']]['domain_name'] : null);
@@ -143,10 +138,8 @@
 	$sql .= "	u.domain_uuid desc, ";
 	$sql .= "	u.username asc ";
 	$database = new database;
-	$database->select($sql);
-	$result = $database->result;
-
-	if (count($result) > 0) {
+	$result = $database->select($sql, 'all');
+	if (is_array($result) > 0) {
 		foreach($result as $row) {
 			$user_time_zone[$row['user_uuid']][] = $row['user_setting_value'];
 		}
@@ -381,8 +374,7 @@
 			$sql .= "where (domain_uuid = '".$domain_uuid."' or domain_uuid is null) ";
 			$sql .= "order by domain_uuid desc, group_name asc ";
 			$database = new database;
-			$database->select($sql);
-			$result = $database->result;
+			$result = $database->select($sql, 'all');
 			$result_count = count($result);
 			if ($result_count > 0) {
 				if (isset($assigned_groups)) { echo "<br />\n"; }
@@ -481,4 +473,5 @@ if (is_array($directory)) {
 
 //show the footer
 	require_once "resources/footer.php";
+
 ?>
