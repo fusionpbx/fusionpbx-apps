@@ -111,10 +111,8 @@
 	$sql .= "ORDER BY ".$order_by." ".$order." \n";
 	$sql .= "limit $rows_per_page offset $offset ";
 	$database = new database;
-	$database->select($sql);
-	$directory = $database->result;
-	unset($database,$result);
-
+	$directory = $database->select($sql, 'all');
+	unset($database);
 
 //additional includes
 	require_once "resources/header.php";
@@ -357,4 +355,5 @@ if (is_array($directory)) {
 
 //show the footer
 	require_once "resources/footer.php";
+
 ?>
