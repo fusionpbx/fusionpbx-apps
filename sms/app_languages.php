@@ -130,6 +130,32 @@ $text['label-message']['de-at'] = "";
 $text['label-message']['ar-eg'] = "";
 $text['label-message']['he'] = "";
 
+$text['label-chatplan_detail_data']['en-us'] = "Extension or Ring Group";
+$text['label-chatplan_detail_data']['es-cl'] = "";
+$text['label-chatplan_detail_data']['pt-pt'] = "";
+$text['label-chatplan_detail_data']['fr-fr'] = "";
+$text['label-chatplan_detail_data']['pt-br'] = "";
+$text['label-chatplan_detail_data']['pl'] = " ";
+$text['label-chatplan_detail_data']['uk'] = "";
+$text['label-chatplan_detail_data']['sv-se'] = "";
+$text['label-chatplan_detail_data']['ro'] = "";
+$text['label-chatplan_detail_data']['de-at'] = "";
+$text['label-chatplan_detail_data']['ar-eg'] = "";
+$text['label-chatplan_detail_data']['he'] = "";
+
+$text['description-chatplan_detail_data']['en-us'] = "Routing extension or ring group for inbound SMS messages";
+$text['description-chatplan_detail_data']['es-cl'] = "";
+$text['description-chatplan_detail_data']['pt-pt'] = "";
+$text['description-chatplan_detail_data']['fr-fr'] = "";
+$text['description-chatplan_detail_data']['pt-br'] = "";
+$text['description-chatplan_detail_data']['pl'] = " ";
+$text['description-chatplan_detail_data']['uk'] = "";
+$text['description-chatplan_detail_data']['sv-se'] = "";
+$text['description-chatplan_detail_data']['ro'] = "";
+$text['description-chatplan_detail_data']['de-at'] = "";
+$text['description-chatplan_detail_data']['ar-eg'] = "";
+$text['description-chatplan_detail_data']['he'] = "";
+
 $text['button-mdr']['en-us'] = "MDRs";
 $text['button-mdr']['es-cl'] = "";
 $text['button-mdr']['pt-pt'] = "";
