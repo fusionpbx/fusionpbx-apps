@@ -56,8 +56,7 @@
 					$sql .= "where domain_uuid = '".$_SESSION['domain_uuid']."' ";
 					$sql .= "and extension_uuid = '".$extension_uuid."' ";
 					$database = new database;
-					$database->select($sql);
-					$extensions = $database->result;
+					$extensions = $database->select($sql, 'all');
 					if (is_array($extensions)) { 
 						foreach ($extensions as &$row) {
 							$extension = $row["extension"];
@@ -80,7 +79,7 @@
 					//echo "<pre>".print_r($message, true)."<pre>\n";
 					//exit;
 					
-					unset($database,$array,$i);
+					unset($database, $array,$i);
 				
 				//clear the cache
 					$cache = new cache;
