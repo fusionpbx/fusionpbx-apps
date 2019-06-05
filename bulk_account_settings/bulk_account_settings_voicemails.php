@@ -110,10 +110,9 @@
 	$sql .= "ORDER BY ".$order_by." ".$order." \n";
 	$sql .= "limit $rows_per_page offset $offset ";
 	$database = new database;
-	$database->select($sql);
-	$directory = $database->result;
+	$directory = $database->select($sql, 'all');
 
-$sql_view = $sql;
+	$sql_view = $sql;
 	unset($database,$result);
 
 //lookup the options
@@ -125,10 +124,9 @@ $sql_view = $sql;
 		$sql .= "and voicemail_uuid = '".$row['voicemail_uuid']."' ";
 		$sql .= "and voicemail_option_digits = '".$option_number."' ";
 		$database = new database;
-		$database->select($sql);
-		$result = $database->result;
+		$result = $database->select($sql, 'all');
 		$directory[$key]['option_db_value'] = $result;		
-		unset($result,$database);
+		unset($result, $database);
 		$x++;
 	}
 	
@@ -450,4 +448,5 @@ if (is_array($directory)) {
 
 //show the footer
 	require_once "resources/footer.php";
+
 ?>
