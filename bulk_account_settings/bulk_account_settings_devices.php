@@ -30,9 +30,6 @@
 	require_once "resources/check_auth.php";
 	require_once "resources/paging.php";
 
-//include the class
-	require_once "resources/check_auth.php";
-
 //check permissions
 	require_once "resources/check_auth.php";
 	if (permission_exists('bulk_account_settings_devices')) {
@@ -42,7 +39,7 @@
 		echo "access denied";
 		exit;
 	}
-	
+
 //add multi-lingual support
 	$language = new text;
 	$text = $language->get();
@@ -55,7 +52,7 @@
 //	if (count($_POST)>0) {
 //		$option_selected = check_str($_POST["option_selected"]);
 //	}
-	
+
 //handle search term
 	$search = check_str($_GET["search"]);
 	if (strlen($search) > 0) {
@@ -74,7 +71,6 @@
 	}
 
 	$domain_uuid = $_SESSION['domain_uuid'];
-	
 
 //get total device count from the database
 	$sql = "select count(*) as num_rows from v_devices where domain_uuid = '".$_SESSION['domain_uuid']."' ".$sql_mod." ";
@@ -117,9 +113,8 @@
 	$sql .= "ORDER BY ".$order_by." ".$order." \n";
 	$sql .= "limit $rows_per_page offset $offset ";
 	$database = new database;
-	$database->select($sql);
-	$directory = $database->result;
-	unset($database,$result);
+	$directory = $database->select($sql, 'all');
+	unset($database);
 
 //lookup the lines
 	$x = 0;
@@ -130,19 +125,18 @@
 		$sql .= "and device_uuid = '".$row['device_uuid']."' ";
 		$sql .= "and line_number = '1' ";
 		$database = new database;
-		$database->select($sql);
 		$sqlview1 = $sql;
-		$result = $database->result;
+		$result = $database->select($sql, 'all');
 		$directory[$key]['line_1_server_address'] = $result[0]['server_address'];
 		$directory[$key]['line_1_outbound_proxy_primary'] = $result[0]['outbound_proxy_primary'];
 		$directory[$key]['line_1_sip_port'] = $result[0]['sip_port'];
 		$directory[$key]['line_1_sip_transport'] = $result[0]['sip_transport'];
 		$directory[$key]['line_1_register_expires'] = $result[0]['register_expires'];
 		$directory[$key]['line_1_outbound_proxy_secondary'] = $result[0]['outbound_proxy_secondary'];
-		unset($result,$database);
+		unset($result, $database);
 		$x++;
 	}
-	
+
 //additional includes
 	require_once "resources/header.php";
 	$document['title'] = $text['title-devices_settings'];
@@ -244,8 +238,7 @@
 	echo "			</td>\n";
 	echo "		</form>\n";	
 	echo "  </tr>\n";
-	
-	
+
 	echo "	<tr>\n";
 	echo "		<td colspan='2'>\n";
 	echo "			".$text['description-devices_settings']."\n";
@@ -282,17 +275,17 @@
 			$result_count = count($result);
 			unset ($prep_statement, $sql);
 			if ($result_count > 0) {
-			echo "<td class='vtable' align='left'>\n";
-			echo "    <select class='formfld' name='new_setting'>\n";
-			echo "				<option value=''></option>\n";
-			foreach($result as $row) {
-				echo "			<option value='".escape($row['device_profile_uuid'])."' ".(($row['device_profile_uuid'] == $device_profile_uuid) ? "selected='selected'" : null).">".escape($row['device_profile_name'])." ".(($row['domain_uuid'] == '') ? "&nbsp;&nbsp;(".$text['select-global'].")" : null)."</option>\n";
-			}
-			//echo "			</select>\n";
-			echo "    </select>\n";
-			echo "    <br />\n";
-			echo $text["description-".$option_selected.""]."\n";
-			echo "</td>\n";
+				echo "<td class='vtable' align='left'>\n";
+				echo "    <select class='formfld' name='new_setting'>\n";
+				echo "				<option value=''></option>\n";
+				foreach($result as $row) {
+					echo "			<option value='".escape($row['device_profile_uuid'])."' ".(($row['device_profile_uuid'] == $device_profile_uuid) ? "selected='selected'" : null).">".escape($row['device_profile_name'])." ".(($row['domain_uuid'] == '') ? "&nbsp;&nbsp;(".$text['select-global'].")" : null)."</option>\n";
+				}
+				//echo "			</select>\n";
+				echo "    </select>\n";
+				echo "    <br />\n";
+				echo $text["description-".$option_selected.""]."\n";
+				echo "</td>\n";
 			}
 		}
 
@@ -384,10 +377,7 @@
 	echo th_order_by('device_description', $text['label-device_description'], $order_by, $order,'','',"option_selected=".$option_selected."&search=".$search."");
 	echo "</tr>\n";
 
-
-
-if (is_array($directory)) {
-
+	if (is_array($directory)) {
 		foreach($directory as $key => $row) {
 			$tr_link = (permission_exists('device_edit')) ? " href='/app/devices/device_edit.php?id=".$row['device_uuid']."'" : null;
 			echo "<tr ".$tr_link.">\n";
@@ -409,7 +399,6 @@ if (is_array($directory)) {
 			echo "</tr>\n";
 			$c = ($c) ? 0 : 1;
 		}
-
 		unset($directory, $row);
 	}
 
@@ -445,4 +434,5 @@ if (is_array($directory)) {
 
 //show the footer
 	require_once "resources/footer.php";
+
 ?>
