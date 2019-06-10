@@ -192,6 +192,21 @@ $text['description-enabled']['de-at'] = "Select the new enabled status for the s
 $text['description-enabled']['it-it'] = "Select the new enabled status for the selected extensions.";
 $text['description-enabled']['ru-ru'] = "Выберите новый статус для выбранных extensions.";
 
+$text['description-directory_visible']['en-us'] = "Select whether to hide the name from the directory.";
+$text['description-directory_visible']['es-cl'] = "";
+$text['description-directory_visible']['pt-pt'] = "";
+$text['description-directory_visible']['en-fr'] = "";
+$text['description-directory_visible']['en-br'] = "";
+$text['description-directory_visible']['pl'] = "";
+$text['description-directory_visible']['sv-se'] = "";
+$text['description-directory_visible']['uk'] = "Select whether to hide the name from the directory.";
+$text['description-directory_visible']['de-at'] = "";
+$text['description-directory_visible']['it-it'] = "";
+$text['description-directory_visible']['ru-ru'] = "";
+
+
+
+
 $text['description-emergency_caller_id_name']['en-us'] = "Enter the new emergency caller id name for the selected extensions.";
 $text['description-emergency_caller_id_name']['es-cl'] = "Enter the new emergency caller id name for the selected extensions.";
 $text['description-emergency_caller_id_name']['pt-pt'] = "Enter the new emergency caller id name for the selected extensions.";
@@ -407,6 +422,20 @@ $text['label-add']['uk'] = "Add";
 $text['label-add']['de-at'] = "Add";
 $text['label-add']['it-it'] = "Add";
 $text['label-add']['ru-ru'] = "Добавить";
+
+
+$text['label-directory_visible']['en-us'] = "Directory Visible";
+$text['label-directory_visible']['es-cl'] = "";
+$text['label-directory_visible']['pt-pt'] = "";
+$text['label-directory_visible']['fr-fr'] = "";
+$text['label-directory_visible']['pt-pt'] = "";
+$text['label-directory_visible']['pl'] = "";
+$text['label-directory_visible']['sv-se'] = "";
+$text['label-directory_visible']['uk'] = "Directory Visible";
+$text['label-directory_visible']['de-at'] = "";
+$text['label-directory_visible']['it-it'] = "";
+$text['label-directory_visible']['ru-ru'] = "";
+
 
 $text['label-remove']['en-us'] = "Remove";
 $text['label-remove']['es-cl'] = "Remove";
