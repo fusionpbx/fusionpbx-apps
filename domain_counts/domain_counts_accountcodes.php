@@ -89,8 +89,7 @@
 	$sql .= "FROM v_domains \n";
 	$sql .= "WHERE domain_uuid = '$domain_uuid' \n";
 	$database = new database;
-	$database->select($sql);
-	$domain_result = $database->result;
+	$domain_result = $database->select($sql, null, 'all');
 	unset($database,$result);
 	
 //get all the accountcodes from the database
@@ -102,8 +101,7 @@
 	$sql .= "ORDER BY ".$order_by." ".$order." \n";
 	$sql .= "limit $rows_per_page offset $offset ";
 	$database = new database;
-	$database->select($sql);
-	$directory = $database->result;
+	$directory = $database->select($sql, null, 'all');
 	unset($database,$result);
 
 //set the http header

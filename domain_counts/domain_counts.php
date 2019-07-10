@@ -137,8 +137,7 @@
 	$sql .= "ORDER BY ".$order_by." ".$order." \n";
 	
 	$database = new database;
-	$database->select($sql);
-	$domain_counts = $database->result;	
+	$domain_counts = $domain_counts = $database->select($sql, null, 'all');
 
 //lookup the domain count
 	$database = new database;
