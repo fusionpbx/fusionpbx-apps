@@ -409,27 +409,27 @@
 									if (strlen($url) == 0) {
 										$url = PROJECT_PATH."/app/contacts/contacts.php?search_all={cid_num}";
 									}
-									$url = str_replace ("{cid_num}", $cid_num, $url);
-									$url = str_replace ("{cid_name}", $cid_name, $url);
-									echo "<td class='".$row_style[$c]."' $style_alternate><a href='".escape($url)."' style='color: #444444;' target='_blank'>".escape($cid_name)."</a></td>\n";
-									echo "<td class='".$row_style[$c]."' $style_alternate><a href='".escape($url)."' style='color: #444444;' target='_blank'>".escape($cid_num)."</a></td>\n";
+									$url = str_replace ("{cid_num}", escape($cid_num), $url);
+									$url = str_replace ("{cid_name}", escape($cid_name), $url);
+									echo "<td class='".$row_style[$c]."' $style_alternate><a href='".$url."' style='color: #444444;' target='_blank'>".escape($cid_name)."</a></td>\n";
+									echo "<td class='".$row_style[$c]."' $style_alternate><a href='".$url."' style='color: #444444;' target='_blank'>".escape($cid_num)."</a></td>\n";
 								}
 							}
 							if (if_group("admin") || if_group("superadmin")) {
 								if (strlen(($_GET['rows'])) == 0) {
 									echo "<td class='".$row_style[$c]."' $style_alternate>\n";
-									echo "".$dest."<br />\n";
+									echo "".escape($dest)."<br />\n";
 									echo "</td>\n";
 									echo "<td class='".$row_style[$c]."' $style_alternate>\n";
 									if ($application == "fifo") {
 										echo "queue &nbsp;\n";
 									}
 									else {
-										echo $application." &nbsp;\n";
+										echo escape($application)." &nbsp;\n";
 									}
 									echo "</td>\n";
 									echo "<td class='".$row_style[$c]."' $style_alternate>\n";
-									echo "".$secure."<br />\n";
+									echo escape($secure)."<br />\n";
 									echo "</td>\n";
 								}
 							}
@@ -457,7 +457,7 @@
 						}
 
 						echo "<td valign='top' class='".$row_style[$c]."' $style_alternate>\n";
-						echo "	".$effective_caller_id_name."&nbsp;\n";
+						echo "	".escape($effective_caller_id_name)."&nbsp;\n";
 						echo "</td>\n";
 
 						if (if_group("admin") || if_group("superadmin")) {
