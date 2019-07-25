@@ -135,9 +135,9 @@
 	$sql .= "FROM v_domains as d \n";
 	$sql .= $sql_mod; //add search mod from above
 	$sql .= "ORDER BY ".$order_by." ".$order." \n";
-	
+
 	$database = new database;
-	$domain_counts = $domain_counts = $database->select($sql, null, 'all');
+	$domain_counts = $database->select($sql, null);
 
 //lookup the domain count
 	$database = new database;
