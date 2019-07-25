@@ -64,16 +64,10 @@
 	
 //get total accountcode count from the database
 	$sql = "select count(DISTINCT accountcode) as num_rows from v_extensions where domain_uuid = '".$domain_uuid."' ".$sql_mod." ";
-	$prep_statement = $db->prepare($sql);
-	if ($prep_statement) {
-		$prep_statement->execute();
-		$row = $prep_statement->fetch(PDO::FETCH_ASSOC);
-		$total_accountcodes = $row['num_rows'];
-		if (($db_type == "pgsql") or ($db_type == "mysql")) {
-			$numeric_accountcodes = $row['num_rows'];
-		}
-	}
-	unset($prep_statement, $row);
+	$database = new database;
+	$numeric_accountcodes = $database->select($sql, null, 'column');
+	$total_accountcodes = $numeric_accountcodes;
+	unset($sql);
 
 //prepare to page the results
 	$rows_per_page = ($_SESSION['domain']['paging']['numeric'] != '') ? $_SESSION['domain']['paging']['numeric'] : 50;
@@ -89,7 +83,8 @@
 	$sql .= "FROM v_domains \n";
 	$sql .= "WHERE domain_uuid = '$domain_uuid' \n";
 	$database = new database;
-	$domain_result = $database->select($sql, null, 'all');
+	$result = $database->select($sql, null);
+	$domain_result = $database->result;
 	unset($database,$result);
 	
 //get all the accountcodes from the database
@@ -101,8 +96,8 @@
 	$sql .= "ORDER BY ".$order_by." ".$order." \n";
 	$sql .= "limit $rows_per_page offset $offset ";
 	$database = new database;
-	$directory = $database->select($sql, null, 'all');
-	unset($database,$result);
+	$directory = $database->select($sql, null);
+	unset($database);
 
 //set the http header
 	if ($_REQUEST['type'] == "csv") {
