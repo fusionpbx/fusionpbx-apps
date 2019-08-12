@@ -540,6 +540,30 @@ $text['label-line_1_server_address']['de-at'] = "Line 1 - Server Address";
 $text['label-line_1_server_address']['it-it'] = "Line 1 - Server Address";
 $text['label-line_1_server_address']['ru-ru'] = "Линия 1 - Адрес сервера";
 
+$text['label-line_1_server_address_primary']['en-us'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['es-cl'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['pt-pt'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['fr-fr'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['pt-br'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['pl'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['sv-se'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['uk'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['de-at'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['it-it'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['ru-ru'] = "Линия 1 - Server Address прокси основной";
+
+$text['label-line_1_server_address_secondary']['en-us'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['es-cl'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['pt-pt'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['fr-fr'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['pt-br'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['pl'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['sv-se'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['uk'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['de-at'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['it-it'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['ru-ru'] = "Линия 1 - Server Address резервный";
+
 $text['label-line_1_outbound_proxy_primary']['en-us'] = "Line 1 - Outbound Proxy Primary";
 $text['label-line_1_outbound_proxy_primary']['es-cl'] = "Line 1 - Outbound Proxy Primary";
 $text['label-line_1_outbound_proxy_primary']['pt-pt'] = "Line 1 - Outbound Proxy Primary";
@@ -551,6 +575,18 @@ $text['label-line_1_outbound_proxy_primary']['uk'] = "Line 1 - Outbound Proxy Pr
 $text['label-line_1_outbound_proxy_primary']['de-at'] = "Line 1 - Outbound Proxy Primary";
 $text['label-line_1_outbound_proxy_primary']['it-it'] = "Line 1 - Outbound Proxy Primary";
 $text['label-line_1_outbound_proxy_primary']['ru-ru'] = "Линия 1 - Исходящий прокси основной";
+
+$text['label-line_1_outbound_proxy_secondary']['en-us'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['es-cl'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['pt-pt'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['fr-fr'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['pt-br'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['pl'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['sv-se'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['uk'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['de-at'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['it-it'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['ru-ru'] = "Линия 1 - Исходящий прокси резервный";
 
 $text['label-line_1_sip_port']['en-us'] = "Line 1 - SIP Port";
 $text['label-line_1_sip_port']['es-cl'] = "Line 1 - SIP Port";
@@ -587,18 +623,6 @@ $text['label-line_1_register_expires']['uk'] = "Line 1 - Register Expires";
 $text['label-line_1_register_expires']['de-at'] = "Line 1 - Register Expires";
 $text['label-line_1_register_expires']['it-it'] = "Line 1 - Register Expires";
 $text['label-line_1_register_expires']['ru-ru'] = "Линия 1 - Регистрация истекает";
-
-$text['label-line_1_outbound_proxy_secondary']['en-us'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['es-cl'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['pt-pt'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['fr-fr'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['pt-br'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['pl'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['sv-se'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['uk'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['de-at'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['it-it'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['ru-ru'] = "Линия 1 - Исходящий прокси резервный";
 
 $text['label-hold_music']['en-us'] = "Hold Music";
 $text['label-hold_music']['es-cl'] = "Hold Music";
@@ -1175,4 +1199,5 @@ $text['title-devices_settings']['uk'] = "Device Settings";
 $text['title-devices_settings']['de-at'] = "Device Settings";
 $text['title-devices_settings']['it-it'] = "Device Settings";
 $text['title-devices_settings']['ru-ru'] = "Настройки устройства";
+
 ?>
