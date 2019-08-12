@@ -348,7 +348,7 @@
 		}
 
 		//options with a free form input
-		if($option_selected == 'line_1_server_address' || $option_selected == 'line_1_outbound_proxy_primary' || $option_selected == 'line_1_sip_port' || $option_selected == 'line_1_register_expires' || $option_selected == 'line_1_outbound_proxy_secondary') {
+		if($option_selected == 'line_1_server_address' || $option_selected == 'line_1_server_address_primary' || $option_selected == 'line_1_server_address_secondary' || $option_selected == 'line_1_outbound_proxy_primary' || $option_selected == 'line_1_outbound_proxy_secondary' || $option_selected == 'line_1_sip_port' || $option_selected == 'line_1_register_expires') {
 			echo "<td class='vtable' align='left'>\n";
 			echo "    <input class='formfld' type='text' name='new_setting' maxlength='255' value=\"".escape($new_setting)."\">\n";
 			echo "<br />\n";
