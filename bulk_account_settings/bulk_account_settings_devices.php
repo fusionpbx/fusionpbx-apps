@@ -108,7 +108,7 @@
 	$sql .= "where d.device_profile_uuid = dp.device_profile_uuid \n";
 	$sql .= ") as device_profile_name \n";
 	$sql .= "FROM v_devices as d \n";
-	$sql .= "WHERE domain_uuid = '$domain_uuid' \n";
+	$sql .= "WHERE domain_uuid = '".$_SESSION['domain_uuid']."' \n";
 	$sql .= $sql_mod; //add search mod from above
 	$sql .= "ORDER BY ".$order_by." ".$order." \n";
 	$sql .= "limit $rows_per_page offset $offset ";
