@@ -184,12 +184,35 @@
 	else {
 		echo "    <option value='line_1_server_address'>".$text['label-line_1_server_address']."</option>\n";
 	}
-//Line 1 - Outbound Proxy		
+
+//Line 1 - Server Address Primary	
+	if ($option_selected == "line_1_server_address_primary") {
+		echo "    <option value='line_1_server_address_primary' selected='selected'>".$text['label-line_1_server_address_primary']."</option>\n";
+	}
+	else {
+		echo "    <option value='line_1_server_address_primary'>".$text['label-line_1_server_address_primary']."</option>\n";
+	}
+
+//Line 1 - Server Address Secondary	
+	if ($option_selected == "line_1_server_address_secondary") {
+		echo "    <option value='line_1_server_address_secondary' selected='selected'>".$text['label-line_1_server_address_secondary']."</option>\n";
+	}
+	else {
+		echo "    <option value='line_1_server_address_secondary'>".$text['label-line_1_server_address_secondary']."</option>\n";
+	}
+//Line 1 - Outbound Proxy Primary
 	if ($option_selected == "line_1_outbound_proxy_primary") {
 		echo "    <option value='line_1_outbound_proxy_primary' selected='selected'>".$text['label-line_1_outbound_proxy_primary']."</option>\n";
 	}
 	else {
 		echo "    <option value='line_1_outbound_proxy_primary'>".$text['label-line_1_outbound_proxy_primary']."</option>\n";
+	}
+//Line 1 - Outbound Proxy Secondary
+	if ($option_selected == "line_1_outbound_proxy_secondary") {
+		echo "    <option value='line_1_outbound_proxy_secondary' selected='selected'>".$text['label-line_1_outbound_proxy_secondary']."</option>\n";
+	}
+	else {
+		echo "    <option value='line_1_outbound_proxy_secondary'>".$text['label-line_1_outbound_proxy_secondary']."</option>\n";
 	}
 //Line 1 - SIP Port
 	if ($option_selected == "line_1_sip_port") {
@@ -212,13 +235,7 @@
 	else {
 		echo "    <option value='line_1_register_expires'>".$text['label-line_1_register_expires']."</option>\n";
 	}
-//Line 1 - Outbound Proxy Secondary
-	if ($option_selected == "line_1_outbound_proxy_secondary") {
-		echo "    <option value='line_1_outbound_proxy_secondary' selected='selected'>".$text['label-line_1_outbound_proxy_secondary']."</option>\n";
-	}
-	else {
-		echo "    <option value='line_1_outbound_proxy_secondary'>".$text['label-line_1_outbound_proxy_secondary']."</option>\n";
-	}		
+		
 	echo "    </select>\n";
 	echo "    </form>\n";
 	echo "<br />\n";
