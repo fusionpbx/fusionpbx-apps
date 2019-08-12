@@ -128,11 +128,14 @@
 		$sqlview1 = $sql;
 		$result = $database->select($sql, 'all');
 		$directory[$key]['line_1_server_address'] = $result[0]['server_address'];
+		$directory[$key]['line_1_server_address_primary'] = $result[0]['server_address_primary'];
+		$directory[$key]['line_1_server_address_secondary'] = $result[0]['server_address_secondary'];
 		$directory[$key]['line_1_outbound_proxy_primary'] = $result[0]['outbound_proxy_primary'];
+		$directory[$key]['line_1_outbound_proxy_secondary'] = $result[0]['outbound_proxy_secondary'];
 		$directory[$key]['line_1_sip_port'] = $result[0]['sip_port'];
 		$directory[$key]['line_1_sip_transport'] = $result[0]['sip_transport'];
 		$directory[$key]['line_1_register_expires'] = $result[0]['register_expires'];
-		$directory[$key]['line_1_outbound_proxy_secondary'] = $result[0]['outbound_proxy_secondary'];
+
 		unset($result, $database);
 		$x++;
 	}
