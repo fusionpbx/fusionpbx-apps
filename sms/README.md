@@ -20,3 +20,6 @@
     - Note: You will need to have a valid certificate to use Twilio. If you need a certificate, consider using Let's Encrypt and certbot. It’s fast and free. 
 
 Send and receive!
+
+NOTE: It is not recommended to use this app with versions of Freeswitch prior to 1.8 if you are installing in a clustered environment.  
+There is a bug in earlier versions of Freeswitch that can cause it to crash in certain situation when using SMS.

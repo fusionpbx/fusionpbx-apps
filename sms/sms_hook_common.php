@@ -31,6 +31,7 @@
 
 */
 include "root.php";
+include "app/sms/sms_email.php";
 
 //luarun /var/www/html/app/sms/sms.lua TO FROM 'BODY'
 
@@ -38,20 +39,17 @@ $debug = true;
 
 require_once "resources/require.php";
 
-function route_and_send_sms($from, $to, $body) {
-	global $db, $debug, $domain_uuid, $domain_name;
-	if ($debug) {
-		error_log('DATA: ' .  print_r($to, true));
-	}
+function route_and_send_sms($from, $to, $body, $media = "") {
+	global $db, $debug, $domain_uuid, $domain_name, $mailsent;
 
-	//create the even socket connection and send the event socket command
+	//create the event socket connection and send the event socket command
 		$fp = event_socket_create($_SESSION['event_socket_ip_address'], $_SESSION['event_socket_port'], $_SESSION['event_socket_password']);
 		if (!$fp) {
 			//error message
 			echo "<div align='center'><strong>Connection to Event Socket failed.</strong></div>";
 		}
 		else {
-
+				$mailsent = false;
 				$to = intval(preg_replace('/(^[1])/','', $to));
 				$from = intval($from);
 				$body = preg_replace('([\'])', '\\\'', $body); // escape apostrophes
@@ -59,6 +57,25 @@ function route_and_send_sms($from, $to, $body) {
 					error_log("TO: " . print_r($to,true));
 					error_log("FROM: " . print_r($from,true));
 					error_log("BODY: " . print_r($body,true));
+				}
+				$mailbody = $body;
+				if (gettype($media)=="array") {
+					if (empty($body)) {
+						$body = "MMS message received, see email for attachment";
+					}
+					else {
+						$body .= " (MMS message received, see email for attachment)";
+					}
+					if ($debug) {
+						error_log("MMS message (media array present)");
+					}
+				}
+				if ($debug) {
+					error_log("BODY: " . print_r($body,true));
+				}
+				$body = preg_replace('([\n])', '<br>', $body); // escape newlines
+				if ($debug) {
+					error_log("BODY-revised: " . print_r($body,true));
 				}
 
 				// Check for chatplan_detail in sms_destinations table
@@ -127,7 +144,17 @@ function route_and_send_sms($from, $to, $body) {
 					error_log("DOMAIN_UUID: " . print_r($domain_uuid,true));
 
 				}
+				//load default and domain settings
+				$_SESSION["domain_uuid"] = $domain_uuid;
+				require_once "resources/classes/domains.php";
+				$domain = new domains;
+				$domain->set();
+				if ($debug) {
+					error_log("email_from: " . $_SESSION['email']['smtp_from']['var']);
+				}
+				$mailsent = send_sms_to_email($from, $to, $mailbody, $media);
 
+				//check to see if we have a ring group or single extension
 				$sql = "select destination_number ";
 				$sql .= "from v_ring_groups, v_ring_group_destinations ";
 				$sql .= "where v_ring_groups.ring_group_uuid = v_ring_group_destinations.ring_group_uuid ";
@@ -141,25 +168,29 @@ function route_and_send_sms($from, $to, $body) {
 					error_log("RG RESULT: " . print_r($result,true));
 				}
 
-				if (count($result)) {
+				//send sms via Lua script
+				if (count($result)) { //ring group
 					foreach ($result as &$row) {
 						$switch_cmd = "api luarun app.lua sms inbound ";
 						$switch_cmd .= $row['destination_number'] . "@" . $domain_name;
-						$switch_cmd .= " " . $from . " '" . $body . "'";
+						$switch_cmd .= " " . $from . " '" . $body . "' " . $mailsent;
 						if ($debug) {
 							error_log(print_r($switch_cmd,true));
 						}
 						$result2 = trim(event_socket_request($fp, $switch_cmd));
+						if ($debug) {
+							error_log("RESULT: " . print_r($result2,true));
+						}
 					}
-				} else {
-					$switch_cmd = "api luarun app.lua sms inbound " . $match[0] . "@" . $domain_name . " " . $from . " '" . $body . "'";
+				} else { //single extension
+					$switch_cmd = "api luarun app.lua sms inbound " . $match[0] . "@" . $domain_name . " " . $from . " '" . $body . "' " . $mailsent;
 					if ($debug) {
 						error_log(print_r($switch_cmd,true));
 					}
 					$result2 = trim(event_socket_request($fp, $switch_cmd));
-				}
-				if ($debug) {
-					error_log("RESULT: " . print_r($result2,true));
+					if ($debug) {
+						error_log("RESULT: " . print_r($result2,true));
+					}
 				}
 
 				unset ($prep_statement);

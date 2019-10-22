@@ -156,6 +156,32 @@ $text['description-chatplan_detail_data']['de-at'] = "";
 $text['description-chatplan_detail_data']['ar-eg'] = "";
 $text['description-chatplan_detail_data']['he'] = "";
 
+$text['label-sms_email']['en-us'] = "Email Address";
+$text['label-sms_email']['es-cl'] = "";
+$text['label-sms_email']['pt-pt'] = "";
+$text['label-sms_email']['fr-fr'] = "";
+$text['label-sms_email']['pt-br'] = "";
+$text['label-sms_email']['pl'] = " ";
+$text['label-sms_email']['uk'] = "";
+$text['label-sms_email']['sv-se'] = "";
+$text['label-sms_email']['ro'] = "";
+$text['label-sms_email']['de-at'] = "";
+$text['label-sms_email']['ar-eg'] = "";
+$text['label-sms_email']['he'] = "";
+
+$text['description-sms_email']['en-us'] = "For email delivery of inbound SMS messages";
+$text['description-sms_email']['es-cl'] = "";
+$text['description-sms_email']['pt-pt'] = "";
+$text['description-sms_email']['fr-fr'] = "";
+$text['description-sms_email']['pt-br'] = "";
+$text['description-sms_email']['pl'] = " ";
+$text['description-sms_email']['uk'] = "";
+$text['description-sms_email']['sv-se'] = "";
+$text['description-sms_email']['ro'] = "";
+$text['description-sms_email']['de-at'] = "";
+$text['description-sms_email']['ar-eg'] = "";
+$text['description-sms_email']['he'] = "";
+
 $text['button-mdr']['en-us'] = "MDRs";
 $text['button-mdr']['es-cl'] = "";
 $text['button-mdr']['pt-pt'] = "";

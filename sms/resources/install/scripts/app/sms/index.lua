@@ -49,6 +49,19 @@
 		return s
 	end
 
+	local hex_to_char = function(x)
+	  return string.char(tonumber(x, 16))
+	end
+
+	local urldecode = function(url)
+	  if url == nil then
+	    return
+	  end
+	  url = url:gsub("+", " ")
+	  url = url:gsub("%%(%x%x)", hex_to_char)
+	  return url
+	end
+
 --define uuid function
 	local random = math.random;
 	local function uuid()
@@ -57,6 +70,16 @@
 			local v = (c == 'x') and random(0, 0xf) or random(8, 0xb);
 			return string.format('%x', v);
 		end)
+	end
+
+--define encoding function
+	function encodeChar(chr)
+		return string.format("%%%X",string.byte(chr))
+	end
+
+	function encodeString(str)
+		local output, t = string.gsub(str,"[^%w]",encodeChar)
+		return output
 	end
 
 --get the argv values
@@ -72,111 +95,122 @@
 		to = argv[3];
 		from = argv[4];
 		body = argv[5];
+		mailsent = argv[6];
 		domain_name = string.match(to,'%@+(.+)');
 		extension = string.match(to,'%d+');
-
+		if (body ~= nil) then
+			body = urldecode(body);
+		end
+		savebody = body;
+		body = body:gsub('<br>','\n');
+		
 		if (debug["info"]) then
-			freeswitch.consoleLog("notice", "[sms] DIRECTION: " .. direction .. "\n");
 			freeswitch.consoleLog("notice", "[sms] TO: " .. to .. "\n");
 			freeswitch.consoleLog("notice", "[sms] Extension: " .. extension .. "\n");
 			freeswitch.consoleLog("notice", "[sms] FROM: " .. from .. "\n");
 			freeswitch.consoleLog("notice", "[sms] BODY: " .. body .. "\n");
 			freeswitch.consoleLog("notice", "[sms] DOMAIN_NAME: " .. domain_name .. "\n");
+			if (mailsent == nil) then
+				freeswitch.consoleLog("notice", "[sms] MAILSENT (already): nil\n");
+			else
+				freeswitch.consoleLog("notice", "[sms] MAILSENT (already): " .. mailsent .. "\n");
+			end
+				
 		end
 
-		local event = freeswitch.Event("CUSTOM", "SMS::SEND_MESSAGE");
-		event:addHeader("proto", "sip");
-		event:addHeader("dest_proto", "sip");
-		event:addHeader("from", "sip:" .. from);
-		event:addHeader("from_user", from);
-		event:addHeader("from_host", domain_name);
-		event:addHeader("from_full", "sip:" .. from .."@".. domain_name);
-		event:addHeader("sip_profile","internal");
-		event:addHeader("to", to);
-		event:addHeader("to_user", extension);
-		event:addHeader("to_host", domain_name);
-		event:addHeader("subject", "SIMPLE MESSAGE");
-		event:addHeader("type", "text/plain");
-		event:addHeader("hint", "the hint");
-		event:addHeader("replying", "true");
-		event:addHeader("DP_MATCH", to);
-		event:addBody(body);
-
-		if (debug["info"]) then
-			freeswitch.consoleLog("info", event:serialize());
-		end
-		event:fire();
-		to = extension;
-		
-		--Send inbound SMS via email delivery
-		if (domain_uuid == nil) then
-			--get the domain_uuid using the domain name required for multi-tenant
-				if (domain_name ~= nil) then
-					sql = "SELECT domain_uuid FROM v_domains ";
-					sql = sql .. "WHERE domain_name = :domain_name and domain_enabled = 'true' ";
-					local params = {domain_name = domain_name}
-
-					if (debug["sql"]) then
-						freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
-					end
-					status = dbh:query(sql, params, function(rows)
-						domain_uuid = rows["domain_uuid"];
-					end);
-				end
-		end
-		if (domain_uuid == nil) then
-			freeswitch.consoleLog("notice", "[sms] domain_uuid is nill, cannot send sms to email.");
+		--See if target ext is registered.
+		extension_status = "sofia_contact " .. to;
+		reply = api:executeString(extension_status);
+		--freeswitch.consoleLog("NOTICE", "[sms] Ext status: "..reply .. "\n");
+		if (reply == "error/user_not_registered") then
+			freeswitch.consoleLog("NOTICE", "[sms] Target extension "..to.." is not registered, not sending via SIMPLE.\n");
 		else
-			sql = "SELECT v_contact_emails.email_address ";
-			sql = sql .. "from v_extensions, v_extension_users, v_users, v_contact_emails ";
-			sql = sql .. "where v_extensions.extension = :toext and v_extensions.domain_uuid = :domain_uuid and v_extensions.extension_uuid = v_extension_users.extension_uuid ";
-			sql = sql .. "and v_extension_users.user_uuid = v_users.user_uuid and v_users.contact_uuid = v_contact_emails.contact_uuid ";
-			sql = sql .. "and (v_contact_emails.email_label = 'sms' or v_contact_emails.email_label = 'SMS')";
-			local params = {toext = extension, domain_uuid = domain_uuid}
+			local event = freeswitch.Event("CUSTOM", "SMS::SEND_MESSAGE");
+			event:addHeader("proto", "sip");
+			event:addHeader("dest_proto", "sip");
+			event:addHeader("from", "sip:" .. from);
+			event:addHeader("from_user", from);
+			event:addHeader("from_host", domain_name);
+			event:addHeader("from_full", "sip:" .. from .."@".. domain_name);
+			event:addHeader("sip_profile","internal");
+			event:addHeader("to", to);
+			event:addHeader("to_user", extension);
+			event:addHeader("to_host", domain_name);
+			event:addHeader("subject", "SIMPLE MESSAGE");
+			event:addHeader("type", "text/plain");
+			event:addHeader("hint", "the hint");
+			event:addHeader("replying", "true");
+			event:addHeader("DP_MATCH", to);
+			event:addBody(body);
 
-			if (debug["sql"]) then
-				freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
+			if (debug["info"]) then
+				freeswitch.consoleLog("info", event:serialize() .. "\n");
 			end
-			status = dbh:query(sql, params, function(rows)
-				send_to_email_address = rows["email_address"];
-			end);
+			event:fire();
+		end
+		to = extension;
 
-			--sql = "SELECT domain_setting_value FROM v_domain_settings ";
-			--sql = sql .. "where domain_setting_category = 'sms' and domain_setting_subcategory = 'send_from_email_address' and domain_setting_enabled = 'true' and domain_uuid = :domain_uuid";
-			--local params = {domain_uuid = domain_uuid}
+		if (not mailsent == 1) then
+			--Send inbound SMS via email delivery 
+			-- This is legacy code retained for backwards compatibility.  See /var/www/fusionpbx/app/sms/sms_email.php for current.
+			if (domain_uuid == nil) then
+				--get the domain_uuid using the domain name required for multi-tenant
+					if (domain_name ~= nil) then
+						sql = "SELECT domain_uuid FROM v_domains ";
+						sql = sql .. "WHERE domain_name = :domain_name and domain_enabled = 'true' ";
+						local params = {domain_name = domain_name}
 
-			--if (debug["sql"]) then
-			--	freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
-			--end
-			--status = dbh:query(sql, params, function(rows)
-			--	send_from_email_address = rows["domain_setting_value"];
-			--end);
-			-- Tried setting the "from" address, above, but default email facility is overriding with global/domain-level default settings.
-			send_from_email_address = 'noreply@example.com'  -- this gets overridden if using v_mailto.php
-			
-			if (send_to_email_address ~= nill and send_from_email_address ~= nill) then
-				subject = 'Text Message from: ' .. from;
-				emailbody = 'To: ' .. to .. '<br>Msg:' .. body;
-				if (debug["info"]) then
-					freeswitch.consoleLog("info", emailbody);
+						if (debug["sql"]) then
+							freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
+						end
+						status = dbh:query(sql, params, function(rows)
+							domain_uuid = rows["domain_uuid"];
+						end);
+					end
+			end
+			if (domain_uuid == nil) then
+				freeswitch.consoleLog("notice", "[sms] domain_uuid is nill, cannot send sms to email.");
+			else
+				sql = "SELECT v_contact_emails.email_address ";
+				sql = sql .. "from v_extensions, v_extension_users, v_users, v_contact_emails ";
+				sql = sql .. "where v_extensions.extension = :toext and v_extensions.domain_uuid = :domain_uuid and v_extensions.extension_uuid = v_extension_users.extension_uuid ";
+				sql = sql .. "and v_extension_users.user_uuid = v_users.user_uuid and v_users.contact_uuid = v_contact_emails.contact_uuid ";
+				sql = sql .. "and (v_contact_emails.email_label = 'sms' or v_contact_emails.email_label = 'SMS')";
+				local params = {toext = extension, domain_uuid = domain_uuid}
+
+				if (debug["sql"]) then
+					freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
 				end
-				--luarun email.lua send_to_email_address send_from_email_address '' subject emailbody;
-				--replace the &#39 with a single quote
-					emailbody = emailbody:gsub("&#39;", "'");
+				status = dbh:query(sql, params, function(rows)
+					send_to_email_address = rows["email_address"];
+				end);
 
-				--replace the &#34 with double quote
-					emailbody = emailbody:gsub("&#34;", [["]]);
+				send_from_email_address = 'noreply@example.com'  -- this gets overridden if using v_mailto.php
 
-				--send the email
-					freeswitch.email(send_to_email_address,
-						send_from_email_address,
-						"To: "..send_to_email_address.."\nFrom: "..send_from_email_address.."\nX-Headers: \nSubject: "..subject,
-						emailbody
-						);
-			end
-		end 
+				if (send_to_email_address ~= nill and send_from_email_address ~= nill) then
+					subject = 'Text Message from: ' .. from;
+					emailbody = 'To: ' .. to .. '<br>Msg:' .. body;
+					if (debug["info"]) then
+						freeswitch.consoleLog("info", emailbody);
+					end
+					--luarun email.lua send_to_email_address send_from_email_address '' subject emailbody;
+					--replace the &#39 with a single quote
+						emailbody = emailbody:gsub("&#39;", "'");
 
-		elseif direction == "outbound" then
+					--replace the &#34 with double quote
+						emailbody = emailbody:gsub("&#34;", [["]]);
+
+					--send the email
+						freeswitch.email(send_to_email_address,
+							send_from_email_address,
+							"To: "..send_to_email_address.."\nFrom: "..send_from_email_address.."\nX-Headers: \nSubject: "..subject,
+							emailbody
+							);
+				end
+			end 
+		end
+
+	elseif direction == "outbound" then
 		if (argv[3] ~= nil) then
 			to_user = argv[3];
 			to_user = to_user:gsub("^+?sip%%3A%%40","");
@@ -204,6 +238,9 @@
 		else
 			body = message:getBody();
 		end
+		if (debug["info"]) then
+			freeswitch.consoleLog("notice", "[sms] BODY-raw: " .. body .. "\n");
+		end
 		--Clean body up for Groundwire send
 		smsraw = body;
 		smstempst, smstempend = string.find(smsraw, 'Content%-length:');
@@ -219,6 +256,8 @@
 		end
 		body = body:gsub('%"','');
 		--body = body:gsub('\r\n',' ');
+		savebody = body;
+		body = encodeString((body));
 
 		if (debug["info"]) then
 			if (message ~= nil) then
@@ -247,6 +286,7 @@
 				end
 		end
 		freeswitch.consoleLog("notice", "[sms] DOMAIN_UUID: " .. domain_uuid .. "\n");
+
 		if (outbound_caller_id_number == nil) then
 			--get the outbound_caller_id_number using the domain_uuid and the extension number
 				if (domain_uuid ~= nil) then
@@ -286,50 +326,60 @@
 				end
 		end
 		
-		sql = "SELECT default_setting_value FROM v_default_settings ";
-		sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_access_key' and default_setting_enabled = 'true'";
-		local params = {carrier = carrier}
-
-		if (debug["sql"]) then
-			freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
+		--get settings 
+		require "resources.functions.settings";
+		settings = settings(domain_uuid);
+		if (settings['sms'] ~= nil) then
+			if (settings['sms'][carrier..'_access_key'] ~= nil) then
+				if (settings['sms'][carrier..'_access_key']['text'] ~= nil) then
+					access_key = settings['sms'][carrier..'_access_key']['text']
+				end
+			end
+			if (settings['sms'][carrier..'_secret_key'] ~= nil) then
+				if (settings['sms'][carrier..'_secret_key']['text'] ~= nil) then
+					secret_key = settings['sms'][carrier..'_secret_key']['text']
+				end
+			end
+			if (settings['sms'][carrier..'_api_url'] ~= nil) then
+				if (settings['sms'][carrier..'_api_url']['text'] ~= nil) then
+					api_url = settings['sms'][carrier..'_api_url']['text']
+				end
+			end
+			if (settings['sms'][carrier..'_username'] ~= nil) then
+				if (settings['sms'][carrier..'_username']['text'] ~= nil) then
+					username = settings['sms'][carrier..'_username']['text']
+				end
+			end
+			if (settings['sms'][carrier..'_delivery_status_webhook_url'] ~= nil) then
+				if (settings['sms'][carrier..'_delivery_status_webhook_url']['text'] ~= nil) then
+					delivery_status_webhook_url = settings['sms'][carrier..'_delivery_status_webhook_url']['text']
+				end
+			end
 		end
-		status = dbh:query(sql, function(rows)
-			access_key = rows["default_setting_value"];
-		end);
-
-		sql = "SELECT default_setting_value FROM v_default_settings ";
-		sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_secret_key' and default_setting_enabled = 'true'";
-
-		if (debug["sql"]) then
-			freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
+		if (debug["info"]) then
+			if (access_key ~= nil) then freeswitch.consoleLog("notice", "[sms] access_key: " .. access_key .. "\n") end;
+			if (secret_key ~= nil) then freeswitch.consoleLog("notice", "[sms] secret_key: " .. secret_key .. "\n") end;
+			if (api_url ~= nil) then freeswitch.consoleLog("notice", "[sms] api_url: " .. api_url .. "\n") end;
+			if (username ~= nil) then freeswitch.consoleLog("notice", "[sms] username: " .. username .. "\n") end;
+			if (delivery_status_webhook_url ~= nil) then freeswitch.consoleLog("notice", "[sms] delivery_status_webhook_url: " .. delivery_status_webhook_url .. "\n") end;
 		end
-		status = dbh:query(sql, function(rows)
-			secret_key = rows["default_setting_value"];
-		end);
+		
+			
 
-		sql = "SELECT default_setting_value FROM v_default_settings ";
-		sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_api_url' and default_setting_enabled = 'true'";
-		if (debug["sql"]) then
-			freeswitch.consoleLog("notice", "[sms] SQL: " .. sql .. "\n");
-		end
-		status = dbh:query(sql, function(rows)
-			api_url = rows["default_setting_value"];
-		end);
-
-		--Check for xml content
+		--Check for xml content or delivery status notification type
 		smstempst, smstempend = string.find(body, '<%?xml');
 		if (smstempst ~= nil) then freeswitch.consoleLog("notice", "[sms] smstempst = '" .. smstempst .. "\n") end;
 		if (smstempend ~= nil) then freeswitch.consoleLog("notice", "[sms] smstempend = '" .. smstempend .. "\n") end;
-		if (smstempst == nil) then 
+		mdn = (smstempst ~= nil); --message delivery notification
+		msgtype = message:getHeader("type");
+		if (msgtype ~= nil and string.find(msgtype, "imdn") ~= nil) then mdn = true end;
+		if (not mdn) then 
 			-- No XML content, continue processing
 			if (carrier == "flowroute") then
 				cmd = "curl -u ".. access_key ..":" .. secret_key .. " -H \"Content-Type: application/json\" -X POST -d '{\"to\":\"" .. to .. "\",\"from\":\"" .. outbound_caller_id_number .."\",\"body\":\"" .. body .. "\"}' " .. api_url;
-			
-		elseif (carrier == "peerless") then	
-   	        cmd = "curl -u" .. access_key .. ":" .. secret_key .. " -ki  https://mms1.pnwireless.net:443/partners/messageReceiving/".. access_key .."/submitMessage -H \"Content-Type: application/json\" -X POST -d '{\"from\":\"" .. outbound_caller_id_number .."\",\"recipients\":[\"+".. to .."\"],\"text\":\"" .. body .. "\"}'";
-		
-		
-		elseif (carrier == "twilio") then
+			elseif (carrier == "peerless") then	
+				cmd = "curl -u" .. access_key .. ":" .. secret_key .. " -ki  https://mms1.pnwireless.net:443/partners/messageReceiving/".. access_key .."/submitMessage -H \"Content-Type: application/json\" -X POST -d '{\"from\":\"" .. outbound_caller_id_number .."\",\"recipients\":[\"+".. to .."\"],\"text\":\"" .. body .. "\"}'";
+			elseif (carrier == "twilio") then
 				if to:len() < 11 then
 					to = "1" .. to;
 				end
@@ -361,15 +411,6 @@
 				if outbound_caller_id_number:len() < 11 then
 					outbound_caller_id_number = "1" .. outbound_caller_id_number;
 				end
-				--Get User_name
-				sql = "SELECT default_setting_value FROM v_default_settings ";
-				sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_username' and default_setting_enabled = 'true'";
-				if (debug["sql"]) then
-					freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
-				end
-				status = dbh:query(sql, function(rows)
-					username = rows["default_setting_value"];
-				end);
 				cmd = "curl -X POST '" .. api_url .."' -H \"Content-Type:multipart/form-data\"  -F 'message=" .. body .. "' -F 'to_did=" .. to .."' -F 'from_did=" .. outbound_caller_id_number .. "' -u '".. username ..":".. access_key .."'"
 			elseif (carrier == "telnyx") then
 				if to:len() < 11 then
@@ -378,15 +419,6 @@
 				if outbound_caller_id_number:len() < 11 then
 					outbound_caller_id_number = "1" .. outbound_caller_id_number;
 				end
-				--Get delivery_status_webhook_url
-				sql = "SELECT default_setting_value FROM v_default_settings ";
-				sql = sql .. "where default_setting_category = 'sms' and default_setting_subcategory = '" .. carrier .. "_delivery_status_webhook_url' and default_setting_enabled = 'true'";
-				if (debug["sql"]) then
-					freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");
-				end
-				status = dbh:query(sql, function(rows)
-					delivery_status_webhook_url = rows["default_setting_value"];
-				end);
 				cmd ="curl -X POST \"" .. api_url .."\" -H \"Content-Type: application/json\"  -H \"x-profile-secret: " .. secret_key .. "\" -d '{\"from\": \"+" .. outbound_caller_id_number .. "\", \"to\": \"+" .. to .. "\", \"body\": \"" .. body .. "\", \"delivery_status_webhook_url\": \"" .. delivery_status_webhook_url .. "\"}'";
 			end
 			if (debug["info"]) then
@@ -400,7 +432,7 @@
 			end
 		else
 			-- XML content
-			freeswitch.consoleLog("notice", "[sms] Body contains XML content, not sending\n");
+			freeswitch.consoleLog("notice", "[sms] Body contains XML content and/or is message delivery notification, not sending\n");
 		end	
 --		os.execute(cmd)
 	end
@@ -444,7 +476,7 @@
 		sql = "insert into v_sms_messages";
 		sql = sql .. "(sms_message_uuid,extension_uuid,domain_uuid,start_stamp,from_number,to_number,message,direction,response,carrier)";
 		sql = sql .. " values (:uuid,:extension_uuid,:domain_uuid,now(),:from,:to,:body,:direction,'',:carrier)";
-		local params = {uuid = uuid(), extension_uuid = extension_uuid, domain_uuid = domain_uuid, from = from, to = to, body = urlencode(body), direction = direction, carrier = carrier }
+		local params = {uuid = uuid(), extension_uuid = extension_uuid, domain_uuid = domain_uuid, from = from, to = to, body = savebody, direction = direction, carrier = carrier }
 
 		if (debug["sql"]) then
 			freeswitch.consoleLog("notice", "[sms] SQL: "..sql.."; params:" .. json.encode(params) .. "\n");

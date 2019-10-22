@@ -63,7 +63,9 @@ else {
 			$enabled = check_str($row["enabled"]);
 			$sms_destination_uuid = $row['sms_destination_uuid'];
 			$chatplan_detail_data = $row['chatplan_detail_data'];
+			$email = $row['email'];
 		}
+		unset ($prep_statement);
 	}
 	else {
 		$action = "add";
@@ -78,6 +80,7 @@ else {
 			$enabled = check_str($_POST["enabled"]);
 			$sms_destination_uuid = uuid();
 			$chatplan_detail_data = check_str($_POST["chatplan_detail_data"]);
+			$email = check_str($_POST["email"]);
 		if ($action == "add") {
 			$sql_insert = "insert into v_sms_destinations ";
 			$sql_insert .= "(";
@@ -87,19 +90,28 @@ else {
 			$sql_insert .= "destination, ";
 			$sql_insert .= "enabled, ";
 			$sql_insert .= "description, ";
-			$sql_insert .= "chatplan_detail_data ";
+			$sql_insert .= "chatplan_detail_data, ";
+			$sql_insert .= "email ";
 			$sql_insert .= ")";
 			$sql_insert .= "values ";
 			$sql_insert .= "(";
-			$sql_insert .= "'".$sms_destination_uuid."', ";
-			$sql_insert .= "'".$carrier."', ";
-			$sql_insert .= "'".$_SESSION['domain_uuid']."', ";
-			$sql_insert .= "'".$destination."', ";
-			$sql_insert .= "'".$enabled."', ";
-			$sql_insert .= "'".$description."', ";
-			$sql_insert .= "'".$chatplan_detail_data."' ";
+			$sql_insert .= ":sms_destination_uuid, ";
+			$sql_insert .= ":carrier, ";
+			$sql_insert .= ":domain_uuid, ";
+			$sql_insert .= ":destination, ";
+			$sql_insert .= ":enabled, ";
+			$sql_insert .= ":description, ";
+			$sql_insert .= ":chatplan_detail_data, ";
+			$sql_insert .= ":email ";
 			$sql_insert .= ")";
-			$db->exec($sql_insert);
+
+			$prep_statement = $db->prepare(check_sql($sql_insert));
+			$prep_statement->execute(array(':sms_destination_uuid' => $sms_destination_uuid, ':carrier' => $carrier,
+				'domain_uuid' => $_SESSION['domain_uuid'], ':destination' => $destination, ':enabled' => $enabled,
+				':description' => $description, ':chatplan_detail_data' => $chatplan_detail_data, ':email' => $email));
+			$prep_statement->execute();
+			unset ($prep_statement);
+
 			header( 'Location: sms.php') ;
 
 		}
@@ -109,17 +121,29 @@ else {
 			$description = check_str($_POST["description"]);
 			$enabled = check_str($_POST["enabled"]);
 			$chatplan_detail_data = check_str($_POST["chatplan_detail_data"]);
+			$email = check_str($_POST["email"]);
+
 
 			$sql_insert = "update v_sms_destinations set";
 			$sql_insert .= " ";
-			$sql_insert .= "carrier = '".$carrier."', ";
-			$sql_insert .= "destination = '".$destination."', ";
-			$sql_insert .= "enabled = '".$enabled."', ";
-			$sql_insert .= "description = '".$description."', ";
-			$sql_insert .= "chatplan_detail_data = '".$chatplan_detail_data."' ";
-			$sql_insert .= "where sms_destination_uuid = '" . $sms_destination_uuid . "' and domain_uuid = '" . $_SESSION['domain_uuid'] . "'";
-			$db->exec($sql_insert);
+			$sql_insert .= "carrier = :carrier, ";
+			$sql_insert .= "destination = :destination, ";
+			$sql_insert .= "enabled = :enabled, ";
+			$sql_insert .= "description = :description, ";
+			$sql_insert .= "chatplan_detail_data = :chatplan_detail_data, ";
+			$sql_insert .= "email = :email ";
+			$sql_insert .= "where sms_destination_uuid = :sms_destination_uuid and domain_uuid = :domain_uuid";
+
+
+			$prep_statement = $db->prepare(check_sql($sql_insert));
+			$prep_statement->execute(array(':carrier' => $carrier, ':destination' => $destination, ':enabled' => $enabled,
+				':description' => $description, ':chatplan_detail_data' => $chatplan_detail_data, ':email' => $email,
+				':sms_destination_uuid' => $sms_destination_uuid, ':domain_uuid' => $_SESSION['domain_uuid']));
+
+			$prep_statement->execute();
+
 			error_log($sql_insert);
+			unset ($prep_statement);
 			header( 'Location: sms.php') ;
 	}
 
@@ -186,6 +210,17 @@ else {
 	echo "    <input class='formfld' type='text' name='chatplan_detail_data' autocomplete='off' maxlength='255' value=\"$chatplan_detail_data\" >\n";
 	echo "<br />\n";
 	echo $text['description-chatplan_detail_data']."\n";
+	echo "</td>\n";
+	echo "</tr>\n";
+
+	echo "<tr>\n";
+	echo "<td class='vncell' valign='top' align='left' nowrap='nowrap'>\n";
+	echo "    ".$text['label-sms_email']."\n";
+	echo "</td>\n";
+	echo "<td class='vtable' align='left'>\n";
+	echo "    <input class='formfld' type='text' name='email' autocomplete='off' maxlength='255' value=\"$email\" >\n";
+	echo "<br />\n";
+	echo $text['description-sms_email']."\n";
 	echo "</td>\n";
 	echo "</tr>\n";
 
