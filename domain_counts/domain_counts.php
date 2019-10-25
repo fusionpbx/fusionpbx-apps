@@ -65,6 +65,7 @@
 	$sql = "SELECT \n";
 	$sql .= "d.domain_uuid, \n";
 	$sql .= "d.domain_name, \n";
+	$sql .= "d.domain_description, \n";
 
 	//extension
 	$sql .= "(\n";
