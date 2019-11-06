@@ -18,6 +18,9 @@
 15. Add your carrier's IPs in an ACL
 16. Add your callback URL on your carrier to IE for twillio it would be: https://YOURDOMAIN/app/sms/hook/sms_hook_twilio.php
     - Note: You will need to have a valid certificate to use Twilio. If you need a certificate, consider using Let's Encrypt and certbot. It’s fast and free. 
+17. For email delivery support, it uses the default setting email->smtp_from, so make sure that this is set appropriately.
+18. For MMS email delivery, it will use the default setting sms->mms_attatement_temp_path, if this is set.  If not, it will try to use '/var/www/fusionpbx/app/sms/tmp/'
+    as the temporary storage for the attachments.  Please make sure that you create the appropriate temp folder and change ownership to www-data/www-data.
 
 Send and receive!
 
