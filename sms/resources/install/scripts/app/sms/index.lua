@@ -255,9 +255,9 @@
 			end
 		end
 		body = body:gsub('%"','');
-		--body = body:gsub('\r\n',' ');
 		savebody = body;
-		body = encodeString((body));
+		--body = encodeString((body));
+		body = body:gsub('\n','\\n');
 
 		if (debug["info"]) then
 			if (message ~= nil) then
