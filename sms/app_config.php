@@ -98,6 +98,14 @@
         $apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'true';
         $apps[$x]['default_settings'][$y]['default_setting_description'] = '';
         $y++;
+		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = 'd1e19c12-fdb8-4dfa-b21b-213250bf4b7b';
+		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
+		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'carriers';
+		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'array';
+		$apps[$x]['default_settings'][$y]['default_setting_value'] = 'peerlees';
+		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'true';
+		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
+		$y++;
 
 		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = 'e997203c-ca48-45b4-828d-e347ff66fa7c';
 		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
@@ -263,6 +271,31 @@
 		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
 		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
 		$y++;
+		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = '2c2a1671-9213-4f2e-8254-a47cda4e7b05';
+		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
+		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'peerless_access_key';
+		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'text';
+		$apps[$x]['default_settings'][$y]['default_setting_value'] = '';
+		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
+		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
+		$y++;
+		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = '24bf5a19-947a-4b82-8888-1657773aca12';
+		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
+		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'peerless_secret_key';
+		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'text';
+		$apps[$x]['default_settings'][$y]['default_setting_value'] = '';
+		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
+		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
+		$y++;
+
+		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = 'c6358f2b-96f9-45df-bd0f-2e9464474a8e';
+		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
+		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'mms_attachment_temp_path';
+		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'text';
+		$apps[$x]['default_settings'][$y]['default_setting_value'] = '';
+		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'true';
+		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
+		$y++;
 
 	//schema details
 		$y=0;
@@ -357,6 +390,10 @@
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = "chatplan_detail_data";
+		$apps[$x]['db'][$y]['fields'][$z]['type'] = "text";
+		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
+		$z++;
+		$apps[$x]['db'][$y]['fields'][$z]['name'] = "email";
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = "text";
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
 		$z++;

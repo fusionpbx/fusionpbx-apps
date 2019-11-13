@@ -12,7 +12,7 @@ if (check_acl()) {
 			error_log('[SMS] REQUEST: ' .  print_r($data, true));
 		}
 		$to = intval(preg_replace('/(^[\+][1])/','', $data->to));
-		route_and_send_sms($data->from, $to, $data->body);
+		route_and_send_sms($data->from, $to, $data->body, $data->media);
 	} else {
 	  die("no");
 	}
