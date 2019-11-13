@@ -174,6 +174,13 @@
 		else {
 			echo "    <option value='enabled'>".$text['label-enabled']."</option>\n";
 		}
+		if ($option_selected == "directory_visible") {
+                        echo "    <option value='directory_visible' selected='selected'>".$text['label-directory_visible']."</option>\n";
+                }
+                else {
+                        echo "    <option value='directory_visible'>".$text['label-directory_visible']."</option>\n";
+                }
+
 		if ($option_selected == "hold_music") {
 			echo "    <option value='hold_music' selected='selected'>".$text['label-hold_music']."</option>\n";
 		}
@@ -265,6 +272,18 @@
 			echo $text["description-".$option_selected.""]."\n";
 			echo "</td>\n";
 		}
+		//option is Directory Visible
+                if($option_selected == 'directory_visible') {
+                        echo "<td class='vtable' align='left'>\n";
+                        echo "    <select class='formfld' name='new_setting'>\n";
+                        echo "    <option value='true'>".$text['label-true']."</option>\n";
+                        echo "    <option value='false'>".$text['label-false']."</option>\n";
+                        echo "    </select>\n";
+                        echo "    <br />\n";
+                        echo $text["description-".$option_selected.""]."\n";
+                        echo "</td>\n";
+                }
+
 		//option is hold_music
 		if($option_selected == 'hold_music') {
 			echo "<td class='vtable' align='left'>\n";
