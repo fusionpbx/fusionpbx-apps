@@ -55,13 +55,18 @@
 //handle search term
 	$search = check_str($_GET["search"]);
 	if (strlen($search) > 0) {
+		$search = strtolower($search);
 		$sql_mod = "and ( ";
-		$sql_mod .= "extension ILIKE '%".$search."%' ";
-		$sql_mod .= "or accountcode ILIKE '%".$search."%' ";		
-		$sql_mod .= "or call_group ILIKE '%".$search."%' ";
-		$sql_mod .= "or description ILIKE '%".$search."%' ";
-		if (($option_selected == "") or ($option_selected == 'call_group') or ($option_selected == 'accountcode') or ($option_selected == 'sip_force_expires')) {} else {
-			$sql_mod .= "or ".$option_selected." ILIKE '%".$search."%' ";
+		$sql_mod .= "lower(extension) like '%".$search."%' ";
+		$sql_mod .= "or lower(accountcode) like '%".$search."%' ";		
+		$sql_mod .= "or lower(call_group) like '%".$search."%' ";
+		$sql_mod .= "or lower(description) like '%".$search."%' ";
+		if (($option_selected == "") or ($option_selected == 'call_group') or ($option_selected == 'accountcode')) {
+			
+		} elseif (($option_selected == 'call_timeout') or ($option_selected == 'sip_force_expires')){
+			$sql_mod .= "or lower(cast (".$option_selected." as text)) like '%".$search."%' ";
+		} else {
+			$sql_mod .= "or lower(".$option_selected.") like '%".$search."%' ";
 		}
 		$sql_mod .= ") ";
 	}
