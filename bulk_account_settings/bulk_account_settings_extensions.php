@@ -181,6 +181,14 @@
                         echo "    <option value='directory_visible'>".$text['label-directory_visible']."</option>\n";
                 }
 
+		 if ($option_selected == "user_record") {
+                        echo "    <option value='user_record' selected='selected'>".$text['label-user_record']."</option>\n";
+                }
+                else {
+                        echo "    <option value='user_record'>".$text['label-user_record']."</option>\n";
+                }
+
+
 		if ($option_selected == "hold_music") {
 			echo "    <option value='hold_music' selected='selected'>".$text['label-hold_music']."</option>\n";
 		}
@@ -283,6 +291,21 @@
                         echo $text["description-".$option_selected.""]."\n";
                         echo "</td>\n";
                 }
+		
+		//option is User Record
+                if($option_selected == 'user_record') {
+                        echo "<td class='vtable' align='left'>\n";
+                        echo "    <select class='formfld' name='new_setting'>\n";
+                        echo "    <option value='all'>".$text['label-all']."</option>\n";
+                        echo "    <option value=inbound'>".$text['label-inbound']."</option>\n";
+                        echo "    <option value=outbound'>".$text['label-outbound']."</option>\n";
+                        echo "    <option value=local'>".$text['label-local']."</option>\n";
+                        echo "    </select>\n";
+                        echo "    <br />\n";
+                        echo $text["description-".$option_selected.""]."\n";
+                        echo "</td>\n";
+                }
+
 
 		//option is hold_music
 		if($option_selected == 'hold_music') {
