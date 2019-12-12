@@ -204,8 +204,17 @@ $text['description-directory_visible']['de-at'] = "";
 $text['description-directory_visible']['it-it'] = "";
 $text['description-directory_visible']['ru-ru'] = "";
 
-
-
+$text['description-user_record']['en-us'] = "Select whether to record the extension.";
+$text['description-user_record']['es-cl'] = "";
+$text['description-user_record']['pt-pt'] = "";
+$text['description-user_record']['en-fr'] = "";
+$text['description-user_record']['en-br'] = "";
+$text['description-user_record']['pl'] = "";
+$text['description-user_record']['sv-se'] = "";
+$text['description-user_record']['uk'] = "Select whether to record the extension.";
+$text['description-user_record']['de-at'] = "";
+$text['description-user_record']['it-it'] = "";
+$text['description-user_record']['ru-ru'] = "";
 
 $text['description-emergency_caller_id_name']['en-us'] = "Enter the new emergency caller id name for the selected extensions.";
 $text['description-emergency_caller_id_name']['es-cl'] = "Enter the new emergency caller id name for the selected extensions.";
@@ -423,6 +432,42 @@ $text['label-add']['de-at'] = "Add";
 $text['label-add']['it-it'] = "Add";
 $text['label-add']['ru-ru'] = "Добавить";
 
+$text['label-inbound']['en-us'] = "Inbound";
+$text['label-inbound']['es-cl'] = "Inbound";
+$text['label-inbound']['pt-pt'] = "Inbound";
+$text['label-inbound']['fr-fr'] = "Inbound";
+$text['label-inbound']['pt-br'] = "Inbound";
+$text['label-inbound']['pl'] = "Inbound";
+$text['label-inbound']['sv-se'] = "Inbound";
+$text['label-inbound']['uk'] = "Inbound";
+$text['label-inbound']['de-at'] = "Inbound";
+$text['label-inbound']['it-it'] = "Inbound";
+$text['label-inbound']['ru-ru'] = "";
+
+$text['label-outbound']['en-us'] = "Outbound";
+$text['label-outbound']['es-cl'] = "Outbound";
+$text['label-outbound']['pt-pt'] = "Outbound";
+$text['label-outbound']['fr-fr'] = "utbound";
+$text['label-outbound']['pt-br'] = "Outbound";
+$text['label-outbound']['pl'] = "Outbound";
+$text['label-outbound']['sv-se'] = "Outbound";
+$text['label-outbound']['uk'] = "Outbound";
+$text['label-outbound']['de-at'] = "Outbound";
+$text['label-outbound']['it-it'] = "Outbound";
+$text['label-outbound']['ru-ru'] = "";
+
+$text['label-local']['en-us'] = "Local";
+$text['label-local']['es-cl'] = "Local";
+$text['label-local']['pt-pt'] = "Local";
+$text['label-local']['fr-fr'] = "Local";
+$text['label-local']['pt-br'] = "Local";
+$text['label-local']['pl'] = "Local";
+$text['label-local']['sv-se'] = "Local";
+$text['label-local']['uk'] = "Local";
+$text['label-local']['de-at'] = "Local";
+$text['label-local']['it-it'] = "Local";
+$text['label-local']['ru-ru'] = "";
+
 
 $text['label-directory_visible']['en-us'] = "Directory Visible";
 $text['label-directory_visible']['es-cl'] = "";
@@ -436,6 +481,17 @@ $text['label-directory_visible']['de-at'] = "";
 $text['label-directory_visible']['it-it'] = "";
 $text['label-directory_visible']['ru-ru'] = "";
 
+$text['label-user_record']['en-us'] = "User Record";
+$text['label-user_record']['es-cl'] = "";
+$text['label-user_record']['pt-pt'] = "";
+$text['label-user_record']['fr-fr'] = "";
+$text['label-user_record']['pt-pt'] = "";
+$text['label-user_record']['pl'] = "";
+$text['label-user_record']['sv-se'] = "";
+$text['label-user_record']['uk'] = "User Record";
+$text['label-user_record']['de-at'] = "";
+$text['label-user_record']['it-it'] = "";
+$text['label-user_record']['ru-ru'] = "";
 
 $text['label-remove']['en-us'] = "Remove";
 $text['label-remove']['es-cl'] = "Remove";
