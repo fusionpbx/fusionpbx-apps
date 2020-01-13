@@ -152,7 +152,7 @@
 			}
 			echo "	</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'><a href='invoice_edit.php?contact_uuid=".escape($row['contact_uuid'])."&id=".escape($row['invoice_uuid']).escape($back)."' alt='".$text['button-edit']."'>".escape($row['invoice_number'])."</a>&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$text['label-invoice_type_'.escape($row['invoice_type']])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".$text['label-invoice_type_'.escape($row['invoice_type'])]."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['contact_organization'])."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['contact_name_given'])."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['contact_name_family'])."&nbsp;</td>\n";
