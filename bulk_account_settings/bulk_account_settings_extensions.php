@@ -55,13 +55,18 @@
 //handle search term
 	$search = check_str($_GET["search"]);
 	if (strlen($search) > 0) {
+		$search = strtolower($search);
 		$sql_mod = "and ( ";
-		$sql_mod .= "extension ILIKE '%".$search."%' ";
-		$sql_mod .= "or accountcode ILIKE '%".$search."%' ";		
-		$sql_mod .= "or call_group ILIKE '%".$search."%' ";
-		$sql_mod .= "or description ILIKE '%".$search."%' ";
-		if (($option_selected == "") or ($option_selected == 'call_group') or ($option_selected == 'accountcode')) {} else {
-			$sql_mod .= "or ".$option_selected." ILIKE '%".$search."%' ";
+		$sql_mod .= "lower(extension) like '%".$search."%' ";
+		$sql_mod .= "or lower(accountcode) like '%".$search."%' ";		
+		$sql_mod .= "or lower(call_group) like '%".$search."%' ";
+		$sql_mod .= "or lower(description) like '%".$search."%' ";
+		if (($option_selected == "") or ($option_selected == 'call_group') or ($option_selected == 'accountcode')) {
+			
+		} elseif (($option_selected == 'call_timeout') or ($option_selected == 'sip_force_expires')){
+			$sql_mod .= "or lower(cast (".$option_selected." as text)) like '%".$search."%' ";
+		} else {
+			$sql_mod .= "or lower(".$option_selected.") like '%".$search."%' ";
 		}
 		$sql_mod .= ") ";
 	}
@@ -111,10 +116,8 @@
 	$sql .= "ORDER BY ".$order_by." ".$order." \n";
 	$sql .= "limit $rows_per_page offset $offset ";
 	$database = new database;
-	$database->select($sql);
-	$directory = $database->result;
-	unset($database,$result);
-
+	$directory = $database->select($sql, 'all');
+	unset($database);
 
 //additional includes
 	require_once "resources/header.php";
@@ -171,6 +174,21 @@
 		else {
 			echo "    <option value='enabled'>".$text['label-enabled']."</option>\n";
 		}
+		if ($option_selected == "directory_visible") {
+                        echo "    <option value='directory_visible' selected='selected'>".$text['label-directory_visible']."</option>\n";
+                }
+                else {
+                        echo "    <option value='directory_visible'>".$text['label-directory_visible']."</option>\n";
+                }
+
+		 if ($option_selected == "user_record") {
+                        echo "    <option value='user_record' selected='selected'>".$text['label-user_record']."</option>\n";
+                }
+                else {
+                        echo "    <option value='user_record'>".$text['label-user_record']."</option>\n";
+                }
+
+
 		if ($option_selected == "hold_music") {
 			echo "    <option value='hold_music' selected='selected'>".$text['label-hold_music']."</option>\n";
 		}
@@ -262,6 +280,33 @@
 			echo $text["description-".$option_selected.""]."\n";
 			echo "</td>\n";
 		}
+		//option is Directory Visible
+                if($option_selected == 'directory_visible') {
+                        echo "<td class='vtable' align='left'>\n";
+                        echo "    <select class='formfld' name='new_setting'>\n";
+                        echo "    <option value='true'>".$text['label-true']."</option>\n";
+                        echo "    <option value='false'>".$text['label-false']."</option>\n";
+                        echo "    </select>\n";
+                        echo "    <br />\n";
+                        echo $text["description-".$option_selected.""]."\n";
+                        echo "</td>\n";
+                }
+		
+		//option is User Record
+                if($option_selected == 'user_record') {
+                        echo "<td class='vtable' align='left'>\n";
+                        echo "    <select class='formfld' name='new_setting'>\n";
+                        echo "    <option value='all'>".$text['label-all']."</option>\n";
+                        echo "    <option value=inbound'>".$text['label-inbound']."</option>\n";
+                        echo "    <option value=outbound'>".$text['label-outbound']."</option>\n";
+                        echo "    <option value=local'>".$text['label-local']."</option>\n";
+                        echo "    </select>\n";
+                        echo "    <br />\n";
+                        echo $text["description-".$option_selected.""]."\n";
+                        echo "</td>\n";
+                }
+
+
 		//option is hold_music
 		if($option_selected == 'hold_music') {
 			echo "<td class='vtable' align='left'>\n";
@@ -357,4 +402,5 @@ if (is_array($directory)) {
 
 //show the footer
 	require_once "resources/footer.php";
+
 ?>

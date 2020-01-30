@@ -1,0 +1,40 @@
+This adds the mobile-twinning app.
+
+Works like this:
+
+Go to Apps -> Mobile Twinning. Associate the mobile number with the corresponding extension.
+Go to Dialplan -> Destinations. Map a Destination to the mobile-twinning dialplan number. (*662) (spells MOB for "mobile")
+
+You can now seamlessly move calls back and forth from your deskphone and your mobile.
+If someone calls your extension and you have it forwarded (or follow-me) to your mobile, you can dial *662 from your desk to bring the call back to your desk.
+If you are on your deskphone, you can dial the mobile-twinning destination (step 2), press 1 and the call is transferred to your mobile.
+
+Notes:
+
+This will probably not work across multiple FS servers as it is written.
+This is setup for the mobile to have a 10 digit number.
+
+Install:
+
+On your server.
+	git clone https://github.com/fusionpbx/fusionpbx-apps
+Copy or move the directory 'mobile-twinning' into your main FusionPBX directory.
+	cp -R fusionpbx-apps/mobile-twinning /var/www/fusionpbx/app
+Move the xml dialplan file.
+	cp /var/www/fusionpbx/app/mobile_twinning/390_mobile_twinning.xml /var/www/fusionpbx/app/dialplans/resources/switch/conf/dialplan/390_mobile_twinning.xml
+Create the LUA script directory
+	mkdir /usr/share/freeswitch/scripts/app/mobile_twinning
+Copy the script
+	cp /var/www/fusionpbx/app/mobile_twinning/index.lua /usr/share/freeswitch/scripts/app/mobile_twinning/index.lua
+Set the permissions
+	chown -R www-data:www-data /var/www/fusionpbx/app/mobile_twinning
+	chown -R www-data:www-data /usr/share/freeswitch/scripts/app/mobile_twinning
+	chown -R www-data:www-data /var/www/fusionpbx/app/dialplans/resources/switch/conf/dialplan
+
+
+	
+Log into the FusionPBX webpage
+Advanced -> Upgrade
+Menu Defaults and Permission Defaults.
+Log out and back in
+

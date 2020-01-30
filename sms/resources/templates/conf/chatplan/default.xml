@@ -7,11 +7,32 @@
                                 <!-- <action application="reply" data="Hello, you said: ${_body}"/> -->
                         </condition>
                 </extension>
-        </context>
-        <context name="internal">
-                <extension name="demo">
-                        <condition field="to" expression="^(.*)$">
+        </context>   
+        <context name="public">
+                <extension name="ten-digit">
+                        <condition field="to" expression="^(\d{10}.*)$">
+                        	    <action application="set" data="final_delivery=true"/>
                                     <action application="lua" data="app.lua sms outbound"/>
+                        </condition>
+                </extension>
+		<extension name="unreg">
+  			<condition field="${sofia_contact(profile/${to})}" expression="error\/user_not_registered">
+                                <action application="set" data="final_delivery=true"/>
+                        </condition> 
+		</extension>
+<!--
+                <extension name="allowed-local">
+			<condition field="from_host" expression="<replace with allowed domain>" >
+                                <action application="set" data="final_delivery=true"/>
+                                <action application="info"/>
+                                <action application="send"/>
+                        </condition> 
+                </extension>
+-->
+                <extension name="other">
+                        <condition field="to" expression="^(.*)$">
+                                <action application="set" data="final_delivery=true"/>
+                                <!-- <action application="send"/> -->
                         </condition>
                 </extension>
         </context>

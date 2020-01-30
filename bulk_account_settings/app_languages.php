@@ -192,6 +192,30 @@ $text['description-enabled']['de-at'] = "Select the new enabled status for the s
 $text['description-enabled']['it-it'] = "Select the new enabled status for the selected extensions.";
 $text['description-enabled']['ru-ru'] = "Выберите новый статус для выбранных extensions.";
 
+$text['description-directory_visible']['en-us'] = "Select whether to hide the name from the directory.";
+$text['description-directory_visible']['es-cl'] = "";
+$text['description-directory_visible']['pt-pt'] = "";
+$text['description-directory_visible']['en-fr'] = "";
+$text['description-directory_visible']['en-br'] = "";
+$text['description-directory_visible']['pl'] = "";
+$text['description-directory_visible']['sv-se'] = "";
+$text['description-directory_visible']['uk'] = "Select whether to hide the name from the directory.";
+$text['description-directory_visible']['de-at'] = "";
+$text['description-directory_visible']['it-it'] = "";
+$text['description-directory_visible']['ru-ru'] = "";
+
+$text['description-user_record']['en-us'] = "Select whether to record the extension.";
+$text['description-user_record']['es-cl'] = "";
+$text['description-user_record']['pt-pt'] = "";
+$text['description-user_record']['en-fr'] = "";
+$text['description-user_record']['en-br'] = "";
+$text['description-user_record']['pl'] = "";
+$text['description-user_record']['sv-se'] = "";
+$text['description-user_record']['uk'] = "Select whether to record the extension.";
+$text['description-user_record']['de-at'] = "";
+$text['description-user_record']['it-it'] = "";
+$text['description-user_record']['ru-ru'] = "";
+
 $text['description-emergency_caller_id_name']['en-us'] = "Enter the new emergency caller id name for the selected extensions.";
 $text['description-emergency_caller_id_name']['es-cl'] = "Enter the new emergency caller id name for the selected extensions.";
 $text['description-emergency_caller_id_name']['pt-pt'] = "Enter the new emergency caller id name for the selected extensions.";
@@ -408,6 +432,67 @@ $text['label-add']['de-at'] = "Add";
 $text['label-add']['it-it'] = "Add";
 $text['label-add']['ru-ru'] = "Добавить";
 
+$text['label-inbound']['en-us'] = "Inbound";
+$text['label-inbound']['es-cl'] = "Inbound";
+$text['label-inbound']['pt-pt'] = "Inbound";
+$text['label-inbound']['fr-fr'] = "Inbound";
+$text['label-inbound']['pt-br'] = "Inbound";
+$text['label-inbound']['pl'] = "Inbound";
+$text['label-inbound']['sv-se'] = "Inbound";
+$text['label-inbound']['uk'] = "Inbound";
+$text['label-inbound']['de-at'] = "Inbound";
+$text['label-inbound']['it-it'] = "Inbound";
+$text['label-inbound']['ru-ru'] = "";
+
+$text['label-outbound']['en-us'] = "Outbound";
+$text['label-outbound']['es-cl'] = "Outbound";
+$text['label-outbound']['pt-pt'] = "Outbound";
+$text['label-outbound']['fr-fr'] = "utbound";
+$text['label-outbound']['pt-br'] = "Outbound";
+$text['label-outbound']['pl'] = "Outbound";
+$text['label-outbound']['sv-se'] = "Outbound";
+$text['label-outbound']['uk'] = "Outbound";
+$text['label-outbound']['de-at'] = "Outbound";
+$text['label-outbound']['it-it'] = "Outbound";
+$text['label-outbound']['ru-ru'] = "";
+
+$text['label-local']['en-us'] = "Local";
+$text['label-local']['es-cl'] = "Local";
+$text['label-local']['pt-pt'] = "Local";
+$text['label-local']['fr-fr'] = "Local";
+$text['label-local']['pt-br'] = "Local";
+$text['label-local']['pl'] = "Local";
+$text['label-local']['sv-se'] = "Local";
+$text['label-local']['uk'] = "Local";
+$text['label-local']['de-at'] = "Local";
+$text['label-local']['it-it'] = "Local";
+$text['label-local']['ru-ru'] = "";
+
+
+$text['label-directory_visible']['en-us'] = "Directory Visible";
+$text['label-directory_visible']['es-cl'] = "";
+$text['label-directory_visible']['pt-pt'] = "";
+$text['label-directory_visible']['fr-fr'] = "";
+$text['label-directory_visible']['pt-pt'] = "";
+$text['label-directory_visible']['pl'] = "";
+$text['label-directory_visible']['sv-se'] = "";
+$text['label-directory_visible']['uk'] = "Directory Visible";
+$text['label-directory_visible']['de-at'] = "";
+$text['label-directory_visible']['it-it'] = "";
+$text['label-directory_visible']['ru-ru'] = "";
+
+$text['label-user_record']['en-us'] = "User Record";
+$text['label-user_record']['es-cl'] = "";
+$text['label-user_record']['pt-pt'] = "";
+$text['label-user_record']['fr-fr'] = "";
+$text['label-user_record']['pt-pt'] = "";
+$text['label-user_record']['pl'] = "";
+$text['label-user_record']['sv-se'] = "";
+$text['label-user_record']['uk'] = "User Record";
+$text['label-user_record']['de-at'] = "";
+$text['label-user_record']['it-it'] = "";
+$text['label-user_record']['ru-ru'] = "";
+
 $text['label-remove']['en-us'] = "Remove";
 $text['label-remove']['es-cl'] = "Remove";
 $text['label-remove']['pt-pt'] = "Remove";
@@ -540,6 +625,30 @@ $text['label-line_1_server_address']['de-at'] = "Line 1 - Server Address";
 $text['label-line_1_server_address']['it-it'] = "Line 1 - Server Address";
 $text['label-line_1_server_address']['ru-ru'] = "Линия 1 - Адрес сервера";
 
+$text['label-line_1_server_address_primary']['en-us'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['es-cl'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['pt-pt'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['fr-fr'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['pt-br'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['pl'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['sv-se'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['uk'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['de-at'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['it-it'] = "Line 1 - Server Address Primary";
+$text['label-line_1_server_address_primary']['ru-ru'] = "Линия 1 - Server Address прокси основной";
+
+$text['label-line_1_server_address_secondary']['en-us'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['es-cl'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['pt-pt'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['fr-fr'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['pt-br'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['pl'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['sv-se'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['uk'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['de-at'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['it-it'] = "Line 1 - Server Address Secondary";
+$text['label-line_1_server_address_secondary']['ru-ru'] = "Линия 1 - Server Address резервный";
+
 $text['label-line_1_outbound_proxy_primary']['en-us'] = "Line 1 - Outbound Proxy Primary";
 $text['label-line_1_outbound_proxy_primary']['es-cl'] = "Line 1 - Outbound Proxy Primary";
 $text['label-line_1_outbound_proxy_primary']['pt-pt'] = "Line 1 - Outbound Proxy Primary";
@@ -551,6 +660,18 @@ $text['label-line_1_outbound_proxy_primary']['uk'] = "Line 1 - Outbound Proxy Pr
 $text['label-line_1_outbound_proxy_primary']['de-at'] = "Line 1 - Outbound Proxy Primary";
 $text['label-line_1_outbound_proxy_primary']['it-it'] = "Line 1 - Outbound Proxy Primary";
 $text['label-line_1_outbound_proxy_primary']['ru-ru'] = "Линия 1 - Исходящий прокси основной";
+
+$text['label-line_1_outbound_proxy_secondary']['en-us'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['es-cl'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['pt-pt'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['fr-fr'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['pt-br'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['pl'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['sv-se'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['uk'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['de-at'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['it-it'] = "Line 1 - Outbound Proxy Secondary";
+$text['label-line_1_outbound_proxy_secondary']['ru-ru'] = "Линия 1 - Исходящий прокси резервный";
 
 $text['label-line_1_sip_port']['en-us'] = "Line 1 - SIP Port";
 $text['label-line_1_sip_port']['es-cl'] = "Line 1 - SIP Port";
@@ -587,18 +708,6 @@ $text['label-line_1_register_expires']['uk'] = "Line 1 - Register Expires";
 $text['label-line_1_register_expires']['de-at'] = "Line 1 - Register Expires";
 $text['label-line_1_register_expires']['it-it'] = "Line 1 - Register Expires";
 $text['label-line_1_register_expires']['ru-ru'] = "Линия 1 - Регистрация истекает";
-
-$text['label-line_1_outbound_proxy_secondary']['en-us'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['es-cl'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['pt-pt'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['fr-fr'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['pt-br'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['pl'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['sv-se'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['uk'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['de-at'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['it-it'] = "Line 1 - Outbound Proxy Secondary";
-$text['label-line_1_outbound_proxy_secondary']['ru-ru'] = "Линия 1 - Исходящий прокси резервный";
 
 $text['label-hold_music']['en-us'] = "Hold Music";
 $text['label-hold_music']['es-cl'] = "Hold Music";
@@ -1175,4 +1284,5 @@ $text['title-devices_settings']['uk'] = "Device Settings";
 $text['title-devices_settings']['de-at'] = "Device Settings";
 $text['title-devices_settings']['it-it'] = "Device Settings";
 $text['title-devices_settings']['ru-ru'] = "Настройки устройства";
+
 ?>

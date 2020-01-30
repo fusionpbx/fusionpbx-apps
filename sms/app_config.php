@@ -39,7 +39,7 @@
 		$apps[$x]['permissions'][$y]['name'] = "sms_enabled";
 		$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
 		$y++;
-		
+
 	//default settings
 		$y = 0;
 		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = '67511e2d-35e1-4f70-80ac-4265ec39d2fe';
@@ -82,6 +82,14 @@
 		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'true';
 		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
 		$y++;
+		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = 'd1e19c12-fdb8-4dfa-b21b-213250bf4b7b';
+		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
+		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'carriers';
+		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'array';
+		$apps[$x]['default_settings'][$y]['default_setting_value'] = 'peerlees';
+		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'true';
+		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
+		$y++;
 		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = '0471de4f-6706-435c-a5b1-9f1f768a8106';
 		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
 		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'carriers';
@@ -90,15 +98,23 @@
 		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'true';
 		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
 		$y++;
-		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = '9b36edac-eeac-4a3e-b8d4-664962e3f78c';
+        $apps[$x]['default_settings'][$y]['default_setting_uuid'] = '9b36edac-eeac-4a3e-b8d4-664962e3f78c';
+        $apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
+        $apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'carriers';
+        $apps[$x]['default_settings'][$y]['default_setting_name'] = 'array';
+        $apps[$x]['default_settings'][$y]['default_setting_value'] = 'telnyx';
+        $apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'true';
+        $apps[$x]['default_settings'][$y]['default_setting_description'] = '';
+        $y++;
+		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = 'd1e19c12-fdb8-4dfa-b21b-213250bf4b7b';
 		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
 		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'carriers';
 		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'array';
-		$apps[$x]['default_settings'][$y]['default_setting_value'] = 'telnyx';
+		$apps[$x]['default_settings'][$y]['default_setting_value'] = 'peerlees';
 		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'true';
 		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
 		$y++;
-		
+
 		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = 'e997203c-ca48-45b4-828d-e347ff66fa7c';
 		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
 		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'twilio_api_url';
@@ -145,17 +161,16 @@
 		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'text';
 		$apps[$x]['default_settings'][$y]['default_setting_value'] = 'https://api.thinq.com/account/{ACCOUNT}/product/origination/sms/send';
 		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
-		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';	
-		$y++;	
+		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
+		$y++;
 		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = '2f246db7-eb07-4c2c-a752-e81466276c89';
 		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
 		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'telnyx_api_url';
 		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'text';
 		$apps[$x]['default_settings'][$y]['default_setting_value'] = 'https://sms.telnyx.com/messages';
 		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
-		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';   
-		$y++;   
-
+		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
+		$y++;
 		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = '14101c26-c3f9-46aa-a67a-3642752e56f4';
 		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
 		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'flowroute_access_key';
@@ -172,7 +187,23 @@
 		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
 		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
 		$y++;
-	
+		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = '2c2a1671-9213-4f2e-8254-a47cda4e7b05';
+		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
+		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'peerless_access_key';
+		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'text';
+		$apps[$x]['default_settings'][$y]['default_setting_value'] = '';
+		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
+		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
+		$y++;
+		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = '24bf5a19-947a-4b82-8888-1657773aca12';
+		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
+		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'peerless_secret_key';
+		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'text';
+		$apps[$x]['default_settings'][$y]['default_setting_value'] = '';
+		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
+		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
+		$y++;
+
 		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = '551b3948-8328-42be-a873-9a32f8b49463';
 		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
 		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'teli_access_key';
@@ -189,7 +220,7 @@
 		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
 		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
 		$y++;
-	
+
 		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = 'c56042fc-4cd4-425b-a39a-9297aaed7743';
 		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
 		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'twilio_access_key';
@@ -206,7 +237,7 @@
 		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
 		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
 		$y++;
-	
+
 		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = '4a86c939-9d80-4da7-bbda-49d6bf1c3882';
 		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
 		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'bandwidth_access_key';
@@ -229,7 +260,7 @@
 		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'text';
 		$apps[$x]['default_settings'][$y]['default_setting_value'] = '';
 		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
-		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';		
+		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
 		$y++;
 		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = 'cc4725d7-66e4-4ee8-ae95-475b8903ba91';
 		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
@@ -237,7 +268,7 @@
 		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'text';
 		$apps[$x]['default_settings'][$y]['default_setting_value'] = '';
 		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
-		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';		
+		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
 		$y++;
 		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = '604c1f7c-e830-441d-9596-31c8d091f8c2';
 		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
@@ -245,7 +276,7 @@
 		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'text';
 		$apps[$x]['default_settings'][$y]['default_setting_value'] = '';
 		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
-		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';       
+		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
 		$y++;
 		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = 'abcd3f80-71c2-4b58-ae9d-3a37cb503faf';
 		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
@@ -253,7 +284,7 @@
 		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'text';
 		$apps[$x]['default_settings'][$y]['default_setting_value'] = '';
 		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
-		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';       
+		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
 		$y++;
 		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = 'cede4bca-e855-4191-a14c-6f69b3aefb2e';
 		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
@@ -261,12 +292,38 @@
 		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'text';
 		$apps[$x]['default_settings'][$y]['default_setting_value'] = '';
 		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
-		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';       
+		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
+		$y++;
+		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = '2c2a1671-9213-4f2e-8254-a47cda4e7b05';
+		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
+		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'peerless_access_key';
+		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'text';
+		$apps[$x]['default_settings'][$y]['default_setting_value'] = '';
+		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
+		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
+		$y++;
+		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = '24bf5a19-947a-4b82-8888-1657773aca12';
+		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
+		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'peerless_secret_key';
+		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'text';
+		$apps[$x]['default_settings'][$y]['default_setting_value'] = '';
+		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
+		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
 		$y++;
 
-		//schema details
+		$apps[$x]['default_settings'][$y]['default_setting_uuid'] = 'c6358f2b-96f9-45df-bd0f-2e9464474a8e';
+		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
+		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'mms_attachment_temp_path';
+		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'text';
+		$apps[$x]['default_settings'][$y]['default_setting_value'] = '';
+		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'true';
+		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
+		$y++;
+
+	//schema details
 		$y=0;
-		$apps[$x]['db'][$y]['table'] = "v_sms_messages";
+		$apps[$x]['db'][$y]['table']['name'] = "v_sms_messages";
+		$apps[$x]['db'][$y]['table']['parent'] = "";
 		$z=0;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = "sms_message_uuid";
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = "uuid";
@@ -321,7 +378,8 @@
 		$z++;
 
 		$y=1;
-		$apps[$x]['db'][$y]['table'] = "v_sms_destinations";
+		$apps[$x]['db'][$y]['table']['name'] = "v_sms_destinations";
+		$apps[$x]['db'][$y]['table']['parent'] = "";
 		$z=0;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = "sms_destination_uuid";
 		$apps[$x]['db'][$y]['fields'][$z]['type']['pgsql'] = "uuid";
@@ -351,6 +409,14 @@
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
 		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = "description";
+		$apps[$x]['db'][$y]['fields'][$z]['type'] = "text";
+		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
+		$z++;
+		$apps[$x]['db'][$y]['fields'][$z]['name'] = "chatplan_detail_data";
+		$apps[$x]['db'][$y]['fields'][$z]['type'] = "text";
+		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
+		$z++;
+		$apps[$x]['db'][$y]['fields'][$z]['name'] = "email";
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = "text";
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
 		$z++;
