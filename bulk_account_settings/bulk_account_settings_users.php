@@ -17,7 +17,7 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2016
+	Portions created by the Initial Developer are Copyright (C) 2008-2020
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
@@ -431,7 +431,7 @@ if (is_array($directory)) {
 				}
 				echo "&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>";
-				if (sizeof($user_time_zone[$row['user_uuid']]) > 0) {
+				if (isset($user_time_zone[$row['user_uuid']]) && sizeof($user_time_zone[$row['user_uuid']]) > 0) {
 					echo implode(', ', $user_time_zone[$row['user_uuid']]);
 				}
 				echo "&nbsp;</td>\n";
