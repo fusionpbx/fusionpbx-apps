@@ -152,9 +152,9 @@ if (count($_POST)>0) {
 		//print_r( $row );
 			echo "<tr style='".$row_style[$c]."'>\n";
 				echo "<td valign='top'><a href='rssupdate.php?rss_uuid=".escape($row[rss_uuid])."'>".escape($row[rss_uuid])."</a></td>";
-				echo "<td valign='top'>".escape($row[rss_category]."</td>";
-				echo "<td valign='top'>".escape($row[rss_sub_category]."</td>";
-				echo "<td valign='top'>".escape($row[rss_title]."</td>";
+				echo "<td valign='top'>".escape($row[rss_category])."</td>";
+				echo "<td valign='top'>".escape($row[rss_sub_category])."</td>";
+				echo "<td valign='top'>".escape($row[rss_title])."</td>";
 				//echo "<td valign='top'>".escape($row[rss_link])."</td>";
 				//echo "<td valign='top'>".escape($row[rss_description])."</td>";
 				//echo "<td valign='top'>".escape($row[rss_img])."</td>";

@@ -225,14 +225,20 @@
 		else {
 			echo "    <option value='sip_force_expires'>".$text['label-sip_force_expires']."</option>\n";
 		}
+		if ($option_selected == "sip_bypass_media") {
+			echo "    <option value='sip_bypass_media' selected='selected'>".$text['label-sip_bypass_media']."</option>\n";
+		}
+		else {
+			echo "    <option value='sip_bypass_media'>".$text['label-sip_bypass_media']."</option>\n";
+		}
 		echo "    </select>\n";
 		echo "    </form>\n";
 		echo "<br />\n";
 		echo $text['description-extension_settings_description']."\n";
 		echo "</td>\n";
-	
-	
-	
+
+
+
 	echo "		<td align='right' width='100%' style='vertical-align: top;'>";
 	echo "		<form method='get' action=''>\n";
 	echo "			<td style='vertical-align: top; text-align: right; white-space: nowrap;'>\n";
@@ -306,7 +312,19 @@
                         echo "</td>\n";
                 }
 
-
+		//option is SIP Bypass Media
+		if($option_selected=='sip_bypass_media') {
+                        echo "<td class='vtable' align='left'>\n";
+                        echo "    <select class='formfld' name='new_setting'>\n";
+                        echo "    <option value=''></option>\n";
+                        echo "    <option value='bypass-media'>".$text['option-bypass_media']."</option>\n";
+                        echo "    <option value='bypass-media-after-bridge'>".$text['option-bypass_media_after_bridge']."</option>\n";
+                        echo "    <option value='proxy-media'>".$text['option-proxy_media']."</option>\n";
+                        echo "    </select>\n";
+                        echo "    <br />\n";
+                        echo $text["description-".$option_selected.""]."\n";
+                        echo "</td>\n";
+		}
 		//option is hold_music
 		if($option_selected == 'hold_music') {
 			echo "<td class='vtable' align='left'>\n";

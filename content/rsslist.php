@@ -107,7 +107,7 @@ $order = $_GET["order"];
 				//echo "<td valign='top'><a href='rssupdate.php?rss_uuid=".escape($row[rss_uuid])."'>".escape($row[rss_uuid])."</a></td>";
 				//echo "<td valign='top'>".$row[rss_category]."</td>";
 
-				echo "<td valign='top' nowrap class='".$row_style[$c]."'><a href='rssupdate.php?rss_uuid=".escape($row[rss_uuid])."'>".$row[rss_title])."</a></td>";
+				echo "<td valign='top' nowrap class='".$row_style[$c]."'><a href='rssupdate.php?rss_uuid=".escape($row[rss_uuid])."'>".$row[rss_title]."</a></td>";
 				echo "<td valign='top' nowrap class='".$row_style[$c]."'><a href='/index.php?c=".escape($row[rss_link])."'>".escape($row[rss_link])."</a></td>";
 				//echo "<td valign='top' class='".$row_style[$c]."'>".$row[rss_sub_category]."&nbsp;</td>";
 				if (strlen($row[rss_group]) > 0) {
