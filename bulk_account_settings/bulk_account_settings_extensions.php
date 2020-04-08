@@ -302,6 +302,7 @@
                 if($option_selected == 'user_record') {
                         echo "<td class='vtable' align='left'>\n";
                         echo "    <select class='formfld' name='new_setting'>\n";
+			echo "    <option value=''>".$text['label-user_record_none']."</option>\n";
                         echo "    <option value='all'>".$text['label-all']."</option>\n";
                         echo "    <option value=inbound'>".$text['label-inbound']."</option>\n";
                         echo "    <option value=outbound'>".$text['label-outbound']."</option>\n";
