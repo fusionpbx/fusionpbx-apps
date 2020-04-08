@@ -468,6 +468,26 @@ $text['label-local']['de-at'] = "Local";
 $text['label-local']['it-it'] = "Local";
 $text['label-local']['ru-ru'] = "";
 
+$text['label-user_record_none']['en-us'] = "Disabled";
+$text['label-user_record_none']['en-gb'] = "Disabled";
+$text['label-user_record_none']['ar-eg'] = "معطل";
+$text['label-user_record_none']['de-at'] = "Ausgeschaltet"; //copied from de-de
+$text['label-user_record_none']['de-ch'] = "Ausgeschaltet"; //copied from de-de
+$text['label-user_record_none']['de-de'] = "Ausgeschaltet";
+$text['label-user_record_none']['es-cl'] = "Ninguno";
+$text['label-user_record_none']['es-mx'] = "Ninguno"; //copied from es-cl
+$text['label-user_record_none']['fr-ca'] = "Aucun"; //copied from fr-fr
+$text['label-user_record_none']['fr-fr'] = "Aucun";
+$text['label-user_record_none']['he-il'] = "מנוטרל";
+$text['label-user_record_none']['it-it'] = "Disabilitato";
+$text['label-user_record_none']['nl-nl'] = "Uitgeschakeld";
+$text['label-user_record_none']['pl-pl'] = "Wyłączone";
+$text['label-user_record_none']['pt-br'] = "Desabilitado"; //copied from pt-pt
+$text['label-user_record_none']['pt-pt'] = "Nenhum";
+$text['label-user_record_none']['ro-ro'] = "";
+$text['label-user_record_none']['ru-ru'] = "Выключено";
+$text['label-user_record_none']['sv-se'] = "Inaktiverad";
+$text['label-user_record_none']['uk-ua'] = "Відключено";
 
 $text['label-directory_visible']['en-us'] = "Directory Visible";
 $text['label-directory_visible']['es-cl'] = "";
