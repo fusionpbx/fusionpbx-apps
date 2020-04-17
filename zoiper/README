@@ -5,13 +5,12 @@ I used the FREE Zoiper OEM account
 Go to: https://oem.zoiper.com/
 Sign up for Login
 Configure your Desktop and Mobile Apps with the information you want.
-Then click "CONFIGURE" Under Desktop. 
-This will give you a LINK with a PAGE ID:
+Then click "View" Under Mobile. 
+Under the heading "The easy way: send your customers to our landing page" there is a LINK with a PAGE ID:
 https://www.zoiper.com/en/page/MYPAGEID?u=&h=&p=&o=&t=&x=&a=&tr="
 Copy the page ID
 
-Then click "CONFIGURE" Under Mobile. 
-This will give you a LINK with a MOBILE PAGE ID:
+Below the title " The Do It Yourself way: make your own page with instructions" there will be a LINK with a MOBILE PAGE ID:
 https://www.zoiper.com/en/page/MYMOBILEPAGEID?u=&h=&p=&o=&t=&x=&a=&tr="
 Copy the mobile page ID
 
