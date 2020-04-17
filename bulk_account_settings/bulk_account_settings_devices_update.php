@@ -66,8 +66,7 @@
 					$sql .= "and device_uuid = '".$device_uuid."' ";
 					$sql .= "and line_number = '".$line_number."' ";
 					$database = new database;
-					$database->select($sql);
-					$devices = $database->result;
+					$devices = $database->select($sql, 'all');
 					if (is_array($devices)) { 
 						foreach ($devices as &$row) {
 							$device_line_uuid = $row["device_line_uuid"];

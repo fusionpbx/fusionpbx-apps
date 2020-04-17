@@ -81,7 +81,8 @@ require_once "resources/paging.php";
 		$order_text = ($total_sms_destinations == $numeric_sms) ? "cast(destination as bigint)" : "destination asc";
 	}
 	else {
-		$order_text = "extension asc";
+		//$order_text = "extension asc"; //extension doesn't exist in this table 8/23/2018/jblack
+		$order_text = "destination asc";
 	}
 
 //get the extensions
@@ -98,8 +99,8 @@ require_once "resources/paging.php";
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute();
 	$sms_destinations = $prep_statement->fetchAll(PDO::FETCH_NAMED);
+//echo $sql;
 	unset ($prep_statement, $sql);
-
 //show the content
 	echo "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n";
 	echo "  <tr>\n";

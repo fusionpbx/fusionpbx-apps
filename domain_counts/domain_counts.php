@@ -65,6 +65,7 @@
 	$sql = "SELECT \n";
 	$sql .= "d.domain_uuid, \n";
 	$sql .= "d.domain_name, \n";
+	$sql .= "d.domain_description, \n";
 
 	//extension
 	$sql .= "(\n";
@@ -135,10 +136,9 @@
 	$sql .= "FROM v_domains as d \n";
 	$sql .= $sql_mod; //add search mod from above
 	$sql .= "ORDER BY ".$order_by." ".$order." \n";
-	
+
 	$database = new database;
-	$database->select($sql);
-	$domain_counts = $database->result;	
+	$domain_counts = $database->select($sql, null);
 
 //lookup the domain count
 	$database = new database;
@@ -260,18 +260,18 @@
 	if (isset($domain_counts)) foreach ($domain_counts as $key => $row) {
 		
 		if (permission_exists('domain_counts_view_all') || (permission_exists('domain_counts_view_domain') && $_SESSION['domain_name'] == $row['domain_name']) ) {
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['domain_name']."</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['extension_count']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['user_count']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['device_count']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['destination_count']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['fax_count']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['ivr_count']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['voicemail_count']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['ring_group_count']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['cc_queue_count']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['contact_count']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'><a href='domain_counts_accountcodes.php?id=".$row['domain_uuid']."'>".$row['accountcode_count']."&nbsp;</td>\n";		
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['domain_name'])."</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['extension_count'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['user_count'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['device_count'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['destination_count'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['fax_count'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['ivr_count'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['voicemail_count'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['ring_group_count'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['cc_queue_count'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['contact_count'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'><a href='domain_counts_accountcodes.php?id=".escape($row['domain_uuid'])."'>".escape($row['accountcode_count'])."&nbsp;</td>\n";		
 			echo "</tr>\n";
 			$c = ($c==0) ? 1 : 0;
 		}

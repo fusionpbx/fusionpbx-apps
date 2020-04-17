@@ -152,7 +152,7 @@ if (count($_POST)>0) {
 	//echo "	<td><textarea name='example'></textarea></td>";
 	//echo "	</tr>";    echo "	<tr>";
 	echo "		<td colspan='2' align='right'>";
-	echo "		    <input type='hidden' name='rss_uuid' value='$rss_uuid'>";
+	echo "		    <input type='hidden' name='rss_uuid' value='".escape($rss_uuid)."'>";
 	echo "			<br><br>";
 	echo "          <input type='submit' name='submit' class='btn' value='".$text['button-add-title']."'>";
 	echo "      </td>";

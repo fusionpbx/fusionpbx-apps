@@ -396,12 +396,12 @@
 								$style_alternate = "style=\"color: #444444; background-image: url('".PROJECT_PATH."/themes/".$_SESSION['domain']['template']['name']."/images/background_cell_active.gif');\"";
 							}
 							echo "<tr>\n";
-							echo "<td class='".$row_style[$c]."' $style_alternate>$extension</td>\n";
+							echo "<td class='".$row_style[$c]."' $style_alternate>".escape($extension)."</td>\n";
 							if ($_SESSION['user_status_display'] == "false") {
 								//hide the user_status when it is set to false
 							}
 							else {
-								echo "<td class='".$row_style[$c]."' $style_alternate>".$user_array[$extension]['user_status']."&nbsp;</td>\n";
+								echo "<td class='".$row_style[$c]."' $style_alternate>".escape($user_array[$extension]['user_status'])."&nbsp;</td>\n";
 							}
 							echo "<td class='".$row_style[$c]."' $style_alternate width='20px;'>".$call_length."</td>\n";
 							if (if_group("admin") || if_group("superadmin")) {
@@ -409,27 +409,27 @@
 									if (strlen($url) == 0) {
 										$url = PROJECT_PATH."/app/contacts/contacts.php?search_all={cid_num}";
 									}
-									$url = str_replace ("{cid_num}", $cid_num, $url);
-									$url = str_replace ("{cid_name}", $cid_name, $url);
-									echo "<td class='".$row_style[$c]."' $style_alternate><a href='".$url."' style='color: #444444;' target='_blank'>".$cid_name."</a></td>\n";
-									echo "<td class='".$row_style[$c]."' $style_alternate><a href='".$url."' style='color: #444444;' target='_blank'>".$cid_num."</a></td>\n";
+									$url = str_replace ("{cid_num}", escape($cid_num), $url);
+									$url = str_replace ("{cid_name}", escape($cid_name), $url);
+									echo "<td class='".$row_style[$c]."' $style_alternate><a href='".$url."' style='color: #444444;' target='_blank'>".escape($cid_name)."</a></td>\n";
+									echo "<td class='".$row_style[$c]."' $style_alternate><a href='".$url."' style='color: #444444;' target='_blank'>".escape($cid_num)."</a></td>\n";
 								}
 							}
 							if (if_group("admin") || if_group("superadmin")) {
 								if (strlen(($_GET['rows'])) == 0) {
 									echo "<td class='".$row_style[$c]."' $style_alternate>\n";
-									echo "".$dest."<br />\n";
+									echo "".escape($dest)."<br />\n";
 									echo "</td>\n";
 									echo "<td class='".$row_style[$c]."' $style_alternate>\n";
 									if ($application == "fifo") {
 										echo "queue &nbsp;\n";
 									}
 									else {
-										echo $application." &nbsp;\n";
+										echo escape($application)." &nbsp;\n";
 									}
 									echo "</td>\n";
 									echo "<td class='".$row_style[$c]."' $style_alternate>\n";
-									echo "".$secure."<br />\n";
+									echo escape($secure)."<br />\n";
 									echo "</td>\n";
 								}
 							}
@@ -437,12 +437,12 @@
 						else {
 							$style_alternate = "style=\"color: #444444; background-image: url('".PROJECT_PATH."/themes/".$_SESSION['domain']['template']['name']."/images/background_cell_light.gif');\"";
 							echo "<tr>\n";
-							echo "<td class='".$row_style[$c]."' $style_alternate>$extension</td>\n";
+							echo "<td class='".$row_style[$c]."' $style_alternate>".escape($extension)."</td>\n";
 							if ($_SESSION['user_status_display'] == "false") {
 								//hide the user_status when it is set to false
 							}
 							else {
-								echo "<td class='".$row_style[$c]."' $style_alternate>".$user_array[$extension]['user_status']."&nbsp;</td>\n";
+								echo "<td class='".$row_style[$c]."' $style_alternate>".escape($user_array[$extension]['user_status'])."&nbsp;</td>\n";
 							}
 							echo "<td class='".$row_style[$c]."' $style_alternate>&nbsp;</td>\n";
 							if (if_group("admin") || if_group("superadmin")) {
@@ -457,7 +457,7 @@
 						}
 
 						echo "<td valign='top' class='".$row_style[$c]."' $style_alternate>\n";
-						echo "	".$effective_caller_id_name."&nbsp;\n";
+						echo "	".escape($effective_caller_id_name)."&nbsp;\n";
 						echo "</td>\n";
 
 						if (if_group("admin") || if_group("superadmin")) {
@@ -544,10 +544,10 @@
 					//	if (strlen($row['extension']) > 0) {
 					//		if ($row['context'] == $_SESSION['domain_name'] || $row['context'] == "default") {
 					//			echo "<tr>\n";
-					//			echo "<td valign='top' class='".$row_style[$c]."' >*".$row['extension']."</td>\n";
-					//			echo "<td valign='top' class='".$row_style[$c]."' >".$row['call_length']."</td>\n";
-					//			echo "<td valign='top' class='".$row_style[$c]."' >".$row['cid_name']."</td>\n";
-					//			echo "<td valign='top' class='".$row_style[$c]."' >".$row['cid_num']."</td>\n";
+					//			echo "<td valign='top' class='".$row_style[$c]."' >*".escape($row['extension'])."</td>\n";
+					//			echo "<td valign='top' class='".$row_style[$c]."' >".escape($row['call_length'])."</td>\n";
+					//			echo "<td valign='top' class='".$row_style[$c]."' >".escape($row['cid_name'])."</td>\n";
+					//			echo "<td valign='top' class='".$row_style[$c]."' >".escape($row['cid_num'])."</td>\n";
 					//			echo "</tr>\n";
 					//		}
 					//	}
@@ -562,7 +562,7 @@
 			$user_status = "Available_On_Demand";
 		}
 		$user_status = str_replace(" ", "_", $user_status);
-		echo "<span id='db_user_status' style='visibility:hidden;'>$user_status</span>\n";
+		echo "<span id='db_user_status' style='visibility:hidden;'>".escape($user_status)."</span>\n";
 		echo "<div id='cmd_reponse'>\n";
 		echo "</div>\n";
 	}

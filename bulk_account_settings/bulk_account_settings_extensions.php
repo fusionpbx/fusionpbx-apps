@@ -55,13 +55,18 @@
 //handle search term
 	$search = check_str($_GET["search"]);
 	if (strlen($search) > 0) {
+		$search = strtolower($search);
 		$sql_mod = "and ( ";
-		$sql_mod .= "extension ILIKE '%".$search."%' ";
-		$sql_mod .= "or accountcode ILIKE '%".$search."%' ";		
-		$sql_mod .= "or call_group ILIKE '%".$search."%' ";
-		$sql_mod .= "or description ILIKE '%".$search."%' ";
-		if (($option_selected == "") or ($option_selected == 'call_group') or ($option_selected == 'accountcode')) {} else {
-			$sql_mod .= "or ".$option_selected." ILIKE '%".$search."%' ";
+		$sql_mod .= "lower(extension) like '%".$search."%' ";
+		$sql_mod .= "or lower(accountcode) like '%".$search."%' ";		
+		$sql_mod .= "or lower(call_group) like '%".$search."%' ";
+		$sql_mod .= "or lower(description) like '%".$search."%' ";
+		if (($option_selected == "") or ($option_selected == 'call_group') or ($option_selected == 'accountcode')) {
+			
+		} elseif (($option_selected == 'call_timeout') or ($option_selected == 'sip_force_expires')){
+			$sql_mod .= "or lower(cast (".$option_selected." as text)) like '%".$search."%' ";
+		} else {
+			$sql_mod .= "or lower(".$option_selected.") like '%".$search."%' ";
 		}
 		$sql_mod .= ") ";
 	}
@@ -111,10 +116,8 @@
 	$sql .= "ORDER BY ".$order_by." ".$order." \n";
 	$sql .= "limit $rows_per_page offset $offset ";
 	$database = new database;
-	$database->select($sql);
-	$directory = $database->result;
-	unset($database,$result);
-
+	$directory = $database->select($sql, 'all');
+	unset($database);
 
 //additional includes
 	require_once "resources/header.php";
@@ -171,6 +174,21 @@
 		else {
 			echo "    <option value='enabled'>".$text['label-enabled']."</option>\n";
 		}
+		if ($option_selected == "directory_visible") {
+                        echo "    <option value='directory_visible' selected='selected'>".$text['label-directory_visible']."</option>\n";
+                }
+                else {
+                        echo "    <option value='directory_visible'>".$text['label-directory_visible']."</option>\n";
+                }
+
+		 if ($option_selected == "user_record") {
+                        echo "    <option value='user_record' selected='selected'>".$text['label-user_record']."</option>\n";
+                }
+                else {
+                        echo "    <option value='user_record'>".$text['label-user_record']."</option>\n";
+                }
+
+
 		if ($option_selected == "hold_music") {
 			echo "    <option value='hold_music' selected='selected'>".$text['label-hold_music']."</option>\n";
 		}
@@ -207,20 +225,26 @@
 		else {
 			echo "    <option value='sip_force_expires'>".$text['label-sip_force_expires']."</option>\n";
 		}
+		if ($option_selected == "sip_bypass_media") {
+			echo "    <option value='sip_bypass_media' selected='selected'>".$text['label-sip_bypass_media']."</option>\n";
+		}
+		else {
+			echo "    <option value='sip_bypass_media'>".$text['label-sip_bypass_media']."</option>\n";
+		}
 		echo "    </select>\n";
 		echo "    </form>\n";
 		echo "<br />\n";
 		echo $text['description-extension_settings_description']."\n";
 		echo "</td>\n";
-	
-	
-	
+
+
+
 	echo "		<td align='right' width='100%' style='vertical-align: top;'>";
 	echo "		<form method='get' action=''>\n";
 	echo "			<td style='vertical-align: top; text-align: right; white-space: nowrap;'>\n";
 	echo "				<input type='button' class='btn' alt='".$text['button-back']."' onclick=\"window.location='bulk_account_settings.php'\" value='".$text['button-back']."'>\n";	
-	echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".$search."'>";
-	echo "				<input type='hidden' class='txt' style='width: 150px' name='option_selected' id='option_selected' value='".$option_selected."'>";
+	echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".escape($search)."'>";
+	echo "				<input type='hidden' class='txt' style='width: 150px' name='option_selected' id='option_selected' value='".escape($option_selected)."'>";
 	echo "				<input type='submit' class='btn' name='submit' value='".$text['button-search']."'>";
 	if ($paging_controls_mini != '') {
 		echo 			"<span style='margin-left: 15px;'>".$paging_controls_mini."</span>\n";
@@ -240,7 +264,7 @@
 
 	if (strlen($option_selected) > 0) {
 		echo "<form name='extensions' method='post' action='bulk_account_settings_extensions_update.php'>\n";
-		echo "<input class='formfld' type='hidden' name='option_selected' maxlength='255' value=\"$option_selected\">\n";
+		echo "<input class='formfld' type='hidden' name='option_selected' maxlength='255' value=\"".escape($option_selected)."\">\n";
 		echo "<table width='auto' border='0' cellpadding='0' cellspacing='0'>\n";
 		echo "<tr>\n";
 		//options with a free form input
@@ -248,7 +272,7 @@
 			echo "<td class='vtable' align='left'>\n";
 			echo "    <input class='formfld' type='text' name='new_setting' maxlength='255' value=\"$new_setting\">\n";
 			echo "<br />\n";
-			echo $text["description-".$option_selected.""]."\n";
+			echo $text["description-".escape($option_selected).""]."\n";
 			echo "</td>\n";
 		}
 		//option is Enabled
@@ -262,6 +286,46 @@
 			echo $text["description-".$option_selected.""]."\n";
 			echo "</td>\n";
 		}
+		//option is Directory Visible
+                if($option_selected == 'directory_visible') {
+                        echo "<td class='vtable' align='left'>\n";
+                        echo "    <select class='formfld' name='new_setting'>\n";
+                        echo "    <option value='true'>".$text['label-true']."</option>\n";
+                        echo "    <option value='false'>".$text['label-false']."</option>\n";
+                        echo "    </select>\n";
+                        echo "    <br />\n";
+                        echo $text["description-".$option_selected.""]."\n";
+                        echo "</td>\n";
+                }
+		
+		//option is User Record
+                if($option_selected == 'user_record') {
+                        echo "<td class='vtable' align='left'>\n";
+                        echo "    <select class='formfld' name='new_setting'>\n";
+			echo "    <option value=''>".$text['label-user_record_none']."</option>\n";
+                        echo "    <option value='all'>".$text['label-all']."</option>\n";
+                        echo "    <option value=inbound'>".$text['label-inbound']."</option>\n";
+                        echo "    <option value=outbound'>".$text['label-outbound']."</option>\n";
+                        echo "    <option value=local'>".$text['label-local']."</option>\n";
+                        echo "    </select>\n";
+                        echo "    <br />\n";
+                        echo $text["description-".$option_selected.""]."\n";
+                        echo "</td>\n";
+                }
+
+		//option is SIP Bypass Media
+		if($option_selected=='sip_bypass_media') {
+                        echo "<td class='vtable' align='left'>\n";
+                        echo "    <select class='formfld' name='new_setting'>\n";
+                        echo "    <option value=''></option>\n";
+                        echo "    <option value='bypass-media'>".$text['option-bypass_media']."</option>\n";
+                        echo "    <option value='bypass-media-after-bridge'>".$text['option-bypass_media_after_bridge']."</option>\n";
+                        echo "    <option value='proxy-media'>".$text['option-proxy_media']."</option>\n";
+                        echo "    </select>\n";
+                        echo "    <br />\n";
+                        echo $text["description-".$option_selected.""]."\n";
+                        echo "</td>\n";
+		}
 		//option is hold_music
 		if($option_selected == 'hold_music') {
 			echo "<td class='vtable' align='left'>\n";
@@ -273,7 +337,7 @@
 			}
 			$new_setting = $hold_music;
 			echo "    <br />\n";
-			echo $text["description-".$option_selected.""]."\n";
+			echo $text["description-".escape($option_selected).""]."\n";
 			echo "</td>\n";
 		}
 		echo "<td align='left'>\n";
@@ -307,18 +371,18 @@ if (is_array($directory)) {
 			echo "<tr ".$tr_link.">\n";
 
 			echo "	<td valign='top' class='".$row_style[$c]." tr_link_void' style='text-align: center; vertical-align: middle; padding: 0px;'>";
-			echo "		<input type='checkbox' name='id[]' id='checkbox_".$row['extension_uuid']."' value='".$row['extension_uuid']."' onclick=\"if (!this.checked) { document.getElementById('chk_all').checked = false; }\">";
+			echo "		<input type='checkbox' name='id[]' id='checkbox_".escape($row['extension_uuid'])."' value='".escape($row['extension_uuid'])."' onclick=\"if (!this.checked) { document.getElementById('chk_all').checked = false; }\">";
 			echo "	</td>";
 			$ext_ids[] = 'checkbox_'.$row['extension_uuid'];
 
 			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['extension']."&nbsp;</td>\n";
 			if (($option_selected == "") or ($option_selected == 'call_group') or ($option_selected == 'accountcode')) {
 			} else {
-				echo "	<td valign='top' class='".$row_style[$c]."'> ".$row[$option_selected]."&nbsp;</td>\n";
+				echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row[$option_selected])."&nbsp;</td>\n";
 			}
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['accountcode']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['call_group']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['description']."</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['accountcode'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['call_group'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['description'])."</td>\n";
 			echo "</tr>\n";
 			$c = ($c) ? 0 : 1;
 		}
@@ -357,4 +421,5 @@ if (is_array($directory)) {
 
 //show the footer
 	require_once "resources/footer.php";
+
 ?>

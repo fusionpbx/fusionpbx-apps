@@ -483,7 +483,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "	Name:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "	<input class='formfld' type='text' name='service_name' maxlength='255' value=\"$service_name\">\n";
+	echo "	<input class='formfld' type='text' name='service_name' maxlength='255' value=\"".escape($service_name)."\">\n";
 	echo "<br />\n";
 	echo "Enter a name.\n";
 	echo "</td>\n";
@@ -494,7 +494,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "	Script:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "	<textarea class='formfld' style='width: 90%;' wrap='off' rows='17' name='service_script' id='service_script' rows='4'>$service_script</textarea>\n";
+	echo "	<textarea class='formfld' style='width: 90%;' wrap='off' rows='17' name='service_script' id='service_script' rows='4'>".escape($service_script)."</textarea>\n";
 	echo "<br />\n";
 	echo "Enter the PHP script here.\n";
 	echo "</td>\n";
@@ -530,7 +530,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "	Description:\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "	<input class='formfld' type='text' name='service_description' maxlength='255' value=\"$service_description\">\n";
+	echo "	<input class='formfld' type='text' name='service_description' maxlength='255' value=\"".escape($service_description)."\">\n";
 	echo "<br />\n";
 	echo "\n";
 	echo "</td>\n";
@@ -538,7 +538,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "	<tr>\n";
 	echo "		<td colspan='2' align='right'>\n";
 	if ($action == "update") {
-		echo "				<input type='hidden' name='php_service_uuid' value='$php_service_uuid'>\n";
+		echo "				<input type='hidden' name='php_service_uuid' value='".escape($php_service_uuid)."'>\n";
 	}
 	echo "				<input type='submit' name='submit' class='btn' value='Save'>\n";
 	echo "		</td>\n";

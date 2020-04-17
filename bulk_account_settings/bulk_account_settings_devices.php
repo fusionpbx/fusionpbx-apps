@@ -30,9 +30,6 @@
 	require_once "resources/check_auth.php";
 	require_once "resources/paging.php";
 
-//include the class
-	require_once "resources/check_auth.php";
-
 //check permissions
 	require_once "resources/check_auth.php";
 	if (permission_exists('bulk_account_settings_devices')) {
@@ -42,7 +39,7 @@
 		echo "access denied";
 		exit;
 	}
-	
+
 //add multi-lingual support
 	$language = new text;
 	$text = $language->get();
@@ -55,7 +52,7 @@
 //	if (count($_POST)>0) {
 //		$option_selected = check_str($_POST["option_selected"]);
 //	}
-	
+
 //handle search term
 	$search = check_str($_GET["search"]);
 	if (strlen($search) > 0) {
@@ -74,7 +71,6 @@
 	}
 
 	$domain_uuid = $_SESSION['domain_uuid'];
-	
 
 //get total device count from the database
 	$sql = "select count(*) as num_rows from v_devices where domain_uuid = '".$_SESSION['domain_uuid']."' ".$sql_mod." ";
@@ -112,14 +108,13 @@
 	$sql .= "where d.device_profile_uuid = dp.device_profile_uuid \n";
 	$sql .= ") as device_profile_name \n";
 	$sql .= "FROM v_devices as d \n";
-	$sql .= "WHERE domain_uuid = '$domain_uuid' \n";
+	$sql .= "WHERE domain_uuid = '".$_SESSION['domain_uuid']."' \n";
 	$sql .= $sql_mod; //add search mod from above
 	$sql .= "ORDER BY ".$order_by." ".$order." \n";
 	$sql .= "limit $rows_per_page offset $offset ";
 	$database = new database;
-	$database->select($sql);
-	$directory = $database->result;
-	unset($database,$result);
+	$directory = $database->select($sql, 'all');
+	unset($database);
 
 //lookup the lines
 	$x = 0;
@@ -130,19 +125,21 @@
 		$sql .= "and device_uuid = '".$row['device_uuid']."' ";
 		$sql .= "and line_number = '1' ";
 		$database = new database;
-		$database->select($sql);
 		$sqlview1 = $sql;
-		$result = $database->result;
+		$result = $database->select($sql, 'all');
 		$directory[$key]['line_1_server_address'] = $result[0]['server_address'];
+		$directory[$key]['line_1_server_address_primary'] = $result[0]['server_address_primary'];
+		$directory[$key]['line_1_server_address_secondary'] = $result[0]['server_address_secondary'];
 		$directory[$key]['line_1_outbound_proxy_primary'] = $result[0]['outbound_proxy_primary'];
+		$directory[$key]['line_1_outbound_proxy_secondary'] = $result[0]['outbound_proxy_secondary'];
 		$directory[$key]['line_1_sip_port'] = $result[0]['sip_port'];
 		$directory[$key]['line_1_sip_transport'] = $result[0]['sip_transport'];
 		$directory[$key]['line_1_register_expires'] = $result[0]['register_expires'];
-		$directory[$key]['line_1_outbound_proxy_secondary'] = $result[0]['outbound_proxy_secondary'];
-		unset($result,$database);
+
+		unset($result, $database);
 		$x++;
 	}
-	
+
 //additional includes
 	require_once "resources/header.php";
 	$document['title'] = $text['title-devices_settings'];
@@ -190,12 +187,35 @@
 	else {
 		echo "    <option value='line_1_server_address'>".$text['label-line_1_server_address']."</option>\n";
 	}
-//Line 1 - Outbound Proxy		
+
+//Line 1 - Server Address Primary	
+	if ($option_selected == "line_1_server_address_primary") {
+		echo "    <option value='line_1_server_address_primary' selected='selected'>".$text['label-line_1_server_address_primary']."</option>\n";
+	}
+	else {
+		echo "    <option value='line_1_server_address_primary'>".$text['label-line_1_server_address_primary']."</option>\n";
+	}
+
+//Line 1 - Server Address Secondary	
+	if ($option_selected == "line_1_server_address_secondary") {
+		echo "    <option value='line_1_server_address_secondary' selected='selected'>".$text['label-line_1_server_address_secondary']."</option>\n";
+	}
+	else {
+		echo "    <option value='line_1_server_address_secondary'>".$text['label-line_1_server_address_secondary']."</option>\n";
+	}
+//Line 1 - Outbound Proxy Primary
 	if ($option_selected == "line_1_outbound_proxy_primary") {
 		echo "    <option value='line_1_outbound_proxy_primary' selected='selected'>".$text['label-line_1_outbound_proxy_primary']."</option>\n";
 	}
 	else {
 		echo "    <option value='line_1_outbound_proxy_primary'>".$text['label-line_1_outbound_proxy_primary']."</option>\n";
+	}
+//Line 1 - Outbound Proxy Secondary
+	if ($option_selected == "line_1_outbound_proxy_secondary") {
+		echo "    <option value='line_1_outbound_proxy_secondary' selected='selected'>".$text['label-line_1_outbound_proxy_secondary']."</option>\n";
+	}
+	else {
+		echo "    <option value='line_1_outbound_proxy_secondary'>".$text['label-line_1_outbound_proxy_secondary']."</option>\n";
 	}
 //Line 1 - SIP Port
 	if ($option_selected == "line_1_sip_port") {
@@ -218,13 +238,7 @@
 	else {
 		echo "    <option value='line_1_register_expires'>".$text['label-line_1_register_expires']."</option>\n";
 	}
-//Line 1 - Outbound Proxy Secondary
-	if ($option_selected == "line_1_outbound_proxy_secondary") {
-		echo "    <option value='line_1_outbound_proxy_secondary' selected='selected'>".$text['label-line_1_outbound_proxy_secondary']."</option>\n";
-	}
-	else {
-		echo "    <option value='line_1_outbound_proxy_secondary'>".$text['label-line_1_outbound_proxy_secondary']."</option>\n";
-	}		
+		
 	echo "    </select>\n";
 	echo "    </form>\n";
 	echo "<br />\n";
@@ -244,8 +258,7 @@
 	echo "			</td>\n";
 	echo "		</form>\n";	
 	echo "  </tr>\n";
-	
-	
+
 	echo "	<tr>\n";
 	echo "		<td colspan='2'>\n";
 	echo "			".$text['description-devices_settings']."\n";
@@ -256,7 +269,7 @@
 
 	if (strlen($option_selected) > 0) {
 		echo "<form name='devices' method='post' action='bulk_account_settings_devices_update.php'>\n";
-		echo "<input class='formfld' type='hidden' name='option_selected' maxlength='255' value=\"$option_selected\">\n";
+		echo "<input class='formfld' type='hidden' name='option_selected' maxlength='255' value=\"".escape($option_selected)."\">\n";
 		echo "<table width='auto' border='0' cellpadding='0' cellspacing='0'>\n";
 		echo "<tr>\n";
 		//option is Enabled
@@ -282,17 +295,17 @@
 			$result_count = count($result);
 			unset ($prep_statement, $sql);
 			if ($result_count > 0) {
-			echo "<td class='vtable' align='left'>\n";
-			echo "    <select class='formfld' name='new_setting'>\n";
-			echo "				<option value=''></option>\n";
-			foreach($result as $row) {
-				echo "			<option value='".$row['device_profile_uuid']."' ".(($row['device_profile_uuid'] == $device_profile_uuid) ? "selected='selected'" : null).">".$row['device_profile_name']." ".(($row['domain_uuid'] == '') ? "&nbsp;&nbsp;(".$text['select-global'].")" : null)."</option>\n";
-			}
-			//echo "			</select>\n";
-			echo "    </select>\n";
-			echo "    <br />\n";
-			echo $text["description-".$option_selected.""]."\n";
-			echo "</td>\n";
+				echo "<td class='vtable' align='left'>\n";
+				echo "    <select class='formfld' name='new_setting'>\n";
+				echo "				<option value=''></option>\n";
+				foreach($result as $row) {
+					echo "			<option value='".escape($row['device_profile_uuid'])."' ".(($row['device_profile_uuid'] == $device_profile_uuid) ? "selected='selected'" : null).">".escape($row['device_profile_name'])." ".(($row['domain_uuid'] == '') ? "&nbsp;&nbsp;(".$text['select-global'].")" : null)."</option>\n";
+				}
+				//echo "			</select>\n";
+				echo "    </select>\n";
+				echo "    <br />\n";
+				echo $text["description-".$option_selected.""]."\n";
+				echo "</td>\n";
 			}
 		}
 
@@ -338,11 +351,11 @@
 		}
 
 		//options with a free form input
-		if($option_selected == 'line_1_server_address' || $option_selected == 'line_1_outbound_proxy_primary' || $option_selected == 'line_1_sip_port' || $option_selected == 'line_1_register_expires' || $option_selected == 'line_1_outbound_proxy_secondary') {
+		if($option_selected == 'line_1_server_address' || $option_selected == 'line_1_server_address_primary' || $option_selected == 'line_1_server_address_secondary' || $option_selected == 'line_1_outbound_proxy_primary' || $option_selected == 'line_1_outbound_proxy_secondary' || $option_selected == 'line_1_sip_port' || $option_selected == 'line_1_register_expires') {
 			echo "<td class='vtable' align='left'>\n";
-			echo "    <input class='formfld' type='text' name='new_setting' maxlength='255' value=\"$new_setting\">\n";
+			echo "    <input class='formfld' type='text' name='new_setting' maxlength='255' value=\"".escape($new_setting)."\">\n";
 			echo "<br />\n";
-			echo $text["description-".$option_selected.""]."\n";
+			echo $text["description-".escape($option_selected).""]."\n";
 			echo "</td>\n";
 		}
 		
@@ -356,7 +369,7 @@
 			echo "    <option value='dns srv'>DNS SRV</option>\n";
 			echo "    </select>\n";
 			echo "    <br />\n";
-			echo $text["description-".$option_selected.""]."\n";
+			echo $text["description-".escape($option_selected).""]."\n";
 			echo "</td>\n";
 		}
 
@@ -384,32 +397,28 @@
 	echo th_order_by('device_description', $text['label-device_description'], $order_by, $order,'','',"option_selected=".$option_selected."&search=".$search."");
 	echo "</tr>\n";
 
-
-
-if (is_array($directory)) {
-
+	if (is_array($directory)) {
 		foreach($directory as $key => $row) {
 			$tr_link = (permission_exists('device_edit')) ? " href='/app/devices/device_edit.php?id=".$row['device_uuid']."'" : null;
 			echo "<tr ".$tr_link.">\n";
 
 			echo "	<td valign='top' class='".$row_style[$c]." tr_link_void' style='text-align: center; vertical-align: middle; padding: 0px;'>";
-			echo "		<input type='checkbox' name='id[]' id='checkbox_".$row['device_uuid']."' value='".$row['device_uuid']."' onclick=\"if (!this.checked) { document.getElementById('chk_all').checked = false; }\">";
+			echo "		<input type='checkbox' name='id[]' id='checkbox_".escape($row['device_uuid'])."' value='".escape($row['device_uuid'])."' onclick=\"if (!this.checked) { document.getElementById('chk_all').checked = false; }\">";
 			echo "	</td>";
 			$device_ids[] = 'checkbox_'.$row['device_uuid'];
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_mac_address']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_label']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['device_mac_address'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['device_label'])."&nbsp;</td>\n";
 			if (preg_match ('/line_/',$option_selected)) {
 				echo "	<td valign='top' class='".$row_style[$c]."'> ".$row[$option_selected]."&nbsp;</td>\n";	
 			}
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_vendor']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_template']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_profile_name']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_enabled']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'> ".$row['device_description']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['device_vendor'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['device_template'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['device_profile_name'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['device_enabled'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'> ".escape($row['device_description'])."&nbsp;</td>\n";
 			echo "</tr>\n";
 			$c = ($c) ? 0 : 1;
 		}
-
 		unset($directory, $row);
 	}
 
@@ -445,4 +454,5 @@ if (is_array($directory)) {
 
 //show the footer
 	require_once "resources/footer.php";
+
 ?>

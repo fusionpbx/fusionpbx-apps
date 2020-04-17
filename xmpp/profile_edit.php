@@ -49,7 +49,7 @@ function show_advanced_config() {
 			<?php echo $text['label-profile_name']?>:
 		</td>
 		<td width="70%" class='vtable' align='left'>
-			<input class='formfld' type='text' name='profile_name' maxlength='255' value="<?php echo $profile['profile_name']; ?>" required='required'>
+			<input class='formfld' type='text' name='profile_name' maxlength='255' value="<?php echo escape($profile['profile_name']); ?>" required='required'>
 			<br />
 			<?php echo $text['description-profile_name']?>
 		</td>
@@ -60,7 +60,7 @@ function show_advanced_config() {
 			<?php echo $text['label-username']?>:
 		</td>
 		<td class='vtable' align='left'>
-			<input class='formfld' type='text' name='profile_username' autocomplete='off' maxlength='255' value="<?php echo $profile['profile_username'];?>" required='required'>
+			<input class='formfld' type='text' name='profile_username' autocomplete='off' maxlength='255' value="<?php echo escape($profile['profile_username']);?>" required='required'>
 			<br />
 			<?php echo $text['description-username']?>
 		</td>
@@ -71,7 +71,7 @@ function show_advanced_config() {
 			<?php echo $text['label-password']?>:
 		</td>
 		<td class='vtable' align='left'>
-			<input class='formfld' type='password' name='profile_password' autocomplete='off' id='profile_password' maxlength='50' onmouseover="this.type='text';" onfocus="this.type='text';" onmouseout="if (!$(this).is(':focus')) { this.type='password'; }" onblur="this.type='password';" value="<?php echo $profile['profile_password'];?>" required='required'>
+			<input class='formfld' type='password' name='profile_password' autocomplete='off' id='profile_password' maxlength='50' onmouseover="this.type='text';" onfocus="this.type='text';" onmouseout="if (!$(this).is(':focus')) { this.type='password'; }" onblur="this.type='password';" value="<?php echo escape($profile['profile_password']);?>" required='required'>
 			<br />
 			<?php echo $text['description-password']?>
 		</td>
@@ -96,7 +96,7 @@ function show_advanced_config() {
 			<?php echo $text['label-xmpp_server']?>:
 		</td>
 		<td width='70%' class='vtable' align='left'>
-			<input class='formfld' type='text' name='xmpp_server' maxlength='255' value="<?php echo $profile['xmpp_server'];?>">
+			<input class='formfld' type='text' name='xmpp_server' maxlength='255' value="<?php echo escape($profile['xmpp_server']);?>">
 			<br />
 			<?php echo $text['description-xmpp_server']?>
 		</td>
@@ -107,7 +107,7 @@ function show_advanced_config() {
 			<?php echo $text['label-default_exten']?>:
 		</td>
 		<td class='vtable' align='left'>
-			<input class='formfld' type='text' name='default_exten' maxlength='255' value="<?php echo $profile['default_exten'];?>" required='required'>
+			<input class='formfld' type='text' name='default_exten' maxlength='255' value="<?php echo escape($profile['default_exten']);?>" required='required'>
 			<br />
 			<?php echo $text['description-default_exten']?>
 		</td>
@@ -133,7 +133,7 @@ function show_advanced_config() {
 						<?php echo $text['label-context']?>:
 					</td>
 					<td width='70%' class='vtable' align='left'>
-						<input class='formfld' type='text' name='context' maxlength='255' value="<?php echo $profile['context'];?>" required='required'>
+						<input class='formfld' type='text' name='context' maxlength='255' value="<?php echo escape($profile['context']);?>" required='required'>
 						<br />
 						<?php echo $text['description-context']?>
 					</td>
@@ -144,7 +144,7 @@ function show_advanced_config() {
 						<?php echo $text['label-rtp_ip']?>:
 					</td>
 					<td class='vtable' align='left'>
-						<input class='formfld' type='text' name='rtp_ip' maxlength='255' value="<?php echo $profile['rtp_ip'];?>" required='required'>
+						<input class='formfld' type='text' name='rtp_ip' maxlength='255' value="<?php echo escape($profile['rtp_ip']);?>" required='required'>
 						<br />
 						<?php echo $text['description-rtp_ip']?>
 					</td>
@@ -155,7 +155,7 @@ function show_advanced_config() {
 						<?php echo $text['label-ext_rtp_ip']?>:
 					</td>
 					<td class='vtable' align='left'>
-						<input class='formfld' type='text' name='ext_rtp_ip' maxlength='255' value="<?php echo $profile['ext_rtp_ip'];?>" required='required'>
+						<input class='formfld' type='text' name='ext_rtp_ip' maxlength='255' value="<?php echo escape($profile['ext_rtp_ip']);?>" required='required'>
 						<br />
 						<?php echo $text['description-ext_rtp_ip']?>
 					</td>
@@ -222,7 +222,7 @@ function show_advanced_config() {
 						<?php echo $text['label-candidate_acl']?>:
 					</td>
 					<td class='vtable' align='left'>
-						<input class='formfld' type='text' name='candidate_acl' maxlength='255' value="<?php echo $profile['candidate_acl'];?>">
+						<input class='formfld' type='text' name='candidate_acl' maxlength='255' value="<?php echo escape($profile['candidate_acl']);?>">
 						<br />
 						<?php echo $text['description-candidate_acl']?>
 					</td>
@@ -233,7 +233,7 @@ function show_advanced_config() {
 						<?php echo $text['label-local_network_acl']?>:
 					</td>
 					<td class='vtable' align='left'>
-						<input class='formfld' type='text' name='local_network_acl' maxlength='255' value="<?php echo $profile['local_network_acl'];?>">
+						<input class='formfld' type='text' name='local_network_acl' maxlength='255' value="<?php echo escape($profile['local_network_acl']);?>">
 						<br />
 						<?php echo $text['description-local_network_acl']?>
 					</td>
@@ -260,14 +260,14 @@ function show_advanced_config() {
 			<?php echo $text['label-description']?>:
 		</td>
 		<td class='vtable' align='left'>
-			<input class='formfld' type='text' name='description' value='<?php echo $profile['description'];?>'>
+			<input class='formfld' type='text' name='description' value='<?php echo escape($profile['description']);?>'>
 			<br />
 			<?php echo $text['description-description']?>
 		</td>
 	</tr>
 	<tr>
 		<td colspan='2' align='right'>
-			<input type='hidden' name='profile_id' value='<?php echo $profile['xmpp_profile_uuid']; ?>'>
+			<input type='hidden' name='profile_id' value='<?php echo escape($profile['xmpp_profile_uuid']); ?>'>
 			<br>
 			<input type='submit' name='submit' class='btn' value='<?php echo $text['button-save']?>'>
 		</td>

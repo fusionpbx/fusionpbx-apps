@@ -126,16 +126,16 @@ $order = $_GET["order"];
 	else { //received results
 		foreach($result as $row) {
 			echo "<tr >\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row[service_name]."</td>\n";
-			//echo "	<td valign='top' class='".$row_style[$c]."'>".$row[service_group]."</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row[service_enabled]."</td>\n";
-			echo "	<td valign='top' class='row_stylebg'>".$row[service_description]."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row[service_name])."</td>\n";
+			//echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row[service_group])."</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row[service_enabled])."</td>\n";
+			echo "	<td valign='top' class='row_stylebg'>".escape($row[service_description])."&nbsp;</td>\n";
 			echo "	<td valign='top' align='right'>\n";
 			if (permission_exists('php_service_edit')) {
-				echo "		<a href='v_php_service_edit.php?id=".$row[php_service_uuid]."' alt='edit'>$v_link_label_edit</a>\n";
+				echo "		<a href='v_php_service_edit.php?id=".escape($row[php_service_uuid])."' alt='edit'>$v_link_label_edit</a>\n";
 			}
 			if (permission_exists('php_service_delete')) {
-				echo "		<a href='v_php_service_delete.php?id=".$row[php_service_uuid]."' alt='delete' onclick=\"return confirm('Do you really want to delete this?')\">$v_link_label_delete</a>\n";
+				echo "		<a href='v_php_service_delete.php?id=".escape($row[php_service_uuid])."' alt='delete' onclick=\"return confirm('Do you really want to delete this?')\">$v_link_label_delete</a>\n";
 			}
 			echo "	</td>\n";
 			echo "</tr>\n";

@@ -1,0 +1,7 @@
+<context name="{v_context}">
+	<extension name="call_acl" number="" continue="true" app_uuid="32aeff16-c7bf-439b-a54d-2568a7e0cec0" enabled="false">
+		<condition field="" expression="" break="">
+			<action application="lua" data="app.lua call_acl"/>
+		</condition>
+	</extension>
+</context>

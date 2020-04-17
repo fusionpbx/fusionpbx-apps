@@ -42,8 +42,6 @@
 	$language = new text;
 	$text = $language->get();
 
-
-
 //check for the ids
 	if (is_array($_REQUEST) && sizeof($_REQUEST) > 0) {
 
@@ -58,8 +56,7 @@
 				$sql .= "where domain_uuid = '".$_SESSION['domain_uuid']."' ";
 				$sql .= "and user_uuid = '".$user_uuid."' ";
 				$database = new database;
-				$database->select($sql);
-				$users = $database->result;
+				$users = $database->select($sql, 'all');
 				if (is_array($users)) { 
 					foreach ($users as &$row) {
 						$user = $row["user"];
@@ -81,7 +78,6 @@
 					$array["users"][$i]["user_uuid"] = $user_uuid;
 					$array['users'][$i]['password'] = md5($salt.$new_setting);
 					$array['users'][$i]['salt'] = $salt;				
-
 				}
 
 				//timezone
@@ -91,8 +87,7 @@
 					$sql .= "and user_uuid = '".$user_uuid."' ";
 					$sql .= "and user_setting_subcategory = 'time_zone' ";
 					$database = new database;
-					$database->select($sql);
-					$users = $database->result;
+					$users = $database->select($sql, 'all');
 					if (is_array($users)) { 
 						foreach ($users as &$row) {
 							$user_setting_uuid = $row["user_setting_uuid"];
@@ -121,4 +116,5 @@
 	$_SESSION["message"] = $text['message-update'];
 	header("Location: bulk_account_settings_users.php?option_selected=".$option_selected."");
 	return;
+
 ?>

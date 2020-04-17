@@ -260,7 +260,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "	".$text['label-invoice_number']."\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "  <input class='formfld' type='text' name='invoice_number' maxlength='255' value='$invoice_number'>\n";
+	echo "  <input class='formfld' type='text' name='invoice_number' maxlength='255' value='".escape($invoice_number)."'>\n";
 	echo "<br />\n";
 	echo $text['description-invoice_number']."\n";
 	echo "</td>\n";
@@ -301,17 +301,17 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			$contact_name .= $row['contact_name_given'];
 		}
 		if ($row['contact_uuid'] == $contact_uuid_from) {
-			echo "<option value=\"".$row['contact_uuid']."\" selected=\"selected\">".$contact_name." $contact_uuid</option>\n";
+			echo "<option value=\"".escape($row['contact_uuid'])."\" selected=\"selected\">".escape($contact_name)." ".escape($contact_uuid)."</option>\n";
 		}
 		else {
-			echo "<option value=\"".$row['contact_uuid']."\">".$contact_name."</option>\n";
+			echo "<option value=\"".escape($row['contact_uuid'])."\">".escape($contact_name)."</option>\n";
 		}
 	}
 	unset($sql, $result, $row_count);
 	echo "</select>\n";
 	echo "<br />\n";
 	echo $text['description-contact_uuid_from']." \n";
-	echo "<a href='".PROJECT_PATH."/app/contacts/contact_edit.php?id=".$contact_uuid_from."'>".$text['button-view']."</a>\n";
+	echo "<a href='".PROJECT_PATH."/app/contacts/contact_edit.php?id=".escape($contact_uuid_from)."'>".$text['button-view']."</a>\n";
 	echo "</td>\n";
 	echo "</tr>\n";
 
@@ -336,17 +336,17 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			$contact_name .= $row['contact_name_given'];
 		}
 		if ($row['contact_uuid'] == $contact_uuid_to) {
-			echo "<option value=\"".$row['contact_uuid']."\" selected=\"selected\">".$contact_name." $contact_uuid</option>\n";
+			echo "<option value=\"".escape($row['contact_uuid'])."\" selected=\"selected\">".escape($contact_name)." ".escape($contact_uuid)."</option>\n";
 		}
 		else {
-			echo "<option value=\"".$row['contact_uuid']."\">".$contact_name."</option>\n";
+			echo "<option value=\"".escape($row['contact_uuid'])."\">".escape($contact_name)."</option>\n";
 		}
 	}
 	unset($sql, $result, $row_count);
 	echo "</select>\n";
 	echo "<br />\n";
 	echo $text['description-contact_uuid_to']." \n";
-	echo "<a href='".PROJECT_PATH."/app/contacts/contact_edit.php?id=".$contact_uuid_to."'>".$text['button-view']."</a>\n";
+	echo "<a href='".PROJECT_PATH."/app/contacts/contact_edit.php?id=".escape($contact_uuid_to)."'>".$text['button-view']."</a>\n";
 	echo "</td>\n";
 	echo "</tr>\n";
 
@@ -355,7 +355,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "	".$text['label-invoice_purchase_order_number']."\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "  <input class='formfld' type='text' name='invoice_purchase_order_number' maxlength='255' value='$invoice_purchase_order_number'>\n";
+	echo "  <input class='formfld' type='text' name='invoice_purchase_order_number' maxlength='255' value='".escape($invoice_purchase_order_number)."'>\n";
 	echo "<br />\n";
 	echo $text['description-invoice_purchase_order_number']."\n";
 	echo "</td>\n";
@@ -366,7 +366,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "	".$text['label-invoice_currency']."\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "  <input class='formfld' type='text' name='invoice_currency' maxlength='255' value='$invoice_currency'>\n";
+	echo "  <input class='formfld' type='text' name='invoice_currency' maxlength='255' value='".escape($invoice_currency)."'>\n";
 	echo "<br />\n";
 	echo $text['description-invoice_currency']."\n";
 	echo "</td>\n";
@@ -402,7 +402,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 			echo "					<option value='cc' ".(($invoice_paid_method == 'cc') ? "selected" : null).">".$text['label-invoice_method_credit_card']."</option>";
 			echo "					<option value='csh' ".(($invoice_paid_method == 'csh') ? "selected" : null).">".$text['label-invoice_method_cash']."</option>";
 			echo "				</select>";
-			echo "				<input type='text' class='formfld' style='min-width: 85px;' name='invoice_paid_method_ref' id='invoice_paid_method_ref' placeholder='Ref #' value='".$invoice_paid_method_ref."'>";
+			echo "				<input type='text' class='formfld' style='min-width: 85px;' name='invoice_paid_method_ref' id='invoice_paid_method_ref' placeholder='Ref #' value='".escape($invoice_paid_method_ref)."'>";
 			echo "			</td>";
 			echo "		</tr>";
 			echo "	</table>";
@@ -415,7 +415,7 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "	".$text['label-invoice_notes']."\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "	<textarea class='formfld' type='text' name='invoice_notes'>$invoice_notes</textarea>\n";
+	echo "	<textarea class='formfld' type='text' name='invoice_notes'>".escape($invoice_notes)."</textarea>\n";
 	echo "<br />\n";
 	echo $text['description-invoice_notes']."\n";
 	echo "</td>\n";
@@ -425,9 +425,9 @@ if (count($_POST)>0 && strlen($_POST["persistformvar"]) == 0) {
 	echo "		<td colspan='2' align='right'>\n";
 	if ($action == "update") {
 		if ($back != '') {
-			echo "		<input type='hidden' name='back' value='".$back."'>";
+			echo "		<input type='hidden' name='back' value='".escape($back)."'>";
 		}
-		echo "		<input type='hidden' name='invoice_uuid' value='$invoice_uuid'>\n";
+		echo "		<input type='hidden' name='invoice_uuid' value='".escape($invoice_uuid)."'>\n";
 	}
 	echo "			<br><input type='submit' name='submit' class='btn' value='".$text['button-save']."'>\n";
 	echo "		</td>\n";

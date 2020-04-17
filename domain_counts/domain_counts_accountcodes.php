@@ -64,16 +64,10 @@
 	
 //get total accountcode count from the database
 	$sql = "select count(DISTINCT accountcode) as num_rows from v_extensions where domain_uuid = '".$domain_uuid."' ".$sql_mod." ";
-	$prep_statement = $db->prepare($sql);
-	if ($prep_statement) {
-		$prep_statement->execute();
-		$row = $prep_statement->fetch(PDO::FETCH_ASSOC);
-		$total_accountcodes = $row['num_rows'];
-		if (($db_type == "pgsql") or ($db_type == "mysql")) {
-			$numeric_accountcodes = $row['num_rows'];
-		}
-	}
-	unset($prep_statement, $row);
+	$database = new database;
+	$numeric_accountcodes = $database->select($sql, null, 'column');
+	$total_accountcodes = $numeric_accountcodes;
+	unset($sql);
 
 //prepare to page the results
 	$rows_per_page = ($_SESSION['domain']['paging']['numeric'] != '') ? $_SESSION['domain']['paging']['numeric'] : 50;
@@ -89,7 +83,7 @@
 	$sql .= "FROM v_domains \n";
 	$sql .= "WHERE domain_uuid = '$domain_uuid' \n";
 	$database = new database;
-	$database->select($sql);
+	$result = $database->select($sql, null);
 	$domain_result = $database->result;
 	unset($database,$result);
 	
@@ -102,9 +96,8 @@
 	$sql .= "ORDER BY ".$order_by." ".$order." \n";
 	$sql .= "limit $rows_per_page offset $offset ";
 	$database = new database;
-	$database->select($sql);
-	$directory = $database->result;
-	unset($database,$result);
+	$directory = $database->select($sql, null);
+	unset($database);
 
 //set the http header
 	if ($_REQUEST['type'] == "csv") {
@@ -164,8 +157,8 @@
 	echo "		<form method='get' action=''>\n";
 	echo "			<td style='vertical-align: top; text-align: right; white-space: nowrap;'>\n";
 	echo "				<input type='button' class='btn' alt='".$text['button-back']."' onclick=\"window.location='domain_counts.php'\" value='".$text['button-back']."'>\n";	
-	echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".$search."'>";
-	echo "				<input type='hidden' name='id' value='".$domain_uuid."' />";	
+	echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".escape($search)."'>";
+	echo "				<input type='hidden' name='id' value='".escape($domain_uuid)."' />";	
 	echo "				<input type='submit' class='btn' name='submit' value='".$text['button-search']."'>";
 	echo "				<input type='button' class='btn' value='".$text['button-export']."' ";
 	echo "onclick=\"window.location='domain_counts_accountcodes.php?";
@@ -200,8 +193,8 @@
 	echo "</tr>\n";
 
 	if (isset($directory)) foreach ($directory as $key => $row) {
-		echo "	<td valign='top' class='".$row_style[$c]."'>".$row['accountcode']."</td>\n";
-		echo "	<td valign='top' class='row_stylebg' width='75%'>".$row['count']."&nbsp;</td>\n";
+		echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['accountcode'])."</td>\n";
+		echo "	<td valign='top' class='row_stylebg' width='75%'>".escape($row['count'])."&nbsp;</td>\n";
 		echo "	</tr>\n";
 		$c = ($c==0) ? 1 : 0;
 	}
