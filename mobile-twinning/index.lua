@@ -157,8 +157,8 @@
 					sql = "SELECT uuid, call_uuid, hostname FROM channels ";
 					sql = sql .. "WHERE callstate = 'ACTIVE' ";
 					sql = sql .. "AND direction = 'outbound' ";
-					sql = sql .. "AND dest = " .. mobile_twinning_number .. " ";
-					sql = sql .. "AND presence_id = '" .. presence_id .. "' ";
+					sql = sql .. "AND dest = '" .. mobile_twinning_number .. "' ";
+					sql = sql .. "AND context = '" .. domain_name .. "' ";
 					sql = sql .. "AND call_uuid IS NOT NULL ";
 				if (debug["sql"]) then
 					log.noticef("SQL: %s; params: %s", sql, json.encode(params));
@@ -169,7 +169,7 @@
 					call_uuid = row.call_uuid;
 					call_hostname = row.hostname;
 				end);
-				log.notice("call_uuid from follow-me: "..call_uuid);
+				log.notice("call_uuid from follow-me q1: "..call_uuid);
 			
 			--lookup active calls to the mobile (for instances where the mobile switched the call from the extension)
 				if (call_uuid == nil or call_uuid == '') then
@@ -181,7 +181,7 @@
 					sql = "SELECT uuid, call_uuid, hostname FROM channels ";
 					sql = sql .. "WHERE callstate = 'ACTIVE' ";
 					sql = sql .. "AND direction = 'inbound' ";
-					sql = sql .. "AND dest = " .. extension .. " ";
+					sql = sql .. "AND dest = '" .. extension .. "' ";
 					sql = sql .. "AND call_uuid IS NOT NULL ";
 					if (debug["sql"]) then
 						log.noticef("SQL: %s; params: %s", sql, json.encode(params));
@@ -192,9 +192,34 @@
 						call_uuid = row.call_uuid;
 						call_hostname = row.hostname;
 					end);
-					log.notice("call_uuid from other: "..call_uuid);
+					log.notice("call_uuid from follow-me q2: "..call_uuid);
 					leg = "bleg"
 				end
+				
+			--lookup active calls on the mobile (for instances where the mobile switched the call from the extension. Original call was outbound)
+				if (call_uuid == nil or call_uuid == '') then
+				--connect to FS database
+					local dbh = Database.new('switch')
+					
+				--check the database for the uuid of the mobile call 
+					call_hostname = "";
+					sql = "SELECT uuid, call_uuid, hostname FROM channels ";
+					sql = sql .. "WHERE callstate = 'ACTIVE' ";
+					sql = sql .. "AND direction = 'outbound' ";
+					sql = sql .. "AND cid_num like '%" .. mobile_twinning_number .. "' ";
+					sql = sql .. "AND call_uuid IS NOT NULL ";
+					if (debug["sql"]) then
+						log.noticef("SQL: %s; params: %s", sql, json.encode(params));
+					end
+					local is_child
+					dbh:query(sql, params, function(row)
+						is_child = (row.uuid == row.call_uuid)
+						call_uuid = row.call_uuid;
+						call_hostname = row.hostname;
+					end);
+					log.notice("call_uuid from follow-me q3: "..call_uuid);
+					leg = "bleg"
+				end				
 		end
 	end
 
