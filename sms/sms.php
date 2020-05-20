@@ -112,6 +112,8 @@ require_once "resources/paging.php";
 	if (if_group("superadmin")) {
 		echo "				<input type='button' class='btn' style='margin-right: 15px;' value='".$text['button-mdr']."' onclick=\"window.location.href='sms_mdr.php'\">\n";
 	}
+		echo "				<input type='button' class='btn' style='margin-right: 15px;' value='".$text['button-broadcast']."' onclick=\"window.location.href='sms_broadcast.php'\">\n";
+
 	echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".$search."'>";
 	echo "				<input type='submit' class='btn' name='submit' value='".$text['button-search']."'>";
 	if ($paging_controls_mini != '') {

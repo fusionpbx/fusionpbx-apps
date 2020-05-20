@@ -2,7 +2,7 @@
 1. ```cd /usr/src/```
 2. ```git clone https://github.com/fusionpbx/fusionpbx-apps```
 3. ```cd fusionpbx-apps/; cp -R sms /var/www/fusionpbx/app/```
-4. ```cd /var/www/fusionpbx/resources/install/scripts/app/```
+4. ```cd /var/www/fusionpbx/app/scripts/resources/scripts/app```
 5. ```ln -s /var/www/fusionpbx/app/sms/resources/install/scripts/app/sms```
 6. Go to GUI
 7. Upgrades -> SCHEMA; APP DEFAULTS; MENU DEFAULTS; PERMISSION DEFAULTS

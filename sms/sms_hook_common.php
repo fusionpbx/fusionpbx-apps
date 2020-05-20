@@ -147,10 +147,11 @@ function route_and_send_sms($from, $to, $body, $media = "") {
 				//load default and domain settings
 				$_SESSION["domain_uuid"] = $domain_uuid;
 				require_once "resources/classes/domains.php";
-				$domain = new domains;
+				$domain = new domains();
 				$domain->set();
+				
 				if ($debug) {
-					error_log("email_from: " . $_SESSION['email']['smtp_from']['var']);
+					error_log("Email from: ". $_SESSION['email']['smtp_from']['text']);
 				}
 				$mailsent = send_sms_to_email($from, $to, $mailbody, $media);
 
