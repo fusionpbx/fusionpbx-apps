@@ -33,7 +33,7 @@ function validateEMAIL($EMAIL) {
     return (bool)preg_match($v, $EMAIL);
 }
 
-function send_sms_to_email($from, $to, $body, $media = "") {
+function send_sms_to_email($from, $to, $body, $media = null) {
 	global $db, $debug, $domain_uuid, $domain_name, $carrier;
 	if ($debug) {
 		error_log('Media: ' .  print_r($media, true));
@@ -59,7 +59,7 @@ function send_sms_to_email($from, $to, $body, $media = "") {
 	}
 
 	$prep_statement = $db->prepare(check_sql($sql));
-	$prep_statement->bindValue(':to', $to);
+	$prep_statement->bindValue(':to', "%{$to}%");
 	$prep_statement->execute();
 	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 
@@ -87,8 +87,8 @@ function send_sms_to_email($from, $to, $body, $media = "") {
 		$semi_rand = md5(time());
 		$mime_boundary = "==Multipart_Boundary_x{$semi_rand}x";
 
-		if (!empty($_SESSION['email']['smtp_from']['var']) and validateEMAIL($_SESSION['email']['smtp_from']['var'])) {
-			$headers = "From: " . $_SESSION['email']['smtp_from']['var'] . "\n";
+		if (!empty($_SESSION['email']['smtp_from']['text']) and validateEMAIL($_SESSION['email']['smtp_from']['text'])) {
+			$headers = "From: " . $_SESSION['email']['smtp_from']['text'] . "\n";
 		}
 		else {
 			$headers = "From: noreply@example.com\n";
@@ -101,17 +101,13 @@ function send_sms_to_email($from, $to, $body, $media = "") {
 		$body = preg_replace('([\n])', '<br>', $body); // fix newlines
 		$email_txt = 'To: ' . $to . '<br>Msg: ' . $body;
 
-		$email_message = "This is a multi-part message in MIME format.\n\n" .
-			"--{$mime_boundary}\n" . "Content-Type:text/html; charset = \"iso-8859-1\"\n" .
-			"Content-Transfer-Encoding: 7bit\n\n" .	$email_txt . "\n\n";
+		$email_message = "" .	$email_txt . "";
 
 		if ($carrier == "telnyx") {
 			if (gettype($media)=="array") {
 				$email_txt = 'To: ' . $to . '<br>Msg: ' . $body . '<br>MMS Message received, see attachment';
 
-				$email_message = "This is a multi-part message in MIME format.\n\n" .
-					"--{$mime_boundary}\n" . "Content-Type:text/html; charset = \"iso-8859-1\"\n" .
-					"Content-Transfer-Encoding: 7bit\n\n" .	$email_txt . "\n\n";
+				$email_message = "" .	$email_txt . "";
 				//process MMS attachment
 				foreach ($media as $attachment) {
 					$url = $attachment->url;
@@ -152,13 +148,15 @@ function send_sms_to_email($from, $to, $body, $media = "") {
 			}
 		}
 		else {
-			$email_message .= "--{$mime_boundary}--\n";
+			$email_message .= "";
 		}
 		if ($debug) {
 			error_log("headers: " . $headers);
 		}
 		//send email
-		$ok = mail($email_to, $email_subject, $email_message, $headers);
+		$ok = send_email($email_to, $email_subject, $email_message);//, $headers);
+
+		if()
 
 		if($ok) {
 			error_log("[sms] Email Sent Successfully.");

@@ -371,7 +371,9 @@
 		if (smstempst ~= nil) then freeswitch.consoleLog("notice", "[sms] smstempst = '" .. smstempst .. "\n") end;
 		if (smstempend ~= nil) then freeswitch.consoleLog("notice", "[sms] smstempend = '" .. smstempend .. "\n") end;
 		mdn = (smstempst ~= nil); --message delivery notification
-		msgtype = message:getHeader("type");
+		if (message ~= nil) then
+			msgtype = message:getHeader("type");
+		end;
 		if (msgtype ~= nil and string.find(msgtype, "imdn") ~= nil) then mdn = true end;
 		if (not mdn) then 
 			-- No XML content, continue processing
