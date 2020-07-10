@@ -1,6 +1,6 @@
 # Domain Counts
 
-Totals up the number of configured extensions, voicemail boxes, ring groups and the like, with the ability to export all this data to a CSV so you can open it in your favorite spreadsheet software!
+Totals the number of configured extensions, voicemail boxes, ring groups and the like per Domain, with the ability to export all this data to a CSV so you can open it in your favorite spreadsheet software!
 
 ![Image of Domain Counts](Domain-Counts-Overview.png)
 
@@ -15,6 +15,15 @@ cd /var/www/fusionpbx/app
 cp -r ~/fusionpbx-apps/domain_counts .
 ```
 
-Then navigate to your FusionPBX install and choose Advanced => Upgrade, check Menu Defaults and press Execute.
+Alternative (and preferred) commands to run in SSH session:
+```
+cd /usr/src 
+git clone https://github.com/fusionpbx/fusionpbx-apps 
+cp -R /usr/src/fusionpbx-apps/domain_counts /var/www/fusionpbx/app
+chown -R www-data:www-data /var/www/fusionpbx/app/domain_counts
+```
 
-At this point, Status => Domain Statistics should appear after you log out and log back in.
+Then navigate to your FusionPBX installation and choose Advanced => Upgrade. Run upgrades for Menu Defaults and for Permission Defaults.
+
+Log out and back into your FusionPBX installation. 
+Go to Status => Domain Counts.
