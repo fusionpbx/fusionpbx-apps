@@ -213,9 +213,9 @@ if (is_array($_FILES) && array_key_exists('users_file', $_FILES)) {
 	}
 }
 
-printf("<form method=${dq}POST${dq} action=${dq}$self${dq} enctype=${dq}multipart/form-data${dq}");
-printf("<input type=${dq}file${dq} name=${dq}users_file${dq}");
-printf("<input type=${dq}submit${dq} value=${dq}Upload${dq}");
+printf("<form method=${dq}POST${dq} action=${dq}$self${dq} enctype=${dq}multipart/form-data${dq}>");
+printf("<input type=${dq}file${dq} name=${dq}users_file${dq}>");
+printf("<input type=${dq}submit${dq} value=${dq}Upload${dq}>");
 printf("</form>");
 
 require_once "resources/footer.php";
