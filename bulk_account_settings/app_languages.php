@@ -468,6 +468,19 @@ $text['label-local']['de-at'] = "Local";
 $text['label-local']['it-it'] = "Local";
 $text['label-local']['ru-ru'] = "";
 
+$text['label-disabled']['en-us'] = "Disabled";
+$text['label-disabled']['es-cl'] = "Disabled";
+$text['label-disabled']['pt-pt'] = "Disabled";
+$text['label-disabled']['fr-fr'] = "Disabled";
+$text['label-disabled']['pt-br'] = "Disabled";
+$text['label-disabled']['pl'] = "Disabled";
+$text['label-disabled']['sv-se'] = "Disabled";
+$text['label-disabled']['uk'] = "Disabled";
+$text['label-disabled']['de-at'] = "Disabled";
+$text['label-disabled']['it-it'] = "Disabled";
+$text['label-disabled']['ru-ru'] = "";
+
+
 $text['label-user_record_none']['en-us'] = "Disabled";
 $text['label-user_record_none']['en-gb'] = "Disabled";
 $text['label-user_record_none']['ar-eg'] = "معطل";
