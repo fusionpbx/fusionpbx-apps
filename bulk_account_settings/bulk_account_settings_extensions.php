@@ -307,6 +307,7 @@
                         echo "    <option value=inbound'>".$text['label-inbound']."</option>\n";
                         echo "    <option value=outbound'>".$text['label-outbound']."</option>\n";
                         echo "    <option value=local'>".$text['label-local']."</option>\n";
+			echo "    <option value=disabled'>".$text['label-disabled']."</option>\n";
                         echo "    </select>\n";
                         echo "    <br />\n";
                         echo $text["description-".$option_selected.""]."\n";
