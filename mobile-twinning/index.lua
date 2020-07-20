@@ -157,7 +157,7 @@
 					sql = "SELECT uuid, call_uuid, hostname FROM channels ";
 					sql = sql .. "WHERE callstate = 'ACTIVE' ";
 					sql = sql .. "AND direction = 'outbound' ";
-					sql = sql .. "AND dest = '" .. mobile_twinning_number .. "' ";
+					sql = sql .. "AND dest like '%" .. mobile_twinning_number .. "' ";
 					sql = sql .. "AND context = '" .. domain_name .. "' ";
 					sql = sql .. "AND call_uuid IS NOT NULL ";
 				if (debug["sql"]) then
