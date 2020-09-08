@@ -125,7 +125,7 @@
 
 	echo $text['title_description-sessiontalk']."\n";
 	echo "<br /><br />\n";
-echo $qr_content;
+	//echo $qr_content;  //enable for debugging
 	echo "<div style='text-align: center; white-space: nowrap; margin: 10px 0 40px 0;'>";
 	echo $text['label-extension']."<br />\n";
 	echo "<select name='id' class='formfld' onchange='this.form.submit();'>\n";
