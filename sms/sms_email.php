@@ -156,15 +156,14 @@ function send_sms_to_email($from, $to, $body, $media = null) {
 		//send email
 		$ok = send_email($email_to, $email_subject, $email_message);//, $headers);
 
-//		if()
-
-		if($ok) {
+		if ($ok) {
 			error_log("[sms] Email Sent Successfully.");
 			return true;
-		}else {
+		} else {
 			error_log("[sms] Email could not be sent.");
 			return false;
 		}
 	}
 }
+
 ?>
