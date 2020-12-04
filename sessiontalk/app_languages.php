@@ -21,8 +21,8 @@ $text['title-sessiontalk']['ru-ru'] = "";
 $text['title-sessiontalk']['sv-se'] = "";
 $text['title-sessiontalk']['uk-ua'] = "";
 
-$text['title_description-sessiontalk']['en-us'] = "Sessiontalk is a soft phone for smart phones or tablets. It can be configured easily with a QR code provided here. To use it download and install Sessiontalk for your device. Start the application and then go to Account Settings press the + to add a new account. Press on UCM Account (Scan QR Code) and then select the extension and scan the QR code.";
-$text['title_description-sessiontalk']['en-gb'] = "Sessiontalk is a soft phone for smart phones or tablets. It can be configured easily with a QR code provided here. To use it download and install Sessiontalk for your device. Start the application and then go to Account Settings press the + to add a new account. Press on UCM Account (Scan QR Code) and then select the extension and scan the QR code.";
+$text['title_description-sessiontalk']['en-us'] = "Sessiontalk is a soft phone for smart phones or tablets. It can be configured easily with a QR code provided here. To use it download and install Sessioncloud for your device. Start the application and then press on the QR Code Symbol and then select the extension and scan the QR code.";
+$text['title_description-sessiontalk']['en-gb'] = "Sessiontalk is a soft phone for smart phones or tablets. It can be configured easily with a QR code provided here. To use it download and install Sessioncloud for your device. Start the application and then press on the QR Code Symbol and then select the extension and scan the QR code.";
 $text['title_description-sessiontalk']['ar-eg'] = "";
 $text['title_description-sessiontalk']['de-at'] = "";
 $text['title_description-sessiontalk']['de-ch'] = "";
@@ -62,5 +62,27 @@ $text['label-extension']['ro-ro'] = "";
 $text['label-extension']['ru-ru'] = "Внутренний Номер";
 $text['label-extension']['sv-se'] = "Anknytning";
 $text['label-extension']['uk-ua'] = "Розширення";
+
+$text['device-description-sessiontalk']['en-us'] = "Sessiontalk Mobile App";
+$text['device-description-sessiontalk']['en-gb'] = "Sessiontalk Mobile App";
+$text['device-description-sessiontalk']['ar-eg'] = "";
+$text['device-description-sessiontalk']['de-at'] = "";
+$text['device-description-sessiontalk']['de-ch'] = "";
+$text['device-description-sessiontalk']['de-de'] = "";
+$text['device-description-sessiontalk']['es-cl'] = "";
+$text['device-description-sessiontalk']['es-mx'] = "";
+$text['device-description-sessiontalk']['fr-ca'] = "";
+$text['device-description-sessiontalk']['fr-fr'] = "";
+$text['device-description-sessiontalk']['he-il'] = "";
+$text['device-description-sessiontalk']['it-it'] = "";
+$text['device-description-sessiontalk']['nl-nl'] = "";
+$text['device-description-sessiontalk']['pl-pl'] = "";
+$text['device-description-sessiontalk']['pt-br'] = "";
+$text['device-description-sessiontalk']['pt-pt'] = "";
+$text['device-description-sessiontalk']['ro-ro'] = "";
+$text['device-description-sessiontalk']['ru-ru'] = "";
+$text['device-description-sessiontalk']['sv-se'] = "";
+$text['device-description-sessiontalk']['uk-ua'] = "";
+
 
 ?>

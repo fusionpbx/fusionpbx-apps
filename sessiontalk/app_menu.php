@@ -20,7 +20,7 @@
 	$apps[$x]['menu'][$y]['title']['ru-ru'] = "";
 	$apps[$x]['menu'][$y]['title']['sv-se'] = "";
 	$apps[$x]['menu'][$y]['title']['uk-ua'] = "";
-	$apps[$x]['menu'][$y]['uuid'] = "e98894cd-ec12-447b-812d-54163fc67ca9";
+	$apps[$x]['menu'][$y]['uuid'] = "6b8e5c00-141c-11eb-adc1-0242ac120002";
 	$apps[$x]['menu'][$y]['parent_uuid'] = "fd29e39c-c936-f5fc-8e2b-611681b266b5";
 	$apps[$x]['menu'][$y]['category'] = "internal";
 	$apps[$x]['menu'][$y]['path'] = "/app/sessiontalk/index.php";
