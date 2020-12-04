@@ -156,7 +156,7 @@ function send_sms_to_email($from, $to, $body, $media = null) {
 		//send email
 		$ok = send_email($email_to, $email_subject, $email_message);//, $headers);
 
-		if()
+//		if()
 
 		if($ok) {
 			error_log("[sms] Email Sent Successfully.");
