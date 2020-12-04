@@ -11,7 +11,8 @@ if (check_acl()) {
 		if ($debug) {
 			error_log('[SMS] REQUEST: ' .  print_r($data, true));
 		}
-		route_and_send_sms($data->from, $data->to, $data->body);	
+	$from = intval(preg_replace('/(^[1])/','', $data->data->attributes->from));
+	route_and_send_sms($from, $data->data->attributes->to, $data->data->attributes->body);	
 	} else {
 	  die("no");
 	}
