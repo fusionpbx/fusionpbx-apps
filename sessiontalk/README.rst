@@ -83,7 +83,20 @@ Permissions
 
 * Administrators that you want to give access to QR Codes for any extension on the domain.
 
+Cloud Configuration
+^^^^^^^^^^^^^^^^^^^^^
+Sign in to your https://cloud.sessiontalk.co.uk account and update various settings on your app.
 
+* Provisioning:
+* Set Login Fields to "Username, Passowrd, and Subdomain"
+* Set the domain to "example.com" where "customer1.example.com" is the customer sudomains format.
+* Set the Incoming Calls mode to "Push" for most use cases.
+* Select your Region (I have had problems with the Auto Region setting)
+* Still under Provision go to the Misc tab and enable "Use Subdomains"
+* Additional:
+* Enable "External Provisioning" and set the URL to https://example.com/app/sessiontalk/provision.php (I use provision.example.com as the domain here so my *.example.com wildcard certificate is valid)
+
+All other settings can be set to your preference. Their cloud service makes a request the provision.php file with the details that are in the QR code, and provision.php returns the SIP credentials for the mobile app to use. An additional note about the app, we cannot pass the SIP Port number to the mobile app in this way. If you are using a port other than 5060, you must either use SRV records independently created for each customer subdomain (SRV doesn't work with wildcards), configure a SIP Proxy address that has the SRV records configured for it, or set the domain to include the port like "example.com:5070" on the main page in provisioning.
 
 
 Usage
