@@ -291,7 +291,7 @@
 					$sql .= "AND l.server_address = :domain_name ";
 					$sql .= "AND d.device_vendor = 'sessiontalk' ";
 					$sql .= "AND l.enabled = 'true' ";
-					$parameters['extension'] = $password_part[1];
+					$parameters['extension'] = $password_part[0];
 					$parameters['domain_name'] = $domain_name;
 					$database = new database;
 					$activations = $database->select($sql, $parameters, 'column');
@@ -369,6 +369,7 @@
 				}
 				else {
 					$settings['errmsg'] = "Max Devices Exceeded";
+					send_json($settings, true);
 				}
 			}
 
