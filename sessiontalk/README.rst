@@ -9,13 +9,14 @@ Prerequisites
 
 * Working install of FusionPBX
 * Customer Domains in the format of subdomain.example.com
-* Create an App at https://cloud.sessiontalk.co.uk/
-* Use "Username, Password & Subdomain" for the Login Fields
-* Provider Name Noted
-* domain name set to "example.com" where "subdomain.example.com" is the customer domain.
-* Each domain will need SRV records to specify the SIP port or you should set the port in the domain name like "example.com:5070", the API does not set the SIP Port for the app.
-* External Provisioning URL: https://mydomain.com/app/sessiontalk/provision.php
-* Set everything else up according to your need/wants
+* Create an App at https://cloud.sessiontalk.co.uk/ and apply the following settings. The rest of the settings are to your preference/requirements
+* In Provisioning, Use "Username, Password & Subdomain" for the Login Fields
+* Domain set to example.com where your customers are "subdomain.example.com"
+* Set the Incoming Calls mode to "Push" for most use cases.
+* Select your Region (I have had problems with the Auto Region setting)
+* Under the Additional tab, enable "Use Subdomains"
+* Under Misc, Enable Provisioning and set the External Provisioning URL: https://mydomain.com/app/sessiontalk/provision.php
+* Optional if using a port other than 5060: You can set the port in the domain name field like "example.com:5070", or use SRV records for more flexibility. Each full customer domain will need SRV records to specify the SIP port or the API does not set the SIP Port for the app during provisioning. Remember that SRV records don't support wildcard, so even if you are using *.example.com for your DNS, you need to use the full _sip._tcp.customer.example.com for an individual SRV record per customer.
 
 
 Install Steps
@@ -83,21 +84,6 @@ Permissions
 
 * Administrators that you want to give access to QR Codes for any extension on the domain.
 
-Cloud Configuration
-^^^^^^^^^^^^^^^^^^^^^
-Sign in to your https://cloud.sessiontalk.co.uk account and update various settings on your app.
-
-* Provisioning:
-* Set Login Fields to "Username, Passowrd, and Subdomain"
-* Set the domain to "example.com" where "customer1.example.com" is the customer sudomains format.
-* Set the Incoming Calls mode to "Push" for most use cases.
-* Select your Region (I have had problems with the Auto Region setting)
-* Still under Provision go to the Misc tab and enable "Use Subdomains"
-* Additional:
-* Enable "External Provisioning" and set the URL to https://example.com/app/sessiontalk/provision.php (I use provision.example.com as the domain here so my *.example.com wildcard certificate is valid)
-
-All other settings can be set to your preference. Their cloud service makes a request the provision.php file with the details that are in the QR code, and provision.php returns the SIP credentials for the mobile app to use. An additional note about the app, we cannot pass the SIP Port number to the mobile app in this way. If you are using a port other than 5060, you must either use SRV records independently created for each customer subdomain (SRV doesn't work with wildcards), configure a SIP Proxy address that has the SRV records configured for it, or set the domain to include the port like "example.com:5070" on the main page in provisioning.
-
 
 Usage
 ^^^^^^^^^^^^^^^^
@@ -105,7 +91,9 @@ Navigate to Applications>Sessiontalk and select the extension you wish to activa
 
 The app generates a single activation QR Code for the selected extension. The QR Code is good for a single activation of the SessionCloud or the White Label version of the app. Re-Using the same QR before it expires will automatically de-activate any app that may already have been activated with this QR Code.
 
-Install the SessionCloud (or your company's rebranded version) app and scan the QR Code from the app login screen.
+If enabled, it also generates a Windows Softphone Link that uses the same key as the visible QR code, so if you use the Windows softphone link to activate the Windows App, the QR code is considered "used". To activate a mobile app and a softphone, you will need to make sure that the sessiontalk_max_activations is not limited to 1, and that you refresh the page before activating the second device.
+
+Install the SessionCloud (or your company's whitelabel version) app and scan the QR Code from the app login screen.
 
 The Apps>Devices page is used to track the activated devices. You can de-activate or edit a device's line settings including adding additional lines that will show up as additional accounts the next time the mobile device updates.
 
