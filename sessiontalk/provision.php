@@ -170,7 +170,7 @@
 	$deviceid_device_uuid = $database->select($sql,$parameters,'column');
 	unset($sql,$parameters);
 
-	$max_activations = $_SESSION['provision']['sessiontalk_max_activations']['numeric'] ?: 1;
+	$max_activations = $_SESSION['provision']['sessiontalk_max_activations']['numeric'];
 	$srtp = $_SESSION['provision']['sessiontalk_srtp']['text'] ?: "Disabled";
 
 	if ($password_device_uuid == $deviceid_device_uuid && is_uuid($deviceid_device_uuid) && !$reprovision ) {
@@ -299,7 +299,7 @@
 				}
 
 
-				if ($max_activations > $activations OR $max_activations == 0) {
+				if ($max_activations > $activations || $max_activations == 0) {
 					// Create Device with device_settings sessiontalk_pass, sessiontalk_deviceid, extension_uuid
 					$device_uuid = uuid();
 					$password_device_uuid = $device_uuid;
