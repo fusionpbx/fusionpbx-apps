@@ -93,7 +93,23 @@
 	$apps[$x]['default_settings'][$y]['default_setting_enabled'] = "true";
 	$apps[$x]['default_settings'][$y]['default_setting_description'] = "Rotation Period of keys. must be greater than the qr expiration period";
 	$y++;
-	
+	$apps[$x]['default_settings'][$y]['default_setting_uuid'] = "1af0c0f9-f19d-4f93-ad75-a5a5100d29c8";
+	$apps[$x]['default_settings'][$y]['default_setting_category'] = "provision";
+	$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = "sessiontalk_windows_softphone";
+	$apps[$x]['default_settings'][$y]['default_setting_name'] = "boolean";
+	$apps[$x]['default_settings'][$y]['default_setting_value'] = "true";
+	$apps[$x]['default_settings'][$y]['default_setting_enabled'] = "true";
+	$apps[$x]['default_settings'][$y]['default_setting_description'] = "Enable generating the Link to activate the Windows Softphone";
+	$y++;
+	$apps[$x]['default_settings'][$y]['default_setting_uuid'] = "8e38ad32-b124-4793-92a5-7f09478dfa51";
+	$apps[$x]['default_settings'][$y]['default_setting_category'] = "provision";
+	$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = "sessiontalk_windows_softphone_url";
+	$apps[$x]['default_settings'][$y]['default_setting_name'] = "text";
+	$apps[$x]['default_settings'][$y]['default_setting_value'] = "https://windows-softphone.s3.eu-west-2.amazonaws.com/sessioncloud.appxbundle";
+	$apps[$x]['default_settings'][$y]['default_setting_enabled'] = "true";
+	$apps[$x]['default_settings'][$y]['default_setting_description'] = "URL for the windows softphone app. Default is the generic, update if you need to use a whitelabel app.";
+	$y++;
+
 // schema details
 	$y = 0; //table array index
 	$z = 0; //field array index

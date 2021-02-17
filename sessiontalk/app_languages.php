@@ -21,8 +21,8 @@ $text['title-sessiontalk']['ru-ru'] = "";
 $text['title-sessiontalk']['sv-se'] = "";
 $text['title-sessiontalk']['uk-ua'] = "";
 
-$text['title_description-sessiontalk']['en-us'] = "Sessiontalk is a soft phone for smart phones or tablets. It can be configured easily with a QR code provided here. To use it download and install Sessioncloud for your device. Start the application and then press on the QR Code Symbol and then select the extension and scan the QR code.";
-$text['title_description-sessiontalk']['en-gb'] = "Sessiontalk is a soft phone for smart phones or tablets. It can be configured easily with a QR code provided here. To use it download and install Sessioncloud for your device. Start the application and then press on the QR Code Symbol and then select the extension and scan the QR code.";
+$text['title_description-sessiontalk']['en-us'] = "Sessiontalk is a soft phone for smart phones or tablets or Windows 10. It can be configured easily with a QR code provided here. To use it download and install Sessioncloud for your device. Start the application and then press on the QR Code Symbol and then select the extension and scan the QR code.";
+$text['title_description-sessiontalk']['en-gb'] = "Sessiontalk is a soft phone for smart phones or tablets or Windows 10. It can be configured easily with a QR code provided here. To use it download and install Sessioncloud for your device. Start the application and then press on the QR Code Symbol and then select the extension and scan the QR code.";
 $text['title_description-sessiontalk']['ar-eg'] = "";
 $text['title_description-sessiontalk']['de-at'] = "";
 $text['title_description-sessiontalk']['de-ch'] = "";
@@ -83,6 +83,27 @@ $text['device-description-sessiontalk']['ro-ro'] = "";
 $text['device-description-sessiontalk']['ru-ru'] = "";
 $text['device-description-sessiontalk']['sv-se'] = "";
 $text['device-description-sessiontalk']['uk-ua'] = "";
+
+$text['label-windows-softphone']['en-us'] = "Windows Softphone Link";
+$text['label-windows-softphone']['en-gb'] = "Windows Softphone Link";
+$text['label-windows-softphone']['ar-eg'] = "";
+$text['label-windows-softphone']['de-at'] = "";
+$text['label-windows-softphone']['de-ch'] = "";
+$text['label-windows-softphone']['de-de'] = "";
+$text['label-windows-softphone']['es-cl'] = "";
+$text['label-windows-softphone']['es-mx'] = "";
+$text['label-windows-softphone']['fr-ca'] = "";
+$text['label-windows-softphone']['fr-fr'] = "";
+$text['label-windows-softphone']['he-il'] = "";
+$text['label-windows-softphone']['it-it'] = "";
+$text['label-windows-softphone']['nl-nl'] = "";
+$text['label-windows-softphone']['pl-pl'] = "";
+$text['label-windows-softphone']['pt-br'] = "";
+$text['label-windows-softphone']['pt-pt'] = "";
+$text['label-windows-softphone']['ro-ro'] = "";
+$text['label-windows-softphone']['ru-ru'] = "";
+$text['label-windows-softphone']['sv-se'] = "";
+$text['label-windows-softphone']['uk-ua'] = "";
 
 
 ?>

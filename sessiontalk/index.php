@@ -201,6 +201,10 @@
 
 	echo $text['title_description-sessiontalk']."\n";
 	echo "<br /><br />\n";
+	echo "<div style='text-align: center; white-space: nowrap;'>";
+
+
+	echo "<br /><br />\n";
 	//echo "QR Content:".$qr_content."<br>\n  ";  //enable for debugging
 	echo "<div style='text-align: center; white-space: nowrap; margin: 10px 0 40px 0;'>";
 	echo $text['label-extension']."<br />\n";
@@ -239,6 +243,13 @@
 		catch (Exception $error) {
 			echo $error;
 		}
+	}
+
+//Activation Link for Windows Softphone
+	if ($_SESSION['provision']['sessiontalk_windows_softphone']['boolean'] && is_uuid($extension_uuid)) {
+		echo "<br /><div style='text-align: center; white-space: nowrap;'>";
+		echo "<a href=\"ms-appinstaller:?source=".$_SESSION['provision']['sessiontalk_windows_softphone_url']['text']."&activationUri=scsc:?username=".$qr['username'].":".$qr['providerid'].'%26password='.$qr['password']."\"/>".$text['label-windows-softphone']."</a><br />";
+		echo "</div>\n";
 	}
 
 //html image
