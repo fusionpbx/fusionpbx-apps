@@ -4,6 +4,7 @@ TO DO
 * Security: Get provisioning IP Addresses from Sessiontalk. They send all provision requests from their cloud platform instead of directly from the phones. Limit the PHP code to only accept requests from those IP addresses, stored in a default setting for easy updates.
 * Enhancement: Store App Store Links in Default Settings to support White Label Apps.
 * Enhancement: Prevent QR Code generation if the max_activations is already met for a device.
+* Enhancement: Friendlier button for the Windows App Store Link. 
 * Enhancement: Add Email QR Code button and app_config or app_defaults code to inject a template for the QR Code into the Email Templates table.
 * Enhancement: Add language support for API error messages. We can get the language from the domain in the username.
 * Enhancement: Add button "Invalidate All Active QR Codes" to clear the stored keys
@@ -34,5 +35,8 @@ TO DO
 
 
 
+Windows App Provisioning Documenation: https://www.sessiontalk.co.uk/help-articles/external-provisioning-with-your-windows-softphone
 
+ * Extra Bonus Note: ms-appinstaller only supports a single key/value pair, but the instructions say to add username=user&password=pass. You must use the "%26" substitution for & to trick the appinstaller feature.
+ 
 Sessiontalk API Documentation: https://www.sessiontalk.co.uk/help-articles/using-qr-codes-with-your-provisioning-server
