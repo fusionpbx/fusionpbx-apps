@@ -30,7 +30,10 @@ On your server
   git clone https://github.com/fusionpbx/fusionpbx-apps
   Move the directory 'sessiontalk' into your main FusionPBX directory
   mv fusionpbx-apps/sessiontalk /var/www/fusionpbx/app
-  chown -R www-data:www-data /var/www/fusionpbx/app/sessiontalk
+  cd /var/www/fusionpbx/resources/templates/provision/
+  mkdir sessiontalk sessiontalk/windows sessiontalk/android sessiontalk/ios
+  chown -R www-data:www-data /var/www/fusionpbx/app/sessiontalk /var/www/fusionpbx/resources/templates/provision/sessiontalk
+
 
 ::
 
@@ -44,59 +47,62 @@ On your server
 
 Settings
 ^^^^^^^^^^^^^^^
- 
-::
 
- Mandatory: 
- Set your Sessiontalk provider ID in Default Settings
- Advanced -> Default Settings
- Provision -> sessiontalk_provider_id
- Leave this field blank or disabled for White Label apps.
+Set up your default settings in Advanced>Default Settings or per domain in the domain settings.
 
-::
-
-Optional: 
-
-::
-
- sessiontalk_max_activations - How many apps can be activated per extension. It counts activations as the number of device lines assigned to any device with the vendor "sessiontalk"
- sessiontalk_qr_expiration - set how long a generated QR code is valid for activating an app in seconds.
- sessiontalk_transport - only set if you want to force all SessionTalk apps to use this instead of the device line setting
-
-* set how long a generated QR code is valid for activating an app in seconds.
-
-::
++-------------------+----------+--------------------------------------------------------------------------------+
+|      Setting      | Default  |                                   Description                                  |
++===================+==========+================================================================================+
+| provider_id       |          | Sessioncloud Provider ID (Blank for white label)                               |
++-------------------+----------+--------------------------------------------------------------------------------+
+| max_activations   | 1        | Maximum apps per extension                                                     |
+|                   |          | counted by assigned lines                                                      |
++-------------------+----------+--------------------------------------------------------------------------------+
+| qr_expiration     | 172800   | How long a QR code is valid in seconds. Default is 3 days.                     |
++-------------------+----------+--------------------------------------------------------------------------------+
+| transport         | UDP      | Default transport for newly activated devices.                                 |
+|                   |          | Can be changed by editing the device after activation.                         |
++-------------------+----------+--------------------------------------------------------------------------------+
+| key_rotation      | 2492000  | Encryption key rotation - 1 month.                                             |
+|                   |          | Only change if you need QR Codes longer than 1 month, this is the upper bound. |
++-------------------+----------+--------------------------------------------------------------------------------+
+| windows_softphone | true     | Enable the windows software installation link                                  |
++-------------------+----------+--------------------------------------------------------------------------------+
+| srtp              | Disabled | Whether or not to enable SRTP.                                                 |
++-------------------+----------+--------------------------------------------------------------------------------+
 
 
 Permissions
 ^^^^^^^^^^^^^^^^^
 
-::
-
- sessiontalk_view 
-
-
-* Users can access QR Codes for extensions they have assigned
-
-::
-
- sessiontalk_view_all 
-
-* Administrators that you want to give access to QR Codes for any extension on the domain.
++----------------------+------------------+----------------------------------------------------------------------+
+|      Permission      |  Default Groups  |                             Descriptions                             |
++======================+==================+======================================================================+
+| sessiontalk_view     | user             | User can generate QR codes for extensions they are assigned to only. |
++----------------------+------------------+----------------------------------------------------------------------+
+| sessiontalk_view_all | superadmin,admin | User can generate QR codes for any extension in a domain.            |
++----------------------+------------------+----------------------------------------------------------------------+::
 
 
 Usage
 ^^^^^^^^^^^^^^^^
 Navigate to Applications>Sessiontalk and select the extension you wish to activate.
 
-The app generates a single activation QR Code for the selected extension. The QR Code is good for a single activation of the SessionCloud or the White Label version of the app. Re-Using the same QR before it expires will automatically de-activate any app that may already have been activated with this QR Code.
+*Mobile App*
 
-If enabled, it also generates a Windows Softphone Link that uses the same key as the visible QR code, so if you use the Windows softphone link to activate the Windows App, the QR code is considered "used". To activate a mobile app and a softphone, you will need to make sure that the sessiontalk_max_activations is not limited to 1, and that you refresh the page before activating the second device.
+Install from the Apple or Google app store, then click the Scan QR button in the app (not your phone's QR scanner). Scan the QR code and the app will automatically activate. Each QR is good for one activation. If you activate the wrong device, you can "move" the activation by scanning the QR code on the new device and it will deactivate the original device. Once the QR code has expired (default 3 days from creation) it is locked to that device.
 
-Install the SessionCloud (or your company's whitelabel version) app and scan the QR Code from the app login screen.
+*Windows App*
 
-The Apps>Devices page is used to track the activated devices. You can de-activate or edit a device's line settings including adding additional lines that will show up as additional accounts the next time the mobile device updates.
+If enabled, there is a Windows Softphone link that you can click that will automatically install the app and activate it. You must uninstall any existing version of the app including previously activated installations. If you activate the wrong device, you can "move" the activation by clicking the same link on the new device and it will deactivate the original device. Once the link has expired (default 3 days from creation) it is locked to that device.
 
+*Admins*
+
+* You can see activated apps by going to Accounts>Devices and searching for "Sessiontalk". An activated app auto creates a device. The template name tells you the type of app that was activated windows/android/ios. 
+* To deactivate a user's app, simply delete the device.
+* To add multiple accounts to a user's app, you can add extensions to the device the same way you would for a desk phone and have the user close and open the app to update.
+* If you disable the device, the app will fail to update settings if they change, but it won't deactivate.
+* Troubleshooting tip: If you want the user's account/accounts to be "Recreated" on the app, delete the value for the json_md5 setting on the device's page for that app. Next update will force accounts to "Recreate"
 
 Activation Rules
 ^^^^^^^^^^^^^^^^^
@@ -107,3 +113,16 @@ Activation Rules
 * Existing App with Previously Used QR Code: If this pair of apps and QR codes were used together in the past, it will activate as normal. If these 2 are both present but weren't used together, it will delete both devices and create a new one.
 * Deleted Devices will De-Activate themselves, but if the end user still has a valid QR code they can re-activate until the QR has expired.
 * Disabled Devices will not de-activate the app, but it will prevent any settings changes to the mobile app until device is re-enabled, including line password updates.
+
+
+BONUS
+^^^^^^
+If you want to be able to point the sessiontalk cloud external provisioning URL to be the same as the phones (https://pbx.example.com/app/provision) you can put this at the beginning of the app/provision/index.php file (After the opening comment block). I figured this out when I accidentally put the wrong URL in my cloud config for sessiontalk and didn't want to wait until they approved the correction to be able to test.
+
+::
+
+ // Use the sessiontalk app if it exists and the URL args match
+ if (strlen($_REQUEST['deviceId']) > 0 && file_exists('/var/www/fusionpbx/app/sessiontalk')) {
+ 	 require_once "/var/www/fusionpbx/app/sessiontalk/provision.php";
+	 exit;
+ }

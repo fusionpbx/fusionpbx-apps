@@ -31,7 +31,6 @@ TO DO
    * Reprovision Device Deleted
    * Reprovision Valid QR New DeviceID
    * New Device Used Valid QR
-* Lament the fact that half of my concerns about security will be assuaged simply by limiting the API to Sessiontalk's provisioning IP addresses. If they update it in the future to come directly from the app all this security might be nice to have.
 
 
 

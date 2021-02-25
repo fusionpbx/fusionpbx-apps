@@ -89,94 +89,10 @@
 			}
 		}
 
-
-
-		
-
-		//get the username
-		$username = $field['extension'];
-		if (isset($field['number_alias']) && strlen($field['number_alias']) > 0) {
-			$username = $field['number_alias'];
-		}
-
-		//Get the variables
-		$key_rotation = $_SESSION['provision']['sessiontalk_key_rotation']['numeric'];
-		$qr['username'] = $username."@".$_SESSION['domain_name'];
-		$qr['expiration'] = date("U") + $_SESSION['provision']['sessiontalk_qr_expiration']['numeric'];
-		$qr['providerid'] = $_SESSION['provision']['sessiontalk_provider_id']['text'];
-		if (isset($qr['providerid']) && strlen($qr['providerid'] > 0)) {
-			$qr['providerid'] = ":".$qr['providerid'];
-		}
-
-		//Fetch the active keys for this domain
-		$sql = "SELECT * FROM v_sessiontalk_keys ";
-		$sql .= "WHERE domain_uuid = :domain_uuid ";
-		$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
-		$database = new database;
-		$key = $database->select($sql,$parameters,'row');
-		unset($sql,$parameters);
-
-
-		// check if there is a key
-		if(!$key) {
-			$key['sessiontalk_key_uuid'] = uuid();
-			$key['domain_uuid'] = $_SESSION['domain_uuid'];
-			$key['key1'] = generate_password(32,3);
-			$key['expiration_date'] = date("U") + $key_rotation;
-			$key_updated = true;
-
-		}
-		//check if it is time to rotate the key
-		elseif($key['expiration_date'] < $qr['expiration']) {
-			$key['key2'] = $key['key1'];
-			$key['key1'] = generate_password(32,3);
-			$key['expiration_date'] = date("U") + $key_rotation;
-			$key_updated = true;
-		}
-
-		// save the new key if modified or created
-		if($key_updated) {
-
-			$array['sessiontalk_keys'][0] = $key;
-
-			$p = new permissions;
-			$p->add('sessiontalk_key_add', 'temp');
-			$p->add('sessiontalk_key_edit', 'temp');
-
-			//save the data
-			$database = new database;
-			$database->app_name = 'sessiontalk';
-			$database->app_uuid = '85774108-716c-46cb-a34b-ce80b212bc82';
-			$database->save($array);
-			unset($array);
-
-		}
-
-
-
-
-
-		//generate the stateless self-expiring password
-		$plaintext = $qr['username']."@".$qr['expiration'];
-
-		//Configure openssl
-		$cipher = "AES-128-CBC";
-		$iv_length = openssl_cipher_iv_length($cipher);
-
-		$iv = random_bytes($iv_length); 
-		$password = openssl_encrypt($plaintext, $cipher, $key['key1'], $options = 0, $iv);
-		$qr['password']  = base64_url_encode($iv.$password);
-
-		// $password_decoded = base64_url_decode($qr['password']);
-		// $iv_decoded = substr($password_decoded, 0, 16);
-		// $password_split = substr($password_decoded, 16);
-		// $original_plaintext = openssl_decrypt($password_split, $cipher, $key['key1'], $options = 0, $iv_decoded);
-
-
-		$qr_content = "scsc:".$qr['username'].":". $qr['password'];
-		if (strlen($qr['providerid']) > 0) {
-			$qr_content .= ":".$qr['providerid'];
-		} 
+		$app_details = new sessiontalk;
+		$app_details->settings = $_SESSION['sessiontalk'];
+		$app_details->set_extension($field, $_SESSION['domain_uuid'], $_SESSION['domain_name']);
+        $credentials = $app_details->get_credentials();
 
 	}
 
@@ -205,7 +121,7 @@
 
 
 	echo "<br /><br />\n";
-	//echo "QR Content:".$qr_content."<br>\n  ";  //enable for debugging
+	//echo "QR Content:".$credentials['mobile']."<br />\n  ";  //enable for debugging
 	echo "<div style='text-align: center; white-space: nowrap; margin: 10px 0 40px 0;'>";
 	echo $text['label-extension']."<br />\n";
 	echo "<select name='id' class='formfld' onchange='this.form.submit();'>\n";
@@ -219,44 +135,22 @@
 	echo "</select>\n";
 
 	echo "</form>\n";
-	echo "<br>\n";
+	echo "<br />\n";
 
-
-//stream the file
-	if (is_uuid($extension_uuid)) {
-		$qr_content = html_entity_decode( $qr_content, ENT_QUOTES, 'UTF-8' );
-		
-		require_once 'resources/qr_code/QRErrorCorrectLevel.php';
-		require_once 'resources/qr_code/QRCode.php';
-		require_once 'resources/qr_code/QRCodeImage.php';
-  
-		try {
-			$code = new QRCode (- 1, QRErrorCorrectLevel::H);
-			$code->addData($qr_content);
-			$code->make();
-			
-			$img = new QRCodeImage ($code, $width=420, $height=420, $quality=50);
-			$img->draw();
-			$image = $img->getImage();
-			$img->finish();
-		}
-		catch (Exception $error) {
-			echo $error;
-		}
-	}
 
 //Activation Link for Windows Softphone
-	if ($_SESSION['provision']['sessiontalk_windows_softphone']['boolean'] && is_uuid($extension_uuid)) {
+	if ($_SESSION['sessiontalk']['windows_softphone']['boolean'] && is_uuid($extension_uuid)) {
 		echo "<br /><div style='text-align: center; white-space: nowrap;'>";
-		echo "<a href=\"ms-appinstaller:?source=".$_SESSION['provision']['sessiontalk_windows_softphone_url']['text']."&activationUri=scsc:?username=".$qr['username'].":".$qr['providerid'].'%26password='.$qr['password']."\"/>".$text['label-windows-softphone']."</a><br />";
+		echo "<a href=\"".$credentials['windows']."\"/>".$text['label-windows-softphone']."</a><br />";
 		echo "</div>\n";
 	}
 
 //html image
 	if (is_uuid($extension_uuid)) {
-		echo "<img src=\"data:image/jpeg;base64,".base64_encode($image)."\" style='margin-top: 30px; padding: 5px; background: white; max-width: 100%;'>\n";
+		echo "<img src=\"data:image/jpeg;base64,".base64_encode($credentials['qr_image'])."\" style='margin-top: 30px; padding: 5px; background: white; max-width: 100%;'/>\n";
 	}
 
+	echo "</div>\n";
 	echo "</div>\n";
 
 //add the footer

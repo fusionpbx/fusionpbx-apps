@@ -29,7 +29,6 @@
 	//includes
 	require_once "root.php";
 	require_once "resources/require.php";
-	require_once "resources/classes/device.php";
 	require_once "resources/functions/functions.php";
 
 	//logging
@@ -170,8 +169,8 @@
 	$deviceid_device_uuid = $database->select($sql,$parameters,'column');
 	unset($sql,$parameters);
 
-	$max_activations = $_SESSION['provision']['sessiontalk_max_activations']['numeric'];
-	$srtp = $_SESSION['provision']['sessiontalk_srtp']['text'] ?: "Disabled";
+	$max_activations = $_SESSION['sessiontalk']['max_activations']['numeric'];
+	$srtp = $_SESSION['sessiontalk']['srtp']['text'] ?: "Disabled";
 
 	if ($password_device_uuid == $deviceid_device_uuid && is_uuid($deviceid_device_uuid) && !$reprovision ) {
 		// Case: User scans same QR Code for same device id
@@ -195,10 +194,10 @@
 
 		$cipher = "AES-128-CBC";
 		//attempt decrypion with key1
-		$password_decrypted = openssl_decrypt($password_split, $cipher, $key['key1'], $options = 0, $iv);
+		$password_decrypted = openssl_decrypt($password_split, $cipher, $key['key1'], 0, $iv);
 		//attempt with key2 if failed key1
 		if (!$password_decrypted) {
-			$password_decrypted = openssl_decrypt($password_split, $cipher, $key['key2'], $options = 0, $iv);
+			$password_decrypted = openssl_decrypt($password_split, $cipher, $key['key2'], 0, $iv);
 		}
 		
 		if (!$password_decrypted) {
@@ -242,7 +241,7 @@
 
 				// Take Advantage of the device class from the devices app to delete the device. So much easier.
 				// I should write a Save function for that class.
-				$device = new st_device;
+				$device = new sessiontalk;
 				$records[0]['uuid'] = $deviceid_device_uuid;
 				$records[0]['checked'] = "true";
 				$device->delete($records);
@@ -271,7 +270,7 @@
 			elseif ($deviceid_device_uuid != $password_device_uuid) {
 				// Case: Mobile App De-Activated by empty provision, but re-activated with a newly generated QR Code
 				// delete both devices if they exist and are not the same (and QR isn't expired of course)
-				$device = new st_device;
+				$device = new sessiontalk;
 				$records[0]['uuid'] = $deviceid_device_uuid;
 				$records[0]['checked'] = "true";
 				$records[1]['uuid'] = $password_device_uuid;
@@ -318,10 +317,24 @@
 					// $array['devices'][0]['device_firmware_version'] = $device_firmware_version;
 					$array['devices'][0]['device_enabled'] = "true";
 					$array['devices'][0]['device_enabled_date'] = 'now()';
-					$array['devices'][0]['device_template'] = "sessiontalk";
+					if (preg_match('/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/', $device_id)) {
+						$array['devices'][0]['device_template'] = "sessiontalk/ios";
+					}
+					elseif (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $device_id)) {
+						$array['devices'][0]['device_template'] = "sessiontalk/windows";
+					}
+					else {
+						$array['devices'][0]['device_template'] = "sessiontalk/android";
+					}
+
 					// $array['devices'][0]['device_profile_uuid'] = is_uuid($device_profile_uuid) ? $device_profile_uuid : null;
 					$array['devices'][0]['device_description'] = $text['device-description-sessiontalk'].$extension['extension'] ?: "Sessiontalk Mobile App ".$extension['extension'];
 					$y = 0;
+
+					$transport = $_SESSION['sessiontalk']['transport']['text'];
+					if (!isset($transport) || strlen($transport) == 0) {
+						$transport = $_SESSION['provision']['line_sip_transport'];
+					}
 
 					//create the device line. we only create one during provision, reprovisions will read manually added lines.
 					$device_line_uuid = uuid();
@@ -336,7 +349,7 @@
 					$array['devices'][0]['device_lines'][$y]['password'] = $extension['password'];
 					$array['devices'][0]['device_lines'][$y]['enabled'] = "true";
 					$array['devices'][0]['device_lines'][$y]['sip_port'] = $_SESSION['provision']['line_sip_port']['numeric'];
-					$array['devices'][0]['device_lines'][$y]['sip_transport'] =  $_SESSION['provision']['sessiontalk_transport']['text'] ?: strtoupper($_SESSION['provision']['line_sip_transport']);
+					$array['devices'][0]['device_lines'][$y]['sip_transport'] = $transport;
 					$array['devices'][0]['device_lines'][$y]['register_expires'] = $_SESSION['provision']['line_register_expires']['numeric'];
 					$array['devices'][0]['device_settings'][$y]['device_uuid'] = $device_uuid;
 					$array['devices'][0]['device_settings'][$y]['domain_uuid'] = $domain_uuid;
@@ -410,7 +423,7 @@
 				$account_array['sippassword'] = $line['password'];
 				$account_array['subdomain'] = $line_sub ?: $sub_domain;
 				$account_array['authusername'] = $line['user_id'];
-				$account_array['transport'] = $line['sip_transport'] ?: $transport;
+				$account_array['transport'] = strtoupper($line['sip_transport']);
 				$account_array['srtp'] = $srtp;
 				$account_array['messaging'] = "Disabled";
 				$account_array['video'] = "Disabled";
