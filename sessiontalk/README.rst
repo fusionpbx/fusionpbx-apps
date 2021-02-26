@@ -50,53 +50,53 @@ Settings
 
 Set up your default settings in Advanced>Default Settings or per domain in the domain settings.
 
-+-------------------+----------+--------------------------------------------------------------------------------+
-|      Setting      | Default  |                                   Description                                  |
-+===================+==========+================================================================================+
-| provider_id       |          | Sessioncloud Provider ID (Blank for white label)                               |
-+-------------------+----------+--------------------------------------------------------------------------------+
-| max_activations   | 1        | Maximum apps per extension                                                     |
-|                   |          | counted by assigned lines                                                      |
-+-------------------+----------+--------------------------------------------------------------------------------+
-| qr_expiration     | 172800   | How long a QR code is valid in seconds. Default is 3 days.                     |
-+-------------------+----------+--------------------------------------------------------------------------------+
-| transport         | UDP      | Default transport for newly activated devices.                                 |
-|                   |          | Can be changed by editing the device after activation.                         |
-+-------------------+----------+--------------------------------------------------------------------------------+
-| key_rotation      | 2492000  | Encryption key rotation - 1 month.                                             |
-|                   |          | Only change if you need QR Codes longer than 1 month, this is the upper bound. |
-+-------------------+----------+--------------------------------------------------------------------------------+
-| windows_softphone | true     | Enable the windows software installation link                                  |
-+-------------------+----------+--------------------------------------------------------------------------------+
-| srtp              | Disabled | Whether or not to enable SRTP.                                                 |
-+-------------------+----------+--------------------------------------------------------------------------------+
-
++-------------------+----------+-------------------------------------------------------------------------------------------------------+
+|      Setting      | Default  |                                              Description                                              |
++===================+==========+=======================================================================================================+
+| provider_id       |          | Sessioncloud Provider ID (Blank for white label)                                                      |
++-------------------+----------+-------------------------------------------------------------------------------------------------------+
+| max_activations   | 1        | Maximum apps per extension counted by assigned lines                                                  |
++-------------------+----------+-------------------------------------------------------------------------------------------------------+
+| qr_expiration     | 172800   | How long a QR code is valid in seconds. Default is 3 days.                                            |
++-------------------+----------+-------------------------------------------------------------------------------------------------------+
+| transport         | udp      | Default transport for newly activated devices. Can be changed by editing the device after activation. |
++-------------------+----------+-------------------------------------------------------------------------------------------------------+
+| key_rotation      | 2492000  | Encryption key rotation - 1 month.                                                                    |
+|                   |          | Only change if you need QR Codes longer than 1 month, this is the upper bound of the qr_expiration.   |
++-------------------+----------+-------------------------------------------------------------------------------------------------------+
+| windows_softphone | true     | Enable the windows software installation link                                                         |
++-------------------+----------+-------------------------------------------------------------------------------------------------------+
+| srtp              | Disabled | Enabled or Disabled for srtp support                                                                  |
++-------------------+----------+-------------------------------------------------------------------------------------------------------+
+| video             | Disabled | Enabled or Disabled for video calling support                                                         |
++-------------------+----------+-------------------------------------------------------------------------------------------------------+
+| callrecording     | Disabled | Enabled or Disabled to allow users to record calls in the app                                         |
++-------------------+----------+-------------------------------------------------------------------------------------------------------+
 
 Permissions
 ^^^^^^^^^^^^^^^^^
 
-+----------------------+------------------+----------------------------------------------------------------------+
-|      Permission      |  Default Groups  |                             Descriptions                             |
-+======================+==================+======================================================================+
-| sessiontalk_view     | user             | User can generate QR codes for extensions they are assigned to only. |
-+----------------------+------------------+----------------------------------------------------------------------+
-| sessiontalk_view_all | superadmin,admin | User can generate QR codes for any extension in a domain.            |
-+----------------------+------------------+----------------------------------------------------------------------+::
-
++----------------------+------------------+----------------------------------------------------------------------------------+
+|      Permission      |  Default Groups  |                                   Descriptions                                   |
++======================+==================+==================================================================================+
+| sessiontalk_view     | user             | User can generate QR codes only for extensions where their user is assigned      |
++----------------------+------------------+----------------------------------------------------------------------------------+
+| sessiontalk_view_all | superadmin,admin | Admin's can generate QR codes for any extension in a domain.                     |
++----------------------+------------------+----------------------------------------------------------------------------------+
 
 Usage
 ^^^^^^^^^^^^^^^^
 Navigate to Applications>Sessiontalk and select the extension you wish to activate.
 
-*Mobile App*
+**Mobile App**
 
 Install from the Apple or Google app store, then click the Scan QR button in the app (not your phone's QR scanner). Scan the QR code and the app will automatically activate. Each QR is good for one activation. If you activate the wrong device, you can "move" the activation by scanning the QR code on the new device and it will deactivate the original device. Once the QR code has expired (default 3 days from creation) it is locked to that device.
 
-*Windows App*
+**Windows App**
 
 If enabled, there is a Windows Softphone link that you can click that will automatically install the app and activate it. You must uninstall any existing version of the app including previously activated installations. If you activate the wrong device, you can "move" the activation by clicking the same link on the new device and it will deactivate the original device. Once the link has expired (default 3 days from creation) it is locked to that device.
 
-*Admins*
+**Admins**
 
 * You can see activated apps by going to Accounts>Devices and searching for "Sessiontalk". An activated app auto creates a device. The template name tells you the type of app that was activated windows/android/ios. 
 * To deactivate a user's app, simply delete the device.

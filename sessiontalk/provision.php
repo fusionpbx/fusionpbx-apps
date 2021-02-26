@@ -171,6 +171,9 @@
 
 	$max_activations = $_SESSION['sessiontalk']['max_activations']['numeric'];
 	$srtp = $_SESSION['sessiontalk']['srtp']['text'] ?: "Disabled";
+	$callrecording = $_SESSION['sessiontalk']['callrecording']['text'] ?: "Disabled";
+	$video = $_SESSION['sessiontalk']['video']['text'] ?: "Disabled";
+	$messaging = $_SESSION['sessiontalk']['messaging']['text'] ?: "Disabled";
 
 	if ($password_device_uuid == $deviceid_device_uuid && is_uuid($deviceid_device_uuid) && !$reprovision ) {
 		// Case: User scans same QR Code for same device id
@@ -425,9 +428,9 @@
 				$account_array['authusername'] = $line['user_id'];
 				$account_array['transport'] = strtoupper($line['sip_transport']);
 				$account_array['srtp'] = $srtp;
-				$account_array['messaging'] = "Disabled";
-				$account_array['video'] = "Disabled";
-				$account_array['callrecording'] = "Disabled";
+				$account_array['messaging'] = $messaging;
+				$account_array['video'] = $video;
+				$account_array['callrecording'] = $callrecording;
 				$settings['sipaccounts'][$i++] = $account_array;
 				unset($line_domain,$line_sub);
 			}

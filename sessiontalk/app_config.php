@@ -38,6 +38,7 @@
 	$y++;
 	$apps[$x]['permissions'][$y]['name'] = "sessiontalk_view_all";
 	$apps[$x]['permissions'][$y]['groups'][] = "superadmin";
+	$apps[$x]['permissions'][$y]['groups'][] = "admin";
 	$y++;
 
 
@@ -57,7 +58,7 @@
 	$apps[$x]['default_settings'][$y]['default_setting_category'] = "sessiontalk";
 	$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = "transport";
 	$apps[$x]['default_settings'][$y]['default_setting_name'] = "text";
-	$apps[$x]['default_settings'][$y]['default_setting_value'] = "UDP";
+	$apps[$x]['default_settings'][$y]['default_setting_value'] = "udp";
 	$apps[$x]['default_settings'][$y]['default_setting_enabled'] = "false";
 	$apps[$x]['default_settings'][$y]['default_setting_description'] = "Sessiontalk Transport. Enable to set default Transport type for Sessiontalk devices.";
 	$y++;
@@ -68,6 +69,30 @@
 	$apps[$x]['default_settings'][$y]['default_setting_value'] = "Disabled";
 	$apps[$x]['default_settings'][$y]['default_setting_enabled'] = "true";
 	$apps[$x]['default_settings'][$y]['default_setting_description'] = "Sessiontalk SRTP";
+	$y++;
+	$apps[$x]['default_settings'][$y]['default_setting_uuid'] = "6e9fcc70-d55c-4e73-b331-d4ddad20de69";
+	$apps[$x]['default_settings'][$y]['default_setting_category'] = "sessiontalk";
+	$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = "video";
+	$apps[$x]['default_settings'][$y]['default_setting_name'] = "text";
+	$apps[$x]['default_settings'][$y]['default_setting_value'] = "Disabled";
+	$apps[$x]['default_settings'][$y]['default_setting_enabled'] = "true";
+	$apps[$x]['default_settings'][$y]['default_setting_description'] = "Sessiontalk Video Support";
+	$y++;
+	$apps[$x]['default_settings'][$y]['default_setting_uuid'] = "4a221416-630c-40f4-967e-85a51d0eb13b";
+	$apps[$x]['default_settings'][$y]['default_setting_category'] = "sessiontalk";
+	$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = "messaging";
+	$apps[$x]['default_settings'][$y]['default_setting_name'] = "text";
+	$apps[$x]['default_settings'][$y]['default_setting_value'] = "Disabled";
+	$apps[$x]['default_settings'][$y]['default_setting_enabled'] = "true";
+	$apps[$x]['default_settings'][$y]['default_setting_description'] = "Sessiontalk SMS over SIP SIMPLE";
+	$y++;
+	$apps[$x]['default_settings'][$y]['default_setting_uuid'] = "b45b17c9-f1b6-45cf-8996-51ea668d3e9d";
+	$apps[$x]['default_settings'][$y]['default_setting_category'] = "sessiontalk";
+	$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = "callrecording";
+	$apps[$x]['default_settings'][$y]['default_setting_name'] = "text";
+	$apps[$x]['default_settings'][$y]['default_setting_value'] = "Disabled";
+	$apps[$x]['default_settings'][$y]['default_setting_enabled'] = "true";
+	$apps[$x]['default_settings'][$y]['default_setting_description'] = "Sessiontalk in app call recording";
 	$y++;
 	$apps[$x]['default_settings'][$y]['default_setting_uuid'] = "1104ce84-a9fa-4b65-8376-c9990b40a41c";
 	$apps[$x]['default_settings'][$y]['default_setting_category'] = "sessiontalk";
