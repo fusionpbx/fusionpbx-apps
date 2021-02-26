@@ -34,9 +34,6 @@
 	//logging
 	openlog("FusionPBX", LOG_PID | LOG_PERROR, LOG_LOCAL0);
 
-	$language = new text;
-	$text = $language->get();
-
 	//Read REQUEST
 	$reprovision = $_REQUEST['reprovision'] == "true" ? true : false;
 	$password = $_REQUEST['password'];
@@ -309,7 +306,7 @@
 					//prepare the array
 					$array['devices'][0]['domain_uuid'] = $domain_uuid;
 					$array['devices'][0]['device_uuid'] = $device_uuid;
-					$array['devices'][0]['device_mac_address'] = substr("000000000000".$password_part[0], -12);
+					$array['devices'][0]['device_mac_address'] = sessiontalk::generate_mac();
 					//$array['devices'][0]['device_provisioned_ip'] = $device_provisioned_ip;
 					$array['devices'][0]['device_label'] = $extension['extension'];
 					// $array['devices'][0]['device_user_uuid'] = $device_user_uuid;
@@ -331,7 +328,7 @@
 					}
 
 					// $array['devices'][0]['device_profile_uuid'] = is_uuid($device_profile_uuid) ? $device_profile_uuid : null;
-					$array['devices'][0]['device_description'] = $text['device-description-sessiontalk'].$extension['extension'] ?: "Sessiontalk Mobile App ".$extension['extension'];
+					$array['devices'][0]['device_description'] = $extension['description'] ?: $extension['extension']." Mobile App";
 					$y = 0;
 
 					$transport = $_SESSION['sessiontalk']['transport']['text'];

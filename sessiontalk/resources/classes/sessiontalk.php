@@ -226,6 +226,17 @@ include "root.php";
 			return $activations;
 		}
 
+		public static function generate_mac() {
+			$mac = '2222';
+			$chars = '';
+			$chars .= "0123456789";
+			$chars .= "abcdef";
+			for ($i = 0; $i < 8; $i++) {
+				$mac .= $chars[random_int(0, strlen($chars)-1)];
+			}
+			return $mac;
+		}
+
 		public static function get_vendor($mac) {
 			// use the mac address to find the vendor
 			$mac = preg_replace('#[^a-fA-F0-9./]#', '', $mac);

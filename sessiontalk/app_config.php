@@ -132,9 +132,25 @@
 	$apps[$x]['default_settings'][$y]['default_setting_name'] = "text";
 	$apps[$x]['default_settings'][$y]['default_setting_value'] = "https://windows-softphone.s3.eu-west-2.amazonaws.com/sessioncloud.appxbundle";
 	$apps[$x]['default_settings'][$y]['default_setting_enabled'] = "true";
-	$apps[$x]['default_settings'][$y]['default_setting_description'] = "URL for the windows softphone app. Default is the generic, update if you need to use a whitelabel app.";
+	$apps[$x]['default_settings'][$y]['default_setting_description'] = "URL for the Windows softphone app. Default is the generic, update if you have a whitelabel app";
 	$y++;
-
+	$apps[$x]['default_settings'][$y]['default_setting_uuid'] = "3c3af619-2e7f-47bf-b37b-5b842150ea18";
+	$apps[$x]['default_settings'][$y]['default_setting_category'] = "sessiontalk";
+	$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = "android_url";
+	$apps[$x]['default_settings'][$y]['default_setting_name'] = "text";
+	$apps[$x]['default_settings'][$y]['default_setting_value'] = "https://play.google.com/store/apps/details?id=co.froute.sessioncloud";
+	$apps[$x]['default_settings'][$y]['default_setting_enabled'] = "true";
+	$apps[$x]['default_settings'][$y]['default_setting_description'] = "URL for the Android softphone app. Default is the generic, update if you have a whitelabel app";
+	$y++;
+	$apps[$x]['default_settings'][$y]['default_setting_uuid'] = "ccc31e3b-1384-4e2b-bee0-e69aea7e0c8e";
+	$apps[$x]['default_settings'][$y]['default_setting_category'] = "sessiontalk";
+	$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = "apple_url";
+	$apps[$x]['default_settings'][$y]['default_setting_name'] = "text";
+	$apps[$x]['default_settings'][$y]['default_setting_value'] = "https://apps.apple.com/us/app/sessioncloud-sip-softphone/id1065327562";
+	$apps[$x]['default_settings'][$y]['default_setting_enabled'] = "true";
+	$apps[$x]['default_settings'][$y]['default_setting_description'] = "URL for the Apple softphone app. Default is the generic, update if you have a whitelabel app";
+	$y++;
+	
 // schema details
 	$y = 0; //table array index
 	$z = 0; //field array index

@@ -109,8 +109,8 @@
 	echo "<div class='action_bar' id='action_bar'>\n";
 	echo "	<div class='heading'><b>".$text['title-sessiontalk']."</b></div>\n";
 	echo "	<div class='actions'>\n";
-	echo "		<a href='https://play.google.com/store/apps/details?id=co.froute.sessioncloud' target='_blank'><img src='/app/sessiontalk/resources/images/google_play.png' style='width: auto; height: 30px;' /></a>";
-	echo "		<a href='https://apps.apple.com/us/app/sessioncloud-sip-softphone/id1065327562' target='_blank'><img src='/app/sessiontalk/resources/images/apple_app_store.png' style='width: auto; height: 30px;' /></a>";
+	echo "		<a href='".$_SESSION['sessiontalk']['android_url']['text']."' target='_blank'><img src='/app/sessiontalk/resources/images/google_play.png' style='width: auto; height: 30px;' /></a>";
+	echo "		<a href='".$_SESSION['sessiontalk']['apple_url']['text']."' target='_blank'><img src='/app/sessiontalk/resources/images/apple_app_store.png' style='width: auto; height: 30px;' /></a>";
 	echo "	</div>\n";
 	echo "	<div style='clear: both;'></div>\n";
 	echo "</div>\n";
@@ -140,8 +140,9 @@
 
 //Activation Link for Windows Softphone
 	if ($_SESSION['sessiontalk']['windows_softphone']['boolean'] && is_uuid($extension_uuid)) {
+		$windows_credentials = $app_details->get_credentials();
 		echo "<br /><div style='text-align: center; white-space: nowrap;'>";
-		echo "<a href=\"".$credentials['windows']."\"/>".$text['label-windows-softphone']."</a><br />";
+		echo "<a href=\"".$windows_credentials['windows']."\"/>".$text['label-windows-softphone']."</a><br />";
 		echo "</div>\n";
 	}
 
