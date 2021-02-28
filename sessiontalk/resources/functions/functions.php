@@ -1,5 +1,103 @@
 <?php
 
+function load_defaults($domain_name) {
+	//get the default settings
+	$sql = "select * from v_default_settings ";
+	$sql .= "where default_setting_enabled = 'true' ";
+	$sql .= "order by default_setting_order asc ";
+	$database = new database;
+	$result = $database->select($sql, null, 'all');
+	//unset the previous settings
+	if (is_array($result) && @sizeof($result) != 0) {
+		foreach ($result as $row) {
+			unset($_SESSION[$row['default_setting_category']]);
+		}
+		//set the settings as a session
+		foreach ($result as $row) {
+			$name = $row['default_setting_name'];
+			$category = $row['default_setting_category'];
+			$subcategory = $row['default_setting_subcategory'];
+			if (strlen($subcategory) == 0) {
+				if ($name == "array") {
+					$_SESSION[$category][] = $row['default_setting_value'];
+				}
+				else {
+					$_SESSION[$category][$name] = $row['default_setting_value'];
+				}
+			}
+			else {
+				if ($name == "array") {
+					$_SESSION[$category][$subcategory][] = $row['default_setting_value'];
+				}
+				else {
+					$_SESSION[$category][$subcategory]['uuid'] = $row['default_setting_uuid'];
+					$_SESSION[$category][$subcategory][$name] = $row['default_setting_value'];
+				}
+			}
+		}
+	}
+	unset($sql, $result, $row);
+
+	//get the domain UUID
+	$sql = "select domain_uuid from v_domains ";
+	$sql .= "where domain_name = :domain_name ";
+	$parameters['domain_name'] = $domain_name;
+	$database = new database;
+	$domain_uuid = $database->select($sql, $parameters, 'column');
+	unset($sql, $parameters);
+	$_SESSION['domain_uuid'] = $domain_uuid;
+	$_SESSION['domain_name'] = $domain_name;
+
+
+	//get the domain settings
+	if (is_uuid($domain_uuid)) {
+		$sql = "select * from v_domain_settings ";
+		$sql .= "where domain_uuid = :domain_uuid ";
+		$sql .= "and domain_setting_enabled = 'true' ";
+		$sql .= "order by domain_setting_order asc ";
+		$parameters['domain_uuid'] = $domain_uuid;
+		$database = new database;
+		$result = $database->select($sql, $parameters, 'all');
+		//unset the arrays that domains are overriding
+		if (is_array($result) && @sizeof($result) != 0) {
+			foreach ($result as $row) {
+				$name = $row['domain_setting_name'];
+				$category = $row['domain_setting_category'];
+				$subcategory = $row['domain_setting_subcategory'];
+				if ($name == "array") {
+					unset($_SESSION[$category][$subcategory]);
+				}
+			}
+			//set the settings as a session
+			foreach ($result as $row) {
+				$name = $row['domain_setting_name'];
+				$category = $row['domain_setting_category'];
+				$subcategory = $row['domain_setting_subcategory'];
+				if (strlen($subcategory) == 0) {
+					//$$category[$name] = $row['domain_setting_value'];
+					if ($name == "array") {
+						$_SESSION[$category][] = $row['domain_setting_value'];
+					}
+					else {
+						$_SESSION[$category][$name] = $row['domain_setting_value'];
+					}
+				}
+				else {
+					//$$category[$subcategory][$name] = $row['domain_setting_value'];
+					if ($name == "array") {
+						$_SESSION[$category][$subcategory][] = $row['domain_setting_value'];
+					}
+					else {
+						$_SESSION[$category][$subcategory][$name] = $row['domain_setting_value'];
+					}
+				}
+			}
+		}
+		unset($sql, $result, $parameters);
+	}
+	return $domain_uuid;
+}
+
 function base64_url_encode($input) {
 	return strtr(base64_encode($input), '+/=', '._-');
 }

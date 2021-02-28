@@ -50,28 +50,34 @@ Settings
 
 Set up your default settings in Advanced>Default Settings or per domain in the domain settings.
 
-+-------------------+----------+-------------------------------------------------------------------------------------------------------+
-|      Setting      | Default  |                                              Description                                              |
-+===================+==========+=======================================================================================================+
-| provider_id       |          | Sessioncloud Provider ID (Blank for white label)                                                      |
-+-------------------+----------+-------------------------------------------------------------------------------------------------------+
-| max_activations   | 1        | Maximum apps per extension counted by assigned lines                                                  |
-+-------------------+----------+-------------------------------------------------------------------------------------------------------+
-| qr_expiration     | 172800   | How long a QR code is valid in seconds. Default is 3 days.                                            |
-+-------------------+----------+-------------------------------------------------------------------------------------------------------+
-| transport         | udp      | Default transport for newly activated devices. Can be changed by editing the device after activation. |
-+-------------------+----------+-------------------------------------------------------------------------------------------------------+
-| key_rotation      | 2492000  | Encryption key rotation - 1 month.                                                                    |
-|                   |          | Only change if you need QR Codes longer than 1 month, this is the upper bound of the qr_expiration.   |
-+-------------------+----------+-------------------------------------------------------------------------------------------------------+
-| windows_softphone | true     | Enable the windows software installation link                                                         |
-+-------------------+----------+-------------------------------------------------------------------------------------------------------+
-| srtp              | Disabled | Enabled or Disabled for srtp support                                                                  |
-+-------------------+----------+-------------------------------------------------------------------------------------------------------+
-| video             | Disabled | Enabled or Disabled for video calling support                                                         |
-+-------------------+----------+-------------------------------------------------------------------------------------------------------+
-| callrecording     | Disabled | Enabled or Disabled to allow users to record calls in the app                                         |
-+-------------------+----------+-------------------------------------------------------------------------------------------------------+
++---------------------------+--------------+-------------------------------------------------------------------------------------------------------+
+|      Setting              | Default      |                                              Description                                              |
++===========================+==============+=======================================================================================================+
+| provider_id               |              | Sessioncloud Provider ID (Blank for white label)                                                      |
++---------------------------+--------------+-------------------------------------------------------------------------------------------------------+
+| max_activations           | 1            | Maximum apps per extension counted by assigned lines                                                  |
++---------------------------+--------------+-------------------------------------------------------------------------------------------------------+
+| qr_expiration             | 172800       | How long a QR code is valid in seconds. Default is 3 days                                             |
++---------------------------+--------------+-------------------------------------------------------------------------------------------------------+
+| transport                 | udp          | Default transport for newly activated devices. Can be changed by editing the device after activation  |
++---------------------------+--------------+-------------------------------------------------------------------------------------------------------+
+| key_rotation              | 2492000      | Encryption key rotation - 1 month.                                                                    |
+|                           |              | Only change if you need QR Codes longer than 1 month, this is the upper bound of the qr_expiratio n   |
++---------------------------+--------------+-------------------------------------------------------------------------------------------------------+
+| windows_softphone         | true         | Enable the windows software installation link                                                         |
++---------------------------+--------------+-------------------------------------------------------------------------------------------------------+
+| windows_softphone_url     | [cdn]        | URL for the appxbundle file. Defaults to the Amazon CDN link for the generic app.                            |
++---------------------------+--------------+-------------------------------------------------------------------------------------------------------+
+| windows_softphone_version | 1.0.67.0     | Version number for the appxbundle in the url. Must match or you will get an error                     |
++---------------------------+--------------+-------------------------------------------------------------------------------------------------------+
+| windows_softphone_name    | sessioncloud | File name for the installer file. Typically not seen by users                                         |
++---------------------------+--------------+-------------------------------------------------------------------------------------------------------+
+| srtp                      | Disabled     | Enabled or Disabled for srtp support                                                                  |
++---------------------------+--------------+-------------------------------------------------------------------------------------------------------+
+| video                     | Disabled     | Enabled or Disabled for video calling support                                                         |
++---------------------------+--------------+-------------------------------------------------------------------------------------------------------+
+| callrecording             | Disabled     | Enabled or Disabled to allow users to record calls in the app                                         |
++---------------------------+--------------+-------------------------------------------------------------------------------------------------------+
 
 Permissions
 ^^^^^^^^^^^^^^^^^
@@ -81,7 +87,7 @@ Permissions
 +======================+==================+==================================================================================+
 | sessiontalk_view     | user             | User can generate QR codes only for extensions where their user is assigned      |
 +----------------------+------------------+----------------------------------------------------------------------------------+
-| sessiontalk_view_all | superadmin,admin | Admin's can generate QR codes for any extension in a domain.                     |
+| sessiontalk_view_all | superadmin,admin | Admin's can generate QR codes for any extension in a domain                      |
 +----------------------+------------------+----------------------------------------------------------------------------------+
 
 Usage

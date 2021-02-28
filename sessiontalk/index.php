@@ -25,6 +25,11 @@
 	KonradSC <konrd@yahoo.com>
 */
 
+if (strpos($_SERVER['REQUEST_URI'],'.appinstaller') !== false) {
+	require_once "appinstaller.php";
+	exit;
+}
+
 //includes
 	require_once "root.php";
 	require_once "resources/require.php";

@@ -43,109 +43,13 @@
 
 	//Read default/domain settimgs
 	if (strlen($device_id) > 0 && strlen($password) > 0) {
-
-		//get the default settings
-		$sql = "select * from v_default_settings ";
-		$sql .= "where default_setting_enabled = 'true' ";
-		$sql .= "order by default_setting_order asc ";
-		$database = new database;
-		$result = $database->select($sql, null, 'all');
-		//unset the previous settings
-		if (is_array($result) && @sizeof($result) != 0) {
-			foreach ($result as $row) {
-				unset($_SESSION[$row['default_setting_category']]);
-			}
-			//set the settings as a session
-			foreach ($result as $row) {
-				$name = $row['default_setting_name'];
-				$category = $row['default_setting_category'];
-				$subcategory = $row['default_setting_subcategory'];
-				if (strlen($subcategory) == 0) {
-					if ($name == "array") {
-						$_SESSION[$category][] = $row['default_setting_value'];
-					}
-					else {
-						$_SESSION[$category][$name] = $row['default_setting_value'];
-					}
-				}
-				else {
-					if ($name == "array") {
-						$_SESSION[$category][$subcategory][] = $row['default_setting_value'];
-					}
-					else {
-						$_SESSION[$category][$subcategory]['uuid'] = $row['default_setting_uuid'];
-						$_SESSION[$category][$subcategory][$name] = $row['default_setting_value'];
-					}
-				}
-			}
-		}
-		unset($sql, $result, $row);
-
-		//get the domain UUID
-		$sql = "select domain_uuid from v_domains ";
-		$sql .= "where domain_name = :domain_name ";
-		$parameters['domain_name'] = $domain_name;
-		$database = new database;
-		$domain_uuid = $database->select($sql, $parameters, 'column');
-		unset($sql, $parameters);
-		$_SESSION['domain_uuid'] = $domain_uuid;
-		$_SESSION['domain_name'] = $domain_name;
-
-
-		//get the domain settings
-		if (is_uuid($domain_uuid)) {
-			$sql = "select * from v_domain_settings ";
-			$sql .= "where domain_uuid = :domain_uuid ";
-			$sql .= "and domain_setting_enabled = 'true' ";
-			$sql .= "order by domain_setting_order asc ";
-			$parameters['domain_uuid'] = $domain_uuid;
-			$database = new database;
-			$result = $database->select($sql, $parameters, 'all');
-			//unset the arrays that domains are overriding
-			if (is_array($result) && @sizeof($result) != 0) {
-				foreach ($result as $row) {
-					$name = $row['domain_setting_name'];
-					$category = $row['domain_setting_category'];
-					$subcategory = $row['domain_setting_subcategory'];
-					if ($name == "array") {
-						unset($_SESSION[$category][$subcategory]);
-					}
-				}
-				//set the settings as a session
-				foreach ($result as $row) {
-					$name = $row['domain_setting_name'];
-					$category = $row['domain_setting_category'];
-					$subcategory = $row['domain_setting_subcategory'];
-					if (strlen($subcategory) == 0) {
-						//$$category[$name] = $row['domain_setting_value'];
-						if ($name == "array") {
-							$_SESSION[$category][] = $row['domain_setting_value'];
-						}
-						else {
-							$_SESSION[$category][$name] = $row['domain_setting_value'];
-						}
-					}
-					else {
-						//$$category[$subcategory][$name] = $row['domain_setting_value'];
-						if ($name == "array") {
-							$_SESSION[$category][$subcategory][] = $row['domain_setting_value'];
-						}
-						else {
-							$_SESSION[$category][$subcategory][$name] = $row['domain_setting_value'];
-						}
-					}
-				}
-			}
-			unset($sql, $result, $parameters);
-		}
-
+		$domain_uuid = load_defaults($domain_name);
 	}
 	else {
 		header("HTTP/1.0 400 Bad Request");
 		$settings['errmsg'] = "Bad Request";
 		send_json($settings, true);
 	}
-
 
 
 	//check if password is used
@@ -199,13 +103,13 @@
 		if (!$password_decrypted) {
 			$password_decrypted = openssl_decrypt($password_split, $cipher, $key['key2'], 0, $iv);
 		}
-		
+
 		if (!$password_decrypted) {
 			$settings['errmsg'] = "Expired Key - Decryption Failure";
 			send_json($settings, true);
 		}
 
-		
+
 		$password_part = explode('@', $password_decrypted);
 		$expiration = $password_part[2];
 
@@ -218,7 +122,7 @@
 		$database = new database;
 		$extension = $database->select($sql,$parameters,'row');
 		unset($sql,$parameters);
-	
+
 		if ($expiration > date("U")) {
 
 			$activate_new = true;
@@ -250,7 +154,7 @@
 			}
 			elseif (!$deviceid_device_uuid && $password_device_uuid) {
 
-				// Case: User re-scans existing QR Code during the validity period with new deviceid. 
+				// Case: User re-scans existing QR Code during the validity period with new deviceid.
 				// deviceid doesn't exist but key still does.
 				// Action: Delete existing device
 				$sql = "UPDATE v_device_settings ";
@@ -396,6 +300,9 @@
 
 	}
 
+	// echo $password_device_uuid ." ".$deviceid_device_uuid;
+	// exit;
+
 	// get device lines for associated device
 	if ($password_device_uuid == $deviceid_device_uuid && is_uuid($deviceid_device_uuid)) {
 		$sql = "SELECT l.user_id, l.password, l.sip_transport, d.device_uuid, l.display_name, l.server_address, d.device_enabled ";
@@ -408,7 +315,7 @@
 		$database = new database;
 		$lines = $database->select($sql, $parameters, 'all');
 		unset($sql, $parameters);
-	
+
 		//loop through the lines
 
 		if (is_array($lines) && count($lines) != 0) {

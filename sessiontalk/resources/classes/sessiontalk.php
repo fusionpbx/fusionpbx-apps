@@ -33,7 +33,7 @@ include "root.php";
 		public $device_uuid;
 		public $device_vendor_uuid;
 		public $device_profile_uuid;
-		public $extension;  
+		public $extension;
 		public $settings;
 		public $template_dir;
 
@@ -73,7 +73,7 @@ include "root.php";
 			if (is_array($extension_details)) {
 				$this->extension = $extension_details;
 				$this->domain_uuid = $domain_uuid;
-			} 
+			}
 			else {
 
 				$sql = "SELECT e.extension_uuid, e.extension, e.description, e.number_alias ";
@@ -83,7 +83,7 @@ include "root.php";
 				if (preg_match('/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i', $extension_details)) {
 					$sql .= "AND e.extension_uuid = :extension_uuid ";
 					$parameters['extension_uuid'] = $extension_details;
-				} 
+				}
 				else {
 					$sql .= "AND e.extension = :extension ";
 					$parameters['extension'] = $extension_details;
@@ -172,7 +172,10 @@ include "root.php";
 				$this->credentials['mobile'] .= ":" . $this->credentials['providerid'];
 			}
 			$this->credentials['windows'] = "ms-appinstaller:?source=";
-			$this->credentials['windows'] .= $this->settings['windows_softphone_url']['text'];
+			$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+			$url = $protocol . $_SERVER['HTTP_HOST'] . "/app/sessiontalk/?".$_SESSION['sessiontalk']['windows_softphone_name']['text'].".appinstaller";
+			$this->credentials['windows'] .= $url;
+			//$this->credentials['windows'] .= $this->settings['windows_softphone_url']['text'];
 			$this->credentials['windows'] .= "&activationUri=scsc:?username=";
 			$this->credentials['windows'] .= $this->credentials['username'];
 			if (strlen($this->credentials['providerid']) > 0) {
@@ -187,7 +190,7 @@ include "root.php";
 		public function render_qr() {
 			//stream the file
 			$qr_content = html_entity_decode( $this->credentials['mobile'], ENT_QUOTES, 'UTF-8' );
-			
+
 			require_once 'resources/qr_code/QRErrorCorrectLevel.php';
 			require_once 'resources/qr_code/QRCode.php';
 			require_once 'resources/qr_code/QRCodeImage.php';
@@ -196,7 +199,7 @@ include "root.php";
 				$code = new QRCode (- 1, QRErrorCorrectLevel::H);
 				$code->addData($qr_content);
 				$code->make();
-				
+
 				$img = new QRCodeImage ($code, 420, 420, 50);
 				$img->draw();
 				$image = $img->getImage();
