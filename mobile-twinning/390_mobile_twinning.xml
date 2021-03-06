@@ -1,5 +1,5 @@
 <context name="{v_context}">
-	<extension name="mobile-twinning" number="*662" continue="false" app_uuid="21152484-76fb-46ad-9035-ecbd3b5f908a" destination="true">
+	<extension name="mobile-twinning" number="*662" continue="false" app_uuid="21152484-76fb-46ad-9035-ecbd3b5f908a" destination="true" order="390">
 		<condition field="destination_number" expression="^\*662$">
 			<action application="answer" data=""/>
 			<action application="lua" data="app.lua mobile_twinning"/>
