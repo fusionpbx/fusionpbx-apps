@@ -170,8 +170,6 @@
 		echo "<img src=\"data:image/jpeg;base64,".base64_encode($image)."\" style='margin-top: 30px; padding: 5px; background: white; max-width: 100%;'>\n";
 	}
 
-	echo "</div>\n";
-
 //add the footer
 	require_once "resources/footer.php";
 
