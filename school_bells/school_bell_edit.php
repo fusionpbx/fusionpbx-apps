@@ -66,7 +66,7 @@
 		$school_bell_dow = (int)check_str($_POST["school_bell_dow"]);
 		$school_bell_timezone = check_str($_POST["school_bell_timezone"]);
 		$school_bell_enabled = check_str($_POST["school_bell_enabled"]);
-		$school_bell_description = check_str($_POST["school_bell_description"]);
+		$school_bell_description = $_POST["school_bell_description"];
 	
 			// Filter values:
 		if (strlen($school_bell_leg_a_type) == 0) {
@@ -189,7 +189,7 @@
 
 				unset($sql, $prep_statement, $insert_array);
 
-				messages::add($text['label-add-complete']);
+				message::add($text['label-add-complete']);
 				header("Location: school_bells.php");
 				return;
 			} //if ($action == "add")
@@ -214,7 +214,7 @@
 				$sql .= " WHERE domain_uuid = :domain_uuid";
 				$sql .= " AND school_bell_uuid = :school_bell_uuid";
 
-				$prep_statement = $db->prepare(check_sql($sql));
+				$prep_statement = $db->prepare($sql);
 
 				$prep_statement->bindValue('school_bell_name', $school_bell_name);
 				$prep_statement->bindValue('school_bell_leg_a_type', $school_bell_leg_a_type);
@@ -238,7 +238,7 @@
 				}
 				unset($sql, $prep_statement);
 
-				messages::add($text['label-update-complete']);
+				message::add($text['label-update-complete']);
 				header("Location: school_bells.php");
 				return;
 			} //if ($action == "update")
@@ -253,7 +253,7 @@
 		$sql .= " AND school_bell_uuid = :school_bell_uuid";
 		$sql .= " LIMIT 1";
 
-		$prep_statement = $db->prepare(check_sql($sql));
+		$prep_statement = $db->prepare($sql);
 
 		$prep_statement->bindValue('domain_uuid', $domain_uuid);
 		$prep_statement->bindValue('school_bell_uuid', $school_bell_uuid);
@@ -571,4 +571,5 @@
 
 //include the footer
 	require_once "resources/footer.php";
+
 ?>
