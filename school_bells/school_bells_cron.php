@@ -20,6 +20,9 @@
 		die('access denied');
 	}
 
+	//show debug
+	$debug = false;
+
 	set_time_limit(55); // Cannot run more than 55 seconds
 
 	$current_timestamp = time();
@@ -27,7 +30,7 @@
 	$current_minute = (int)date('i', $current_timestamp);
 
 	$sql = "SELECT v_domains.domain_name AS context,";
-	$sql .= " domain_uuid AS domain_uuid,";
+	$sql .= " v_school_bells.domain_uuid AS domain_uuid,";
 	$sql .= " school_bell_leg_a_data AS extension,";
 	$sql .= " school_bell_leg_b_type AS full_path,";
 	$sql .= " school_bell_ring_timeout AS ring_timeout,";
@@ -41,7 +44,18 @@
 	$sql .= "JOIN v_domains ON v_domains.domain_uuid = v_school_bells.domain_uuid ";
 	$sql .= " WHERE school_bell_min = :current_minute";
 	$sql .= " OR school_bell_min = -1";
-	
+	$parameters['current_minute'] = $current_minute;
+	$database = new database;
+	$school_bells = $database->select($sql, $parameters, 'all');
+	if ($debug) {
+		echo $sql."\n";
+		print_r($parameters);
+		print_r($school_bells);
+	}
+	unset($sql, $parameters);
+
+	/*
+	//used for fusionpbx 4.4
 	$prep_statement = $db->prepare(check_sql($sql));
 	if (!$prep_statement) {
 		die('SQL forming error');
@@ -53,8 +67,11 @@
 	}
 
 	$school_bells = $prep_statement->fetchAll(PDO::FETCH_NAMED);
+	*/
+	
 
 	if (count($school_bells) == 0) {
+		echo "no bells\n";
 		return;
 	}
 
@@ -74,28 +91,40 @@
 		$school_bell_hour = (int)$school_bell['hour'];
 		$current_hour = (int)date('G', $current_timestamp);
 
-		if ($school_bell_hour != -1 || $current_hour != $school_bell_hour) { // Hour is not matched
+		if ((int)$current_hour != (int)$school_bell_hour) { // Hour is not matched
+			if ($debug) {
+				echo "Hour is not matched current {$current_hour} != bell {$school_bell_hour}\n";
+			}
 			continue;
 		}
 
 		$school_bell_dom = (int)$school_bell['dom'];
 		$current_dom = (int)date('j', $current_timestamp);
 
-		if ($school_bell_dom != -1 || $current_dom != $school_bell_dom) { // Day of the month is not matched
+		if ($school_bell_dom != -1 && (int)$current_dom != (int)$school_bell_dom) { // Day of the month is not matched
+			if ($debug) {
+				echo "Day of the month is not matched {$current_dom}  bell {$school_bell_dom}\n";
+			}
 			continue;
 		}
 
 		$school_bell_mon = (int)$school_bell['mon'];
 		$current_mon = (int)date('n', $current_timestamp);
 
-		if ($school_bell_mon != -1 || $current_mon != $school_bell_mon) { // Month is not matched
+		if ($school_bell_mon != -1 && (int)$current_mon != (int)$school_bell_mon) { // Month is not matched
+			if ($debug) {
+				echo "Month is not matched current {$current_mon} != bell {$school_bell_mon}\n";
+			}
 			continue;
 		}
 
 		$school_bell_dow = (int)$school_bell['dow'];
 		$current_dow = (int)date('w', $current_timestamp);
 
-		if ($school_bell_dow != -1 || $current_dow != $school_bell_dow) { // Day of the week is not matched
+		if ($school_bell_dow != -1 && (int)$current_dow != (int)$school_bell_dow) { // Day of the week is not matched
+			if ($debug) {
+				echo "Day of the week is not matched current {$current_dow} != bell {$school_bell_dow}\n";
+			}
 			continue;
 		}
 
@@ -115,7 +144,9 @@
 		$switch_cmd .= "call_timeout=".$school_bell_ring_timeout."}";
 		$switch_cmd .= "loopback/".$school_bell['extension']."/".$school_bell['context'];
 		$switch_cmd .= " &playback(".$school_bell['full_path'].")";
-		
+		if ($debug) {
+			echo $switch_cmd."\n";
+		}
 		event_socket_request($freeswitch_event_socket, $switch_cmd);
 
 	}
