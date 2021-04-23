@@ -35,6 +35,6 @@ Set the permissions
 	
 Log into the FusionPBX webpage
 Advanced -> Upgrade
-Menu Defaults and Permission Defaults.
+Menu Defaults and Permission Defaults (and App Defaults, if you want to add the 390_mobile_twinning.xml to appear in Dialplan Manager).
 Log out and back in
 
