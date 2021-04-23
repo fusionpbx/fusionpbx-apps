@@ -244,7 +244,7 @@
 	else {
 		echo "    <option value='voicemail_option_9'>".$text['label-voicemail_option_9']."</option>\n";
 	}
-	if ($option_selected == "voicemail_option_*") {
+	if ($option_selected == "voicemail_option_star") {
 		echo "    <option value='voicemail_option_star' selected='selected'>".$text['label-voicemail_option_star']."</option>\n";
 	}
 	else {
@@ -255,7 +255,7 @@
 			echo "    <option value='voicemail_option_pound' selected='selected'>".$text['label-voicemail_option_pound']."</option>\n";
 		}
 		else {
-			echo "    <option value='voicemail_option_#'>".$text['label-voicemail_option_pound']."</option>\n";
+			echo "    <option value='voicemail_option_pound'>".$text['label-voicemail_option_pound']."</option>\n";
 		}
 	}
 	echo "    </select>\n";
