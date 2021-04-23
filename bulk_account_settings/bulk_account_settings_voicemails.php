@@ -243,7 +243,21 @@
 	}
 	else {
 		echo "    <option value='voicemail_option_9'>".$text['label-voicemail_option_9']."</option>\n";
-	}	
+	}
+	if ($option_selected == "voicemail_option_star") {
+		echo "    <option value='voicemail_option_star' selected='selected'>".$text['label-voicemail_option_star']."</option>\n";
+	}
+	else {
+		echo "    <option value='voicemail_option_star'>".$text['label-voicemail_option_star']."</option>\n";
+	}
+	if (permission_exists('bulk_account_settings_pound')) {
+		if ($option_selected == "voicemail_option_pound") {
+			echo "    <option value='voicemail_option_pound' selected='selected'>".$text['label-voicemail_option_pound']."</option>\n";
+		}
+		else {
+			echo "    <option value='voicemail_option_pound'>".$text['label-voicemail_option_pound']."</option>\n";
+		}
+	}
 	echo "    </select>\n";
 	echo "    </form>\n";
 	echo "<br />\n";
