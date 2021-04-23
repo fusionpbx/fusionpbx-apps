@@ -68,11 +68,6 @@
 		$sql .= "AND e.extension_uuid = eu.extension_uuid ";
 		$sql .= "AND eu.user_uuid = u.user_uuid ";
 		$sql .= "order by e.extension asc ";
-		
-//		$sql .= "where e.extension_uuid = eu.extension_uuid ";
-//		$sql .= "and e.domain_uuid = :domain_uuid ";
-//		$sql .= "and e.enabled = 'true' ";
-//		$sql .= "order by e.extension asc ";
 		$parameters['user_uuid'] = $_SESSION['user']['user_uuid'];
 	}
 	$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
@@ -125,7 +120,7 @@
 
 	echo $text['title_description-sessiontalk']."\n";
 	echo "<br /><br />\n";
-	//echo $qr_content;  //enable for debugging
+	//echo $qr_content; //debug 
 	echo "<div style='text-align: center; white-space: nowrap; margin: 10px 0 40px 0;'>";
 	echo $text['label-extension']."<br />\n";
 	echo "<select name='id' class='formfld' onchange='this.form.submit();'>\n";
@@ -137,20 +132,54 @@
 		}
 	}
 	echo "</select>\n";
-
+echo "</div>\n";
 	echo "</form>\n";
 	echo "<br>\n";
 
 
+
 //stream the file
 	if (is_uuid($extension_uuid)) {
-		$qr_content = html_entity_decode( $qr_content, ENT_QUOTES, 'UTF-8' );
 		
+		$html_link = "scsc:?username=". $username . "@" . $_SESSION['domain_name'] . ":". $_SESSION['provision']['sessiontalk_provider_id']['text']."%26password=".$field['api_key'];
+		$html_link = html_entity_decode( $html_link, ENT_QUOTES, 'UTF-8' );
+
+		//Windows 10
+		echo "<div class='action_bar' id='action_bar_2'>\n";
+		echo "	<div class='heading'><b>".$text['header-windows_10']."</b></div>\n";
+		echo "	<div style='clear: both;'></div>\n";
+		echo "</div>\n";	
+
+		echo "<div>\n";
+		echo " ".$text['description-step_1']."\n";
+		echo " <a href='ms-appinstaller:?source=https://windows-softphone.s3.eu-west-2.amazonaws.com/sessioncloud.appinstaller&activationUri=".$html_link."'>".$text['description-windows_10']."</a>\n";
+		echo " <br/>\n";
+		echo " <br/>\n";
+		echo " ".$text['description-step_2']."<a href='".PROJECT_PATH."/app/sessiontalk/sessiontalk_directory.php'>".$text['description-windows_10_directory']."</a>\n";
+		echo "</div>\n";
+		echo "<br>\n";
+		echo "<br>\n";
+
+		//Mobile
+		echo "<div class='action_bar' id='action_bar'>\n";
+		echo "	<div class='heading'><b>".$text['header-mobile']."</b></div>\n";
+		echo "	<div style='clear: both;'></div>\n";
+		echo "</div>\n";	
+
+		echo "<div>\n";
+		echo " ".$text['description-step_1_mobile']."\n";
+		echo " <br>\n";
+		echo " <br>\n";
+		echo " ".$text['description-step_2_mobile']."\n";
+		echo "</div>\n";
+
 		require_once 'resources/qr_code/QRErrorCorrectLevel.php';
 		require_once 'resources/qr_code/QRCode.php';
 		require_once 'resources/qr_code/QRCodeImage.php';
+		$qr_content = html_entity_decode( $qr_content, ENT_QUOTES, 'UTF-8' );
   
 		try {
+			
 			$code = new QRCode (- 1, QRErrorCorrectLevel::H);
 			$code->addData($qr_content);
 			$code->make();
