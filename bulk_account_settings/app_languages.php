@@ -468,19 +468,6 @@ $text['label-local']['de-at'] = "Local";
 $text['label-local']['it-it'] = "Local";
 $text['label-local']['ru-ru'] = "";
 
-$text['label-disabled']['en-us'] = "Disabled";
-$text['label-disabled']['es-cl'] = "Disabled";
-$text['label-disabled']['pt-pt'] = "Disabled";
-$text['label-disabled']['fr-fr'] = "Disabled";
-$text['label-disabled']['pt-br'] = "Disabled";
-$text['label-disabled']['pl'] = "Disabled";
-$text['label-disabled']['sv-se'] = "Disabled";
-$text['label-disabled']['uk'] = "Disabled";
-$text['label-disabled']['de-at'] = "Disabled";
-$text['label-disabled']['it-it'] = "Disabled";
-$text['label-disabled']['ru-ru'] = "";
-
-
 $text['label-user_record_none']['en-us'] = "Disabled";
 $text['label-user_record_none']['en-gb'] = "Disabled";
 $text['label-user_record_none']['ar-eg'] = "معطل";
@@ -882,6 +869,26 @@ $text['label-sip_bypass_media']['ru-ru'] = "SIP Bypass Media";
 $text['label-sip_bypass_media']['sv-se'] = "SIP Bypass Media";
 $text['label-sip_bypass_media']['uk-ua'] = "";
 
+$text['label-mwi_account']['en-us'] = "MWI Account";
+$text['label-mwi_account']['ar-eg'] = "MWI Account";
+$text['label-mwi_account']['de-at'] = "MWI Account";
+$text['label-mwi_account']['de-ch'] = "MWI Account";
+$text['label-mwi_account']['de-de'] = "MWI Account";
+$text['label-mwi_account']['es-cl'] = "MWI Account";
+$text['label-mwi_account']['es-mx'] = "MWI Account";
+$text['label-mwi_account']['fr-ca'] = "MWI Account";
+$text['label-mwi_account']['fr-fr'] = "MWI Account";
+$text['label-mwi_account']['he-il'] = "MWI Account";
+$text['label-mwi_account']['it-it'] = "MWI Account";
+$text['label-mwi_account']['nl-nl'] = "MWI Account";
+$text['label-mwi_account']['pl-pl'] = "MWI Account";
+$text['label-mwi_account']['pt-br'] = "MWI Account";
+$text['label-mwi_account']['pt-pt'] = "MWI Account";
+$text['label-mwi_account']['ro-ro'] = "MWI Account";
+$text['label-mwi_account']['ru-ru'] = "MWI Account";
+$text['label-mwi_account']['sv-se'] = "MWI Account";
+$text['label-mwi_account']['uk-ua'] = "MWI Account";
+
 $text['label-sip_force_expires']['en-us'] = "SIP Force Expires";
 $text['label-sip_force_expires']['es-cl'] = "SIP Force Expires";
 $text['label-sip_force_expires']['pt-pt'] = "SIP Force Expires";
@@ -1158,30 +1165,6 @@ $text['label-voicemail_option_9']['de-at'] = "Option 9";
 $text['label-voicemail_option_9']['it-it'] = "Option 9";
 $text['label-voicemail_option_9']['ru-ru'] = "Option 9";
 
-$text['label-voicemail_option_star']['en-us'] = "Option *";
-$text['label-voicemail_option_star']['es-cl'] = "Option *";
-$text['label-voicemail_option_star']['pt-pt'] = "Option *";
-$text['label-voicemail_option_star']['fr-fr'] = "Option *";
-$text['label-voicemail_option_star']['pt-br'] = "Option *";
-$text['label-voicemail_option_star']['pl'] = "Option *";
-$text['label-voicemail_option_star']['sv-se'] = "Option *";
-$text['label-voicemail_option_star']['uk'] = "Option *";
-$text['label-voicemail_option_star']['de-at'] = "Option *";
-$text['label-voicemail_option_star']['it-it'] = "Option *";
-$text['label-voicemail_option_star']['ru-ru'] = "Option *";
-
-$text['label-voicemail_option_pound']['en-us'] = "Option #";
-$text['label-voicemail_option_pound']['es-cl'] = "Option #";
-$text['label-voicemail_option_pound']['pt-pt'] = "Option #";
-$text['label-voicemail_option_pound']['fr-fr'] = "Option #";
-$text['label-voicemail_option_pound']['pt-br'] = "Option #";
-$text['label-voicemail_option_pound']['pl'] = "Option #";
-$text['label-voicemail_option_pound']['sv-se'] = "Option #";
-$text['label-voicemail_option_pound']['uk'] = "Option #";
-$text['label-voicemail_option_pound']['de-at'] = "Option #";
-$text['label-voicemail_option_pound']['it-it'] = "Option #";
-$text['label-voicemail_option_pound']['ru-ru'] = "Option #";
-
 $text['label-voicemail_enabled']['en-us'] = "Enabled";
 $text['label-voicemail_enabled']['es-cl'] = "Enabled";
 $text['label-voicemail_enabled']['pt-pt'] = "Enabled";
@@ -1325,6 +1308,7 @@ $text['option-proxy_media']['ro-ro'] = "";
 $text['option-proxy_media']['ru-ru'] = "Proxy Media";
 $text['option-proxy_media']['sv-se'] = "Proxy Media";
 $text['option-proxy_media']['uk-ua'] = "";
+
 
 $text['option-logged_out']['en-us'] = "Logged Out";
 $text['option-logged_out']['es-cl'] = "Logged Out";
