@@ -231,6 +231,12 @@
 		else {
 			echo "    <option value='sip_bypass_media'>".$text['label-sip_bypass_media']."</option>\n";
 		}
+		if ($option_selected == "mwi_account") {
+			echo "    <option value='mwi_account' selected='selected'>".$text['label-mwi_account']."</option>\n";
+		}
+		else {
+			echo "    <option value='mwi_account'>".$text['label-mwi_account']."</option>\n";
+		}
 		echo "    </select>\n";
 		echo "    </form>\n";
 		echo "<br />\n";
@@ -268,7 +274,7 @@
 		echo "<table width='auto' border='0' cellpadding='0' cellspacing='0'>\n";
 		echo "<tr>\n";
 		//options with a free form input
-		if($option_selected == 'accountcode' || $option_selected == 'call_group' || $option_selected == 'call_timeout' || $option_selected == 'emergency_caller_id_name' || $option_selected == 'emergency_caller_id_number' || $option_selected == 'limit_max' || $option_selected == 'outbound_caller_id_name' || $option_selected == 'outbound_caller_id_number' || $option_selected == 'toll_allow' || $option_selected == 'sip_force_expires') {
+		if($option_selected == 'accountcode' || $option_selected == 'call_group' || $option_selected == 'call_timeout' || $option_selected == 'emergency_caller_id_name' || $option_selected == 'emergency_caller_id_number' || $option_selected == 'limit_max' || $option_selected == 'outbound_caller_id_name' || $option_selected == 'outbound_caller_id_number' || $option_selected == 'toll_allow' || $option_selected == 'sip_force_expires' || $option_selected == 'mwi_account') {
 			echo "<td class='vtable' align='left'>\n";
 			echo "    <input class='formfld' type='text' name='new_setting' maxlength='255' value=\"$new_setting\">\n";
 			echo "<br />\n";
@@ -307,7 +313,6 @@
                         echo "    <option value=inbound'>".$text['label-inbound']."</option>\n";
                         echo "    <option value=outbound'>".$text['label-outbound']."</option>\n";
                         echo "    <option value=local'>".$text['label-local']."</option>\n";
-			echo "    <option value=disabled'>".$text['label-disabled']."</option>\n";
                         echo "    </select>\n";
                         echo "    <br />\n";
                         echo $text["description-".$option_selected.""]."\n";
