@@ -480,7 +480,6 @@ $text['label-disabled']['de-at'] = "Disabled";
 $text['label-disabled']['it-it'] = "Disabled";
 $text['label-disabled']['ru-ru'] = "";
 
-
 $text['label-user_record_none']['en-us'] = "Disabled";
 $text['label-user_record_none']['en-gb'] = "Disabled";
 $text['label-user_record_none']['ar-eg'] = "معطل";
@@ -881,6 +880,26 @@ $text['label-sip_bypass_media']['ro-ro'] = "";
 $text['label-sip_bypass_media']['ru-ru'] = "SIP Bypass Media";
 $text['label-sip_bypass_media']['sv-se'] = "SIP Bypass Media";
 $text['label-sip_bypass_media']['uk-ua'] = "";
+
+$text['label-mwi_account']['en-us'] = "MWI Account";
+$text['label-mwi_account']['ar-eg'] = "MWI Account";
+$text['label-mwi_account']['de-at'] = "MWI Account";
+$text['label-mwi_account']['de-ch'] = "MWI Account";
+$text['label-mwi_account']['de-de'] = "MWI Account";
+$text['label-mwi_account']['es-cl'] = "MWI Account";
+$text['label-mwi_account']['es-mx'] = "MWI Account";
+$text['label-mwi_account']['fr-ca'] = "MWI Account";
+$text['label-mwi_account']['fr-fr'] = "MWI Account";
+$text['label-mwi_account']['he-il'] = "MWI Account";
+$text['label-mwi_account']['it-it'] = "MWI Account";
+$text['label-mwi_account']['nl-nl'] = "MWI Account";
+$text['label-mwi_account']['pl-pl'] = "MWI Account";
+$text['label-mwi_account']['pt-br'] = "MWI Account";
+$text['label-mwi_account']['pt-pt'] = "MWI Account";
+$text['label-mwi_account']['ro-ro'] = "MWI Account";
+$text['label-mwi_account']['ru-ru'] = "MWI Account";
+$text['label-mwi_account']['sv-se'] = "MWI Account";
+$text['label-mwi_account']['uk-ua'] = "MWI Account";
 
 $text['label-sip_force_expires']['en-us'] = "SIP Force Expires";
 $text['label-sip_force_expires']['es-cl'] = "SIP Force Expires";
