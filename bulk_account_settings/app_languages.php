@@ -1165,6 +1165,30 @@ $text['label-voicemail_option_9']['de-at'] = "Option 9";
 $text['label-voicemail_option_9']['it-it'] = "Option 9";
 $text['label-voicemail_option_9']['ru-ru'] = "Option 9";
 
+$text['label-voicemail_option_star']['en-us'] = "Option *";
+$text['label-voicemail_option_star']['es-cl'] = "Option *";
+$text['label-voicemail_option_star']['pt-pt'] = "Option *";
+$text['label-voicemail_option_star']['fr-fr'] = "Option *";
+$text['label-voicemail_option_star']['pt-br'] = "Option *";
+$text['label-voicemail_option_star']['pl'] = "Option *";
+$text['label-voicemail_option_star']['sv-se'] = "Option *";
+$text['label-voicemail_option_star']['uk'] = "Option *";
+$text['label-voicemail_option_star']['de-at'] = "Option *";
+$text['label-voicemail_option_star']['it-it'] = "Option *";
+$text['label-voicemail_option_star']['ru-ru'] = "Option *";
+
+$text['label-voicemail_option_pound']['en-us'] = "Option #";
+$text['label-voicemail_option_pound']['es-cl'] = "Option #";
+$text['label-voicemail_option_pound']['pt-pt'] = "Option #";
+$text['label-voicemail_option_pound']['fr-fr'] = "Option #";
+$text['label-voicemail_option_pound']['pt-br'] = "Option #";
+$text['label-voicemail_option_pound']['pl'] = "Option #";
+$text['label-voicemail_option_pound']['sv-se'] = "Option #";
+$text['label-voicemail_option_pound']['uk'] = "Option #";
+$text['label-voicemail_option_pound']['de-at'] = "Option #";
+$text['label-voicemail_option_pound']['it-it'] = "Option #";
+$text['label-voicemail_option_pound']['ru-ru'] = "Option #";
+
 $text['label-voicemail_enabled']['en-us'] = "Enabled";
 $text['label-voicemail_enabled']['es-cl'] = "Enabled";
 $text['label-voicemail_enabled']['pt-pt'] = "Enabled";
