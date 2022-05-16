@@ -31,16 +31,19 @@
 
 */
 
-include "root.php";
-require_once "resources/require.php";
-require_once "resources/check_auth.php";
-if (permission_exists('sms_view')) {
-	//access granted
-}
-else {
-	echo "access denied";
-	exit;
-}
+//includes
+	include "root.php";
+	require_once "resources/require.php";
+	require_once "resources/check_auth.php";
+
+//check permissions
+	if (permission_exists('sms_view')) {
+		//access granted
+	}
+	else {
+		echo "access denied";
+		exit;
+	}
 
 //add multi-lingual support
 	$language = new text;
@@ -50,8 +53,55 @@ else {
 	require_once "resources/header.php";
 	require_once "resources/paging.php";
 
+//set variables
 	$rows_per_page = ($_SESSION['domain']['paging']['numeric'] != '') ? $_SESSION['domain']['paging']['numeric'] : 50;
-	$sql = "select domain_name, extension, sms_message_uuid,start_stamp,from_number,to_number,message,direction from v_sms_messages, v_domains, v_extensions where v_sms_messages.domain_uuid = v_domains.domain_uuid and v_sms_messages.extension_uuid = v_extensions.extension_uuid and v_domains.domain_uuid = :domain_uuid order by start_stamp DESC";
+	//$sql = "select domain_name, extension, sms_message_uuid,start_stamp,from_number,to_number,message,direction from v_sms_messages, v_domains, v_extensions where v_sms_messages.domain_uuid = v_domains.domain_uuid and v_sms_messages.extension_uuid = v_extensions.extension_uuid and v_domains.domain_uuid = :domain_uuid order by start_stamp DESC";
+	$num_rows = '0';
+	$param = "";
+
+//get the number of rows in the v_xml_cdr
+	$sql = "select count(*) as num_rows from  v_sms_messages, v_domains ";
+	$sql .= "WHERE v_domains.domain_uuid = v_sms_messages.domain_uuid and v_domains.domain_uuid = '" . $domain_uuid . "' ";
+	$prep_statement = $db->prepare(check_sql($sql));
+	if ($prep_statement) {
+		$prep_statement->execute();
+		$row = $prep_statement->fetch(PDO::FETCH_ASSOC);
+		if ($row['num_rows'] > 0) {
+			$num_rows = $row['num_rows'];
+		} else {
+			$num_rows = '0';
+		}
+	}
+	unset($prep_statement, $result);
+
+//set the default paging
+	if ($_SESSION['domain']['paging']['numeric'] != '' && $rows_per_page > $_SESSION['domain']['paging']['numeric']) {
+		$rows_per_page = $_SESSION['domain']['paging']['numeric'];
+	} else {
+		$rows_per_page = 50;
+	}
+
+//prepare to page the results
+	//$rows_per_page = ($_SESSION['domain']['paging']['numeric'] != '') ? $_SESSION['domain']['paging']['numeric'] : 50; //set on the page that includes this page
+	$page = $_GET['page'];
+	if (strlen($page) == 0) {
+	$page = 0;
+	$_GET['page'] = 0;
+	}
+	list($paging_controls_mini, $rows_per_page, $var_3) = paging($num_rows, $param, $rows_per_page, true); //top
+	list($paging_controls, $rows_per_page, $var_3) = paging($num_rows, $param, $rows_per_page); //bottom
+	$offset = $rows_per_page * $page;
+
+//get messages from the database
+	$sql = "SELECT domain_name, v_sms_messages.extension_uuid as extension, sms_message_uuid,start_stamp,from_number,to_number,message,direction ";
+	$sql .= "FROM v_sms_messages, v_domains ";
+	$sql .= "WHERE v_domains.domain_uuid = v_sms_messages.domain_uuid ";
+	$sql .= "and v_domains.domain_uuid = :domain_uuid order by start_stamp DESC ";
+	if ($rows_per_page == 0) {
+		$sql .= " limit " . $_SESSION['cdr']['limit']['numeric'] . " offset 0 ";
+	} else {
+		$sql .= " limit " . $rows_per_page . " offset " . $offset . " ";
+	}
 	error_log("SQL: " . print_r($sql,true));
 	$prep_statement = $db->prepare(check_sql($sql));
 	$prep_statement->execute(array(':domain_uuid' => $domain_uuid));
@@ -88,24 +138,33 @@ else {
 		echo "<tr>\n";
 
 		//determine if theme images exist
-			$theme_image_path = $_SERVER["DOCUMENT_ROOT"]."/themes/".$_SESSION['domain']['template']['name']."/images/";
-			$theme_cdr_images_exist = (
-				file_exists($theme_image_path."icon_cdr_inbound_answered.png") &&
-				file_exists($theme_image_path."icon_cdr_inbound_voicemail.png") &&
-				file_exists($theme_image_path."icon_cdr_inbound_cancelled.png") &&
-				file_exists($theme_image_path."icon_cdr_inbound_failed.png") &&
-				file_exists($theme_image_path."icon_cdr_outbound_answered.png") &&
-				file_exists($theme_image_path."icon_cdr_outbound_cancelled.png") &&
-				file_exists($theme_image_path."icon_cdr_outbound_failed.png") &&
-				file_exists($theme_image_path."icon_cdr_local_answered.png") &&
-				file_exists($theme_image_path."icon_cdr_local_voicemail.png") &&
-				file_exists($theme_image_path."icon_cdr_local_cancelled.png") &&
-				file_exists($theme_image_path."icon_cdr_local_failed.png")
-				) ? true : false;
+		$theme_image_path = $_SERVER["DOCUMENT_ROOT"]."/themes/".$_SESSION['domain']['template']['name']."/images/";
+		$theme_cdr_images_exist = (
+			file_exists($theme_image_path."icon_cdr_inbound_answered.png") &&
+			file_exists($theme_image_path."icon_cdr_inbound_voicemail.png") &&
+			file_exists($theme_image_path."icon_cdr_inbound_cancelled.png") &&
+			file_exists($theme_image_path."icon_cdr_inbound_failed.png") &&
+			file_exists($theme_image_path."icon_cdr_outbound_answered.png") &&
+			file_exists($theme_image_path."icon_cdr_outbound_cancelled.png") &&
+			file_exists($theme_image_path."icon_cdr_outbound_failed.png") &&
+			file_exists($theme_image_path."icon_cdr_local_answered.png") &&
+			file_exists($theme_image_path."icon_cdr_local_voicemail.png") &&
+			file_exists($theme_image_path."icon_cdr_local_cancelled.png") &&
+			file_exists($theme_image_path."icon_cdr_local_failed.png")
+			) ? true : false;
 
 		foreach($result as $index => $row) {
 
 			$tmp_start_epoch = ($_SESSION['domain']['time_format']['text'] == '12h') ? date("j M Y g:i:sa", $row['start_stamp']) : date("j M Y H:i:s", $row['start_epoch']);
+
+			$extension = " - ";
+			if(!empty($row['extension'])) {
+				$sql = "SELECT extension FROM v_extensions WHERE extension_uuid = :extension_uuid";
+				$prep_statement = $db->prepare(check_sql($sql));
+				$prep_statement->execute(array(':extension_uuid' => $row['extension']));
+				$result = $prep_statement->fetch(PDO::FETCH_ASSOC);
+				$extension = !empty($result['extension'])?$result['extension']:" - ";
+			}
 
 			//determine call result and appropriate icon
 			echo "<td valign='top' class='".$row_style[$c]."'>\n";
@@ -115,22 +174,18 @@ else {
 			}
 			else { echo "&nbsp;"; }
 			echo "</td>\n";
-		//domain name
+
+			//domain name
 			if ($_REQUEST['showall'] && permission_exists('xml_cdr_all')) {
 				echo "	<td valign='top' class='".$row_style[$c]."'>";
 				echo 	$row['domain_name'].'&nbsp;';
 				echo "	</td>\n";
 			}
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['extension']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['start_stamp']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['from_number']."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['to_number']."&nbsp;</td>\n";
-			$tmpmsg = urldecode($row['message']);
-			//$tmpmsg=htmlspecialcharacters($tmpmsg);
-			$tmpmsg = str_replace('>', '&gt;', $tmpmsg);
-			$tmpmsg = str_replace('<', '&lt;', $tmpmsg);
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$tmpmsg."&nbsp;</td>\n";
-			//echo "	<td valign='top' class='".$row_style[$c]."'>".$row['message']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($extension)."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['start_stamp'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['from_number'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['to_number'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape(urldecode($row['message']))."&nbsp;</td>\n";
 			echo "</tr>\n";
 			$c = ($c) ? 0 : 1;
 		} // end foreach
@@ -140,6 +195,12 @@ else {
 	echo "</table>\n";
 	echo "</form>\n";
 
+echo "<br><br>";
+if ($result_count == $rows_per_page) {
+	echo $paging_controls;
+}
+
+echo "<br><br>";
 //show the footer
 	require_once "resources/footer.php";
 ?>
