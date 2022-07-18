@@ -21,7 +21,7 @@
 	$apps[$x]['menu'][$y]['title']['sv-se'] = "";
 	$apps[$x]['menu'][$y]['title']['uk-ua'] = "";
 	$apps[$x]['menu'][$y]['uuid'] = "e98894cd-ec12-447b-812d-54163fc67ca9";
-	$apps[$x]['menu'][$y]['parent_uuid'] = "b08f5f87-8a66-4c29-b1e6-eb0c374d59e2";
+	$apps[$x]['menu'][$y]['parent_uuid'] = "fd29e39c-c936-f5fc-8e2b-611681b266b5";
 	$apps[$x]['menu'][$y]['category'] = "internal";
 	$apps[$x]['menu'][$y]['path'] = "/app/sessiontalk/index.php";
 	$apps[$x]['menu'][$y]['groups'][] = "superadmin";
