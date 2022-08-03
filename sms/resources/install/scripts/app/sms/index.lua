@@ -258,7 +258,7 @@
 		savebody = body;
 		--body = encodeString((body));
 		body = body:gsub('\n','\\n');
-
+		
 		if (debug["info"]) then
 			if (message ~= nil) then
 				freeswitch.consoleLog("info", message:serialize());
@@ -377,6 +377,7 @@
 		if (msgtype ~= nil and string.find(msgtype, "imdn") ~= nil) then mdn = true end;
 		if (not mdn) then 
 			-- No XML content, continue processing
+			body = body:gsub("'","'\\''"); -- Fixing Apostrophe for CURL
 			if (carrier == "flowroute") then
 				cmd = "curl -u ".. access_key ..":" .. secret_key .. " -H \"Content-Type: application/json\" -X POST -d '{\"to\":\"" .. to .. "\",\"from\":\"" .. outbound_caller_id_number .."\",\"body\":\"" .. body .. "\"}' " .. api_url;
 			elseif (carrier == "peerless") then	
