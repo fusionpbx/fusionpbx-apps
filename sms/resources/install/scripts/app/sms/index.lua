@@ -258,7 +258,7 @@
 		savebody = body;
 		--body = encodeString((body));
 		body = body:gsub('\n','\\n');
-		
+
 		if (debug["info"]) then
 			if (message ~= nil) then
 				freeswitch.consoleLog("info", message:serialize());
