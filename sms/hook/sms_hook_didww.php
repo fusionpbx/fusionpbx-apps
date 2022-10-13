@@ -1,12 +1,12 @@
 <?php
 
 //set the include path
-    $conf = glob("{/usr/local/etc,/etc}/fusionpbx/config.conf", GLOB_BRACE);
-    set_include_path(parse_ini_file($conf[0])['document.root']);
+$conf = glob("{/usr/local/etc,/etc}/fusionpbx/config.conf", GLOB_BRACE);
+set_include_path(parse_ini_file($conf[0])['document.root']);
 
 //includes files
-	require_once "resources/require.php";
-    require_once "../sms_hook_common.php";
+require_once "resources/require.php";
+require_once "../sms_hook_common.php";
 
 error_log(print_r($_POST,true));
 
