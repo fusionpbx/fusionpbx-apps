@@ -30,14 +30,17 @@
 	James Rose <james.o.rose@gmail.com>
 
 */
-include "root.php";
+//set the include path
+$conf = glob("{/usr/local/etc,/etc}/fusionpbx/config.conf", GLOB_BRACE);
+set_include_path(parse_ini_file($conf[0])['document.root']);
+
+//includes files
+require_once "resources/require.php";
 include "app/sms/sms_email.php";
 
 //luarun /var/www/html/app/sms/sms.lua TO FROM 'BODY'
 
 $debug = true;
-
-require_once "resources/require.php";
 
 function route_and_send_sms($from, $to, $body, $media = "") {
 	global $db, $debug, $domain_uuid, $domain_name, $mailsent;
@@ -197,4 +200,5 @@ function route_and_send_sms($from, $to, $body, $media = "") {
 				unset ($prep_statement);
 		}
 }
+
 ?>
