@@ -53,7 +53,8 @@ function route_and_send_sms($from, $to, $body, $media = "") {
 	}
 	else {
 			$mailsent = false;
-			$to = intval(preg_replace('/(^[1])/','', $to));
+			// $to = intval(preg_replace('/(^[1])/','', $to));
+			$to = intval(preg_replace('/^(\+?1)/','',$to));
 			$from = intval($from);
 			$body = preg_replace('([\'])', '\\\'', $body); // escape apostrophes
 			if ($debug) {
@@ -202,7 +203,7 @@ function route_and_send_sms($from, $to, $body, $media = "") {
 
 	// These are the class and functions that were in root.php and removed during change (#168). These are also needed for 
 	// the sms_hook_xxx.php functions
-	 
+
 	if (!class_exists('IP4Filter')) {
 		class IP4Filter {
 	
