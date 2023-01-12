@@ -15,6 +15,16 @@ if ($debug) {
 if (check_acl()) {
 	if  ($_SERVER['CONTENT_TYPE'] == 'application/json; charset=utf-8') {
 		$data = json_decode(file_get_contents("php://input"));
+		if (is_array($data)) {
+			$from = $data[0]->message->from;
+			$to = $data[0]->message->owner;
+			$text = $data[0]->message->text;
+		} else {
+			$from = $data->message->from;
+			$to = $data->message->owner;
+			$text = $data->message->text;
+		}
+
 		if ($debug) {
 			error_log('[SMS] REQUEST: ' .  print_r($data, true));
 		}
