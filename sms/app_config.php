@@ -145,7 +145,7 @@
 		$apps[$x]['default_settings'][$y]['default_setting_category'] = 'sms';
 		$apps[$x]['default_settings'][$y]['default_setting_subcategory'] = 'flowroute_api_url';
 		$apps[$x]['default_settings'][$y]['default_setting_name'] = 'text';
-		$apps[$x]['default_settings'][$y]['default_setting_value'] = 'https://api.flowroute.com/v2/messages';
+		$apps[$x]['default_settings'][$y]['default_setting_value'] = 'https://api.flowroute.com/v2.2/messages';
 		$apps[$x]['default_settings'][$y]['default_setting_enabled'] = 'false';
 		$apps[$x]['default_settings'][$y]['default_setting_description'] = '';
 		$y++;
