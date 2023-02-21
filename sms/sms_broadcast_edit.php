@@ -25,6 +25,8 @@
 	Luis Daniel Lucio Quiroz <dlucio@okay.com.mx>
 */
 
+include "root.php";
+
 //set the include path
 	$conf = glob("{/usr/local/etc,/etc}/fusionpbx/config.conf", GLOB_BRACE);
 	set_include_path(parse_ini_file($conf[0])['document.root']);
