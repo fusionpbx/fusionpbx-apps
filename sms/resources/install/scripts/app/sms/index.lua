@@ -423,6 +423,14 @@
 					outbound_caller_id_number = "1" .. outbound_caller_id_number;
 				end
 				cmd ="curl -X POST \"" .. api_url .."\" -H \"Content-Type: application/json\"  -H \"x-profile-secret: " .. secret_key .. "\" -d '{\"from\": \"+" .. outbound_caller_id_number .. "\", \"to\": \"+" .. to .. "\", \"body\": \"" .. body .. "\", \"delivery_status_webhook_url\": \"" .. delivery_status_webhook_url .. "\"}'";
+			elseif (carrier == "telnyx_v2") then
+				if to:len() < 11 then
+					to = "1" .. to;
+				end
+				if outbound_caller_id_number:len() < 11 then
+					outbound_caller_id_number = "1" .. outbound_caller_id_number;
+				end
+				cmd ="curl -X POST \"" .. api_url .."\" -H \"Content-Type: application/json\"  -H \"Authorization: Bearer " .. secret_key .. "\" -d '{\"from\": \"+" .. outbound_caller_id_number .. "\", \"to\": \"+" .. to .. "\", \"text\": \"" .. body .. "\", \"delivery_status_webhook_url\": \"" .. delivery_status_webhook_url .. "\"}'";
 			end
 			if (debug["info"]) then
 				freeswitch.consoleLog("notice", "[sms] CMD: " .. cmd .. "\n");
