@@ -14,7 +14,7 @@ if (check_acl()) {
 		if ($debug) {
 			error_log('[SMS] REQUEST: ' .  print_r($data, true));
 		}
-		$to = intval(preg_replace('/(^[\+][1])/','', $data->data->payload->to->{0}->phone_number));
+		$to = intval(preg_replace('/(^[\+][1])/','', $data->data->payload->to[0]->phone_number));
 		route_and_send_sms($data->data->payload->from->phone_number, $to, $data->data->payload->text, $data->media);
 	} else {
 	  die("no");
