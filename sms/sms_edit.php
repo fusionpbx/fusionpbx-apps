@@ -36,6 +36,7 @@
 	set_include_path(parse_ini_file($conf[0])['document.root']);
 
 //includes files
+	include "root.php";
 	require_once "resources/require.php";
 	require_once "resources/check_auth.php";
 
