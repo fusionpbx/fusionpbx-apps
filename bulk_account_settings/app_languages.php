@@ -192,6 +192,18 @@ $text['description-enabled']['de-at'] = "Select the new enabled status for the s
 $text['description-enabled']['it-it'] = "Select the new enabled status for the selected extensions.";
 $text['description-enabled']['ru-ru'] = "Выберите новый статус для выбранных extensions.";
 
+$text['description-device_enabled']['en-us'] = "Select the new enabled status for the selected devices.";
+$text['description-device_enabled']['es-cl'] = "Select the new enabled status for the selected devices.";
+$text['description-device_enabled']['pt-pt'] = "Select the new enabled status for the selected devices.";
+$text['description-device_enabled']['fr-fr'] = "Select the new enabled status for the selected devices.";
+$text['description-device_enabled']['pt-br'] = "Select the new enabled status for the selected devices.";
+$text['description-device_enabled']['pl'] = "Select the new enabled status for the selected devices.";
+$text['description-device_enabled']['sv-se'] = "Select the new enabled status for the selected devices.";
+$text['description-device_enabled']['uk'] = "Select the new enabled status for the selected devices.";
+$text['description-device_enabled']['de-at'] = "Select the new enabled status for the selected devices.";
+$text['description-device_enabled']['it-it'] = "Select the new enabled status for the selected devices.";
+$text['description-device_enabled']['ru-ru'] = "Выберите новый статус для выбранных devices.";
+
 $text['description-directory_visible']['en-us'] = "Select whether to hide the name from the directory.";
 $text['description-directory_visible']['es-cl'] = "";
 $text['description-directory_visible']['pt-pt'] = "";
@@ -1009,17 +1021,17 @@ $text['label-device_description']['de-at'] = "Description";
 $text['label-device_description']['it-it'] = "Description";
 $text['label-device_description']['ru-ru'] = "Описание";
 
-$text['label-device_mac_address']['en-us'] = "MAC Address";
-$text['label-device_mac_address']['es-cl'] = "MAC Address";
-$text['label-device_mac_address']['pt-pt'] = "MAC Address";
-$text['label-device_mac_address']['fr-fr'] = "MAC Address";
-$text['label-device_mac_address']['pt-br'] = "MAC Address";
-$text['label-device_mac_address']['pl'] = "MAC Address";
-$text['label-device_mac_address']['sv-se'] = "MAC Address";
-$text['label-device_mac_address']['uk'] = "MAC Address";
-$text['label-device_mac_address']['de-at'] = "MAC Address";
-$text['label-device_mac_address']['it-it'] = "MAC Address";
-$text['label-device_mac_address']['ru-ru'] = "MAC адрес";
+$text['label-device_address']['en-us'] = "Address";
+$text['label-device_address']['es-cl'] = "Address";
+$text['label-device_address']['pt-pt'] = "Address";
+$text['label-device_address']['fr-fr'] = "Address";
+$text['label-device_address']['pt-br'] = "Address";
+$text['label-device_address']['pl'] = "Address";
+$text['label-device_address']['sv-se'] = "Address";
+$text['label-device_address']['uk'] = "Address";
+$text['label-device_address']['de-at'] = "Address";
+$text['label-device_address']['it-it'] = "Address";
+$text['label-device_address']['ru-ru'] = "адрес";
 
 $text['label-voicemail_file']['en-us'] = "Voicemail File";
 $text['label-voicemail_file']['es-cl'] = "Voicemail File";
