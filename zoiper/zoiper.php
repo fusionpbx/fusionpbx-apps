@@ -65,7 +65,7 @@
 	}
 
 //get total extension count from the database
-	$sql = "select count(*) as num_rows from v_extensions where domain_uuid = '".$_SESSION['domain_uuid']."' ".$sql_mod." ";
+	$sql = "select count(*) as num_rows from v_extensions where domain_uuid = '".$_SESSION['domain_uuid']."' ".$sql_mod." and enabled = 'true' ";
 	//$sql .= "where domain_uuid = '".$_SESSION['domain_uuid']."' ";
 	$prep_statement = $db->prepare($sql);
 	if ($prep_statement) {
@@ -81,7 +81,7 @@
 
 //prepare to page the results
 	$rows_per_page = ($_SESSION['domain']['paging']['numeric'] != '') ? $_SESSION['domain']['paging']['numeric'] : 50;
-	$param = "&search=".$search."&order_by=".$order_by."&order=".$order;
+	$param = "&search=".rawurlencode($_GET["search"])."&order_by=".rawurlencode($order_by)."&order=".rawurlencode($order);
 	if (!isset($_GET['page'])) { $_GET['page'] = 0; }
 	$_GET['page'] = check_str($_GET['page']);
 	list($paging_controls_mini, $rows_per_page, $var_3) = paging($total_extensions, $param, $rows_per_page, true); //top
@@ -90,7 +90,7 @@
 
 //get all the extensions from the database
 	$sql = "select * from v_extensions ";
-	$sql .= "where domain_uuid = '$domain_uuid' ";
+	$sql .= "where domain_uuid = '".$_SESSION['domain_uuid']."' ";
 	$sql .= $sql_mod; //add search mod from above	
 	$sql .= "and enabled = 'true' ";
 	if (!(if_group("admin") || if_group("superadmin"))) {
@@ -137,7 +137,7 @@
 	if ((if_group("admin") || if_group("superadmin"))) {
 		echo "		<form method='get' action=''>\n";
 		echo "			<td style='vertical-align: top; text-align: right; white-space: nowrap;'>\n";
-		echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".escape($search)."'>";
+		echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".escape($_GET["search"])."'>";
 		echo "				<input type='submit' class='btn' name='submit' value='".$text['button-search']."'>";
 		if ($paging_controls_mini != '') {
 			echo 			"<span style='margin-left: 15px;'>".$paging_controls_mini."</span>\n";
