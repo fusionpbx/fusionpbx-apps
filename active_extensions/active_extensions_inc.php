@@ -254,10 +254,10 @@
 
 		//active extensions
 			//get the extension information
-				if ($debug) {
+				if (!empty($debug)) {
 					unset($_SESSION['extension_array']);
 				}
-				if (count($_SESSION['extension_array']) == 0) {
+				if (empty($_SESSION['extension_array'])) {
 					$sql = "";
 					$sql .= "select * from v_extensions ";
 					$x = 0;
@@ -281,7 +281,7 @@
 						}
 						$x++;
 					}
-					if (count($range_array) == 0) {
+					if (empty($range_array)) {
 						$sql .= "where domain_uuid = '$domain_uuid' ";
 						$sql .= "and enabled = 'true' ";
 					}
@@ -491,7 +491,7 @@
 						}
 						echo "</tr>\n";
 
-						if ($y == $_GET['rows'] && $_GET['rows'] > 0) {
+						if ($y == $_GET['rows'] && !empty($_GET['rows'])) {
 							$y = 0;
 							echo "</table>\n";
 

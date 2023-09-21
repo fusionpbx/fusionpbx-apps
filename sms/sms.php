@@ -151,7 +151,7 @@ require_once "resources/paging.php";
 	echo "</td>\n";
 	echo "</tr>\n";
 
-	if (is_array($sms_destinations)) {
+	if (!empty($sms_destinations) && is_array($sms_destinations)) {
 
 		foreach($sms_destinations as $row) {
 			$tr_link = (permission_exists('sms_edit')) ? " href='sms_edit.php?id=".$row['sms_destination_uuid']."'" : null;
@@ -210,7 +210,7 @@ require_once "resources/paging.php";
 	echo "<br /><br />".((is_array($sms_destinations)) ? "<br /><br />" : null);
 
 	// check or uncheck all checkboxes
-	if (sizeof($ext_ids) > 0) {
+	if (!empty($ext_ids) && sizeof($ext_ids) > 0) {
 		echo "<script>\n";
 		echo "	function check(what) {\n";
 		echo "		document.getElementById('chk_all').checked = (what == 'all') ? true : false;\n";
@@ -221,7 +221,7 @@ require_once "resources/paging.php";
 		echo "</script>\n";
 	}
 
-	if (is_array($sms_destinations)) {
+	if (!empty($sms_destinations) && is_array($sms_destinations)) {
 		// check all checkboxes
 		key_press('ctrl+a', 'down', 'document', null, null, "check('all');", true);
 
@@ -231,4 +231,5 @@ require_once "resources/paging.php";
 
 //show the footer
 	require_once "resources/footer.php";
+
 ?>
