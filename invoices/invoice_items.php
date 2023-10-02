@@ -53,19 +53,17 @@
 
 //prepare to page the results
 	$sql = "select count(*) as num_rows from v_invoice_items ";
-	$sql .= "where domain_uuid = '$domain_uuid' ";
-	$sql .= " and invoice_uuid = '$invoice_uuid' ";
-	if (strlen($order_by)> 0) { $sql .= "order by $order_by $order "; }
-	$prep_statement = $db->prepare($sql);
-	if ($prep_statement) {
-		$prep_statement->execute();
-		$row = $prep_statement->fetch(PDO::FETCH_ASSOC);
-		if ($row['num_rows'] > 0) {
-			$num_rows = $row['num_rows'];
-		}
-		else {
-			$num_rows = '0';
-		}
+	$sql .= "where domain_uuid = :domain_uuid ";
+	$sql .= " and invoice_uuid = :invoice_uuid ";
+	if (!empty($order_by)) { $sql .= "order by $order_by $order "; }
+	$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
+	$parameters['invoice_uuid'] = $invoice_uuid;
+	$row = $database->select($sql, $parameters, 'row');
+	if ($row['num_rows'] > 0) {
+		$num_rows = $row['num_rows'];
+	}
+	else {
+		$num_rows = '0';
 	}
 
 //prepare to page the results
@@ -78,14 +76,12 @@
 
 //get the list
 	$sql = "select * from v_invoice_items ";
-	$sql .= "where domain_uuid = '$domain_uuid' ";
-	$sql .= " and invoice_uuid = '$invoice_uuid' ";
-	if (strlen($order_by)> 0) { $sql .= "order by $order_by $order "; }
-	$sql .= "limit $rows_per_page offset $offset ";
-	$prep_statement = $db->prepare(check_sql($sql));
-	$prep_statement->execute();
-	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
-	$result_count = count($result);
+	$sql .= "where domain_uuid = :domain_uuid ";
+	$sql .= " and invoice_uuid = :invoice_uuid ";
+	if (!empty($order_by)) { $sql .= "order by $order_by $order "; }
+	$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
+	$parameters['invoice_uuid'] = $invoice_uuid;
+	$result = $database->select($sql, $parameters, 'all');
 	unset ($prep_statement, $sql);
 
 //set the row style
@@ -111,7 +107,7 @@
 	echo "</td>\n";
 	echo "<tr>\n";
 
-	if ($result_count > 0) {
+	if (!empty($result)) {
 		foreach($result as $row) {
 			$item_desc = $row['item_desc'];
 			$item_desc = str_replace("\n", "<br />", $item_desc);
