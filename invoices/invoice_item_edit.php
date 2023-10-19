@@ -46,23 +46,23 @@
 //action add or update
 	if (isset($_REQUEST["id"])) {
 		$action = "update";
-		$invoice_item_uuid = check_str($_REQUEST["id"]);
-		$back = check_str($_REQUEST['back']);
+		$invoice_item_uuid = $_REQUEST["id"];
+		$back = $_REQUEST['back'];
 	}
 	else {
 		$action = "add";
-		$back = check_str($_REQUEST['back']);
+		$back = $_REQUEST['back'];
 	}
 
 //get http post variables and set them to php variables
 	if (strlen(count($_REQUEST)) > 0) {
-		$contact_uuid = check_str($_REQUEST["contact_uuid"]);
-		$invoice_uuid = check_str($_REQUEST["invoice_uuid"]);
+		$contact_uuid = $_REQUEST["contact_uuid"];
+		$invoice_uuid = $_REQUEST["invoice_uuid"];
 	}	
 	if (count($_POST) > 0) {
-		$item_qty = check_str($_POST["item_qty"]);
-		$item_desc = check_str($_POST["item_desc"]);
-		$item_unit_price = check_str($_POST["item_unit_price"]);
+		$item_qty = $_POST["item_qty"];
+		$item_desc = $_POST["item_desc"];
+		$item_unit_price = $_POST["item_unit_price"];
 	}
 
 //process the data from the http post
@@ -70,7 +70,7 @@
 
 		//get the id
 			if ($action == "update") {
-				$invoice_item_uuid = check_str($_POST["invoice_item_uuid"]);
+				$invoice_item_uuid = $_POST["invoice_item_uuid"];
 			}
 
 		//check for all required data
@@ -94,73 +94,59 @@
 				return;
 			}
 
-		//add or update the database
-			if ($_POST["persistformvar"] != "true") {
-				if ($action == "add" && permission_exists('invoice_item_add')) {
-					$invoice_item_uuid = uuid();
-					$sql = "insert into v_invoice_items ";
-					$sql .= "(";
-					$sql .= "domain_uuid, ";
-					$sql .= "invoice_uuid, ";
-					$sql .= "invoice_item_uuid, ";
-					$sql .= "item_qty, ";
-					$sql .= "item_desc, ";
-					$sql .= "item_unit_price ";
-					$sql .= ")";
-					$sql .= "values ";
-					$sql .= "(";
-					$sql .= "'$domain_uuid', ";
-					$sql .= "'$invoice_uuid', ";
-					$sql .= "'$invoice_item_uuid', ";
-					$sql .= "'$item_qty', ";
-					$sql .= "'$item_desc', ";
-					$sql .= "'$item_unit_price' ";
-					$sql .= ")";
-					$db->exec(check_sql($sql));
-					unset($sql);
+		//add the invoice_uuid
+			if (!is_uuid($_POST["invoice_item_uuid"])) {
+				$invoice_item_uuid = uuid();
+			}
 
-					//set redirect
-					$_SESSION['message'] = $text['message-add'];
-					$back = ($back != '') ? "&back=".$back : null;
-					header("Location: invoice_edit.php?id=".$invoice_uuid."&contact_uuid=".$contact_uuid.$back);
-					return;
-	
-				} //if ($action == "add")
+		//prepare the array
+			$array['invoice_items'][0]['invoice_item_uuid'] = $invoice_item_uuid;
+			$array['invoice_items'][0]['invoice_uuid'] = $invoice_uuid;
+			$array['invoice_items'][0]['domain_uuid'] = $_SESSION['domain_uuid'];
+			$array['invoice_items'][0]['item_qty'] = $item_qty;
+			$array['invoice_items'][0]['item_desc'] = $item_desc;
+			$array['invoice_items'][0]['item_unit_price'] = $item_unit_price;
 
-				if ($action == "update" && permission_exists('invoice_item_edit')) {
-					$sql = "update v_invoice_items set ";
-					$sql .= "item_qty = '$item_qty', ";
-					$sql .= "item_desc = '$item_desc', ";
-					$sql .= "item_unit_price = '$item_unit_price' ";
-					$sql .= "where domain_uuid = '$domain_uuid' ";
-					$sql .= "and invoice_item_uuid = '$invoice_item_uuid'";
-					$db->exec(check_sql($sql));
-					unset($sql);
+		//save the data
+			$database = new database;
+			$database->app_name = 'invoices';
+			$database->app_uuid = 'e5a1f4f5-7766-ec9c-118b-50f76b0788c0';
+			$result = $database->save($array);
+			//view_array($result);
 
-					//set redirect
-					$_SESSION['message'] = $text['message-update'];
-					$back = ($back != '') ? "&back=".$back : null;
-					header("Location: invoice_edit.php?id=".$invoice_uuid."&contact_uuid=".$contact_uuid.$back);
-					return;
+		//redirect the browser
+			if ($action == "add" && permission_exists('invoice_item_add')) {
+				$_SESSION['message'] = $text['message-add'];
+				$back = ($back != '') ? "&back=".$back : null;
+				header("Location: invoice_edit.php?id=".$invoice_uuid."&contact_uuid=".$contact_uuid.$back);
+				return;
+			}
 
-				} //if ($action == "update")
-			} //if ($_POST["persistformvar"] != "true")
-	} //(count($_POST)>0 && strlen($_POST["persistformvar"]) == 0)
+			if ($action == "update" && permission_exists('invoice_item_edit')) {
+				$_SESSION['message'] = $text['message-update'];
+				$back = ($back != '') ? "&back=".$back : null;
+				header("Location: invoice_edit.php?id=".$invoice_uuid."&contact_uuid=".$contact_uuid.$back);
+				return;
+			}
+
+	}
 
 //pre-populate the form
-	if (count($_GET) > 0 && $_POST["persistformvar"] != "true") {
-		$invoice_item_uuid = check_str($_GET["id"]);
+	if (is_array($_GET) && $_POST["persistformvar"] != "true") {
+		$invoice_item_uuid = $_GET["id"];
 		$sql = "select * from v_invoice_items ";
-		$sql .= "where domain_uuid = '$domain_uuid' ";
-		$sql .= "and invoice_item_uuid = '$invoice_item_uuid' ";
-		$prep_statement = $db->prepare(check_sql($sql));
-		$prep_statement->execute();
-		$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
-		foreach ($result as &$row) {
-			$item_qty = $row["item_qty"];
-			$item_desc = $row["item_desc"];
-			$item_unit_price = $row["item_unit_price"];
-			break; //limit to 1 row
+		$sql .= "where domain_uuid = :domain_uuid ";
+		$sql .= "and invoice_item_uuid = :invoice_item_uuid ";
+		$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
+		$parameters['invoice_item_uuid'] = $invoice_item_uuid;
+		$database = new database;
+		$result = $database->select($sql, $parameters, 'all');
+		if (!empty($result)) {
+			foreach ($result as &$row) {
+				$item_qty = $row["item_qty"];
+				$item_desc = $row["item_desc"];
+				$item_unit_price = $row["item_unit_price"];
+			}
 		}
 		unset ($prep_statement);
 	}
@@ -205,7 +191,7 @@
 	echo "	".$text['label-item_desc']."\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "  <textarea class='formfld' type='text' rows='15' name='item_desc'>".escape($item_desc)."</textarea>\n";
+	echo "  <textarea class='formfld' type='text' rows='15' name='item_desc'>".$item_desc."</textarea>\n";
 	echo "<br />\n";
 	//echo $text['description-item_desc']."\n";
 	echo "</td>\n";
