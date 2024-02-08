@@ -5,11 +5,11 @@ require_once dirname(__DIR__, 3) . "/resources/require.php";
 require_once "../sms_hook_common.php";
 
 if ($debug) {
-	error_log('[SMS] REQUEST: ' .  print_r($_SERVER, true));
+	error_log('[SMS] REQUEST: ' . print_r($_SERVER, true));
 }
 
 if (check_acl()) {
-	if  ($_SERVER['CONTENT_TYPE'] == 'application/json; charset=utf-8') {
+	if ($_SERVER['CONTENT_TYPE'] == 'application/json; charset=utf-8') {
 		$data = json_decode(file_get_contents("php://input"));
 		if (is_array($data)) {
 			$from = $data[0]->message->from;
@@ -23,10 +23,9 @@ if (check_acl()) {
 			$text = $data->message->text;
 			$msg_type = $data->type;
 			$desc = $data->description;
-
 		}
 		if ($debug) {
-			error_log('[SMS] REQUEST: ' .  print_r($data, true));
+			error_log('[SMS] REQUEST: ' . print_r($data, true));
 		}
 
 		/**
@@ -41,29 +40,32 @@ if (check_acl()) {
 		 * https://dev.bandwidth.com/docs/messaging/webhooks#message-failed/
 		 */
 
-		switch ($msg_type) {
+		switch (strtolower($msg_type)) {
 			case 'message-delivered': {
-				route_and_send_sms($from, $to, $text);			
+				//				$text .= "Message was delivered";
+//				route_and_send_sms($from, $to, $text);
 				return http_response_code(200);
 				break;
 			}
 			case 'message-failed': {
-				$text .= $data->description . '\n' . $text;
+				$text = "Message failed to be delivered";
+				$text .= " Reason: " . ucfirst(str_replace('-', ' ', $desc));
+				error_log("Message Failed to send " . print_r($data, false));
 				route_and_send_sms($from, $to, $text);
 				return http_response_code(200);
 				break;
 			}
-			default:
-				route_and_send_sms($from, $to, $text);			
+			default: {
+				route_and_send_sms($from, $to, $text);
 				return http_response_code(200);
-				break;
+			}
 		}
 	} else {
 		error_log('[SMS] REQUEST: No SMS Data Received');
 		die("no");
 	}
 } else {
-	error_log('ACCESS DENIED [SMS]: ' .  print_r($_SERVER['REMOTE_ADDR'], true));
+	error_log('ACCESS DENIED [SMS]: ' . print_r($_SERVER['REMOTE_ADDR'], true));
 	die("access denied");
 }
 

@@ -101,6 +101,7 @@ if (debug["info"]) then
 end
 
 if direction == "inbound" then
+	freeswitch.consoleLog("notice", "-----\nInside LUA - INBOUND\n----\n")
 	to = argv[3]
 	from = argv[4]
 	body = argv[5]
@@ -129,7 +130,9 @@ if direction == "inbound" then
 	--See if target ext is registered.
 	extension_status = "sofia_contact " .. to
 	reply = api:executeString(extension_status)
-	--freeswitch.consoleLog("NOTICE", "[sms] Ext status: "..reply .. "\n");
+	--------
+	freeswitch.consoleLog("NOTICE", "[sms] Ext status: "..reply .. "\n");
+	--------
 	if (reply == "error/user_not_registered") then
 		freeswitch.consoleLog("NOTICE", "[sms] Target extension " .. to .. " is not registered, not sending via SIMPLE.\n")
 	else
@@ -507,13 +510,14 @@ elseif direction == "outbound" then
 				"curl -v -X POST " ..
 				api_url ..
 					" -u " ..
-						access_key ..
-							":" ..
-								secret_key ..
-									' -H "Content-type: application/json" ' ..
-										' -d \'{"from": "+' ..
-											outbound_caller_id_number ..
-												'", "to": "+' .. to .. '", ' .. ' "text": "' .. body .. '", "applicationId": "' .. application_id .. '" }\''
+						access_key .. ":" .. secret_key ..
+						' -H "Content-type: application/json" ' ..
+							' -d \'{"from": "+' ..
+									outbound_caller_id_number ..
+									'", "to": "+' .. to ..
+									'", ' .. ' "text": "' .. body ..
+									'", "applicationId": "' .. application_id ..
+									'" }\''
 		elseif (carrier == "thinq") then
 			if to:len() < 11 then
 				to = "1" .. to
