@@ -41,7 +41,7 @@
 		echo "access denied";
 		exit;
 	}
-	
+
 //add multi-lingual support
 	$language = new text;
 	$text = $language->get();
@@ -50,18 +50,21 @@
 	$order_by = check_str($_GET["order_by"]);
 	$order = check_str($_GET["order"]);
 	$option_selected = check_str($_GET["option_selected"]);
-	
+
+//set other defaults
+	$ext_ids = [];
+
 //handle search term
 	$search = check_str($_GET["search"]);
 	if (strlen($search) > 0) {
 		$search = strtolower($search);
 		$sql_mod = "and ( ";
 		$sql_mod .= "lower(extension) like '%".$search."%' ";
-		$sql_mod .= "or lower(accountcode) like '%".$search."%' ";		
+		$sql_mod .= "or lower(accountcode) like '%".$search."%' ";
 		$sql_mod .= "or lower(call_group) like '%".$search."%' ";
 		$sql_mod .= "or lower(description) like '%".$search."%' ";
 		if (($option_selected == "") or ($option_selected == 'call_group') or ($option_selected == 'accountcode')) {
-			
+
 		} elseif (($option_selected == 'call_timeout') or ($option_selected == 'sip_force_expires')){
 			$sql_mod .= "or lower(cast (".$option_selected." as text)) like '%".$search."%' ";
 		} else {
@@ -75,7 +78,7 @@
 	}
 
 	$domain_uuid = $_SESSION['domain_uuid'];
-	
+
 
 //get total extension count from the database
 	$sql = "select count(*) as num_rows from v_extensions where domain_uuid = '".$_SESSION['domain_uuid']."' ".$sql_mod." ";
@@ -126,7 +129,7 @@
 	$c = 0;
 	$row_style["0"] = "row_style0";
 	$row_style["1"] = "row_style1";
-	
+
 //show the content
 	echo "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n";
 	echo "  <tr>\n";
@@ -236,6 +239,12 @@
 		else {
 			echo "    <option value='mwi_account'>".$text['label-mwi_account']."</option>\n";
 		}
+		if ($option_selected == "user_context") {
+			echo "    <option value='user_context' selected='context'>".$text['label-context']."</option>\n";
+		}
+		else {
+			echo "    <option value='user_context'>".$text['label-context']."</option>\n";
+		}
 		echo "    </select>\n";
 		echo "    </form>\n";
 		echo "<br />\n";
@@ -255,10 +264,9 @@
 		echo 			"<span style='margin-left: 15px;'>".$paging_controls_mini."</span>\n";
 	}
 	echo "			</td>\n";
-	echo "		</form>\n";	
+	echo "		</form>\n";
 	echo "  </tr>\n";
-	
-	
+
 	echo "	<tr>\n";
 	echo "		<td colspan='2'>\n";
 	echo "			".$text['description-extensions_settings']."\n";
@@ -273,7 +281,18 @@
 		echo "<table width='auto' border='0' cellpadding='0' cellspacing='0'>\n";
 		echo "<tr>\n";
 		//options with a free form input
-		if($option_selected == 'accountcode' || $option_selected == 'call_group' || $option_selected == 'call_timeout' || $option_selected == 'emergency_caller_id_name' || $option_selected == 'emergency_caller_id_number' || $option_selected == 'limit_max' || $option_selected == 'outbound_caller_id_name' || $option_selected == 'outbound_caller_id_number' || $option_selected == 'toll_allow' || $option_selected == 'sip_force_expires' || $option_selected == 'mwi_account') {
+		if ($option_selected == 'accountcode'
+			|| $option_selected == 'call_group'
+			|| $option_selected == 'call_timeout'
+			|| $option_selected == 'user_context'
+			|| $option_selected == 'emergency_caller_id_name'
+			|| $option_selected == 'emergency_caller_id_number'
+			|| $option_selected == 'limit_max'
+			|| $option_selected == 'outbound_caller_id_name'
+			|| $option_selected == 'outbound_caller_id_number'
+			|| $option_selected == 'toll_allow'
+			|| $option_selected == 'sip_force_expires'
+			|| $option_selected == 'mwi_account') {
 			echo "<td class='vtable' align='left'>\n";
 			echo "    <input class='formfld' type='text' name='new_setting' maxlength='255' value=\"$new_setting\">\n";
 			echo "<br />\n";
@@ -302,7 +321,7 @@
                         echo $text["description-".$option_selected.""]."\n";
                         echo "</td>\n";
                 }
-		
+
 		//option is User Record
                 if($option_selected == 'user_record') {
                         echo "<td class='vtable' align='left'>\n";
@@ -363,7 +382,7 @@
 		} else {
 			echo th_order_by($option_selected, $text["label-".$option_selected.""], $order_by,$order,'','',"option_selected=".$option_selected."&search=".$search."");
 		}
-	echo th_order_by('accountcode', $text['label-accountcode'], $order_by, $order,'','',"option_selected=".$option_selected."&search=".$search."");	
+	echo th_order_by('accountcode', $text['label-accountcode'], $order_by, $order,'','',"option_selected=".$option_selected."&search=".$search."");
 	echo th_order_by('call_group', $text['label-call_group'], $order_by, $order,'','',"option_selected=".$option_selected."&search=".$search."");
 	echo th_order_by('description', $text['label-description'], $order_by, $order,'','',"option_selected=".$option_selected."&search=".$search."");
 	echo "</tr>\n";

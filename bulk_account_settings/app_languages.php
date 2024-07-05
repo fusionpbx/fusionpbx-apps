@@ -1453,4 +1453,29 @@ $text['title-devices_settings']['de-at'] = "Device Settings";
 $text['title-devices_settings']['it-it'] = "Device Settings";
 $text['title-devices_settings']['ru-ru'] = "Настройки устройства";
 
+$text['label-context']['en-us'] = "Context";
+$text['label-context']['en-gb'] = "Context";
+$text['label-context']['ar-eg'] = "السياق";
+$text['label-context']['de-at'] = "Kontext";
+$text['label-context']['de-ch'] = "Kontext";
+$text['label-context']['de-de'] = "Kontext";
+$text['label-context']['el-gr'] = "Συμφραζόμενα";
+$text['label-context']['es-cl'] = "Contexto";
+$text['label-context']['es-mx'] = "Contexto";
+$text['label-context']['fr-ca'] = "Contexte";
+$text['label-context']['fr-fr'] = "Contexte";
+$text['label-context']['he-il'] = "המונחים";
+$text['label-context']['it-it'] = "Contesto";
+$text['label-context']['nl-nl'] = "Context";
+$text['label-context']['pl-pl'] = "Kontekst";
+$text['label-context']['pt-br'] = "Contexto";
+$text['label-context']['pt-pt'] = "Contexto";
+$text['label-context']['ro-ro'] = "Context";
+$text['label-context']['ru-ru'] = "Контекст";
+$text['label-context']['sv-se'] = "Context";
+$text['label-context']['uk-ua'] = "Контекст";
+$text['label-context']['zh-cn'] = "语境";
+$text['label-context']['ja-jp'] = "コンテクスト";
+$text['label-context']['ko-kr'] = "문맥";
+
 ?>

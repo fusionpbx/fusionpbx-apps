@@ -37,6 +37,9 @@
 		exit;
 	}
 
+//connect to the database
+	$database = new database();
+
 //add multi-lingual support
 	$language = new text;
 	$text = $language->get();
@@ -54,9 +57,8 @@
 					$sql = "select * from v_extensions ";
 					$sql .= "where domain_uuid = '".$_SESSION['domain_uuid']."' ";
 					$sql .= "and extension_uuid = '".$extension_uuid."' ";
-					$database = new database;
 					$extensions = $database->select($sql, 'all');
-					if (is_array($extensions)) { 
+					if (is_array($extensions)) {
 						foreach ($extensions as &$row) {
 							$extension = $row["extension"];
 							$user_context = $row["user_context"];
@@ -69,17 +71,16 @@
 					$array["extensions"][$i]["extension_uuid"] = $extension_uuid;
 					$array["extensions"][$i][$option_selected] = $new_setting;
 
-					$database = new database;
 					$database->app_name = 'bulk_account_settings';
 					$database->app_uuid = null;
 					$database->save($array);
 					$message = $database->message;
-				
+
 					//echo "<pre>".print_r($message, true)."<pre>\n";
 					//exit;
-					
+
 					unset($database, $array,$i);
-				
+
 				//clear the cache
 					$cache = new cache;
 					$cache->delete("directory:".$extension."@".$user_context);
