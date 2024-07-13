@@ -89,7 +89,7 @@ body {
 	<source src="resources/ringtones/ringtone.mp3" type="audio/mpeg" loop="loop" />
 </audio>
 
-<script src="resources/sip-0.7.8.min.js"></script>
+<script src="sip-0.7.8.min.js"></script>
 <!--<script src="./resources/sip-0.21.2.js"></script>-->
 <!--<script type="module" src="./resources/app.php"></script>-->
 
