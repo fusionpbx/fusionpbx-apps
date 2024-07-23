@@ -29,7 +29,7 @@
 	require_once "resources/check_auth.php";
 	require_once "resources/paging.php";
 
-//check permissions	
+//check permissions
 	if (permission_exists('zoiper')) {
 		//access granted
 	}
@@ -41,7 +41,7 @@
 //add multi-lingual support
 	$language = new text;
 	$text = $language->get();
-	
+
 //get the https values and set as variables
 	$order_by = check_str($_GET["order_by"]);
 	$order = check_str($_GET["order"]);
@@ -65,7 +65,7 @@
 	}
 
 //get total extension count from the database
-	$sql = "select count(*) as num_rows from v_extensions where domain_uuid = '".$_SESSION['domain_uuid']."' ".$sql_mod." ";
+	$sql = "select count(*) as num_rows from v_extensions where domain_uuid = '".$_SESSION['domain_uuid']."' ".$sql_mod." and enabled = 'true' ";
 	//$sql .= "where domain_uuid = '".$_SESSION['domain_uuid']."' ";
 	$prep_statement = $db->prepare($sql);
 	if ($prep_statement) {
@@ -81,7 +81,7 @@
 
 //prepare to page the results
 	$rows_per_page = ($_SESSION['domain']['paging']['numeric'] != '') ? $_SESSION['domain']['paging']['numeric'] : 50;
-	$param = "&search=".$search."&order_by=".$order_by."&order=".$order;
+	$param = "&search=".rawurlencode($_GET["search"])."&order_by=".rawurlencode($order_by)."&order=".rawurlencode($order);
 	if (!isset($_GET['page'])) { $_GET['page'] = 0; }
 	$_GET['page'] = check_str($_GET['page']);
 	list($paging_controls_mini, $rows_per_page, $var_3) = paging($total_extensions, $param, $rows_per_page, true); //top
@@ -90,7 +90,7 @@
 
 //get all the extensions from the database
 	$sql = "select * from v_extensions ";
-	$sql .= "where domain_uuid = '$domain_uuid' ";
+	$sql .= "where domain_uuid = '".$_SESSION['domain_uuid']."' ";
 	$sql .= $sql_mod; //add search mod from above	
 	$sql .= "and enabled = 'true' ";
 	if (!(if_group("admin") || if_group("superadmin"))) {
@@ -137,14 +137,14 @@
 	if ((if_group("admin") || if_group("superadmin"))) {
 		echo "		<form method='get' action=''>\n";
 		echo "			<td style='vertical-align: top; text-align: right; white-space: nowrap;'>\n";
-		echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".escape($search)."'>";
+		echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".escape($_GET["search"])."'>";
 		echo "				<input type='submit' class='btn' name='submit' value='".$text['button-search']."'>";
 		if ($paging_controls_mini != '') {
 			echo 			"<span style='margin-left: 15px;'>".$paging_controls_mini."</span>\n";
 		}
 		echo "			</td>\n";
 		echo "			</td>\n";
-		echo "		</form>\n";	
+		echo "		</form>\n";
 	}
 	echo "  </tr>\n";
 
@@ -160,25 +160,25 @@
 	echo "	</tr>\n";
 	echo "	<tr>\n";
 	echo "		<td colspan='2'>\n";
-	echo "			".$text['description-zoiper2']."\n";	
+	echo "			".$text['description-zoiper2']."\n";
 	echo "		</td>\n";
-	echo "	</tr>\n";	
+	echo "	</tr>\n";
 	echo "</table>\n";
 	echo "<br>";
-	
+
 	echo "<table class='tr_hover' width='100%' border='0' cellpadding='0' cellspacing='0'>\n";
 	echo "<tr>\n";
 	echo th_order_by('extension', $text['table-extension'], $order_by,$order);
 	echo "<th>".$text['table-tools']."</th>\n";
 	echo "<th>".$text['table-qr']."</th>\n";
-//	echo "<th>".$text['table-password']."</th>\n";	
+//	echo "<th>".$text['table-password']."</th>\n";
 	echo th_order_by('description', $text['table-description'], $order_by, $order);
 	echo "</tr>\n";
 
 	if ($result_count > 0) {
 		foreach($result as $row) {
-			$tr_url = "https://www.zoiper.com/en/page/" . $_SESSION['zoiper']['page_id']['text'] . "?u=" . escape($row['extension']) . "&h=" . escape($row['user_context']) . rawurlencode($zoiper_sip_port) . "&p=" . escape($row['password']) . "&o=" . $_SESSION['zoiper']['outbound_proxy']['text'] . "&t=&x=&a=" . escape($row['extension']) . "&tr=";
-			$qr_img = "https://oem.zoiper.com/qr.php?provider_id=" . $_SESSION['zoiper']['provider_id']['text'] . "&u=" . escape($row['extension']) . "&h=" . escape($row['user_context']) . rawurlencode($zoiper_sip_port) . "&p=" . escape($row['password']) . "&o=" . $_SESSION['zoiper']['outbound_proxy']['text'] . "&t=&x=&a=" . escape($row['extension']) . "&tr=";
+			$tr_url = "https://www.zoiper.com/en/page/" . rawurlencode($_SESSION['zoiper']['page_id']['text']) . "?u=" . rawurlencode($row['extension']) . "&h=" . rawurlencode($row['user_context']) . rawurlencode($zoiper_sip_port) . "&p=" . rawurlencode($row['password']) . "&o=" . rawurlencode($_SESSION['zoiper']['outbound_proxy']['text']) . "&t=&x=&a=" . rawurlencode($row['extension']) . "&tr=";
+			$qr_img = "https://oem.zoiper.com/qr.php?provider_id=" . rawurlencode($_SESSION['zoiper']['provider_id']['text']) . "&u=" . rawurlencode($row['extension']) . "&h=" . rawurlencode($row['user_context']) . rawurlencode($zoiper_sip_port) . "&p=" . rawurlencode($row['password']) . "&o=" . rawurlencode($_SESSION['zoiper']['outbound_proxy']['text']) . "&t=&x=&a=" . rawurlencode($row['extension']) . "&tr=";
 			$tr_link = (permission_exists('zoiper')) ? "href='".$tr_url."'" : null;
 			echo "<tr>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['extension'])."</td>\n";
@@ -192,7 +192,7 @@
 //			echo "			<option data-toggle='tooltip' ";
 //			echo 				"title='User: ".$row['extension']."\n";
 //			echo 				"Password: ".$row['password']."' ";
-//			echo "			</option>\n";			
+//			echo "			</option>\n";
 //			echo "******";
 //			echo "&nbsp;</td>\n";
 			echo "	<td valign='top' class='row_stylebg' width='40%'>".escape($row['description'])."&nbsp;</td>\n";
