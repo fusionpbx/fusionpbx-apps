@@ -43,6 +43,9 @@
 	$language = new text;
 	$text = $language->get();
 
+//set defaults
+	$user_ids = [];
+
 //get the http values and set them as variables
 	$order_by = check_str($_GET["order_by"]);
 	$order = check_str($_GET["order"]);
