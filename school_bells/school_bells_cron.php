@@ -2,11 +2,8 @@
 
 //restrict to command line only
 	if(defined('STDIN')) {
-		$document_root = str_replace("\\", "/", $_SERVER["PHP_SELF"]);
-		preg_match("/^(.*)\/app\/.*$/", $document_root, $matches);
-		$document_root = $matches[1];
+		$document_root = dirname(__DIR__, 2);
 		set_include_path($document_root);
-		include "root.php";
 		require_once "resources/require.php";
 		require_once "resources/classes/text.php";
 		$_SERVER["DOCUMENT_ROOT"] = $document_root;
