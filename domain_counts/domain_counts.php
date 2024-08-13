@@ -87,6 +87,7 @@
 	//inbound-destinations
 	$sql .= "(\n";
 	$sql .= "select count(*) from v_destinations \n";
+	$sql .= "where domain_uuid = d.domain_uuid \n";
 	$sql .= "and destination_type = 'inbound'\n";
 	$sql .= ") as inbound_destination_count, \n";
 
