@@ -41,27 +41,30 @@
 		echo "access denied";
 		exit;
 	}
-	
+
 //add multi-lingual support
 	$language = new text;
 	$text = $language->get();
+
+//create database object
+	$database = database::new();
 
 //get the http values and set them as variables
 	$order_by = check_str($_GET["order_by"]);
 	$order = check_str($_GET["order"]);
 	$option_selected = check_str($_GET["option_selected"]);
-	
+
 //handle search term
 	$search = check_str($_GET["search"]);
 	if (strlen($search) > 0) {
 		$search = strtolower($search);
 		$sql_mod = "and ( ";
 		$sql_mod .= "lower(extension) like '%".$search."%' ";
-		$sql_mod .= "or lower(accountcode) like '%".$search."%' ";		
+		$sql_mod .= "or lower(accountcode) like '%".$search."%' ";
 		$sql_mod .= "or lower(call_group) like '%".$search."%' ";
 		$sql_mod .= "or lower(description) like '%".$search."%' ";
 		if (($option_selected == "") or ($option_selected == 'call_group') or ($option_selected == 'accountcode')) {
-			
+
 		} elseif (($option_selected == 'call_timeout') or ($option_selected == 'sip_force_expires')){
 			$sql_mod .= "or lower(cast (".$option_selected." as text)) like '%".$search."%' ";
 		} else {
@@ -75,20 +78,17 @@
 	}
 
 	$domain_uuid = $_SESSION['domain_uuid'];
-	
+
 
 //get total extension count from the database
 	$sql = "select count(*) as num_rows from v_extensions where domain_uuid = '".$_SESSION['domain_uuid']."' ".$sql_mod." ";
-	$prep_statement = $db->prepare($sql);
-	if ($prep_statement) {
-		$prep_statement->execute();
-		$row = $prep_statement->fetch(PDO::FETCH_ASSOC);
-		$total_extensions = $row['num_rows'];
-		if (($db_type == "pgsql") or ($db_type == "mysql")) {
-			$numeric_extensions = $row['num_rows'];
-		}
+	$result = $database->select($sql, null, 'column');
+	if (!empty($result)) {
+		$total_extensions = intval($result);
+	} else {
+		$total_extensions = 0;
 	}
-	unset($prep_statement, $row);
+	unset($sql);
 
 //prepare to page the results
 	$rows_per_page = ($_SESSION['domain']['paging']['numeric'] != '') ? $_SESSION['domain']['paging']['numeric'] : 50;
@@ -126,12 +126,12 @@
 	$c = 0;
 	$row_style["0"] = "row_style0";
 	$row_style["1"] = "row_style1";
-	
+
 //show the content
 	echo "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n";
 	echo "  <tr>\n";
 	echo "	<td align='left' width='100%'>\n";
-	echo "		<b>".$text['header-extensions']." (".$numeric_extensions.")</b><br>\n";
+	echo "		<b>".$text['header-extensions']." (".$total_extensions.")</b><br>\n";
 
 //options list
 		echo "<form name='frm' method='get' id=option_selected>\n";
@@ -247,7 +247,7 @@
 	echo "		<td align='right' width='100%' style='vertical-align: top;'>";
 	echo "		<form method='get' action=''>\n";
 	echo "			<td style='vertical-align: top; text-align: right; white-space: nowrap;'>\n";
-	echo "				<input type='button' class='btn' alt='".$text['button-back']."' onclick=\"window.location='bulk_account_settings.php'\" value='".$text['button-back']."'>\n";	
+	echo "				<input type='button' class='btn' alt='".$text['button-back']."' onclick=\"window.location='bulk_account_settings.php'\" value='".$text['button-back']."'>\n";
 	echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".escape($search)."'>";
 	echo "				<input type='hidden' class='txt' style='width: 150px' name='option_selected' id='option_selected' value='".escape($option_selected)."'>";
 	echo "				<input type='submit' class='btn' name='submit' value='".$text['button-search']."'>";
@@ -255,10 +255,10 @@
 		echo 			"<span style='margin-left: 15px;'>".$paging_controls_mini."</span>\n";
 	}
 	echo "			</td>\n";
-	echo "		</form>\n";	
+	echo "		</form>\n";
 	echo "  </tr>\n";
-	
-	
+
+
 	echo "	<tr>\n";
 	echo "		<td colspan='2'>\n";
 	echo "			".$text['description-extensions_settings']."\n";
@@ -302,7 +302,7 @@
                         echo $text["description-".$option_selected.""]."\n";
                         echo "</td>\n";
                 }
-		
+
 		//option is User Record
                 if($option_selected == 'user_record') {
                         echo "<td class='vtable' align='left'>\n";
@@ -363,7 +363,7 @@
 		} else {
 			echo th_order_by($option_selected, $text["label-".$option_selected.""], $order_by,$order,'','',"option_selected=".$option_selected."&search=".$search."");
 		}
-	echo th_order_by('accountcode', $text['label-accountcode'], $order_by, $order,'','',"option_selected=".$option_selected."&search=".$search."");	
+	echo th_order_by('accountcode', $text['label-accountcode'], $order_by, $order,'','',"option_selected=".$option_selected."&search=".$search."");
 	echo th_order_by('call_group', $text['label-call_group'], $order_by, $order,'','',"option_selected=".$option_selected."&search=".$search."");
 	echo th_order_by('description', $text['label-description'], $order_by, $order,'','',"option_selected=".$option_selected."&search=".$search."");
 	echo "</tr>\n";
@@ -427,5 +427,3 @@ if (is_array($directory)) {
 
 //show the footer
 	require_once "resources/footer.php";
-
-?>
