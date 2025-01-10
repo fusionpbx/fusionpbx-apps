@@ -43,6 +43,9 @@
 	$language = new text;
 	$text = $language->get();
 
+//use a database object
+	$database = database::new();
+
 //get the http values and set them as variables
 	$order_by = $_GET["order_by"] ?? null;
 	$order = $_GET["order"] ?? null;
@@ -73,16 +76,12 @@
 
 //get total device count from the database
 	$sql = "select count(*) as num_rows from v_devices where domain_uuid = '".$_SESSION['domain_uuid']."' ".($sql_mod ?? '')." ";
-	$prep_statement = $db->prepare($sql);
-	if ($prep_statement) {
-		$prep_statement->execute();
-		$row = $prep_statement->fetch(PDO::FETCH_ASSOC);
-		$total_devices = $row['num_rows'];
-		if (($db_type == "pgsql") or ($db_type == "mysql")) {
-			$numeric_devices = $row['num_rows'];
-		}
+	$result = $database->select($sql, null, 'column');
+	if (!empty($result)) {
+		$numeric_devices = intval($result);
+	} else {
+		$numeric_devices = 0;
 	}
-	unset($prep_statement, $row);
 
 //prepare to page the results
 	$rows_per_page = ($_SESSION['domain']['paging']['numeric'] != '') ? $_SESSION['domain']['paging']['numeric'] : 50;
@@ -289,11 +288,13 @@
 			$sql = "select * from v_device_profiles ";
 			$sql .= "where (domain_uuid = '".$domain_uuid."' or domain_uuid is null) ";
 			$sql .= "order by device_profile_name asc ";
-			$prep_statement = $db->prepare(check_sql($sql));
-			$prep_statement->execute();
-			$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
-			$result_count = count($result);
-			unset ($prep_statement, $sql);
+			$result = $database->select($sql);
+			if (!empty($result)) {
+				$result_count = count(intval($result));
+			} else {
+				$result_count = 0;
+			}
+			unset ($sql);
 			if ($result_count > 0) {
 				echo "<td class='vtable' align='left'>\n";
 				echo "    <select class='formfld' name='new_setting'>\n";
