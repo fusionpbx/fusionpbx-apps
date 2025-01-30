@@ -17,7 +17,7 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2016
+	Portions created by the Initial Developer are Copyright (C) 2008-2025
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
@@ -63,17 +63,6 @@
 
 //add the search term
 	$search = strtolower($_GET["search"] ?? '');
-	if (strlen($search) > 0) {
-		$sql_mod = "and ( ";
-		$sql_mod .= "e.extension ILIKE '%".$search."%' ";
-		$sql_mod .= "or e.description ILIKE '%".$search."%' ";
-		$sql_mod .= "or m.mobile_twinning_number ILIKE '%".$search."%' ";
-		$sql_mod .= ") ";
-	}
-	if (strlen($order_by) < 1) {
-		$order_by = "e.extension";
-		$order = "ASC";
-	}
 
 //get total extension count
 	$sql = "select count(*) from v_extensions ";
@@ -105,8 +94,19 @@
 	$sql = "select e.extension, m.mobile_twinning_number, e.description, m.mobile_twinning_uuid, e.extension_uuid \n";
 	$sql .= "FROM  v_extensions AS e \n ";
 	$sql .= "LEFT OUTER JOIN v_mobile_twinnings AS m ON m.extension_uuid = e.extension_uuid ";
-	$sql .= "where e.domain_uuid = '$domain_uuid' ";
-	$sql .= $sql_mod; //add search mod from above
+	$sql .= "where true ";
+	if (!(!empty($_GET['show']) && $_GET['show'] == "all" && permission_exists('extension_all'))) {
+		$sql .= "and e.domain_uuid = :domain_uuid ";
+		$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
+	}
+	if (!empty($search)) {
+		$sql .= "and ( ";
+		$sql .= " lower(extension) like :search ";
+		$sql .= " or lower(mobile_twinning_number) like :search ";
+		$sql .= " or lower(description) like :search ";
+		$sql .= ") ";
+		$parameters['search'] = '%'.$search.'%';
+	}
 	$sql .= "and e.enabled = 'true' ";
 	if (strlen($order_by)> 0) {
 		$sql .= "order by $order_by $order ";
@@ -115,11 +115,9 @@
 		$sql .= "order by extension asc ";
 	}
 	$sql .= " limit $rows_per_page offset $offset ";
-	$prep_statement = $db->prepare(check_sql($sql));
-	$prep_statement->execute();
-	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
+	$result = $database->select($sql, $parameters ?? null, 'all');
 	$result_count = count($result);
-	unset ($prep_statement, $sql);
+	unset($parameters, $sql);
 
 //create token
 	$object = new token;
@@ -135,7 +133,7 @@
 
 //begin the content
 	echo "<div class='action_bar' id='action_bar'>\n";
-	echo "	<div class='heading'><b>".$text['header-mobile_twinning']."</b><div class='count'>".number_format($num_rows)."</div></div>\n";
+	echo "	<div class='heading'><b>".$text['header-mobile_twinning']."</b><div class='count'>".number_format($result_count)."</div></div>\n";
 	echo "	<div class='actions'>\n";
 	if ((if_group("admin") || if_group("superadmin"))) {
 		echo "	<form method='get' action=''>\n";
