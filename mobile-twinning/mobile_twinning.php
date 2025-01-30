@@ -82,6 +82,14 @@
 		$sql .= "and domain_uuid = :domain_uuid ";
 		$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
 	}
+	if (!empty($search)) {
+		$sql .= "and ( ";
+		$sql .= " lower(extension) like :search ";
+		$sql .= " or lower(mobile_twinning_number) like :search ";
+		$sql .= " or lower(description) like :search ";
+		$sql .= ") ";
+		$parameters['search'] = '%'.$search.'%';
+	}
 	$num_rows = $database->select($sql, $parameters ?? null, 'column');
 
 //prepare to page the results
