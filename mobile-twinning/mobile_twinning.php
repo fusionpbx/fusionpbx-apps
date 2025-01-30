@@ -30,7 +30,6 @@
 	require_once "resources/pdo.php";
 	require_once "resources/check_auth.php";
 	require_once "resources/paging.php";
-	require_once "resources/header.php";
 
 //check permissions
 	if (permission_exists('mobile_twinning_view')) {
@@ -41,16 +40,29 @@
 		exit;
 	}
 
+//initialize the database object
+	$database = new database;
+
 //add multi-lingual support
 	$language = new text;
 	$text = $language->get();
 
-//get the https values and set as variables
-	$order_by = check_str($_GET["order_by"]);
-	$order = check_str($_GET["order"]);
+//get order and order by
+	$order_by = $_GET["order_by"] ?? 'extension';
+	$order = $_GET["order"] ?? 'asc';
+	$sort = $order_by == 'extension' ? 'natural' : null;
 
-//handle search term
-	$search = check_str($_GET["search"]);
+//get total extension count for domain
+	if (isset($_SESSION['limit']['extensions']['numeric'])) {
+		$sql = "select count(*) from v_extensions ";
+		$sql .= "where domain_uuid = :domain_uuid ";
+		$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
+		$total_extensions = $database->select($sql, $parameters, 'column');
+		unset($sql, $parameters);
+	}
+
+//add the search term
+	$search = strtolower($_GET["search"] ?? '');
 	if (strlen($search) > 0) {
 		$sql_mod = "and ( ";
 		$sql_mod .= "e.extension ILIKE '%".$search."%' ";
@@ -63,18 +75,14 @@
 		$order = "ASC";
 	}
 
-//get total extension count from the database
-	$sql = "select count(*) as num_rows from v_extensions where domain_uuid = '".$_SESSION['domain_uuid']."' ".$sql_mod." ";
-	$prep_statement = $db->prepare($sql);
-	if ($prep_statement) {
-		$prep_statement->execute();
-		$row = $prep_statement->fetch(PDO::FETCH_ASSOC);
-		$total_extensions = $row['num_rows'];
-		if (($db_type == "pgsql") or ($db_type == "mysql")) {
-			$numeric_extensions = $row['num_rows'];
-		}
+//get total extension count
+	$sql = "select count(*) from v_extensions ";
+	$sql .= "where true ";
+	if (!(!empty($_GET['show']) && $_GET['show'] == "all" && permission_exists('extension_all'))) {
+		$sql .= "and domain_uuid = :domain_uuid ";
+		$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
 	}
-	unset($prep_statement, $row);
+	$num_rows = $database->select($sql, $parameters ?? null, 'column');
 
 //prepare to page the results
 	$rows_per_page = ($_SESSION['domain']['paging']['numeric'] != '') ? $_SESSION['domain']['paging']['numeric'] : 50;
@@ -105,6 +113,13 @@
 	$result_count = count($result);
 	unset ($prep_statement, $sql);
 
+//create token
+	$object = new token;
+	$token = $object->create($_SERVER['PHP_SELF']);
+
+//include the header
+	require_once "resources/header.php";
+
 //set the alternating styles
 	$c = 0;
 	$row_style["0"] = "row_style0";
@@ -112,7 +127,7 @@
 
 //begin the content
 	echo "<div class='action_bar' id='action_bar'>\n";
-	echo "	<div class='heading'><b>".$text['header-mobile_twinning']."</b><div class='count'>".number_format($numeric_extensions)."</div></div>\n";
+	echo "	<div class='heading'><b>".$text['header-mobile_twinning']."</b><div class='count'>".number_format($num_rows)."</div></div>\n";
 	echo "	<div class='actions'>\n";
 	if ((if_group("admin") || if_group("superadmin"))) {
 		echo "	<form method='get' action=''>\n";
@@ -143,9 +158,9 @@
 		foreach($result as $row) {
 			$tr_link = (permission_exists('mobile_twinning_edit')) ? " href='mobile_twinning_edit.php?id=".$row['mobile_twinning_uuid']."&extid=".$row['extension_uuid']."'" : null;
 			echo "<tr ".$tr_link.">\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".$row['extension']."</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".format_phone(substr($row['mobile_twinning_number'],-10))."</td>\n";
-			echo "	<td valign='top' class='row_stylebg' width='40%'>".$row['description']."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['extension'])."</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape(format_phone(substr($row['mobile_twinning_number'],-10)))."</td>\n";
+			echo "	<td valign='top' class='row_stylebg' width='40%'>".escape($row['description'])."&nbsp;</td>\n";
 			echo "	<td class='list_control_icons'>";
 			echo "     <a href='mobile_twinning_edit.php?id=".$row['mobile_twinning_uuid']."&extid=".$row['extension_uuid']."'>$v_link_label_edit</a>";
 			echo "  </td>\n";
