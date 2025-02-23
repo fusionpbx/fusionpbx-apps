@@ -103,7 +103,7 @@
 	
 		//set the headers
 			header('Content-type: application/octet-binary');
-			header("Content-Disposition: attachment; filename='".$domain_result[0][domain_name]."_accountcodes" . date("Y-m-d") . ".csv'");
+			header("Content-Disposition: attachment; filename='".$domain_result[0]['domain_name']."_accountcodes_" . date("Y-m-d") . ".csv'");
 
 		//show the column names on the first line
 			$z = 0;
@@ -150,7 +150,7 @@
 	echo "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n";
 	echo "  <tr>\n";
 	echo "	<td align='left' width='100%'>\n";
-	echo "		<b>".$text['header-domain_counts_accountcodes'].": ".$domain_result[0][domain_name]." (".$numeric_accountcodes.")</b><br>\n";
+	echo "		<b>".$text['header-domain_counts_accountcodes'].": ".$domain_result[0]['domain_name']." (".$numeric_accountcodes.")</b><br>\n";
 	echo "	</td>\n";
 	echo "		<td align='right' width='100%' style='vertical-align: top;'>";
 	echo "		<form method='get' action=''>\n";
