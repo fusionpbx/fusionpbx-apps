@@ -17,7 +17,7 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2023
+	Portions created by the Initial Developer are Copyright (C) 2008-2025
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
@@ -27,6 +27,7 @@
 
 //includes files
 	require_once dirname(__DIR__, 2) . "/resources/require.php";
+	require_once "resources/pdo.php";
 	require_once "resources/check_auth.php";
 
 if (permission_exists('school_bell_view')) {
@@ -65,9 +66,9 @@ require_once "resources/paging.php";
 	$rows_per_page = ($_SESSION['domain']['paging']['numeric'] != '') ? $_SESSION['domain']['paging']['numeric'] : 50;
 	$param = "";
 	$page = $_GET['page'];
-	if (strlen($page) == 0) { 
-		$page = 0; 
-		$_GET['page'] = 0; 
+	if (strlen($page) == 0) {
+		$page = 0;
+		$_GET['page'] = 0;
 	}
 	list($paging_controls, $rows_per_page, $var3) = paging($num_rows, $param, $rows_per_page);
 	$offset = $rows_per_page * $page;
@@ -76,8 +77,8 @@ require_once "resources/paging.php";
 	if ($num_rows > 0) {
 		$sql = "SELECT * FROM v_school_bells";
 		$sql .= " WHERE domain_uuid = :domain_uuid";
-		if (strlen($order_by)> 0) { 
-			$sql .= " ORDER BY $order_by $order"; 
+		if (strlen($order_by)> 0) {
+			$sql .= " ORDER BY $order_by $order";
 		}
 		$sql .= " LIMIT $rows_per_page OFFSET $offset";
 

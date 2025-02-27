@@ -17,7 +17,7 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2023
+	Portions created by the Initial Developer are Copyright (C) 2008-2025
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
@@ -27,6 +27,7 @@
 
 //includes files
 	require_once dirname(__DIR__, 2) . "/resources/require.php";
+	require_once "resources/pdo.php";
 	require_once "resources/check_auth.php";
 
 //check permissions
@@ -67,7 +68,7 @@
 		$school_bell_timezone = check_str($_POST["school_bell_timezone"]);
 		$school_bell_enabled = check_str($_POST["school_bell_enabled"]);
 		$school_bell_description = $_POST["school_bell_description"];
-	
+
 			// Filter values:
 		if (strlen($school_bell_leg_a_type) == 0) {
 			$school_bell_leg_a_type = "loopback/";
@@ -112,15 +113,15 @@
 	}
 //handle the http post
 	if (count($_POST) > 0 && strlen($_POST["persistformvar"]) == 0) {
-	
+
 		$msg = '';
-	
+
 		//check for all required data
-		if (strlen($school_bell_name) == 0) { 
-			$msg .= $text['label-school_bell_name']."<br>\n"; 
+		if (strlen($school_bell_name) == 0) {
+			$msg .= $text['label-school_bell_name']."<br>\n";
 		}
 		if (strlen($school_bell_leg_a_data) == 0) {
-			$msg .= $text['label-school_bell_leg_a_data']."<br>\n"; 
+			$msg .= $text['label-school_bell_leg_a_data']."<br>\n";
 		}
 
 		if (strlen($msg) > 0 && strlen($_POST["persistformvar"]) == 0) {
@@ -232,7 +233,7 @@
 				$prep_statement->bindValue('school_bell_description', $school_bell_description);
 				$prep_statement->bindValue('domain_uuid', $domain_uuid);
 				$prep_statement->bindValue('school_bell_uuid', $school_bell_uuid);
-				
+
 				if ($prep_statement) {
 					$prep_statement->execute();
 				}
