@@ -41,12 +41,14 @@ class RingotelClass
     public $domain_name_postfix;
     public $max_registration;
     public $default_connection_protocol;
+    public $organization_default_emailcc;
 
     function __construct($mode)
     {
         $this->domain_name_postfix = isset($_SESSION['ringotel']['domain_name_postfix']['text']) ? ('-'.$_SESSION['ringotel']['domain_name_postfix']['text']) : '-ringotel';
         $this->max_registration = isset($_SESSION['ringotel']['max_registration']['text']) ? intval($_SESSION['ringotel']['max_registration']['text']) : 1;
         $this->default_connection_protocol = isset($_SESSION['ringotel']['default_connection_protocol']['text']) ? $_SESSION['ringotel']['default_connection_protocol']['text'] : 'sip-tcp';
+        $this->organization_default_emailcc = isset($_SESSION['ringotel']['organization_default_emailcc']['text']) ? $_SESSION['ringotel']['organization_default_emailcc']['text'] : '';
         $ringotel_api = $mode !== 'INTEGRATION' ? $_SESSION['ringotel']['ringotel_api']['text'] : $_SESSION['ringotel']['ringotel_integration_api']['text'];
         $this->api = new RingotelApiFunctions($ringotel_api);
         $this->error = new RingotelErrorService();
@@ -693,7 +695,7 @@ class RingotelClass
         $param = array(
             "id" => $_REQUEST['orgid'],
             "params" => array(
-                "emailcc" => "flagmango@flagmantelecom.com",
+                "emailcc" => $this->organization_default_emailcc,
                 "tags" => array(0 => isset($_REQUEST['tag']) ? $_REQUEST['tag'] : $_SESSION['ringotel']['server_name']['text'])
             )
         );
