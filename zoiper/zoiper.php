@@ -17,7 +17,7 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2023
+	Portions created by the Initial Developer are Copyright (C) 2008-2025
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
@@ -26,6 +26,7 @@
 
 //includes files
 	require_once dirname(__DIR__, 2) . "/resources/require.php";
+	require_once "resources/pdo.php";
 	require_once "resources/check_auth.php";
 	require_once "resources/paging.php";
 
@@ -133,12 +134,12 @@
 	echo "	<td align='left' width='100%'>\n";
 	echo "		<b>".$text['title']."</b><br>\n";
 	echo "	</td>\n";
-	echo "		<td align='right' width='100%' style='vertical-align: top;'>";
+	echo "		<td align='right' width='100%' style='vertical-align: top;'>\n";
 	if ((if_group("admin") || if_group("superadmin"))) {
 		echo "		<form method='get' action=''>\n";
 		echo "			<td style='vertical-align: top; text-align: right; white-space: nowrap;'>\n";
-		echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".escape($_GET["search"])."'>";
-		echo "				<input type='submit' class='btn' name='submit' value='".$text['button-search']."'>";
+		echo "				<input type='text' class='txt' style='width: 150px' name='search' id='search' value='".escape($search)."'>\n";
+		echo "				<input type='submit' class='btn' name='submit' value='".$text['button-search']."'>\n";
 		if ($paging_controls_mini != '') {
 			echo 			"<span style='margin-left: 15px;'>".$paging_controls_mini."</span>\n";
 		}
@@ -166,6 +167,9 @@
 	echo "</table>\n";
 	echo "<br>";
 
+	echo "<br>\n";
+
+	echo "<div class='card'>\n";
 	echo "<table class='tr_hover' width='100%' border='0' cellpadding='0' cellspacing='0'>\n";
 	echo "<tr>\n";
 	echo th_order_by('extension', $text['table-extension'], $order_by,$order);
@@ -202,12 +206,13 @@
 		unset($sql, $result, $row_count);
 	} //end if results
 
-	echo "</table>";
+	echo "</table>\n";
+	echo "</div>\n";
 	if (strlen($paging_controls) > 0) {
-		echo "<br />";
+		echo "<br />\n";
 		echo $paging_controls."\n";
 	}
-	echo "<br><br>";
+	echo "<br><br>\n";
 
 	if ($is_included != "true") {
 		require_once "resources/footer.php";

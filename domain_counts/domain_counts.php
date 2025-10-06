@@ -84,11 +84,19 @@
 	$sql .= "where domain_uuid = d.domain_uuid\n";
 	$sql .= ") as device_count, \n";
 
-	//destinations
+	//inbound-destinations
 	$sql .= "(\n";
 	$sql .= "select count(*) from v_destinations \n";
-	$sql .= "where domain_uuid = d.domain_uuid\n";
-	$sql .= ") as destination_count, \n";
+	$sql .= "where domain_uuid = d.domain_uuid \n";
+	$sql .= "and destination_type = 'inbound'\n";
+	$sql .= ") as inbound_destination_count, \n";
+
+	//outbound-destinations
+	$sql .= "(\n";
+	$sql .= "select count(*) from v_destinations \n";
+	$sql .= "where domain_uuid = d.domain_uuid \n";
+	$sql .= "and destination_type = 'outbound'\n";
+	$sql .= ") as outbound_destination_count, \n";
 	
 	//faxes
 	$sql .= "(\n";
@@ -246,7 +254,8 @@
 	echo th_order_by('extension_count', $text['label-extensions'], $order_by,$order);
 	echo th_order_by('user_count', $text['label-users'], $order_by, $order);
 	echo th_order_by('device_count', $text['label-devices'], $order_by, $order);
-	echo th_order_by('destination_count', $text['label-destinations'], $order_by, $order);
+	echo th_order_by('inbound_destination_count', $text['label-inbound-destinations'], $order_by, $order);
+	echo th_order_by('outbound_destination_count', $text['label-outbound-destinations'], $order_by, $order);
 	echo th_order_by('fax_count', $text['label-faxes'], $order_by, $order);
 	echo th_order_by('ivr_count', $text['label-ivrs'], $order_by, $order);
 	echo th_order_by('voicemail_count', $text['label-voicemails'], $order_by, $order);
@@ -263,7 +272,8 @@
 			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['extension_count'])."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['user_count'])."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['device_count'])."&nbsp;</td>\n";
-			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['destination_count'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['inbound_destination_count'])."&nbsp;</td>\n";
+			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['outbound_destination_count'])."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['fax_count'])."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['ivr_count'])."&nbsp;</td>\n";
 			echo "	<td valign='top' class='".$row_style[$c]."'>".escape($row['voicemail_count'])."&nbsp;</td>\n";

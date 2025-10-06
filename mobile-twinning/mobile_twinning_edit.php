@@ -26,12 +26,12 @@
 */
 
 //includes
-	include "root.php";
-	require_once "resources/require.php";
+	require_once dirname(__DIR__, 2) . "/resources/require.php";
+	require_once "resources/pdo.php";
 	require_once "resources/check_auth.php";
 	require_once "resources/paging.php";
 
-//check permissions	
+//check permissions
 	if (permission_exists('mobile_twinning_view')) {
 		//access granted
 	}
@@ -43,7 +43,7 @@
 //add multi-lingual support
 	$language = new text;
 	$text = $language->get();
-	
+
 //get the https values and set as variables
 	$extension_uuid = check_str($_GET["extid"]);
 	$mobile_twinning_uuid = check_str($_GET["id"]);
@@ -56,7 +56,7 @@
 	else {
 		$action = "add";
 	}
-	
+
 //get the http values and set them as php variables
 	if (count($_POST) > 0 && $_POST["persistform"] != "1") {
 		$mobile_twinning_number = check_str($_POST["mobile_twinning_number"]);
@@ -79,13 +79,13 @@
 			$where[0]["value"] = "$mobile_twinning_number";
 			$where[1]["name"] = "mobile_twinning_uuid";
 			$where[1]["operator"] = "!=";
-			$where[1]["value"] = "$mobile_twinning_uuid";			
+			$where[1]["value"] = "$mobile_twinning_uuid";
 			$database->where = $where;
 			$result = $database->count();
 			if ($result > 0) {
 					$msg .= $text['message-warning'].$text['message-duplicate_mobile_twinning_number']."<br>\n";
 				}
-			unset($result,$database);	
+			unset($result,$database);
 
 		//check for a valid 10 digit mobile number
 			if (strlen($mobile_twinning_number) != 10)  {
@@ -93,8 +93,8 @@
 					$msg .= $text['message-warning'].$text['message-invalid_mobile_twinning_number']."<br>\n";
 				}
 			}
-			
-		//display error msg if error found			
+
+		//display error msg if error found
 			if (strlen($msg) > 0 && strlen($_POST["persistformvar"]) == 0) {
 				require_once "resources/header.php";
 				require_once "resources/persist_form_var.php";
@@ -114,7 +114,7 @@
 			$array["mobile_twinnings"][$i]["mobile_twinning_uuid"] = $mobile_twinning_uuid;
 			$array["mobile_twinnings"][$i]["extension_uuid"] = $extension_uuid;
 			$array["mobile_twinnings"][$i]["mobile_twinning_number"] = $mobile_twinning_number;
-			
+
 		//save to the datbase
 			$database = new database;
 			$database->app_name = 'mobile_twinnings';
@@ -124,7 +124,7 @@
 			//echo "<pre>".print_r($message, true)."<pre>\n";
 			//exit;
 	}
-	
+
 //pre-populate the form
 	if (is_array($_GET) && $_POST["persistformvar"] != "true") {
 		$sql = "SELECT e.extension, m.mobile_twinning_number, e.description, m.mobile_twinning_uuid, e.extension_uuid \n";
@@ -139,23 +139,22 @@
 		$prep_statement->execute();
 		$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
 		unset ($prep_statement, $sql);
-	
+
 	//set the variables
 
-	
 		foreach ($result as $row) {
-			$mobile_twinning_number = $row[mobile_twinning_number];
-			$mobile_twinning_uuid = $row[mobile_twinning_uuid];
-			$extension = $row[extension];
-			$description = $row[description];
-			$extension_uuid = $row[extension_uuid];
+			$mobile_twinning_number = $row['mobile_twinning_number'];
+			$mobile_twinning_uuid = $row['mobile_twinning_uuid'];
+			$extension = $row['extension'];
+			$description = $row['description'];
+			$extension_uuid = $row['extension_uuid'];
 		}
 
 		if (strlen($mobile_twinning_uuid) == 0) {
 			$mobile_twinning_uuid = uuid();
-		}			
+		}
 	}
-	
+
 //show the header
 	require_once "resources/header.php";
 
@@ -172,6 +171,10 @@
 	echo "	<input type='submit' class='btn' value='".$text['button-save']."'>";
 	echo "</td>\n";
 	echo "</tr>\n";
+	echo "</table>\n";
+
+	echo "<div class='card'>\n";
+	echo "<table width='100%' border='0' cellpadding='0' cellspacing='0'>\n";
 
 	//Extension
 	echo "<tr>\n";
@@ -193,7 +196,9 @@
 	echo $text['description-mobile_twinning_number']."\n";
 	echo "</td>\n";
 	echo "</tr>\n";
-	echo "</table>";	
+
+	echo "</table>";
+	echo "</div>";
 	echo "</form>";
 	echo "<br /><br />";
 

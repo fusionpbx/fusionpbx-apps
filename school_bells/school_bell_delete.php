@@ -17,7 +17,7 @@
 
 	The Initial Developer of the Original Code is
 	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2023
+	Portions created by the Initial Developer are Copyright (C) 2008-2025
 	the Initial Developer. All Rights Reserved.
 
 	Contributor(s):
@@ -26,6 +26,7 @@
 
 //includes files
 	require_once dirname(__DIR__, 2) . "/resources/require.php";
+	require_once "resources/pdo.php";
 	require_once "resources/check_auth.php";
 
 //check permissions
