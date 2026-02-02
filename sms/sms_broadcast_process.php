@@ -8,7 +8,7 @@ require_once "resources/classes/text.php";
 $debug = false;
 
 //connect to the database
-$database = new database;
+$database = database::new();
 
 //get get data from the database
 $sql = "select * from v_sms_broadcast";

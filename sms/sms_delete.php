@@ -30,13 +30,14 @@
 	require_once dirname(__DIR__, 2) . "/resources/require.php";
 	require_once "resources/check_auth.php";
 
-if (permission_exists('sms_delete')) {
-	//access granted
-}
-else {
-	echo "access denied";
-	exit;
-}
+//check permissions
+	if (!permission_exists('sms_delete')) {
+		echo "access denied";
+		exit;
+	}
+
+//connect to the database
+	$database = database::new();
 
 //add multi-lingual support
 	$language = new text;
@@ -48,20 +49,20 @@ else {
 	}
 
 //delete the extension
-	if (strlen($id)>0) {
-
+	if (is_uuid($id)) {
 		//delete the call block
-			$sql = "delete from v_sms_destinations ";
-			$sql .= "where domain_uuid = '".$_SESSION['domain_uuid']."' ";
-			$sql .= "and sms_destination_uuid = '$id' ";
-			$prep_statement = $db->prepare(check_sql($sql));
-			$prep_statement->execute();
-			unset($prep_statement, $sql);
+		$sql = "delete from v_sms_destinations ";
+		$sql .= "where domain_uuid = :domain_uuid ";
+		$sql .= "and sms_destination_uuid = :id ";
+		$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
+		$parameters['id'] = $id;
+		$database->execute($sql, $parameters);
+		unset($sql, $parameters);
 	}
 
-	//redirect the browser
-		$_SESSION["message"] = $text['label-delete-complete'];
-		header("Location: sms.php");
-		return;
+//redirect the browser
+	$_SESSION["message"] = $text['label-delete-complete'];
+	header("Location: sms.php");
+	return;
 
 ?>

@@ -42,6 +42,9 @@ $debug = true;
 function route_and_send_sms($from, $to, $body, $media = "") {
 	global $db, $debug, $domain_uuid, $domain_name, $mailsent;
 
+	//connect to the database
+	$database = database::new();
+
 	//create the event socket connection and send the event socket command
 		$fp = event_socket_create($_SESSION['event_socket_ip_address'], $_SESSION['event_socket_port'], $_SESSION['event_socket_password']);
 		if (!$fp) {
@@ -81,21 +84,18 @@ function route_and_send_sms($from, $to, $body, $media = "") {
 				// Check for chatplan_detail in sms_destinations table
 				$sql = "select domain_name, ";
 				$sql .= "chatplan_detail_data, ";
-				$sql .= "v_sms_destinations.domain_uuid as domain_uuid ";
-				$sql .= "from v_sms_destinations, ";
-				$sql .= "v_domains ";
-				$sql .= "where v_sms_destinations.domain_uuid = v_domains.domain_uuid";
-				$sql .= " and destination like :to";
-				$sql .= " and chatplan_detail_data <> ''";
-
+				$sql .= "s.domain_uuid as domain_uuid ";
+				$sql .= "from v_sms_destinations as s, ";
+				$sql .= "v_domains as d ";
+				$sql .= "where s.domain_uuid = d.domain_uuid ";
+				$sql .= "and destination like :to ";
+				$sql .= "and chatplan_detail_data <> '' ";
 				if ($debug) {
 					error_log("SQL: " . print_r($sql,true));
 				}
-
-				$prep_statement = $db->prepare(check_sql($sql));
-				$prep_statement->bindValue(':to', "%{$to}%");
-				$prep_statement->execute();
-				$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
+				$parameters['to'] = "%{$to}%";
+				$result = $database->select($sql, $parameters ?? null, 'all');
+				unset($parameters);
 
 				if (count($result) > 0) {
 					foreach ($result as &$row) {
@@ -120,10 +120,9 @@ function route_and_send_sms($from, $to, $body, $media = "") {
 						error_log("SQL: " . print_r($sql,true));
 					}
 
-					$prep_statement = $db->prepare(check_sql($sql));
-					$prep_statement->bindValue(':to', "%{$to}%");
-					$prep_statement->execute();
-					$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
+					$parameters['to'] = "%{$to}%";
+					$result = $database->select($sql, $parameters ?? null, 'all');
+					unset($parameters);
 					if (count($result) == 0) {
 						error_log("Cannot find a destination: " . print_r($result,true));
 						die("Invalid Destination");
@@ -160,10 +159,12 @@ function route_and_send_sms($from, $to, $body, $media = "") {
 				$sql .= "from v_ring_groups, v_ring_group_destinations ";
 				$sql .= "where v_ring_groups.ring_group_uuid = v_ring_group_destinations.ring_group_uuid ";
 				$sql .= "and ring_group_extension = :extension ";
-				$sql .= "and v_ring_groups.domain_uuid = :domain_uuid";
-				$prep_statement = $db->prepare(check_sql($sql));
-				$prep_statement->execute(array(':extension' => $match[0], ':domain_uuid' => $domain_uuid));
-				$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
+				$sql .= "and v_ring_groups.domain_uuid = :domain_uuid ";
+				$parameters['extension'] = $match[0];
+				$parameters['domain_uuid'] = $domain_uuid;
+				$result = $database->select($sql, $parameters ?? null, 'all');
+				unset($parameters);
+
 				if ($debug) {
 					error_log("SQL: " . print_r($sql,true));
 					error_log("RG RESULT: " . print_r($result,true));

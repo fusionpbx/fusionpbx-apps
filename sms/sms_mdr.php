@@ -36,10 +36,7 @@
 	require_once "resources/check_auth.php";
 
 //check permissions
-	if (permission_exists('sms_view')) {
-		//access granted
-	}
-	else {
+	if (!permission_exists('sms_view')) {
 		echo "access denied";
 		exit;
 	}
@@ -53,61 +50,51 @@
 	require_once "resources/paging.php";
 
 //set variables
-	$rows_per_page = ($_SESSION['domain']['paging']['numeric'] != '') ? $_SESSION['domain']['paging']['numeric'] : 50;
 	//$sql = "select domain_name, extension, sms_message_uuid,start_stamp,from_number,to_number,message,direction from v_sms_messages, v_domains, v_extensions where v_sms_messages.domain_uuid = v_domains.domain_uuid and v_sms_messages.extension_uuid = v_extensions.extension_uuid and v_domains.domain_uuid = :domain_uuid order by start_stamp DESC";
 	$num_rows = '0';
 	$param = "";
 
 //get the number of rows in the v_xml_cdr
-	$sql = "select count(*) as num_rows from  v_sms_messages, v_domains ";
-	$sql .= "WHERE v_domains.domain_uuid = v_sms_messages.domain_uuid and v_domains.domain_uuid = '" . $domain_uuid . "' ";
-	$prep_statement = $db->prepare(check_sql($sql));
-	if ($prep_statement) {
-		$prep_statement->execute();
-		$row = $prep_statement->fetch(PDO::FETCH_ASSOC);
+	$sql = "SELECT count(*) as num_rows ";
+	$sql .= "from v_sms_messages s as, v_domains as d ";
+	$sql .= "WHERE d.domain_uuid = s.domain_uuid ";
+	$sql .= "AND d.domain_uuid = :domain_uuid ";
+	$parameters['domain_uuid'] = $domain_uuid;
+	$row = $database->select($sql, $parameters ?? null, 'row');
+	if (is_array($row) {
 		if ($row['num_rows'] > 0) {
 			$num_rows = $row['num_rows'];
 		} else {
 			$num_rows = '0';
 		}
 	}
-	unset($prep_statement, $result);
-
-//set the default paging
-	if ($_SESSION['domain']['paging']['numeric'] != '' && $rows_per_page > $_SESSION['domain']['paging']['numeric']) {
-		$rows_per_page = $_SESSION['domain']['paging']['numeric'];
-	} else {
-		$rows_per_page = 50;
-	}
+	unset($parameters);
 
 //prepare to page the results
-	//$rows_per_page = ($_SESSION['domain']['paging']['numeric'] != '') ? $_SESSION['domain']['paging']['numeric'] : 50; //set on the page that includes this page
-	$page = $_GET['page'];
-	if (strlen($page) == 0) {
-	$page = 0;
-	$_GET['page'] = 0;
-	}
-	list($paging_controls_mini, $rows_per_page, $var_3) = paging($num_rows, $param, $rows_per_page, true); //top
-	list($paging_controls, $rows_per_page, $var_3) = paging($num_rows, $param, $rows_per_page); //bottom
+	$rows_per_page = $settings->get('domain', 'paging', 50);
+	$param = !empty($search) ? "&search=".$search : null;
+	$page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 0;
+	list($paging_controls, $rows_per_page) = paging($num_rows, $param, $rows_per_page);
+	list($paging_controls_mini, $rows_per_page) = paging($num_rows, $param, $rows_per_page, true);
 	$offset = $rows_per_page * $page;
 
-//get messages from the database
-	$sql = "SELECT domain_name, v_sms_messages.extension_uuid as extension, sms_message_uuid,start_stamp,from_number,to_number,message,direction ";
-	$sql .= "FROM v_sms_messages, v_domains ";
-	$sql .= "WHERE v_domains.domain_uuid = v_sms_messages.domain_uuid ";
-	$sql .= "and v_domains.domain_uuid = :domain_uuid order by start_stamp DESC ";
-	if ($rows_per_page == 0) {
-		$sql .= " limit " . $_SESSION['cdr']['limit']['numeric'] . " offset 0 ";
-	} else {
-		$sql .= " limit " . $rows_per_page . " offset " . $offset . " ";
-	}
-	error_log("SQL: " . print_r($sql,true));
-	$prep_statement = $db->prepare(check_sql($sql));
-	$prep_statement->execute(array(':domain_uuid' => $domain_uuid));
-	$result = $prep_statement->fetchAll(PDO::FETCH_ASSOC);
-	$result_count = count($result);
-	unset ($prep_statement, $sql);
+//get the rows per page
+	$rows_per_page = $settings->get('domain', 'paging', 50);
 
+//get messages from the database
+	$sql = "SELECT domain_name, s.extension_uuid as extension, ";
+	$sql .= "sms_message_uuid, start_stamp, from_number, to_number, message,direction ";
+	$sql .= "FROM v_sms_messages as s, v_domains as d ";
+	$sql .= "WHERE d.domain_uuid = s.domain_uuid ";
+	$sql .= "and d.domain_uuid = :domain_uuid order by start_stamp DESC ";
+	$sql .= "limit " . $rows_per_page . " offset " . $offset . " ";
+	error_log("SQL: " . print_r($sql,true));
+	$parameters['domain_uuid'] = $domain_uuid;
+	$result = $database->select($sql, $parameters ?? null, 'row');
+	$result_count = count($result);
+	unset ($parameters, $sql);
+
+//set the values for the row style
 	$c = 0;
 	$row_style["0"] = "row_style0";
 	$row_style["1"] = "row_style1";
@@ -137,7 +124,7 @@
 		echo "<tr>\n";
 
 		//determine if theme images exist
-		$theme_image_path = $_SERVER["DOCUMENT_ROOT"]."/themes/".$_SESSION['domain']['template']['name']."/images/";
+		$theme_image_path = $_SERVER["DOCUMENT_ROOT"]."/themes/".$settings->get('domain', 'template', 'default')."/images/";
 		$theme_cdr_images_exist = (
 			file_exists($theme_image_path."icon_cdr_inbound_answered.png") &&
 			file_exists($theme_image_path."icon_cdr_inbound_voicemail.png") &&
@@ -158,11 +145,13 @@
 
 			$extension = " - ";
 			if(!empty($row['extension'])) {
-				$sql = "SELECT extension FROM v_extensions WHERE extension_uuid = :extension_uuid";
-				$prep_statement = $db->prepare(check_sql($sql));
-				$prep_statement->execute(array(':extension_uuid' => $row['extension']));
-				$result = $prep_statement->fetch(PDO::FETCH_ASSOC);
-				$extension = !empty($result['extension'])?$result['extension']:" - ";
+				$sql = "SELECT extension FROM v_extensions ";
+				$sql .= "WHERE extension_uuid = :extension_uuid ";
+				$sql .= "AND domain_uuid = :domain_uuid ";
+				$parameters['domain_uuid'] = $domain_uuid;
+				$parameters['extension_uuid'] = $row['extension'];
+				$result = $database->select($sql, $parameters ?? null, 'row');
+				$extension = !empty($result['extension'])? $result['extension'] : " - ";
 			}
 
 			//determine call result and appropriate icon

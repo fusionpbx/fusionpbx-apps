@@ -30,40 +30,35 @@
 	require_once "resources/paging.php";
 
 //check permissions
-	if (permission_exists('call_broadcast_view')) {
-		//access granted
-	}
-	else {
+	if (!permission_exists('call_broadcast_view')) {
 		echo "access denied";
 		exit;
 	}
 
+//connect to the database
+	$database = $database::new();
+
 //add multi-lingual support
 	$language = new text;
 	$text = $language->get();
-
 
 //get the http get variables and set them to php variables
 	$order_by = $_GET["order_by"];
 	$order = $_GET["order"];
 
 //add the search term
-	$search = strtolower($_GET["search"]);
-	if (strlen($search) > 0) {
-		$sql_search = " (";
+	$search = strtolower($_GET["search"] ?? '');
+
+//get the count
+	$sql = "select count(*) from v_sms_broadcast ";
+	$sql .= "where domain_uuid = :domain_uuid ";
+	if (!empty($search)) {
+		$sql_search = "and (";
 		$sql_search .= "	lower(sms_sms_broadcast_name) like :search ";
 		$sql_search .= "	or lower(sms_broadcast_description) like :search ";
 		$sql_search .= ") ";
 		$parameters['search'] = '%'.$search.'%';
 	}
-
-//get the count
-	$sql = "select count(*) from v_sms_broadcast ";
-	$sql .= "where domain_uuid = :domain_uuid ";
-	if (isset($sql_search)) {
-		$sql .= "and ".$sql_search;
-	}
-	$database = new database;
 	$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
 	$num_rows = $database->select($sql, $parameters, 'column');
 
@@ -77,10 +72,18 @@
 	$offset = $rows_per_page * $page;
 
 //get the call broadcast
-	$sql = str_replace('count(*)','*', $sql);
+	$sql = "select * from v_sms_broadcast ";
+	$sql .= "where domain_uuid = :domain_uuid ";
+	if (!empty($search)) {
+		$sql = "and (";
+		$sql .= "	lower(sms_sms_broadcast_name) like :search ";
+		$sql .= "	or lower(sms_broadcast_description) like :search ";
+		$sql .= ") ";
+		$parameters['search'] = '%'.$search.'%';
+	}
+	$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
 	$sql .= order_by($order_by, $order);
 	$sql .= limit_offset($rows_per_page, $offset);
-	$database = new database;
 	$result = $database->select($sql, $parameters, 'all');
 	unset($sql, $parameters);
 

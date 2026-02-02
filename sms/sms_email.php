@@ -46,23 +46,18 @@ function send_sms_to_email($from, $to, $body, $media = null) {
 	// Check for email address in sms_destinations table
 	$sql = "select domain_name, ";
 	$sql .= "email, ";
-	$sql .= "v_sms_destinations.domain_uuid as domain_uuid, ";
+	$sql .= "s.domain_uuid as domain_uuid, ";
 	$sql .= "carrier ";
-	$sql .= "from v_sms_destinations, ";
-	$sql .= "v_domains ";
-	$sql .= "where v_sms_destinations.domain_uuid = v_domains.domain_uuid";
+	$sql .= "from v_sms_destinations as s, v_domains as d ";
+	$sql .= "where s.domain_uuid = d.domain_uuid";
 	$sql .= " and destination like :to";
 //	$sql .= " and chatplan_detail_data <> ''"; //uncomment to disable email-only
 
 	if ($debug) {
 		error_log("SQL: " . print_r($sql,true));
 	}
-
-	$prep_statement = $db->prepare(check_sql($sql));
-	$prep_statement->bindValue(':to', "%{$to}%");
-	$prep_statement->execute();
-	$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
-
+	$parameters['to'] = "%{$to}%";
+	$result = $database->select($sql, $parameters ?? null, 'all');
 	if (count($result) > 0) {
 		foreach ($result as &$row) {
 			$domain_name = $row["domain_name"];

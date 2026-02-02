@@ -35,13 +35,14 @@
 	require_once dirname(__DIR__, 2) . "/resources/require.php";
 	require_once "resources/check_auth.php";
 
-if (permission_exists('sms_add') || permission_exists('sms_edit')) {
-	//access granted
-}
-else {
-	echo "access denied";
-	exit;
-}
+//check permissions
+	if (!(permission_exists('sms_add') || permission_exists('sms_edit'))) {
+		echo "access denied";
+		exit;
+	}
+
+//connect to the database
+	$database = database::new();
 
 //add multi-lingual support
 	$language = new text;
@@ -50,18 +51,19 @@ else {
 //set the action as an add or an update
 	if (isset($_REQUEST["id"])) {
 		$action = "update";
-		$sms_uuid = check_str($_REQUEST["id"]);
+		$sms_uuid = $_REQUEST["id"];
 		$sql = "select * from v_sms_destinations ";
-		$sql .= "where sms_destination_uuid = '" . $_REQUEST["id"] . "' ";
-		$sql .= "and domain_uuid = '" . $_SESSION['domain_uuid'] . "' LIMIT 1";
-		$prep_statement = $db->prepare(check_sql($sql));
-		$prep_statement->execute();
-		$sms_destinations = $prep_statement->fetchAll(PDO::FETCH_NAMED);
+		$sql .= "where sms_destination_uuid = :id ";
+		$sql .= "and domain_uuid = :domain_uuid LIMIT 1 ";
+		$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
+		$parameters['id'] = $_REQUEST["id"];
+		$sms_destinations = $database->select($sql, $parameters ?? null, 'all');
+		unset($parameters);
 		foreach ($sms_destinations as $row) {
-			$destination = check_str($row["destination"]);
-			$carrier = check_str($row["carrier"]);
-			$description = check_str($row["description"]);
-			$enabled = check_str($row["enabled"]);
+			$destination = $row["destination"];
+			$carrier = $row["carrier"];
+			$description = $row["description"];
+			$enabled = $row["enabled"];
 			$sms_destination_uuid = $row['sms_destination_uuid'];
 			$chatplan_detail_data = $row['chatplan_detail_data'];
 			$email = $row['email'];
@@ -72,80 +74,35 @@ else {
 		$action = "add";
 	}
 
-//get the http values and set them as php variables
-	if (count($_POST) > 0 && $action != "update") {
+//process the user data and save it to the database
+	if (!empty($_POST)) {
 		//get the values from the HTTP POST and save them as PHP variables
-			$destination = str_replace(' ','-',check_str($_POST["destination"]));
-			$carrier = check_str($_POST["carrier"]);
-			$description = check_str($_POST["description"]);
-			$enabled = check_str($_POST["enabled"]);
-			$sms_destination_uuid = uuid();
-			$chatplan_detail_data = check_str($_POST["chatplan_detail_data"]);
-			$email = check_str($_POST["email"]);
-		if ($action == "add") {
-			$sql_insert = "insert into v_sms_destinations ";
-			$sql_insert .= "(";
-			$sql_insert .= "sms_destination_uuid, ";
-			$sql_insert .= "carrier, ";
-			$sql_insert .= "domain_uuid, ";
-			$sql_insert .= "destination, ";
-			$sql_insert .= "enabled, ";
-			$sql_insert .= "description, ";
-			$sql_insert .= "chatplan_detail_data, ";
-			$sql_insert .= "email ";
-			$sql_insert .= ")";
-			$sql_insert .= "values ";
-			$sql_insert .= "(";
-			$sql_insert .= ":sms_destination_uuid, ";
-			$sql_insert .= ":carrier, ";
-			$sql_insert .= ":domain_uuid, ";
-			$sql_insert .= ":destination, ";
-			$sql_insert .= ":enabled, ";
-			$sql_insert .= ":description, ";
-			$sql_insert .= ":chatplan_detail_data, ";
-			$sql_insert .= ":email ";
-			$sql_insert .= ")";
+		$destination = str_replace(' ','-', $_POST["destination"]);
+		$carrier = $_POST["carrier"];
+		$description = $_POST["description"];
+		$enabled = $_POST["enabled"]);
+		$sms_destination_uuid = uuid();
+		$chatplan_detail_data = $_POST["chatplan_detail_data"];
+		$email = $_POST["email"]);
 
-			$prep_statement = $db->prepare(check_sql($sql_insert));
-			$prep_statement->execute(array(':sms_destination_uuid' => $sms_destination_uuid, ':carrier' => $carrier,
-				'domain_uuid' => $_SESSION['domain_uuid'], ':destination' => $destination, ':enabled' => $enabled,
-				':description' => $description, ':chatplan_detail_data' => $chatplan_detail_data, ':email' => $email));
-			$prep_statement->execute();
-			unset ($prep_statement);
+		//prepare the array
+		$array['sms_destinations'][0]['sms_destination_uuid'] = $sms_destination_uuid ?? uuid();
+		$array['sms_destinations'][0]['domain_uuid'] = $_SESSION["domain_uuid"];
+		$array['sms_destinations'][0]['carrier'] = $carrier;
+		$array['sms_destinations'][0]['destination'] = $destination;
+		$array['sms_destinations'][0]['chatplan_detail_data'] = $chatplan_detail_data;
+		$array['sms_destinations'][0]['email'] = $email;
+		$array['sms_destinations'][0]['enabled'] = $enabled;
+		$array['sms_destinations'][0]['description'] = $description;
 
-			header( 'Location: sms.php') ;
+		//save to the data
+		$result = $database->save($array);
 
-		}
-	} elseif (count($_POST) > 0 && $action == "update") {
-			$destination = str_replace(' ','-',check_str($_POST["destination"]));
-			$carrier = check_str($_POST["carrier"]);
-			$description = check_str($_POST["description"]);
-			$enabled = check_str($_POST["enabled"]);
-			$chatplan_detail_data = check_str($_POST["chatplan_detail_data"]);
-			$email = check_str($_POST["email"]);
+		//add the result to the log
+		//error_log($result);
 
-
-			$sql_insert = "update v_sms_destinations set";
-			$sql_insert .= " ";
-			$sql_insert .= "carrier = :carrier, ";
-			$sql_insert .= "destination = :destination, ";
-			$sql_insert .= "enabled = :enabled, ";
-			$sql_insert .= "description = :description, ";
-			$sql_insert .= "chatplan_detail_data = :chatplan_detail_data, ";
-			$sql_insert .= "email = :email ";
-			$sql_insert .= "where sms_destination_uuid = :sms_destination_uuid and domain_uuid = :domain_uuid";
-
-
-			$prep_statement = $db->prepare(check_sql($sql_insert));
-			$prep_statement->execute(array(':carrier' => $carrier, ':destination' => $destination, ':enabled' => $enabled,
-				':description' => $description, ':chatplan_detail_data' => $chatplan_detail_data, ':email' => $email,
-				':sms_destination_uuid' => $sms_destination_uuid, ':domain_uuid' => $_SESSION['domain_uuid']));
-
-			$prep_statement->execute();
-
-			error_log($sql_insert);
-			unset ($prep_statement);
-			header( 'Location: sms.php') ;
+		//redirect the browser
+		header( 'Location: sms.php') ;
 	}
 
 //include the header
@@ -200,8 +157,6 @@ else {
 	echo $text['description-carrier']."\n";
 	echo "</td>\n";
 	echo "</tr>\n";
-
-
 
 	echo "<tr>\n";
 	echo "<td class='vncell' valign='top' align='left' nowrap='nowrap'>\n";
@@ -286,4 +241,5 @@ else {
 
 //show the footer
 	require_once "resources/footer.php";
+
 ?>

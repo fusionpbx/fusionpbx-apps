@@ -107,9 +107,9 @@
 	else {
 		$sql .= "order by $order_text ";
 	}
-	$sms_destinations = $database->select($sql, $parameters ?? null, 'all');
 	$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
-	$num_rows = $database->select($sql, $parameters, 'column');
+	$sms_destinations = $database->select($sql, $parameters ?? null, 'all');
+	$num_rows = count($sms_destinations);
 	unset ($parameters, $sql);
 
 //include the header
