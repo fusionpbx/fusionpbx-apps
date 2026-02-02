@@ -27,56 +27,57 @@
 //includes files
 	require_once dirname(__DIR__, 2) . "/resources/require.php";
 	require_once "resources/check_auth.php";
+	require_once "resources/paging.php";
 
-if (permission_exists('sms_view')) {
-	//access granted
-}
-else {
-	echo "access denied";
-	exit;
-}
+//check the permissions
+	if (!permission_exists('sms_view')) {
+		echo "access denied";
+		exit;
+	}
 
 //add multi-lingual support
 	$language = new text;
 	$text = $language->get();
 
+//connect to the database
+	$database = new database;
+
 //get the http values and set them as variables
-	$search = check_str($_GET["search"]);
-	$order_by = check_str($_GET["order_by"]);
-	$order = check_str($_GET["order"]);
+	$search = $_GET["search"];
+	$order_by = $_GET["order_by"];
+	$order = $_GET["order"];
 
-require_once "resources/header.php";
-$document['title'] = $text['title-sms'];
+//sanitize the order by user data
+	$order_by = preg_replace("#[^a-zA-Z0-9_]#", "", $order_by);
+	$order = preg_replace("#[^a-zA-Z0-9_]#", "", $order);
 
-require_once "resources/paging.php";
+//set the title
+	$document['title'] = $text['title-sms'];
 
 //get total extension count from the database
 	$sql = "select ";
-	$sql .= "(select count(*) from v_sms_destinations where domain_uuid = '".$_SESSION['domain_uuid']."' ".$sql_mod.") as num_rows ";
+	$sql .= "(select count(*) from v_sms_destinations where domain_uuid = :domain_uuid) as num_rows ";
 	if ($db_type == "pgsql") {
 		$sql .= ",(select count(*) as count from v_sms_destinations ";
-		$sql .= "where domain_uuid = '".$_SESSION['domain_uuid']."' ";
+		$sql .= "where domain_uuid = :domain_uuid ";
 		$sql .= ") as numeric_sms ";
 	}
-	$prep_statement = $db->prepare($sql);
-	if ($prep_statement) {
-		$prep_statement->execute();
-		$row = $prep_statement->fetch(PDO::FETCH_ASSOC);
+	$parameters['domain_uuid'] = $domain_uuid;
+	$row = $database->select($sql, $parameters ?? null, 'row');
+	if (is_array($row) {
 		$total_sms_destinations = $row['num_rows'];
 		if (($db_type == "pgsql") or ($db_type == "mysql")) {
 			$numeric_sms = $row['numeric_sms'];
 		}
 	}
-	unset($prep_statement, $row);
 
 //prepare to page the results
-	$rows_per_page = ($_SESSION['domain']['paging']['numeric'] != '') ? $_SESSION['domain']['paging']['numeric'] : 50;
-	$param = "&search=".$search;
-	if (!isset($_GET['page'])) { $_GET['page'] = 0; }
-	$_GET['page'] = check_str($_GET['page']);
-	list($paging_controls_mini, $rows_per_page, $var_3) = paging($total_sms_destinations, $param, $rows_per_page, true); //top
-	list($paging_controls, $rows_per_page, $var_3) = paging($total_sms_destinations, $param, $rows_per_page); //bottom
-	$offset = $rows_per_page * $_GET['page'];
+	$rows_per_page = $settings->get('domain', 'paging', 50);
+	$param = !empty($search) ? "&search=".$search : null;
+	$page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 0;
+	list($paging_controls, $rows_per_page) = paging($num_rows, $param, $rows_per_page);
+	list($paging_controls_mini, $rows_per_page) = paging($num_rows, $param, $rows_per_page, true);
+	$offset = $rows_per_page * $page;
 
 //to cast or not to cast
 	if ($db_type == "pgsql") {
@@ -89,20 +90,31 @@ require_once "resources/paging.php";
 
 //get the extensions
 	$sql = "select * from v_sms_destinations ";
-	$sql .= "where domain_uuid = '$domain_uuid' ";
-	$sql .= $sql_mod; //add search mod from above
+	$sql .= "where domain_uuid = :domain_uuid ";
+	if (!empty($search)) {
+		$search =  strtolower($_GET["search"]);
+		$sql = " (";
+		$sql .= "	lower(message) like :search ";
+		$sql .= "	or lower(direction) like :search ";
+		$sql .= "	or lower(response) like :search ";
+		$sql .= "	or lower(carrier) like :search ";
+		$sql .= ") ";
+		$parameters['search'] = '%'.$search.'%';
+	}
 	if (strlen($order_by) > 0) {
 		$sql .= ($order_by == 'destination') ? "order by $order_text ".$order." " : "order by ".$order_by." ".$order." ";
 	}
 	else {
 		$sql .= "order by $order_text ";
 	}
-	$sql .= "limit $rows_per_page offset $offset ";
-	$prep_statement = $db->prepare(check_sql($sql));
-	$prep_statement->execute();
-	$sms_destinations = $prep_statement->fetchAll(PDO::FETCH_NAMED);
-//echo $sql;
-	unset ($prep_statement, $sql);
+	$sms_destinations = $database->select($sql, $parameters ?? null, 'all');
+	$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
+	$num_rows = $database->select($sql, $parameters, 'column');
+	unset ($parameters, $sql);
+
+//include the header
+	require_once "resources/header.php";
+
 //show the content
 	echo "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n";
 	echo "  <tr>\n";
