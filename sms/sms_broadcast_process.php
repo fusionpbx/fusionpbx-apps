@@ -4,12 +4,14 @@
 require_once dirname(__DIR__, 2) . "/resources/require.php";
 require_once "resources/classes/text.php";
 
-$debug = true;
+//set degug to false by default
+$debug = false;
 
+//connect to the database
+$database = new database;
+
+//get get data from the database
 $sql = "select * from v_sms_broadcast";
-$database = new database;
-
-$database = new database;
 $result = $database->select($sql, $parameters, 'all');
 unset($sql, $parameters);
 
@@ -26,12 +28,9 @@ foreach ($result as $sms_broadcast) {
 	$domain_uuid = $sms_broadcast['domain_uuid'];
 	
 	$sql = "select * from v_domains where domain_uuid = :domain_uuid";
-	$database = new database;
 	$parameters['domain_uuid'] = $sms_broadcast['domain_uuid'];
-	$database = new database;
 	$result_domains = $database->select($sql, $parameters, 'all');
 	$domain_name = $result_domains[0]['domain_name'];
-	
 	unset($sql, $parameters);
 	
 	$sms_body = $sms_broadcast['sms_broadcast_destination_data'];
