@@ -85,6 +85,11 @@
 		$chatplan_detail_data = $_POST["chatplan_detail_data"];
 		$email = $_POST["email"]);
 
+		//add the temporary permission
+		$p = permissions::new();
+		$p->add('sms_destination_add', 'temp');
+		$p->add('sms_destination_edit', 'temp');
+
 		//prepare the array
 		$array['sms_destinations'][0]['sms_destination_uuid'] = $sms_destination_uuid ?? uuid();
 		$array['sms_destinations'][0]['domain_uuid'] = $_SESSION["domain_uuid"];
@@ -94,6 +99,10 @@
 		$array['sms_destinations'][0]['email'] = $email;
 		$array['sms_destinations'][0]['enabled'] = $enabled;
 		$array['sms_destinations'][0]['description'] = $description;
+
+		//remove the temporary permission
+		$p->delete('call_center_tier_add', 'temp');
+		$p->delete('call_center_tier_edit', 'temp');
 
 		//save to the data
 		$result = $database->save($array);
