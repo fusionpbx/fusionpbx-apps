@@ -34,7 +34,8 @@ function validateEMAIL($EMAIL) {
 }
 
 function send_sms_to_email($from, $to, $body, $media = null) {
-	global $db, $debug, $domain_uuid, $domain_name, $carrier;
+	global $database, $debug, $domain_uuid, $domain_name, $carrier;
+
 	if ($debug) {
 		error_log('Media: ' .  print_r($media, true));
 	}
@@ -42,6 +43,7 @@ function send_sms_to_email($from, $to, $body, $media = null) {
 	if (preg_match('/@+(.+)/',$to,$matches)) {
 		$domain_name = $matches[1];
 	}
+
 	//get email address from db
 	// Check for email address in sms_destinations table
 	$sql = "select domain_name, ";
