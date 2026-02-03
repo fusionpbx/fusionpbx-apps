@@ -45,6 +45,9 @@
 	$language = new text;
 	$text = $language->get();
 
+//set the domain_uuid
+	$domain_uuid = $_SESSION['domain_uuid'];
+
 //include the header
 	require_once "resources/header.php";
 	require_once "resources/paging.php";
@@ -61,7 +64,7 @@
 	$sql .= "AND d.domain_uuid = :domain_uuid ";
 	$parameters['domain_uuid'] = $domain_uuid;
 	$row = $database->select($sql, $parameters ?? null, 'row');
-	if (is_array($row) {
+	if (is_array($row)) {
 		if ($row['num_rows'] > 0) {
 			$num_rows = $row['num_rows'];
 		} else {
@@ -82,15 +85,16 @@
 	$rows_per_page = $settings->get('domain', 'paging', 50);
 
 //get messages from the database
-	$sql = "SELECT domain_name, s.extension_uuid as extension, ";
-	$sql .= "sms_message_uuid, start_stamp, from_number, to_number, message,direction ";
+	$sql = "SELECT domain_name, s.extension_uuid as extension, sms_message_uuid, ";
+	$sql .= "start_stamp, from_number, to_number, message, direction ";
 	$sql .= "FROM v_sms_messages as s, v_domains as d ";
 	$sql .= "WHERE d.domain_uuid = s.domain_uuid ";
-	$sql .= "and d.domain_uuid = :domain_uuid order by start_stamp DESC ";
+	$sql .= "and d.domain_uuid = :domain_uuid ";
+	$sql .= "order by start_stamp DESC ";
 	$sql .= "limit " . $rows_per_page . " offset " . $offset . " ";
-	error_log("SQL: " . print_r($sql,true));
+	//error_log("SQL: " . print_r($sql, true));
 	$parameters['domain_uuid'] = $domain_uuid;
-	$result = $database->select($sql, $parameters ?? null, 'row');
+	$result = $database->select($sql, $parameters ?? null, 'all');
 	$result_count = count($result);
 	unset ($parameters, $sql);
 
@@ -141,8 +145,6 @@
 
 		foreach($result as $index => $row) {
 
-			$tmp_start_epoch = ($_SESSION['domain']['time_format']['text'] == '12h') ? date("j M Y g:i:sa", $row['start_stamp']) : date("j M Y H:i:s", $row['start_epoch']);
-
 			$extension = " - ";
 			if(!empty($row['extension'])) {
 				$sql = "SELECT extension FROM v_extensions ";
@@ -158,7 +160,7 @@
 			echo "<td valign='top' class='".$row_style[$c]."'>\n";
 			if ($theme_cdr_images_exist) {
 				$call_result = 'answered';
-				echo "<img src='".PROJECT_PATH."/themes/".$_SESSION['domain']['template']['name']."/images/icon_cdr_".$row['direction']."_".$call_result.".png' width='16' style='border: none; cursor: help;' title='".$text['label-'.$row['direction']].": ".$text['label-'.$call_result]."'>\n";
+				echo "<img src='".PROJECT_PATH."/themes/".$settings->get('domain', 'template', 'default')."/images/icon_cdr_".$row['direction']."_".$call_result.".png' width='16' style='border: none; cursor: help;' title='".$text['label-'.$row['direction']].": ".$text['label-'.$call_result]."'>\n";
 			}
 			else { echo "&nbsp;"; }
 			echo "</td>\n";
@@ -189,6 +191,8 @@ if ($result_count == $rows_per_page) {
 }
 
 echo "<br><br>";
+
 //show the footer
 	require_once "resources/footer.php";
+
 ?>

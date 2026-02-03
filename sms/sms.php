@@ -64,7 +64,7 @@
 	}
 	$parameters['domain_uuid'] = $domain_uuid;
 	$row = $database->select($sql, $parameters ?? null, 'row');
-	if (is_array($row) {
+	if (is_array($row)) {
 		$total_sms_destinations = $row['num_rows'];
 		if (($db_type == "pgsql") or ($db_type == "mysql")) {
 			$numeric_sms = $row['numeric_sms'];

@@ -80,10 +80,10 @@
 		$destination = str_replace(' ','-', $_POST["destination"]);
 		$carrier = $_POST["carrier"];
 		$description = $_POST["description"];
-		$enabled = $_POST["enabled"]);
+		$enabled = $_POST["enabled"];
 		$sms_destination_uuid = uuid();
 		$chatplan_detail_data = $_POST["chatplan_detail_data"];
-		$email = $_POST["email"]);
+		$email = $_POST["email"];
 
 		//add the temporary permission
 		$p = permissions::new();
