@@ -26,7 +26,6 @@
 
 //includes files
 	require_once dirname(__DIR__, 2) . "/resources/require.php";
-	require_once "resources/pdo.php";
 	require_once "resources/check_auth.php";
 
 //check permissions
@@ -38,6 +37,9 @@
 		exit;
 	}
 
+//connect to the database
+	$database = database::new();
+
 //add multi-lingual support
 	$language = new text;
 	$text = $language->get();
@@ -48,15 +50,14 @@
 //delete the data
 	if (isset($_GET["id"]) && is_uuid($_GET["id"])) {
 
-		//get the id
-			$id = check_str($_GET["id"]);
-
-		//delete bridge
+		//delete the school bell
 			$sql = "delete from v_school_bells ";
-			$sql .= "where school_bell_uuid = '$id' ";
-			$prep_statement = $db->prepare(check_sql($sql));
-			$prep_statement->execute();
-			unset($sql);
+			$sql .= "where domain_uuid = :domain_uuid ";
+			$sql .= "and school_bell_uuid = :school_bell_uuid ";
+			$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
+			$parameters['school_bell_uuid'] = $_GET["id"];
+			$database->execute($sql, $parameters);
+			unset($sql, $parameters);
 
 		//redirect the user
 			header('Location: school_bells.php');

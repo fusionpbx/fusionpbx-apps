@@ -27,7 +27,6 @@
 
 //includes files
 	require_once dirname(__DIR__, 2) . "/resources/require.php";
-	require_once "resources/pdo.php";
 	require_once "resources/check_auth.php";
 
 //check permissions
@@ -41,6 +40,9 @@
 //add multi-lingual support
 	$language = new text;
 	$text = $language->get();
+
+//connect to the database
+	$database = database::new();
 
 // Get timezones
 	$timezone_identifiers_list = timezone_identifiers_list();
@@ -164,10 +166,14 @@
 				$sql .= "school_bell_description ";
 				$sql .= ") ";
 				$sql .= "VALUES ";
-				$sql .= "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				$sql .= "(:domain_uuid, :school_bell_uuid, :school_bell_name, :school_bell_leg_a_type, ";
+				$sql .= ":school_bell_leg_a_data, :school_bell_leg_b_type, :school_bell_leg_b_data, ";
+				$sql .= ":school_bell_ring_timeout, :school_bell_min, :school_bell_hour, :school_bell_dom, ";
+				$sql .= ":school_bell_mon, :school_bell_dow, :school_bell_timezone, :school_bell_enabled, ";
+				$sql .= ":school_bell_description)";
 
-				$insert_array = array(
-					'domain_uuid' => $domain_uuid,
+				$parameters = array(
+					'domain_uuid' => $_SESSION['domain_uuid'],
 					'school_bell_uuid' => $school_bell_uuid,
 					'school_bell_name' => $school_bell_name,
 					'school_bell_leg_a_type' => $school_bell_leg_a_type,
@@ -185,10 +191,8 @@
 					'school_bell_description' => $school_bell_description
 				);
 
-				$prep_statement = $db->prepare(check_sql($sql));
-				$prep_statement->execute(array_values($insert_array));
-
-				unset($sql, $prep_statement, $insert_array);
+				$database->execute($sql, $parameters);
+				unset($sql, $parameters);
 
 				message::add($text['label-add-complete']);
 				header("Location: school_bells.php");
@@ -215,29 +219,26 @@
 				$sql .= " WHERE domain_uuid = :domain_uuid";
 				$sql .= " AND school_bell_uuid = :school_bell_uuid";
 
-				$prep_statement = $db->prepare($sql);
-
-				$prep_statement->bindValue('school_bell_name', $school_bell_name);
-				$prep_statement->bindValue('school_bell_leg_a_type', $school_bell_leg_a_type);
-				$prep_statement->bindValue('school_bell_leg_a_data', $school_bell_leg_a_data);
-				$prep_statement->bindValue('school_bell_leg_b_type', $school_bell_leg_b_type);
-				$prep_statement->bindValue('school_bell_leg_b_data', $school_bell_leg_b_data);
-				$prep_statement->bindValue('school_bell_ring_timeout', $school_bell_ring_timeout);
-				$prep_statement->bindValue('school_bell_min', $school_bell_min);
-				$prep_statement->bindValue('school_bell_hour', $school_bell_hour);
-				$prep_statement->bindValue('school_bell_dom', $school_bell_dom);
-				$prep_statement->bindValue('school_bell_mon', $school_bell_mon);
-				$prep_statement->bindValue('school_bell_dow', $school_bell_dow);
-				$prep_statement->bindValue('school_bell_timezone', $school_bell_timezone);
-				$prep_statement->bindValue('school_bell_enabled', $school_bell_enabled);
-				$prep_statement->bindValue('school_bell_description', $school_bell_description);
-				$prep_statement->bindValue('domain_uuid', $domain_uuid);
-				$prep_statement->bindValue('school_bell_uuid', $school_bell_uuid);
-
-				if ($prep_statement) {
-					$prep_statement->execute();
-				}
-				unset($sql, $prep_statement);
+				$parameters = array(
+					'school_bell_name' => $school_bell_name,
+					'school_bell_leg_a_type' => $school_bell_leg_a_type,
+					'school_bell_leg_a_data' => $school_bell_leg_a_data,
+					'school_bell_leg_b_type' => $school_bell_leg_b_type,
+					'school_bell_leg_b_data' => $school_bell_leg_b_data,
+					'school_bell_ring_timeout' => $school_bell_ring_timeout,
+					'school_bell_min' => $school_bell_min,
+					'school_bell_hour' => $school_bell_hour,
+					'school_bell_dom' => $school_bell_dom,
+					'school_bell_mon' => $school_bell_mon,
+					'school_bell_dow' => $school_bell_dow,
+					'school_bell_timezone' => $school_bell_timezone,
+					'school_bell_enabled' => $school_bell_enabled,
+					'school_bell_description' => $school_bell_description,
+					'domain_uuid' => $_SESSION['domain_uuid'],
+					'school_bell_uuid' => $school_bell_uuid
+				);
+				$database->execute($sql, $parameters);
+				unset($sql, $parameters);
 
 				message::add($text['label-update-complete']);
 				header("Location: school_bells.php");
@@ -254,13 +255,9 @@
 		$sql .= " AND school_bell_uuid = :school_bell_uuid";
 		$sql .= " LIMIT 1";
 
-		$prep_statement = $db->prepare($sql);
-
-		$prep_statement->bindValue('domain_uuid', $domain_uuid);
-		$prep_statement->bindValue('school_bell_uuid', $school_bell_uuid);
-
-		$prep_statement->execute();
-		$result = $prep_statement->fetchAll();
+		$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
+		$parameters['school_bell_uuid'] = $school_bell_uuid;
+		$result = $database->select($sql, $parameters, 'all');
 
 		foreach ($result as &$row) {
 			$school_bell_name = $row["school_bell_name"];
@@ -278,25 +275,16 @@
 			$school_bell_description = $row["school_bell_description"];
 			break; //limit to 1 row ? Should be only 1 result at all
 		}
-		unset ($prep_statement, $sql);
+		unset($sql, $parameters);
 	}
 
 	//get the recordings
 	$sql = "SELECT recording_name, recording_filename FROM v_recordings";
 	$sql .= " WHERE domain_uuid = :domain_uuid";
 	$sql .= " ORDER BY recording_name ASC";
-	$prep_statement = $db->prepare(check_sql($sql));
-	$prep_statement->bindValue('domain_uuid', $domain_uuid);
-	$prep_statement->execute();
-	$recordings = $prep_statement->fetchAll(PDO::FETCH_ASSOC);
-
-	//get the phrases
-	// $sql = "SELECT * FROM v_phrases ";
-	// $sql .= " WHERE (domain_uuid = :domain_uuid OR domain_uuid IS NULL) ";
-	// $prep_statement = $db->prepare(check_sql($sql));
-	// $prep_statement->bindValue('domain_uuid', $domain_uuid);
-	// $prep_statement->execute();
-	// $phrases = $prep_statement->fetchAll(PDO::FETCH_NAMED);
+	$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
+	$recordings = $database->select($sql, $parameters, 'all');
+	unset($sql, $parameters);
 
 	//get the sound files
 	$file = new file;

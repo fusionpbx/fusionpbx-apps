@@ -27,7 +27,6 @@
 
 //includes files
 	require_once dirname(__DIR__, 2) . "/resources/require.php";
-	require_once "resources/pdo.php";
 	require_once "resources/check_auth.php";
 
 if (permission_exists('school_bell_view')) {
@@ -42,6 +41,9 @@ else {
 	$language = new text;
 	$text = $language->get();
 
+//connect to the database
+	$database = database::new();
+
 require_once "resources/header.php";
 	$document['title'] = $text['title-school_bells'];
 
@@ -52,15 +54,11 @@ require_once "resources/paging.php";
 	$order = $_GET["order"];
 
 	//prepare to page the results
-	$sql = "SELECT count(school_bell_uuid) AS num_rows FROM v_school_bells";
+	$sql = "SELECT count(school_bell_uuid) FROM v_school_bells";
 	$sql .= " WHERE domain_uuid = :domain_uuid";
-	$prep_statement = $db->prepare($sql);
-	$prep_statement->bindValue('domain_uuid', $domain_uuid);
-	if ($prep_statement) {
-		$prep_statement->execute();
-		$row = $prep_statement->fetch(PDO::FETCH_ASSOC);
-		$num_rows = ($row['num_rows'] > 0) ? $row['num_rows'] : '0';
-	}
+	$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
+	$num_rows = $database->select($sql, $parameters, 'column');
+	unset($sql, $parameters);
 
 	//prepare to page the results
 	$rows_per_page = ($_SESSION['domain']['paging']['numeric'] != '') ? $_SESSION['domain']['paging']['numeric'] : 50;
@@ -77,18 +75,13 @@ require_once "resources/paging.php";
 	if ($num_rows > 0) {
 		$sql = "SELECT * FROM v_school_bells";
 		$sql .= " WHERE domain_uuid = :domain_uuid";
-		if (strlen($order_by)> 0) {
-			$sql .= " ORDER BY $order_by $order";
-		}
-		$sql .= " LIMIT $rows_per_page OFFSET $offset";
+		$sql .= order_by($order_by, $order);
+		$sql .= limit_offset($rows_per_page, $offset);
 
-		$prep_statement = $db->prepare(check_sql($sql));
-		$prep_statement->bindValue('domain_uuid', $domain_uuid);
-
-		$prep_statement->execute();
-		$result = $prep_statement->fetchAll();
+		$parameters['domain_uuid'] = $_SESSION['domain_uuid'];
+		$result = $database->select($sql, $parameters, 'all');
 		$result_count = count($result);
-		unset ($prep_statement, $sql);
+		unset($sql, $parameters);
 	}
 
 	//show the content

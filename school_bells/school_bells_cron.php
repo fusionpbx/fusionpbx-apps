@@ -42,7 +42,7 @@
 	$sql .= " WHERE school_bell_min = :current_minute";
 	$sql .= " OR school_bell_min = -1";
 	$parameters['current_minute'] = $current_minute;
-	$database = new database;
+	$database = database::new();
 	$school_bells = $database->select($sql, $parameters, 'all');
 	if ($debug) {
 		echo $sql."\n";
@@ -50,22 +50,6 @@
 		print_r($school_bells);
 	}
 	unset($sql, $parameters);
-
-	/*
-	//used for fusionpbx 4.4
-	$prep_statement = $db->prepare(check_sql($sql));
-	if (!$prep_statement) {
-		die('SQL forming error');
-	}
-	$prep_statement->bindValue('current_minute', $current_minute);
-	
-	if (!$prep_statement->execute()) {
-		die('SQL execute error');
-	}
-
-	$school_bells = $prep_statement->fetchAll(PDO::FETCH_NAMED);
-	*/
-	
 
 	if (count($school_bells) == 0) {
 		echo "no bells\n";
