@@ -1,66 +1,48 @@
 <?php
-/*
-	FusionPBX
-	Version: MPL 1.1
 
-	The contents of this file are subject to the Mozilla Public License Version
-	1.1 (the "License"); you may not use this file except in compliance with
-	the License. You may obtain a copy of the License at
-	http://www.mozilla.org/MPL/
+require_once dirname(__DIR__, 2) . "/resources/require.php";
+require_once "resources/pdo.php";
+require_once "resources/check_auth.php";
 
-	Software distributed under the License is distributed on an "AS IS" basis,
-	WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
-	for the specific language governing rights and limitations under the
-	License.
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !permission_exists('school_bell_delete')) {
+	http_response_code(403);
+	exit('Access denied');
+}
 
-	The Original Code is FusionPBX
+$csrf = (string)($_POST['csrf'] ?? '');
+if (empty($_SESSION['school_bell_csrf']) || !hash_equals($_SESSION['school_bell_csrf'], $csrf)) {
+	http_response_code(403);
+	exit('Invalid security token');
+}
 
-	The Initial Developer of the Original Code is
-	Mark J Crane <markjcrane@fusionpbx.com>
-	Portions created by the Initial Developer are Copyright (C) 2008-2025
-	the Initial Developer. All Rights Reserved.
+$id = (string)($_POST['id'] ?? '');
+if (!is_uuid($id)) {
+	http_response_code(400);
+	exit('Invalid schedule identifier');
+}
 
-	Contributor(s):
-	Mark J Crane <markjcrane@fusionpbx.com>
-*/
-
-//includes files
-	require_once dirname(__DIR__, 2) . "/resources/require.php";
-	require_once "resources/pdo.php";
-	require_once "resources/check_auth.php";
-
-//check permissions
-	if (permission_exists('school_bell_delete')) {
-		//access granted
+$db->beginTransaction();
+try {
+	$bindings = [':domain_uuid' => $domain_uuid, ':school_bell_uuid' => check_str($id)];
+	foreach (['v_school_bell_history', 'v_school_bell_pauses', 'v_school_bell_times'] as $child_table) {
+		$child = $db->prepare("DELETE FROM {$child_table} WHERE domain_uuid = :domain_uuid AND school_bell_uuid = :school_bell_uuid");
+		$child->execute($bindings);
 	}
-	else {
-		echo "access denied";
-		exit;
-	}
+	$mapping = $db->prepare('DELETE FROM v_school_bell_exception_schedules WHERE domain_uuid = :domain_uuid AND school_bell_uuid = :school_bell_uuid');
+	$mapping->execute($bindings);
+	$prep_statement = $db->prepare("DELETE FROM v_school_bells
+		WHERE domain_uuid = :domain_uuid
+		AND school_bell_uuid = :school_bell_uuid");
+	$prep_statement->execute($bindings);
+	$db->commit();
+} catch (Throwable $e) {
+	if ($db->inTransaction()) $db->rollBack();
+	error_log('School Bells schedule deletion failed: '.$e->getMessage());
+	http_response_code(500);
+	exit('Unable to delete schedule.');
+}
 
-//add multi-lingual support
-	$language = new text;
-	$text = $language->get();
-
-//delete the message
-	message::add($text['message-delete']);
-
-//delete the data
-	if (isset($_GET["id"]) && is_uuid($_GET["id"])) {
-
-		//get the id
-			$id = check_str($_GET["id"]);
-
-		//delete bridge
-			$sql = "delete from v_school_bells ";
-			$sql .= "where school_bell_uuid = '$id' ";
-			$prep_statement = $db->prepare(check_sql($sql));
-			$prep_statement->execute();
-			unset($sql);
-
-		//redirect the user
-			header('Location: school_bells.php');
-	}
-
-
+message::add('Bell schedule deleted.');
+header('Location: school_bells.php');
+exit;
 ?>
